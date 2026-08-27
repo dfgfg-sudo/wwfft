@@ -1,0 +1,19 @@
+{
+  "original_rel_path": "项目主目录/完整知识库_最终版/data/raw/merged_conversations.json",
+  "original_size": 134217728,
+  "original_sha256": "152e182b6700e381f938095266bdccb2add7aa11050d5739f2f2f9b84d055638",
+  "part_size": 83886080,
+  "part_count": 2,
+  "parts": [
+    {
+      "name": "part000",
+      "size": 83886080,
+      "sha256": "43878969408c8b245f7da2d96b1bac82f5cd3d10876aae1f12d242e944d48f25"
+    },
+    {
+      "name": "part001",
+      "size": 50331648,
+      "sha256": "092b8bbd5aada664618d043fd33b00fc192749a9c3bffd358d647ef258a60ac7"
+    }
+  ]
+}

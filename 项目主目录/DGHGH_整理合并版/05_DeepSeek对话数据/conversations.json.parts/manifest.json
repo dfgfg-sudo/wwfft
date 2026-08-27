@@ -1,0 +1,19 @@
+{
+  "original_rel_path": "项目主目录/DGHGH_整理合并版/05_DeepSeek对话数据/conversations.json",
+  "original_size": 112514470,
+  "original_sha256": "dbe5fcac329f9e54b671707e9e8f139678b87405fd80fe2425ae05a404eb360a",
+  "part_size": 83886080,
+  "part_count": 2,
+  "parts": [
+    {
+      "name": "part000",
+      "size": 83886080,
+      "sha256": "45ef42afed851de4612d9fb3ea21e3b44ca158fc7e7bdceccb4361d9e46fdfb3"
+    },
+    {
+      "name": "part001",
+      "size": 28628390,
+      "sha256": "2709f30c33bba05ebe7181012228e20369aa9ceb49207f5f0b0bfd7c22efddd0"
+    }
+  ]
+}

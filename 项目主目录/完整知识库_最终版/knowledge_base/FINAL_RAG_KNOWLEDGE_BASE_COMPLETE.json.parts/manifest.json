@@ -1,0 +1,24 @@
+{
+  "original_rel_path": "项目主目录/完整知识库_最终版/knowledge_base/FINAL_RAG_KNOWLEDGE_BASE_COMPLETE.json",
+  "original_size": 210439892,
+  "original_sha256": "bb8494c8744f56fd74c46dad46b44d6785175a91b703a1973823436ae42ef2dd",
+  "part_size": 83886080,
+  "part_count": 3,
+  "parts": [
+    {
+      "name": "part000",
+      "size": 83886080,
+      "sha256": "bcc799b634a5635392d0ffe5c5d54779705d90f8e8b01e8d1c461ad2d4d602e2"
+    },
+    {
+      "name": "part001",
+      "size": 83886080,
+      "sha256": "2be20f4c27716b35f92960679c1c8af7d256adace3f09c5debc26cffbc276909"
+    },
+    {
+      "name": "part002",
+      "size": 42667732,
+      "sha256": "26ec9e16f009b2f5aedb00b972dfae4221e79e4539c17915cd85533a4d4b6387"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+2026-03-31 13:44:18,545 - __main__ - INFO - Configuration loaded from D:\AI_Agent_System\config\config.yaml
+2026-03-31 13:44:19,822 - __main__ - INFO - DeepSeek Agent initialized successfully
+2026-03-31 13:44:19,823 - __main__ - INFO - OpenClaw Agent initialized successfully
+2026-03-31 13:44:35,490 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2026-03-31 13:44:35,495 - __main__ - ERROR - HTTP error: Client error '402 Payment Required' for url 'https://api.deepseek.com/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402
+2026-03-31 13:44:35,496 - __main__ - ERROR - Error processing task: Client error '402 Payment Required' for url 'https://api.deepseek.com/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402
+2026-03-31 13:44:35,929 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2026-03-31 13:44:35,929 - __main__ - ERROR - HTTP error: Client error '402 Payment Required' for url 'https://api.deepseek.com/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402
+2026-03-31 13:44:35,930 - __main__ - ERROR - Error processing task: Client error '402 Payment Required' for url 'https://api.deepseek.com/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402
+2026-03-31 13:44:35,932 - __main__ - INFO - Processed task 1/3
+2026-03-31 13:44:36,380 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2026-03-31 13:44:36,382 - __main__ - ERROR - HTTP error: Client error '402 Payment Required' for url 'https://api.deepseek.com/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402
+2026-03-31 13:44:36,389 - __main__ - ERROR - Error processing task: Client error '402 Payment Required' for url 'https://api.deepseek.com/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402
+2026-03-31 13:44:36,390 - __main__ - INFO - Processed task 2/3
+2026-03-31 13:44:36,849 - httpx - INFO - HTTP Request: POST https://api.deepseek.com/v1/chat/completions "HTTP/1.1 402 Payment Required"
+2026-03-31 13:44:36,851 - __main__ - ERROR - HTTP error: Client error '402 Payment Required' for url 'https://api.deepseek.com/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402
+2026-03-31 13:44:36,852 - __main__ - ERROR - Error processing task: Client error '402 Payment Required' for url 'https://api.deepseek.com/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/402
+2026-03-31 13:44:36,853 - __main__ - INFO - Processed task 3/3
+2026-03-31 13:44:36,857 - __main__ - INFO - DeepSeek Agent closed
+2026-03-31 13:44:36,858 - __main__ - INFO - OpenClaw Agent closed
+2026-04-04 10:47:10,148 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.107:5000
+2026-04-04 10:47:10,150 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-04-04 10:47:50,039 - werkzeug - INFO - 127.0.0.1 - - [04/Apr/2026 10:47:50] "POST /api/chat HTTP/1.1" 200 -

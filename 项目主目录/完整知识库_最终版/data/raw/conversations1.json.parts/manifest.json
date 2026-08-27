@@ -1,0 +1,24 @@
+{
+  "original_rel_path": "项目主目录/完整知识库_最终版/data/raw/conversations1.json",
+  "original_size": 173714076,
+  "original_sha256": "16eb50034ef8ddfed7d3d931fb82ca42d53ada9997ad8877e70c566436f6b7e8",
+  "part_size": 83886080,
+  "part_count": 3,
+  "parts": [
+    {
+      "name": "part000",
+      "size": 83886080,
+      "sha256": "736dc28100564a7e749ec55708cd75112033c52f91037a9966c331c2943613c9"
+    },
+    {
+      "name": "part001",
+      "size": 83886080,
+      "sha256": "acc3512b81f72d6f393cd6c30df8e7bbf76dc698c2ecda45f9d687ec6e148465"
+    },
+    {
+      "name": "part002",
+      "size": 5941916,
+      "sha256": "5cbbbcba16d0c67e9833cd582a2652143e23e8e385730c0ecce0aac5d116a565"
+    }
+  ]
+}

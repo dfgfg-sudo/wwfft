@@ -81,3 +81,6 @@ github项目/freeCodeCamp/
 github项目/pentagi/
 github项目/HermesAgent/skills/web-access/
 vibe-coding-cn/
+
+# VS Code 安装目录（ACL 锁死无法读取，且可从官网重新下载）
+software/Microsoft VS Code/

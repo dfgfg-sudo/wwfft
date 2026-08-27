@@ -1,0 +1,13 @@
+# Ollama Provider Configuration
+provider:
+  name: ollama-llama3
+  type: ollama
+  config:
+    base_url: ${OLLAMA_SERVER_URL:-http://localhost:11434}
+    model: ${OLLAMA_SERVER_MODEL:-llama3}
+    temperature: 0.3
+    max_tokens: 4096
+    top_p: 0.95
+    frequency_penalty: 0
+    presence_penalty: 0
+    timeout: 60

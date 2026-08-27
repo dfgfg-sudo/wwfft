@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QIDI Agent - 启迪智能体</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-text">
+          <span class="logo-q">Q</span><span class="logo-i">I</span><span class="logo-d">D</span><span class="logo-i2">I</span>
+        </div>
+        <div class="logo-sub">启迪智能体</div>
+      </div>
+      <nav class="nav">
+        <a href="#dashboard" class="nav-item" data-page="dashboard">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">仪表盘</span>
+        </a>
+        <a href="#console" class="nav-item active" data-page="console">
+          <span class="nav-icon">🤖</span>
+          <span class="nav-text">Agent</span>
+        </a>
+        <a href="#tools" class="nav-item" data-page="tools">
+          <span class="nav-icon">🔧</span>
+          <span class="nav-text">工具管理</span>
+        </a>
+        <a href="#agents" class="nav-item" data-page="agents">
+          <span class="nav-icon">🧩</span>
+          <span class="nav-text">模型管理</span>
+        </a>
+        <a href="#routing" class="nav-item" data-page="routing">
+          <span class="nav-icon">🧠</span>
+          <span class="nav-text">智能路由</span>
+        </a>
+        <a href="#tokens" class="nav-item" data-page="tokens">
+          <span class="nav-icon">💰</span>
+          <span class="nav-text">Token 统计</span>
+        </a>
+        <a href="#tasks" class="nav-item" data-page="tasks">
+          <span class="nav-icon">📋</span>
+          <span class="nav-text">任务管理</span>
+        </a>
+        <a href="#files" class="nav-item" data-page="files">
+          <span class="nav-icon">📁</span>
+          <span class="nav-text">文件与报告</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="version">v1.0.0</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="header">
+        <h1 id="page-title">仪表盘</h1>
+        <div class="header-actions">
+          <button class="btn btn-primary" onclick="refreshData()">
+            <span>🔄</span> 刷新
+          </button>
+        </div>
+      </header>
+
+      <div class="content">
+        <div id="page-dashboard" class="page">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon">🔧</div>
+              <div class="stat-content">
+                <div class="stat-value" id="stat-tools">0</div>
+                <div class="stat-label">已连接工具</div>
+              </div>
+              <div class="stat-trend up" id="stat-tools-online">0 在线</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">🤖</div>
+              <div class="stat-content">
+                <div class="stat-value" id="stat-agents">0</div>
+                <div class="stat-label">智能体数量</div>
+              </div>
+              <div class="stat-trend up" id="stat-agents-active">0 活跃</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">💰</div>
+              <div class="stat-content">
+                <div class="stat-value" id="stat-tokens">0</div>
+                <div class="stat-label">Token 消耗</div>
+              </div>
+              <div class="stat-trend">总计</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">📝</div>
+              <div class="stat-content">
+                <div class="stat-value" id="stat-reports">0</div>
+                <div class="stat-label">实验报告</div>
+              </div>
+              <div class="stat-trend up" id="stat-success-rate">0% 成功率</div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="card">
+              <div class="card-header">
+                <h3>工具状态</h3>
+                <a href="#tools" class="card-link">查看全部 →</a>
+              </div>
+              <div class="card-body">
+                <div id="tools-preview" class="tools-list">
+                  <div class="loading">加载中...</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3>智能体状态</h3>
+                <a href="#agents" class="card-link">查看全部 →</a>
+              </div>
+              <div class="card-body">
+                <div id="agents-preview" class="agents-list">
+                  <div class="loading">加载中...</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3>Token 消耗排行</h3>
+                <a href="#tokens" class="card-link">查看详情 →</a>
+              </div>
+              <div class="card-body">
+                <div id="tokens-preview" class="tokens-list">
+                  <div class="loading">加载中...</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3>最近报告</h3>
+                <a href="#reports" class="card-link">查看全部 →</a>
+              </div>
+              <div class="card-body">
+                <div id="reports-preview" class="reports-list">
+                  <div class="loading">加载中...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="page-console" class="page chat-page active">
+          <div class="page-header">
+            <div>
+              <h2>Agent</h2>
+              <p class="page-desc">与 AI 对话沟通需求，确认后点击「执行任务」按钮运行</p>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <select id="model-selector" onchange="onModelChange()" style="padding:6px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:12px;background:white;min-width:120px;" title="选择执行任务的模型">
+                <option value="">正在加载模型...</option>
+              </select>
+              <button class="btn" style="padding:6px 10px;font-size:12px;" onclick="switchPage('agents')" title="去模型管理页启用/禁用模型">⚙️ 管理模型</button>
+              <div class="mode-toggle" style="display:flex;gap:4px;background:#f3f4f6;border-radius:8px;padding:3px;">
+                <button class="mode-pill mode-pill-active" data-mode="privacy" onclick="selectMode('privacy')" title="本地拆分→云端碎片处理→本地质检→契约合并">🔒 隐私</button>
+                <button class="mode-pill" data-mode="quality" onclick="selectMode('quality')" title="云端拆分→云端处理→云端质检→AI合并">✨ 高质量</button>
+                <button class="mode-pill" data-mode="efficiency" onclick="selectMode('efficiency')" title="云端拆分→广播并行→本地质检→AI合并">⚡ 效率</button>
+              </div>
+              <button class="btn" style="padding:6px 10px;font-size:12px;" onclick="recommendMode()" title="根据任务自动推荐模式">💡</button>
+              <span id="mode-recommend" style="font-size:11px;color:#6b7280;"></span>
+            </div>
+          </div>
+
+          <!-- 上面：大输出区 -->
+          <div class="card chat-output-card">
+            <div class="card-header">
+              <h3>📤 Agent 输出</h3>
+              <div style="display:flex;gap:6px;align-items:center;">
+                <span id="console-status" class="status-badge status-idle">空闲</span>
+                <button class="btn btn-icon" onclick="copyOutput()" title="复制输出">📋</button>
+                <button class="btn btn-icon" onclick="downloadOutput()" title="下载输出">📥</button>
+                <button class="btn btn-icon" onclick="clearOutput()" title="清空输出">🧹</button>
+              </div>
+            </div>
+            <!-- 上下文用量指示器 -->
+            <div class="context-usage">
+              <div class="context-usage-track">
+                <div id="context-usage-bar" class="context-usage-bar" style="width:0%"></div>
+              </div>
+              <span id="context-usage-text" class="context-usage-text"></span>
+            </div>
+            <div class="card-body chat-output-body" id="console-output-scroll">
+              <div id="console-output" class="chat-output">
+                <div class="chat-empty">
+                  <div class="chat-empty-icon">🤖</div>
+                  <div class="chat-empty-title">Agent 待命</div>
+                  <div class="chat-empty-desc">在下方输入框描述任务，回车或点击「发送」按钮提交<br>支持拖入文件 / 粘贴文件 / 点击 ＋ 上传参考</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 下面：紧凑输入栏 -->
+          <div class="card chat-input-card">
+            <div class="chat-input-row">
+              <!-- ＋ 上传按钮 -->
+              <button class="chat-add-btn" id="chat-add-btn" title="上传参考文件（也可直接拖入或粘贴到输入框）">＋</button>
+              <input type="file" id="task-file-input" multiple style="display:none;" onchange="onFileSelected(event)">
+
+              <!-- 模板折叠 -->
+              <button class="chat-tpl-btn" id="chat-tpl-btn" title="快捷模板">⚡</button>
+              <div id="chat-tpl-popover" class="chat-tpl-popover" style="display:none;"></div>
+
+              <!-- 输入框 + 附件预览 -->
+              <div class="chat-input-wrap" id="chat-input-wrap">
+                <div id="upload-list" class="chat-attachments" style="display:none;"></div>
+                <textarea id="console-task" rows="1" placeholder="描述任务，Enter 发送 · Shift+Enter 换行 · 拖入/粘贴文件自动上传"
+                  style="width:100%;min-height:44px;max-height:200px;padding:10px 12px;border:none;background:transparent;font-size:14px;resize:none;font-family:inherit;line-height:1.5;outline:none;"></textarea>
+              </div>
+
+              <!-- 提交 -->
+              <button class="chat-send-btn" id="chat-send-btn" onclick="smartSend()" title="发送（Enter）">🚀 发送</button>
+              <button class="chat-exec-btn" id="chat-exec-btn" onclick="executeTaskWithFiles()" title="强制编程模式（Ctrl+Enter）">⚡</button>
+            </div>
+            <div class="chat-input-foot">
+              <span class="chat-hint" id="task-char-count">0 字</span>
+              <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+                <label class="chat-chip"><input type="checkbox" id="const-c" value="C语言"> C</label>
+                <label class="chat-chip"><input type="checkbox" id="const-python" value="Python"> Python</label>
+                <label class="chat-chip"><input type="checkbox" id="const-console" value="控制台" checked> 控制台</label>
+                <label class="chat-chip"><input type="checkbox" id="const-web" value="Web"> Web</label>
+              </div>
+              <button class="btn btn-ghost" style="font-size:11px;padding:3px 8px;" onclick="saveTaskToWorkspace()" title="把当前任务描述保存到工作目录 tasks/">💾 存为任务</button>
+            </div>
+            
+            <!-- 场景预设按钮 -->
+            <div class="scenario-presets" id="console-scenarios" style="margin-top:10px;padding-top:10px;border-top:1px solid #e5e7eb;display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:center;">
+              <span style="font-size:11px;color:#9ca3af;margin-right:4px;">场景:</span>
+              <button class="btn-scenario" data-scenario="sweep" style="font-size:12px;padding:4px 12px;border-radius:12px;border:1px solid #d1d5db;background:#f9fafb;cursor:pointer;">🧹 扫尾(单工具)</button>
+              <button class="btn-scenario" data-scenario="chore" style="font-size:12px;padding:4px 12px;border-radius:12px;border:1px solid #d1d5db;background:#f9fafb;cursor:pointer;">📦 杂活(单工具)</button>
+              <button class="btn-scenario" data-scenario="tough" style="font-size:12px;padding:4px 12px;border-radius:12px;border:1px solid #d1d5db;background:#f9fafb;cursor:pointer;">🧠 攻坚(双工具并行)</button>
+              <span style="flex:1;"></span>
+              <!-- 自适应编排模式切换 -->
+              <span style="font-size:11px;color:#9ca3af;margin-left:8px;">编排:</span>
+              <div class="adaptive-mode-switch" style="display:inline-flex;border:1px solid #d1d5db;border-radius:12px;overflow:hidden;">
+                <button class="btn-adaptive-mode active" data-mode="hybrid" title="系统推荐+用户确认" style="font-size:11px;padding:3px 10px;border:none;background:#3b82f6;color:#fff;cursor:pointer;">🤝 混合</button>
+                <button class="btn-adaptive-mode" data-mode="auto" title="系统全自动决策" style="font-size:11px;padding:3px 10px;border:none;background:#f9fafb;color:#374151;cursor:pointer;border-left:1px solid #d1d5db;">🤖 自适应</button>
+                <button class="btn-adaptive-mode" data-mode="manual" title="完全手动搭配" style="font-size:11px;padding:3px 10px;border:none;background:#f9fafb;color:#374151;cursor:pointer;border-left:1px solid #d1d5db;">✋ 手动</button>
+              </div>
+              <button id="adaptive-prefs-btn" onclick="toggleAdaptivePrefs()" title="自适应偏好设置" style="font-size:11px;padding:3px 8px;border:1px solid #d1d5db;background:#f9fafb;border-radius:12px;cursor:pointer;">⚙️</button>
+            </div>
+
+            <!-- 自适应偏好面板（默认隐藏） -->
+            <div id="adaptive-prefs-panel" style="display:none;margin-top:8px;padding:10px;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb;font-size:12px;">
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;">
+                <div>
+                  <label style="display:block;margin-bottom:4px;color:#6b7280;">隐私敏感度</label>
+                  <select id="pref-privacy" style="width:100%;padding:4px 6px;border:1px solid #d1d5db;border-radius:4px;">
+                    <option value="low">低（公开项目）</option>
+                    <option value="medium" selected>中（默认）</option>
+                    <option value="high">高（机密项目）</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="display:block;margin-bottom:4px;color:#6b7280;">质量优先级</label>
+                  <select id="pref-quality" style="width:100%;padding:4px 6px;border:1px solid #d1d5db;border-radius:4px;">
+                    <option value="low">低（速度优先）</option>
+                    <option value="medium">中</option>
+                    <option value="high" selected>高（默认）</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="display:block;margin-bottom:4px;color:#6b7280;">效率优先级</label>
+                  <select id="pref-efficiency" style="width:100%;padding:4px 6px;border:1px solid #d1d5db;border-radius:4px;">
+                    <option value="low">低</option>
+                    <option value="medium" selected>中（默认）</option>
+                    <option value="high">高（最快）</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="display:block;margin-bottom:4px;color:#6b7280;">最大并行工具数</label>
+                  <input type="number" id="pref-maxtools" min="1" max="6" value="3" style="width:100%;padding:4px 6px;border:1px solid #d1d5db;border-radius:4px;">
+                </div>
+              </div>
+              <button class="btn btn-primary" style="margin-top:8px;font-size:11px;padding:3px 10px;" onclick="saveAdaptivePrefs()">💾 保存偏好</button>
+            </div>
+
+            <!-- 自适应推荐结果展示（任务输入时显示） -->
+            <div id="adaptive-recommendation" style="display:none;margin-top:8px;padding:10px;border:1px solid #3b82f6;border-radius:8px;background:#eff6ff;font-size:12px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <strong style="color:#1e40af;">🎯 系统推荐方案</strong>
+                <span id="adaptive-confidence" style="background:#3b82f6;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px;">置信度 0%</span>
+              </div>
+              <div id="adaptive-reasoning" style="color:#374151;white-space:pre-wrap;margin-bottom:6px;font-size:11px;"></div>
+              <div style="display:flex;gap:6px;">
+                <button class="btn btn-primary" style="font-size:11px;padding:3px 10px;" onclick="applyAdaptiveRecommendation()">✅ 接受推荐</button>
+                <button class="btn" style="font-size:11px;padding:3px 10px;" onclick="dismissAdaptiveRecommendation()">✋ 自己选</button>
+              </div>
+            </div>
+            
+            <!-- 工具选择区域 -->
+            <div class="tool-selection-area" id="console-tool-selection" style="padding-top:10px;border-top:1px solid #e5e7eb;">
+              <label class="tool-section-label" style="font-size:12px;font-weight:500;color:#6b7280;margin-right:8px;">🔧 调用工具(可选,不选则只用模型生成)</label>
+              <div class="tool-checkbox-group" id="console-tool-checkboxes" style="display:inline-flex;gap:8px;flex-wrap:wrap;">
+              </div>
+            </div>
+          </div>
+
+          <!-- 产出文件（折叠） -->
+          <div class="card" style="margin-top:12px;">
+            <div class="card-header" onclick="toggleOutputFiles()" style="cursor:pointer;user-select:none;">
+              <h3>📁 生成的文件 <span id="file-count" style="font-size:12px;color:#6b7280;font-weight:400;">0 个</span></h3>
+              <span id="output-files-toggle" style="font-size:12px;color:#6b7280;">展开 ▾</span>
+            </div>
+            <div class="card-body" id="output-files-body" style="display:none;">
+              <div style="display:flex;gap:8px;margin-bottom:10px;">
+                <button class="btn" style="font-size:11px;padding:3px 8px;" onclick="downloadAllOutputFiles()">📦 全部下载</button>
+                <button class="btn" style="font-size:11px;padding:3px 8px;" onclick="switchPage('files')">在文件管理中查看 →</button>
+              </div>
+              <div id="output-files" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;">
+                <div class="empty-state" style="grid-column:1/-1;padding:16px;"><div class="empty-text" style="font-size:12px;">暂无生成文件</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="page-tools" class="page">
+          <div class="page-header">
+            <div>
+              <h2>工具管理</h2>
+              <p class="page-desc">管理和配置本机 AI 编程工具（以后接入的软件会越来越多）</p>
+            </div>
+            <button class="btn btn-primary" onclick="scanTools()">
+              <span>🔍</span> 扫描工具
+            </button>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div id="tools-full" class="tools-grid">
+                <div class="loading">点击上方"扫描工具"检测已安装的 AI 编程软件</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="page-agents" class="page">
+          <div class="page-header">
+            <div>
+              <h2>模型管理</h2>
+              <p class="page-desc">管理本地和云端 AI 模型，启用/禁用模型</p>
+            </div>
+            <button class="btn btn-primary" onclick="showAddModelModal()">
+              <span>➕</span> 添加模型
+            </button>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div id="agents-full" class="agents-grid">
+                <div class="loading">加载中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="page-routing" class="page">
+          <div class="page-header">
+            <div>
+              <h2>智能路由</h2>
+              <p class="page-desc">配置任务路由策略，自动选择最合适的模型</p>
+            </div>
+          </div>
+          
+          <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 20px;">
+            <div class="stat-card">
+              <div class="stat-icon">⚡</div>
+              <div class="stat-content">
+                <div class="stat-value" id="routing-fast-count">0</div>
+                <div class="stat-label">快速任务</div>
+              </div>
+              <div class="stat-trend" id="routing-fast-target">-</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">🎯</div>
+              <div class="stat-content">
+                <div class="stat-value" id="routing-normal-count">0</div>
+                <div class="stat-label">常规任务</div>
+              </div>
+              <div class="stat-trend" id="routing-normal-target">-</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">🧠</div>
+              <div class="stat-content">
+                <div class="stat-value" id="routing-complex-count">0</div>
+                <div class="stat-label">复杂任务</div>
+              </div>
+              <div class="stat-trend" id="routing-complex-target">-</div>
+            </div>
+          </div>
+          
+          <div class="dashboard-grid" style="grid-template-columns: 1fr;">
+            <div class="card">
+              <div class="card-header">
+                <h3>路由策略配置</h3>
+              </div>
+              <div class="card-body">
+                <div id="routing-strategy" class="routing-config">
+                  <div class="loading">加载中...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+              <h3>模型优先级</h3>
+              <span style="font-size:12px;color:#6b7280;">优先级高的模型会被优先选择</span>
+            </div>
+            <div class="card-body">
+              <div id="routing-models" class="routing-models">
+                <div class="loading">加载中...</div>
+              </div>
+            </div>
+          </div>
+          
+          <div style="margin-top: 20px; display: flex; gap: 12px;">
+            <button class="btn btn-primary" onclick="saveRoutingConfig()">
+              <span>💾</span> 保存配置
+            </button>
+            <button class="btn" onclick="loadRoutingConfig()">
+              <span>🔄</span> 重置
+            </button>
+          </div>
+        </div>
+
+        <div id="page-tokens" class="page">
+          <div class="page-header">
+            <div>
+              <h2>Token 统计</h2>
+              <p class="page-desc">各智能体和工具的 Token 消耗详情</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div id="tokens-full" class="tokens-table">
+                <div class="loading">加载中...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="page-tasks" class="page">
+          <div class="page-header">
+            <div>
+              <h2>任务管理</h2>
+              <p class="page-desc">查看任务执行状态和进度</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div id="tasks-full" class="tasks-list">
+                <div class="empty-state">
+                  <div class="empty-icon">📋</div>
+                  <div class="empty-text">暂无任务</div>
+                  <div class="empty-desc">任务开始后将在这里显示</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="page-files" class="page">
+          <div class="page-header">
+            <div>
+              <h2>文件与报告</h2>
+              <p class="page-desc">浏览工作目录文件、查看实验报告</p>
+            </div>
+            <!-- Tab 切换：文件 / 报告 -->
+            <div class="tab-switcher" style="display:flex;gap:4px;background:#f3f4f6;border-radius:8px;padding:3px;">
+              <button class="tab-pill tab-pill-active" id="tab-files-btn" onclick="switchFilesTab('files')">📁 文件</button>
+              <button class="tab-pill" id="tab-reports-btn" onclick="switchFilesTab('reports')">📝 报告</button>
+            </div>
+          </div>
+
+          <!-- 文件视图 -->
+          <div id="files-view">
+            <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;">
+              <div style="display:flex;gap:8px;align-items:center;flex:1;min-width:260px;">
+                <input type="text" id="files-path" value="." placeholder="相对路径，例如 . 或 task_xxx"
+                  style="flex:1;padding:8px 12px;border:1px solid #d1d5db;border-radius:8px;font-family:'Consolas',monospace;font-size:13px;"
+                  onkeydown="if(event.key==='Enter') filesRefresh()">
+                <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6b7280;">
+                  <input type="checkbox" id="files-recursive"> 递归
+                </label>
+                <span id="files-count" style="font-size:12px;color:#6b7280;">0 项</span>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn" onclick="filesRefresh()"><span>🔄</span> 刷新</button>
+                <button class="btn" onclick="filesNewFile()"><span>📄</span> 新建文件</button>
+                <button class="btn" onclick="filesNewDir()"><span>📁</span> 新建目录</button>
+                <button class="btn" onclick="filesUploadClick()"><span>📤</span> 上传</button>
+                <input type="file" id="files-upload-input" multiple style="display:none;" onchange="filesOnUpload(event)">
+                <div id="files-upload-status" style="display:none;margin-top:8px;"></div>
+              </div>
+            </div>
+
+            <div class="dashboard-grid" style="grid-template-columns: 320px 1fr; gap: 16px;">
+              <div class="card">
+                <div class="card-header">
+                  <h3>📂 文件列表</h3>
+                </div>
+                <div class="card-body" style="max-height: 600px; overflow-y: auto; padding: 8px;">
+                  <div id="files-list" class="files-list">
+                    <div class="empty-state" style="padding: 30px;">
+                      <div class="empty-icon">📁</div>
+                      <div class="empty-text">暂无文件</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h3 id="files-editor-title">📄 文件查看器</h3>
+                  <div id="files-editor-actions" style="display:flex;gap:6px;align-items:center;">
+                    <span id="files-editor-meta" style="font-size:11px;color:#9ca3af;">未打开文件</span>
+                    <button class="btn" style="padding:3px 8px;font-size:11px;" onclick="filesEditorSave()" disabled id="files-save-btn">💾 保存</button>
+                    <button class="btn" style="padding:3px 8px;font-size:11px;" onclick="filesEditorDownload()" disabled id="files-download-btn">📥 下载</button>
+                    <button class="btn" style="padding:3px 8px;font-size:11px;color:#dc2626;" onclick="filesEditorDelete()" disabled id="files-delete-btn">🗑️ 删除</button>
+                  </div>
+                </div>
+                <div class="card-body" style="padding:0;">
+                  <div id="files-editor-empty" class="empty-state" style="padding:60px;">
+                    <div class="empty-icon">📄</div>
+                    <div class="empty-text">点击左侧文件以查看/编辑</div>
+                    <div class="empty-desc">文本文件可直接在线编辑保存，二进制文件只读</div>
+                  </div>
+                  <div id="files-editor-wrap" style="display:none;">
+                    <div id="files-editor-gutter" class="code-editor-gutter" style="height: 600px;"></div>
+                    <textarea id="files-editor" rows="24" spellcheck="false"
+                      style="width:100%;height:600px;padding:12px 12px 12px 48px;border:none;border-top:1px solid #e5e7eb;border-radius:0 0 12px 12px;font-family:'Consolas','Courier New',monospace;font-size:13px;line-height:1.5;resize:vertical;tab-size:2;"></textarea>
+                    <div id="files-editor-status" style="padding:8px 12px;font-size:12px;color:#7f8c8d;border-top:1px solid #e5e7eb;">未打开文件</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 报告视图（默认隐藏） -->
+          <div id="reports-view" style="display:none;">
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+              <input type="text" id="report-search" placeholder="搜索报告..." onkeyup="searchReports()"
+                style="flex:1;min-width:240px;padding:8px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:13px;">
+              <span id="reports-count" style="font-size:12px;color:#6b7280;">0 份</span>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <div id="reports-full" class="reports-table">
+                  <div class="loading">加载中...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="model-modal" class="modal" style="display:none;">
+    <div class="modal-overlay" onclick="closeModelModal()"></div>
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h3 id="model-modal-title">添加模型</h3>
+        <button class="btn-close" onclick="closeModelModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="model-form" onsubmit="saveModel(event)">
+          <input type="hidden" id="model-name-original" value="">
+          
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">模型名称 *</label>
+            <input type="text" id="model-name" required placeholder="例如: 我的 GPT-4"
+              style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+          
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">模型类型 *</label>
+            <select id="model-type" required onchange="updateModelDefaults()"
+              style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+              <option value="">请选择模型类型</option>
+              <option value="openai">OpenAI 兼容 API (GPT, DeepSeek, 通义等)</option>
+              <option value="anthropic">Anthropic Claude</option>
+              <option value="ollama">Ollama 本地模型</option>
+              <option value="custom">自定义 API</option>
+            </select>
+          </div>
+          
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">API 地址 *</label>
+            <input type="text" id="model-baseurl" required placeholder="https://api.openai.com/v1"
+              style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+            <div style="font-size: 11px; color: #6b7280; margin-top: 4px;">
+              OpenAI 兼容: https://api.openai.com/v1 | DeepSeek: https://api.deepseek.com/v1 | 通义: https://dashscope.aliyuncs.com/api/v1
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">模型名称 *</label>
+            <input type="text" id="model-model" required placeholder="gpt-4, deepseek-coder, qwen2.5:7b"
+              style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+            <div style="font-size: 11px; color: #6b7280; margin-top: 4px;">
+              常用模型: gpt-4, gpt-3.5-turbo, claude-3-sonnet, deepseek-coder, qwen2.5:7b
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">API Key *</label>
+            <input type="password" id="model-apikey" placeholder="sk-xxxx 或环境变量格式 ${API_KEY}"
+              style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+            <div style="font-size: 11px; color: #6b7280; margin-top: 4px;">
+              支持直接输入 API Key 或使用环境变量格式: ${OPENAI_API_KEY}
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">描述</label>
+            <input type="text" id="model-description" placeholder="模型的简短描述"
+              style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+          
+          <div style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 500; margin-bottom: 6px;">超时时间 (毫秒)</label>
+            <input type="number" id="model-timeout" value="60000" placeholder="60000"
+              style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+          </div>
+          
+          <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px;">
+            <button type="button" class="btn" onclick="closeModelModal()">取消</button>
+            <button type="submit" class="btn btn-primary">保存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="report-modal" class="modal" style="display:none;">
+    <div class="modal-overlay" onclick="closeReportModal()"></div>
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h3 id="modal-title">报告详情</h3>
+        <button class="btn-close" onclick="closeReportModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <pre id="modal-content" class="report-content"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/app.js?v=202606282149"></script>
+</body>
+</html>

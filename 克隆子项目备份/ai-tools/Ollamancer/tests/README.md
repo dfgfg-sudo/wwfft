@@ -1,0 +1,130 @@
+# Tests
+
+Deterministic tests for the agent, one file per feature/fix. They import from the
+`agentic/` package; anything that is monkeypatched must be patched on the module that *owns*
+it, since a name imported elsewhere is a separate binding.
+ They use only monkeypatched
+`ollama.chat` (or direct function calls) plus `tempfile` working dirs, so they run offline with
+**no Ollama, no network, and no writes to your real config**.
+
+> That last claim is now enforced, not just asserted. `run_all.sh` checksums every
+> `~/.agentic_1a_*` file before and after the run and fails if any changed. This was added
+> after `test_structure`'s `/parameters` round-trip silently rewrote the live
+> `~/.agentic_1a_params.json`, bumping all 30 settings one step, including
+> `GEN_NUM_PREDICT` from `-1` (unlimited) to `127`, which truncates every model answer. The
+> suite stayed green the whole time.
+
+## How to run
+
+Either runner works, and both run each test in its **own process**.
+
+```bash
+pytest                         # 42 scripts plus a collection guard
+pytest -k skills               # one script
+pytest -x                      # stop at the first failure
+bash tests/run_all.sh          # no pytest needed
+```
+
+`pytest` gives you the failing script's stdout, stderr and traceback instead of a bare
+exit code. `run_all.sh` needs nothing but bash and works when pytest is not installed.
+Neither wraps the other.
+
+Each test must run in its **own process**. They are currently standalone scripts (module-level
+assertions ending in `... ALL PASS`), and several deliberately mutate module globals
+(`agent.STREAM_FINAL`, `agent.ollama.chat`, `agent.PROJECT_ROOT`, …), so running them all in a
+single interpreter would cross-contaminate. Use the runner, which isolates each in a subprocess:
+
+```bash
+bash tests/run_all.sh          # from the project root, "tests: 42 passed, 0 failed"
+```
+
+Or a single test:
+
+```bash
+PYTHONPATH="$PWD" .venv/bin/python tests/test_skills.py
+```
+
+## Coverage (42 files)
+
+| File | Feature under test |
+|---|---|
+| `test_a1` | `append_file` + chunked-write note |
+| `test_a2` | SearXNG → DuckDuckGo-MCP failover |
+| `test_a3` | bytes→trafilatura encoding fix (mojibake) |
+| `test_a4` | closest-path hint on file-not-found |
+| `test_a56` | `_grounding_check` + claim-vs-action nudge |
+| `test_a7` | model failover on plumbing-bug exhaustion |
+| `test_b1` | git checkpoints / `/undo` |
+| `test_b2` | streaming reconstruction + toggle |
+| `test_b3` | session persistence / `/resume` |
+| `test_b4` | architect read-only gate + sequential load |
+| `test_b4b` | architect read-only "write the plan" nudge |
+| `test_b5` | `search_semantic` (fake embedder) |
+| `test_b6` | `analyze_image` detection + sequential load |
+| `test_b7` | persistent `python_repl` |
+| `test_b8` | cross-model `/review-by` |
+| `test_b9` | headless `--run` / `--recipe` |
+| `test_compact` | context compaction |
+| `test_completer` | slash-command autocomplete |
+| `test_escape` | Esc-to-stop plumbing |
+| `test_ctrlc` | Ctrl+C at prompt cancels (doesn't quit) |
+| `test_private` | `--private` writes nothing to disk |
+| `test_skills` | skills discovery / `load_skill` |
+| `test_structure` | golden master: tool registry, slash commands, EN/FR parity, params schema, **and every count the docs advertise about the repo's own shape** — tools, live settings, skills, tests, modules, lines, plus that the coverage table below lists every test file. Added after an audit found four had drifted at once (test count 36 vs 40, coverage header 24 vs 41, ~6,700 lines vs 7,727, "fourteen" modules vs 21). All seven assertions were mutation-tested: each fails with the actual figure when its doc is edited |
+| `test_import_rules` | live-module import rules, no globals() across modules, no shadowing, no undefined names |
+| `test_ram_readout` | the live RAM figure comes from `ollama.ps()`, not process RSS, which undercounts the MLX engine |
+| `test_packaging` | the 14 bundled skills are findable in a checkout and shipped by the wheel; requirements.txt and pyproject stay in step |
+| `test_repomap` | PageRank, the distinctiveness filter, Python extraction, ranking order, `focus=`, the character budget, and both language paths |
+| `test_tool_display` | the compact one-line tool display, and that `/details` keeps the full untruncated result the line omitted |
+| `test_banner` | the startup wordmark keeps its shape, and the width guard hides it on a terminal too narrow to hold it |
+| `test_architect_guards` | architect phase stays read-only; no unsatisfiable claim-vs-action nudge |
+| `test_nudge_marking` | automatic nudges are labelled as checks, in EN and FR, so they read as corrections rather than new user requests |
+| `test_repetition_breaker` | stop nudging once an answer has collapsed into repeating itself |
+| `test_source_diversity` | one page per outlet in search results, rather than several from the same domain |
+| `test_duplicate_items` | flag the same event reported twice in one answer, without firing on a shared live-blog URL |
+| `test_grounding_recheck` | the answer a grounding nudge produces is itself checked once, and **warned** about rather than nudged again. The nudge is capped at 1, so a fabrication introduced *by* the correction used to ship unexamined — observed live, a model replaced one invented repo owner with another and declared it verified. Also pins the known blind spot: a bare `owner/repo` slug in prose is not a token class and is not detectable, deliberately, since `agentic/loop.py` has the same shape |
+| `test_deadline_salvage` | running out of budget must produce an answer, not a status line. Both exhaustion paths — the round limit and a wall-clock budget — used to discard everything gathered; in the ranking campaign that hit 50 of 135 runs, one after 35 successful tool calls. Pins that the salvage call passes an **empty** tool list (`None` means *all* tools in `_stream_or_buffer_chat`, and the first version passed None, handing the model the full toolset with no budget left — it failed silently because the model just called another tool), that the salvaged text is what the caller receives, that a failed salvage still reports honestly, and that the time budget ships off by default |
+| `test_grounding_sensitivity` | **`_grounding_check` never fired in 264 benchmark runs — this measures whether it *would* have.** Silence is the same observation for a check that is perfectly calibrated and one that is dead, and only the second is alarming. Pins that an invented URL and figure are caught inside a haystack matched to the real corpus on *both* size and digit density (an early fixture was 17.8% four-digit-collision against the corpus's 2.8% and would have "proved" the matcher vacuous), that a grounded answer stays silent, and that a one-digit change to a cited figure does not pass. Sweeps the banked runs when present — 91/91 injected fabrications caught — and skips cleanly in CI, where `results/` is gitignored |
+| `test_claim_action_research` | the "you claim to have verified" nudge must not fire on a research turn. `had_verification` is set only by `lint_file`/`run_tests`/`run_command`, so on a search-and-read turn it is structurally False and every answer saying "verified" was accused of claiming a test it never ran — reported on a `gemma-4-26b-heretic` search turn, where the model complied and replaced a sound answer with a paragraph about not having run `run_tests`. Pins the three shapes whose premise still holds (edited-but-unverified, no-tools-at-all, and the fix half), and that the flag can only ever *silence* a nudge, never raise one |
+| `test_failover_unload` | a plumbing failover unloads the model it fails away from. Two resident models do not fit in 24 GB — the architect path enforces that at four call sites, the three failover branches did not, and the omission survived because the same three lines were written three times. Pins the unload, the audit record, and that no branch switches models inline |
+| `test_context_overflow` | the fifth plumbing signature. A prompt over `num_ctx` makes Ollama drop the *oldest* messages, which deletes the user's own instruction; two models refuse outright and the rest answer from a conversation missing the request. Pins that the pre-send guard fires above the 85% ceiling, that it runs even with `AUTO_COMPACT` off (it is a correctness guard, not the convenience path), and that the handler's match string still appears in the real Ollama error |
+| `test_ram_units` | the `/model` header shows memory in binary GiB (a "24 GB" Mac reports 25.77 decimal GB and used to print **26**), while `usage_tier` keeps the decimal value so it still matches the model sizes Ollama reports. Pins both halves, and the 16.3 GB boundary model that the two divisors disagree about |
+| `test_score_rollup` | the benchmark scorer's `pass^k` roll-up: the headline is the **minimum** across reps and never the mean, a differing rep count is visibly marked in the table, per-rep hand judgements win over the legacy model-level key, and an unjudged item is reported `judged_pending` rather than silently scored 0. Also that a half-written run directory is skipped rather than crashing or scoring 0, since `results/` is written concurrently by a running campaign |
+
+## Structural guardrails
+
+Two of the tests are not behavioural. They exist to make the ongoing modularization safe:
+
+| File | Enforces |
+|---|---|
+| `test_structure.py` | Golden master over the agent's *shape*: the 35-tool registry, the slash-command set, EN/FR parity across `STR`/`SYSTEM_PROMPT`/`HELP_TEXT`, and the 31-entry `/parameters` schema, including a live write/read round-trip proving the menu is still wired to the variables the agent reads. |
+| `test_import_rules.py` | `config` and `state` must always be reached through the module object (`config.X`), never `from config import X`, which copies a value that never sees a later rebinding. Also bans `globals()[...]` across module boundaries and any local shadowing those module names. |
+
+Both were verified *negatively*, each fails on the bug it exists to catch.
+
+## How the pytest layer works
+
+The scripts are **not** collected by pytest directly. They assert at import time and most
+mutate module globals, so importing them into one interpreter would let them corrupt each
+other, with whichever ran last deciding the result. Instead:
+
+- `conftest.py` excludes every `test_*.py` from collection except the runner, and adds a
+  session fixture that checksums `~/.agentic_1a_*` before and after the run.
+- `test_scripts.py` parametrises over the scripts and runs each one in a subprocess with
+  stdin closed.
+- `test_every_script_is_collected` compares the two lists, so a new script can never end
+  up both ignored by pytest and absent from the runner, silently untested.
+
+An autouse `clean_state` fixture calls `state.reset()` around every test, which restores
+each per-session global and clears the caches without touching `config`. Anything a test
+patches that is not state, `ollama.chat` above all, must still be restored by the test.
+
+CI runs both runners on Ubuntu against Python 3.12 and 3.14, the floor the README claims
+and the current release.
+
+## Still to do
+
+Convert the scripts into real pytest functions with assertions pytest can introspect.
+That is a per-file rewrite, not a mechanical one, because each script would need its
+global mutations replaced by fixtures before it is safe to share an interpreter. The
+subprocess runner above makes it optional rather than urgent.

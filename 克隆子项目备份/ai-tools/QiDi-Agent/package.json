@@ -1,0 +1,61 @@
+{
+  "name": "qidi-agent",
+  "version": "2.0.0",
+  "description": "启迪 Agent - 多 AI 编程工具统一编排与协作平台",
+  "main": "src/cli/index.js",
+  "bin": {
+    "qidi": "src/cli/index.js"
+  },
+  "scripts": {
+    "start": "node src/cli/index.js",
+    "cli": "node src/cli/index.js",
+    "qidi": "node src/cli/index.js",
+    "web": "node src/cli/index.js web",
+    "test": "node test/comprehensive_test.js",
+    "test:e2e": "node test/e2e_real_test.js",
+    "lint": "eslint src/ test/ --ext .js",
+    "lint:fix": "eslint src/ test/ --ext .js --fix",
+    "lint:ci": "eslint src/ test/ --ext .js --max-warnings 90 --ignore-path .eslintignore"
+  },
+  "keywords": [
+    "ai-coding",
+    "agent",
+    "orchestrator",
+    "llm",
+    "code-generation",
+    "ollama",
+    "multi-agent",
+    "free-ai",
+    "code-orchestration",
+    "claude-code",
+    "deepseek",
+    "copilot-alternative"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "dotenv": "^16.3.1",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
+    "fuzzysort": "^2.0.4",
+    "highlight.js": "^11.9.0",
+    "ink": "^3.2.0",
+    "inquirer": "^8.2.6",
+    "multer": "^2.2.0",
+    "ora": "^5.4.1",
+    "react": "^18.2.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1"
+  }
+}

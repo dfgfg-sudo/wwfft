@@ -1,0 +1,274 @@
+package handler
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+	"strings"
+	"time"
+
+	"github.com/gin-gonic/gin"
+)
+
+// ========== Aether 视觉预处理：谷歌 Interactions REST 接口（2026-06 GA） ==========
+//
+// 官方 Go SDK（google.golang.org/genai）目前还没有 Interactions API 的绑定，
+// 只有 Models/Chats/Files 等旧接口，所以这里不依赖任何第三方 SDK，直接手写
+// net/http 调 REST 端点——跟 chat_engines_ds.go / chat_engines_cloud.go /
+// chat_engines_local.go 这几个引擎的实现方式完全一致。
+
+const (
+	geminiInteractionsEndpoint = "https://generativelanguage.googleapis.com/v1beta/interactions"
+	geminiVisionModel          = "gemini-2.5-flash"
+	geminiDefaultInstruction   = "请分析这张图片，给出简洁的中文结构化描述（画面内容、关键 UI 元素、可见文字），供后续 Agent 流水线使用。"
+)
+
+// geminiInteractionRequest 对应 REST 请求体
+type geminiInteractionRequest struct {
+	Model                 string                   `json:"model"`
+	Input                 []geminiInteractionInput `json:"input"`
+	PreviousInteractionID string                   `json:"previous_interaction_id,omitempty"`
+	Store                 bool                     `json:"store"`
+}
+
+// geminiInteractionInput 是 input 数组里的一项：文本或图片
+type geminiInteractionInput struct {
+	Type     string `json:"type"` // "text" | "image"
+	Text     string `json:"text,omitempty"`
+	Data     string `json:"data,omitempty"` // 图片的 base64（不带 data:xxx;base64, 前缀）
+	MimeType string `json:"mime_type,omitempty"`
+}
+
+// geminiInteractionResponse 对应 REST 原始响应体
+// 注意：官方 SDK 里的 output_text 是 SDK 自己拼出来的便利属性，
+// 原始 REST JSON 里没有这个字段，真正的文本在 steps[].content[].text 里，
+// 需要自己遍历提取。
+type geminiInteractionResponse struct {
+	ID     string                  `json:"id"`
+	Status string                  `json:"status"`
+	Steps  []geminiInteractionStep `json:"steps"`
+	Error  *geminiInteractionError `json:"error,omitempty"`
+}
+
+type geminiInteractionStep struct {
+	Type    string                     `json:"type"` // "model_output" | "function_call" | "user_input" | ...
+	Content []geminiInteractionContent `json:"content,omitempty"`
+}
+
+type geminiInteractionContent struct {
+	Type string `json:"type"` // "text" | ...
+	Text string `json:"text,omitempty"`
+}
+
+type geminiInteractionError struct {
+	Message string `json:"message"`
+}
+
+// analyzeImageWithGemini 调用 Gemini Interactions REST 接口分析一张图片。
+//
+// imageBase64: 图片的 base64 编码（纯数据部分，不带 data URI 前缀）
+// mimeType:    图片的 MIME 类型，如 "image/png"、"image/jpeg"
+// instruction: 给模型的具体指令；传空字符串则用默认的通用视觉预处理指令
+// previousInteractionID: 上一次调用返回的 interaction id；传入即可让服务端
+//
+//	沿用之前的会话状态，命中隐式缓存，降低后续 token 消耗；
+//	传空字符串代表开启一条全新的会话链
+//
+// 返回：模型输出的中文分析文本、这次调用的 interaction id、错误
+func analyzeImageWithGemini(
+	ctx context.Context,
+	imageBase64 string,
+	mimeType string,
+	instruction string,
+	previousInteractionID string,
+) (string, string, error) {
+	apiKey := os.Getenv("GEMINI_API_KEY")
+	if apiKey == "" {
+		return "", "", fmt.Errorf("缺少 GEMINI_API_KEY，请检查 main-backend/.env 是否已正确加载")
+	}
+	if imageBase64 == "" {
+		return "", "", fmt.Errorf("图片 base64 数据为空")
+	}
+	if mimeType == "" {
+		mimeType = "image/jpeg"
+	}
+	if instruction == "" {
+		instruction = geminiDefaultInstruction
+	}
+
+	reqPayload := geminiInteractionRequest{
+		Model: geminiVisionModel,
+		Input: []geminiInteractionInput{
+			{Type: "text", Text: instruction},
+			{Type: "image", Data: imageBase64, MimeType: mimeType},
+		},
+		// 默认开启持久化：免费层自动保留 1 天数据，足够日常调试，
+		// 同时也是 previous_interaction_id 能生效的前提
+		Store: true,
+	}
+	if previousInteractionID != "" {
+		reqPayload.PreviousInteractionID = previousInteractionID
+	}
+
+	bodyBytes, err := json.Marshal(reqPayload)
+	if err != nil {
+		return "", "", fmt.Errorf("构造请求体失败: %w", err)
+	}
+
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, geminiInteractionsEndpoint, bytes.NewBuffer(bodyBytes))
+	if err != nil {
+		return "", "", fmt.Errorf("构造 HTTP 请求失败: %w", err)
+	}
+	httpReq.Header.Set("Content-Type", "application/json")
+	httpReq.Header.Set("x-goog-api-key", apiKey) // 官方文档确认：走这个 header，不是 Bearer/query 参数
+
+	client := &http.Client{Timeout: 2 * time.Minute}
+	resp, err := client.Do(httpReq)
+	if err != nil {
+		if ctx.Err() != nil {
+			return "", "", ctx.Err()
+		}
+		return "", "", fmt.Errorf("调用 Gemini Interactions API 失败: %w", err)
+	}
+	defer resp.Body.Close()
+
+	respBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", "", fmt.Errorf("读取响应失败: %w", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return "", "", fmt.Errorf("Gemini Interactions API 返回错误 %d: %s", resp.StatusCode, string(respBytes))
+	}
+
+	var parsed geminiInteractionResponse
+	if err := json.Unmarshal(respBytes, &parsed); err != nil {
+		return "", "", fmt.Errorf("解析响应 JSON 失败: %w", err)
+	}
+	if parsed.Error != nil {
+		return "", "", fmt.Errorf("Gemini 返回错误: %s", parsed.Error.Message)
+	}
+
+	var textBuilder strings.Builder
+	for _, step := range parsed.Steps {
+		if step.Type != "model_output" {
+			continue
+		}
+		for _, item := range step.Content {
+			if item.Type == "text" {
+				textBuilder.WriteString(item.Text)
+			}
+		}
+	}
+	outputText := textBuilder.String()
+	if outputText == "" {
+		return "", parsed.ID, fmt.Errorf("Gemini 未返回任何文本内容（status=%s）", parsed.Status)
+	}
+
+	return outputText, parsed.ID, nil
+}
+
+// aetherVisionRequest 是前端上传图片时的请求体
+type aetherVisionRequest struct {
+	ImageBase64           string `json:"image_base64" binding:"required"`
+	MimeType              string `json:"mime_type"`
+	Instruction           string `json:"instruction"`
+	PreviousInteractionID string `json:"previous_interaction_id"`
+	// Model 是设置面板「模型」页选出的识图模型 ID（免费池/自定义配置均可，
+	// 不强制 Vision 标签——用户自己选的模型，成不成由上游说了算）。
+	// 留空则走默认视觉模型（向后兼容）。
+	Model string `json:"model"`
+}
+
+// analyzeImageWithModelID 走通用 OpenAI 兼容视觉路由（model_router.go 的 resolveExact +
+// openAIChatOnce），让设置面板选中的主模型或独立识图模型承接识图。
+//
+// 不强制 b.Vision 门禁：自定义 OpenAI 兼容提供方的 /models 通常不返回能力元数据，
+// 因而实际支持图片的模型也可能是 Vision=false。这里以用户选择和上游真实响应为准；
+// Vision 只用于 UI 提示，不是调用许可。
+func analyzeImageWithModelID(ctx context.Context, modelID, imageBase64, mimeType, instruction string) (string, error) {
+	b := resolveExact("", modelID)
+	if b == nil {
+		return "", fmt.Errorf("模型 %s 未找到或未配置 Key", modelID)
+	}
+	return analyzeImageWithBackend(ctx, *b, imageBase64, mimeType, instruction)
+}
+
+func analyzeImageWithBackend(ctx context.Context, b RouterBackend, imageBase64, mimeType, instruction string) (string, error) {
+	if instruction == "" {
+		instruction = geminiDefaultInstruction
+	}
+	if mimeType == "" {
+		mimeType = "image/png"
+	}
+	clean := imageBase64
+	if idx := strings.Index(clean, "base64,"); idx != -1 {
+		clean = clean[idx+7:]
+	}
+	if strings.TrimSpace(clean) == "" {
+		return "", fmt.Errorf("图片 base64 数据为空")
+	}
+	msgs := []map[string]any{{
+		"role": "user",
+		"content": []map[string]any{
+			{"type": "text", "text": instruction},
+			{"type": "image_url", "image_url": map[string]any{"url": "data:" + mimeType + ";base64," + clean}},
+		},
+	}}
+	// 识图涉及图片 base64 传输，云端模型也可能偏慢，给足 90s 而不是沿用
+	// openAIChatOnce 默认的 45s catalog 超时；太紧的场景交给调用方自行兜底。
+	ctx, cancel := context.WithTimeout(ctx, 90*time.Second)
+	defer cancel()
+	content, _, err := openAIChatOnce(ctx, b, msgs, nil)
+	if err != nil {
+		return "", err
+	}
+	if strings.TrimSpace(content) == "" {
+		return "", fmt.Errorf("视觉模型返回空内容")
+	}
+	return content, nil
+}
+
+// HandleAetherVisionPreprocess POST /api/aether/vision-preprocess
+// 接收前端上传的图片，优先用请求里指定的 model（设置面板「模型」页选的识图模型）分析；
+// 没指定或该模型调用失败时，回退到默认视觉模型（visionBackends：VISION_MODEL_ID 指定，
+// 否则免费池里第一个 Vision=true 的条目）。
+// 把分析出的中文文本回传给前端；前端后续把这段文本作为上下文塞进 Agent 流水线
+// （/api/workflow/run 的 task 里）即可。
+func HandleAetherVisionPreprocess(c *gin.Context) {
+	var req aetherVisionRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "参数错误: " + err.Error()})
+		return
+	}
+
+	// 1. 显式指定的识图模型（设置面板「模型」页选的）
+	if req.Model != "" {
+		text, err := analyzeImageWithModelID(c.Request.Context(), req.Model, req.ImageBase64, req.MimeType, req.Instruction)
+		if err == nil {
+			c.JSON(http.StatusOK, gin.H{"text": text, "interaction_id": ""})
+			return
+		}
+		fmt.Printf("⚠️ [Aether] 指定视觉模型 %s 失败，回退默认视觉模型: %v\n", req.Model, err)
+	}
+
+	// 2. 默认视觉模型（VISION_MODEL_ID 或免费池首个 Vision=true）。
+	//    不再回退 Gemini——Gemini 已从免费池移除（2026-07-21 实测大陆不可达），
+	//    报「缺少 GEMINI_API_KEY」只会误导用户去配一个早已淘汰的 Key。
+	if backends := visionBackends(); len(backends) > 0 {
+		text, err := analyzeImageWithBackend(c.Request.Context(), backends[0], req.ImageBase64, req.MimeType, req.Instruction)
+		if err == nil {
+			fmt.Printf("👁️ [Aether] 默认视觉模型 %s (%s) 完成识图\n", backends[0].Name, backends[0].Model)
+			c.JSON(http.StatusOK, gin.H{"text": text, "interaction_id": ""})
+			return
+		}
+		fmt.Printf("⚠️ [Aether] 默认视觉模型 %s 失败: %v\n", backends[0].Name, err)
+	}
+
+	// 3. 全部失败：给出可行动的提示，而不是让人去配 GEMINI_API_KEY
+	c.JSON(http.StatusBadGateway, gin.H{"error": "视觉预处理失败: 没有可用的识图模型（请检查 VISION_MODEL_ID，或设置面板「模型」页选择识图模型）"})
+}

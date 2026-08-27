@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LLM Security Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       DISCLAIMER MODAL
+  ═══════════════════════════════════════════ -->
+  <div id="disclaimer-overlay" class="disclaimer-overlay" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title">
+    <div class="disclaimer-card">
+      <h2 id="disclaimer-title">Educational Use - Disclaimer</h2>
+      <p>
+        This tool is part of the <a href="https://mlaquatra.me/teaching/CYB/" target="_blank" rel="noopener">CyberSecurity course</a>
+        at the Master of Computer Engineering, Kore University of Enna. It is intended exclusively for academic and research use.
+      </p>
+      <p>
+        The playground illustrates the behavioural difference between <strong>unaligned base models</strong> (pre-training only)
+        and <strong>aligned instruction-tuned models</strong> (SFT + RLHF). Outputs from base models may be unfiltered.
+        Do not use this tool to generate or distribute harmful content.
+      </p>
+      <button class="btn-primary btn-lg" id="btn-disclaimer-close" onclick="closeDisclaimer()">
+        Understood - Enter Playground
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════ -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="header-text">
+        <h1 class="header-title">LLM Security Playground</h1>
+        <p class="header-subtitle">
+          Base vs. Aligned Models ·
+          <a href="https://mlaquatra.me/teaching/CYB/" target="_blank" rel="noopener">
+            CyberSecurity Course
+          </a>
+          · Master of Computer Engineering, Kore University of Enna
+        </p>
+      </div>
+    </div>
+    <div class="header-right">
+      <a
+        href="https://github.com/MorenoLaQuatra/llm-security-playground"
+        target="_blank"
+        rel="noopener"
+        class="btn-outline btn-sm"
+      >GitHub</a>
+      <a
+        href="https://mlaquatra.me/teaching/CYB/"
+        target="_blank"
+        rel="noopener"
+        class="btn-outline btn-sm"
+      >Course</a>
+      <button class="btn-ghost btn-sm" onclick="openDisclaimer()" title="Open disclaimer">
+        Disclaimer
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       MODEL FAMILY SELECTOR
+  ═══════════════════════════════════════════ -->
+  <div class="family-bar">
+    <span class="family-label">Model family:</span>
+    <div class="family-tabs" role="tablist">
+      {% for fkey, fdata in family_display.items() %}
+      <button
+        class="family-tab {% if loop.first %}active{% endif %}"
+        role="tab"
+        data-family="{{ fkey }}"
+        onclick="setFamily('{{ fkey }}')"
+      >
+        <span class="family-tab-icon">{{ fdata.icon }}</span>
+        {{ fdata.label }}
+      </button>
+      {% endfor %}
+    </div>
+    <div class="thinking-toggle">
+      <label class="toggle-label" title="Enable internal chain-of-thought (IT models only)">
+        <input type="checkbox" id="toggle-thinking" />
+        <span class="toggle-track"></span>
+        <span class="toggle-text">Enable Thinking Mode</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       COMPARISON PANELS
+  ═══════════════════════════════════════════ -->
+  <main class="comparison-main">
+
+    <!-- ── Left: Base model ────────────────────────────────── -->
+    <section class="panel panel-base" id="panel-left" aria-label="Base model panel">
+      <div class="panel-header">
+        <div class="panel-header-top">
+          <span class="model-badge badge-base">⚠ Unaligned Base</span>
+          <div class="model-status" id="status-left">
+            <span class="status-dot dot-idle" id="dot-left"></span>
+            <span class="status-text" id="status-text-left">Not loaded</span>
+          </div>
+        </div>
+        <div class="panel-header-body">
+          <h2 class="model-name" id="model-name-left">-</h2>
+          <p class="model-desc" id="model-desc-left">Select a model family above.</p>
+          <a class="model-hf-link" id="model-hf-left" href="#" target="_blank" rel="noopener" style="display:none">
+            View on Hugging Face ↗
+          </a>
+        </div>
+        <button
+          class="btn-load btn-base"
+          id="btn-load-left"
+          onclick="loadModel('left')"
+          disabled
+        >Load Model</button>
+      </div>
+
+      <!-- Legend for this panel type -->
+      <div class="panel-legend panel-legend-base">
+        <strong>Text completion mode</strong> - The model sees your prompt as raw text and
+        simply continues it. There is no concept of instructions or refusal.
+      </div>
+
+      <!-- Output area -->
+      <div class="panel-output" id="output-left">
+        <div class="output-placeholder" id="placeholder-left">
+          Load the model, then enter a prompt to see unfiltered text continuation.
+        </div>
+      </div>
+
+      <!-- Thinking block (hidden by default) -->
+      <div class="thinking-block" id="thinking-left" style="display:none">
+        <div class="thinking-header">
+          <span>🧠 Thinking process</span>
+          <button class="btn-ghost btn-xs" onclick="toggleThinking('left')">Hide</button>
+        </div>
+        <div class="thinking-content" id="thinking-content-left"></div>
+      </div>
+    </section>
+
+    <!-- ── Divider ────────────────────────────────────────── -->
+    <div class="panel-divider" aria-hidden="true">
+      <div class="divider-label">vs</div>
+    </div>
+
+    <!-- ── Right: Aligned model ──────────────────────────── -->
+    <section class="panel panel-aligned" id="panel-right" aria-label="Aligned model panel">
+      <div class="panel-header">
+        <div class="panel-header-top">
+          <span class="model-badge badge-aligned">✓ Aligned</span>
+          <div class="model-status" id="status-right">
+            <span class="status-dot dot-idle" id="dot-right"></span>
+            <span class="status-text" id="status-text-right">Not loaded</span>
+          </div>
+        </div>
+        <div class="panel-header-body">
+          <h2 class="model-name" id="model-name-right">-</h2>
+          <p class="model-desc" id="model-desc-right">Select a model family above.</p>
+          <a class="model-hf-link" id="model-hf-right" href="#" target="_blank" rel="noopener" style="display:none">
+            View on Hugging Face ↗
+          </a>
+        </div>
+        <button
+          class="btn-load btn-aligned"
+          id="btn-load-right"
+          onclick="loadModel('right')"
+          disabled
+        >Load Model</button>
+      </div>
+
+      <!-- Legend -->
+      <div class="panel-legend panel-legend-aligned">
+        <strong>Chat / instruction mode</strong> - Post-training (SFT + RLHF) gives the model
+        a conversational interface and safety alignment. Conversation history is maintained.
+      </div>
+
+      <!-- Chat messages -->
+      <div class="panel-output chat-output" id="output-right">
+        <div class="output-placeholder" id="placeholder-right">
+          Load the model, then send a message to start the chat.
+        </div>
+      </div>
+
+      <!-- Thinking block -->
+      <div class="thinking-block" id="thinking-right" style="display:none">
+        <div class="thinking-header">
+          <span>🧠 Thinking process</span>
+          <button class="btn-ghost btn-xs" onclick="toggleThinking('right')">Hide</button>
+        </div>
+        <div class="thinking-content" id="thinking-content-right"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       INPUT SECTION
+  ═══════════════════════════════════════════ -->
+  <div class="input-section">
+
+    <!-- Main prompt input row -->
+    <div class="input-row">
+      <div class="input-wrapper">
+        <textarea
+          id="prompt-input"
+          class="prompt-textarea"
+          rows="3"
+          placeholder="Enter prompt text - sent to the base model as a raw continuation prefix, and to the aligned model as a user message …"
+          aria-label="Prompt input"
+        ></textarea>
+        <div class="input-actions-inline">
+          <button class="btn-icon" id="btn-clear-input" onclick="clearInput()" title="Clear input">✕</button>
+        </div>
+      </div>
+      <button class="btn-generate" id="btn-generate" onclick="sendPrompt()">
+        <span id="btn-generate-text">Generate</span>
+        <span id="btn-generate-spinner" class="spinner" style="display:none"></span>
+      </button>
+    </div>
+
+    <!-- Example prompts -->
+    <div class="examples-row">
+      <span class="examples-label">Examples:</span>
+      <div class="examples-chips">
+        {% for ex in example_prompts %}
+        <button
+          class="chip"
+          onclick="setPrompt(this)"
+          data-prompt="{{ ex.prompt | e }}"
+          title="{{ ex.prompt | e }}"
+        >{{ ex.label }}</button>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Generation parameters (collapsible) -->
+    <div class="params-section">
+      <button class="params-toggle" id="params-toggle" onclick="toggleParams()" aria-expanded="false">
+        <span>⚙ Generation parameters</span>
+        <span class="params-arrow" id="params-arrow">›</span>
+      </button>
+      <div class="params-grid" id="params-grid" style="display:none">
+        <div class="param-item">
+          <label class="param-label" for="temperature">
+            Temperature
+            <span class="param-hint">Randomness (0 = greedy, 2 = chaotic)</span>
+          </label>
+          <div class="param-control">
+            <input type="range" id="temperature" min="0" max="2" step="0.05" value="0.8"
+              oninput="document.getElementById('temperature-val').textContent = this.value" />
+            <span class="param-value" id="temperature-val">0.8</span>
+          </div>
+        </div>
+        <div class="param-item">
+          <label class="param-label" for="top-p">
+            Top-p
+            <span class="param-hint">Nucleus sampling probability mass</span>
+          </label>
+          <div class="param-control">
+            <input type="range" id="top-p" min="0.1" max="1.0" step="0.05" value="0.9"
+              oninput="document.getElementById('top-p-val').textContent = this.value" />
+            <span class="param-value" id="top-p-val">0.90</span>
+          </div>
+        </div>
+        <div class="param-item">
+          <label class="param-label" for="max-tokens">
+            Max new tokens
+            <span class="param-hint">Maximum tokens to generate</span>
+          </label>
+          <div class="param-control">
+            <input type="range" id="max-tokens" min="32" max="1024" step="32" value="256"
+              oninput="document.getElementById('max-tokens-val').textContent = this.value" />
+            <span class="param-value" id="max-tokens-val">256</span>
+          </div>
+        </div>
+        <div class="param-item param-item-actions">
+          <button class="btn-outline btn-sm" onclick="resetParams()">Reset defaults</button>
+          <button class="btn-outline btn-sm" onclick="clearConversations()">Clear conversations</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="app-footer">
+    &copy; <a href="https://mlaquatra.me/" target="_blank" rel="noopener">Moreno La Quatra</a>
+    <span class="footer-sep">|</span>
+    <a href="https://mlaquatra.me/teaching/CYB/" target="_blank" rel="noopener">CyberSecurity Course</a>
+    <span class="footer-sep">|</span>
+    Master of Computer Engineering, Kore University of Enna
+    <span class="footer-sep">|</span>
+    <a href="https://github.com/MorenoLaQuatra/llm-security-playground" target="_blank" rel="noopener">GitHub</a>
+    <span class="footer-sep">|</span>
+    <button class="btn-ghost btn-xs" onclick="openDisclaimer()">Disclaimer</button>
+  </footer>
+
+  <!-- Model config passed to JS -->
+  <script id="models-data" type="application/json">{{ models | tojson }}</script>
+  <script id="families-data" type="application/json">{{ model_families | tojson }}</script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+# Round 2 battery roster.
+#
+# Round 1 survivors, confirmed by the user 2026-08-08. Their t1..t4 rep1 was run at
+# --reps 1, so everything they produced before 2026-08-11 is pass^1; the rep2 backfill
+# is what brings them onto the same footing as the block underneath.
+qwen3.5:4b
+#gamy316/aileen1.0:latest
+#lfm2.5:8b
+#ornith:9b
+hf.co/deepreinforce-ai/Ornith-1.0-9B-GGUF:Q4_K_M
+jikepjikep_16HEX/gemma-4-12b-nightshift-heretic-uncensored-qat-q4:latest
+gemma4:12b-mlx
+gpt-oss:20b
+gemma4:26b-mlx
+Agen/gemma-4-26B-A4B-it-uncensored-heretic:latest
+
+# Added 2026-08-11, gated and run at --reps 2 (complete, 40/40 runs banked).
+qwen3.5:4b-mlx
+qwen-heretic:latest
+qwen3.5:9b-mlx
+hf.co/HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive:IQ2_M
+hf.co/HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive:IQ3_M
+
+# Uninstalled from the machine 2026-08-16 (user removed them), so they cannot be re-run.
+# Commented out rather than deleted: they are part of the banked campaign, and their
+# archived results stand. Re-installing them is what makes them eligible again.

@@ -1,0 +1,14 @@
+# Custom OpenAI Provider Configuration
+provider:
+  name: custom-openai
+  type: openai
+  config:
+    api_key: ${OPEN_AI_KEY}
+    base_url: ${OPEN_AI_SERVER_URL:-https://api.openai.com/v1}
+    model: gpt-4o
+    temperature: 0.3
+    max_tokens: 4096
+    top_p: 0.95
+    frequency_penalty: 0
+    presence_penalty: 0
+    timeout: 60

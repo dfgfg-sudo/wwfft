@@ -1,0 +1,18 @@
+# LLM Security Playground - Python dependencies
+# CyberSecurity Course · Kore University of Enna
+# © Moreno La Quatra - https://mlaquatra.me/
+
+# Web framework
+flask>=3.0.0
+
+# HuggingFace inference stack
+# Install PyTorch separately with the right CUDA/MPS variant:
+#   CUDA 12.x:  pip install torch --index-url https://download.pytorch.org/whl/cu121
+#   CPU-only:   pip install torch --index-url https://download.pytorch.org/whl/cpu
+#   macOS MPS:  pip install torch  (standard PyPI wheel)
+transformers>=4.51.0
+accelerate>=0.34.0
+sentencepiece>=0.2.0
+
+# Optional: faster tokenisers
+tokenizers>=0.21.0

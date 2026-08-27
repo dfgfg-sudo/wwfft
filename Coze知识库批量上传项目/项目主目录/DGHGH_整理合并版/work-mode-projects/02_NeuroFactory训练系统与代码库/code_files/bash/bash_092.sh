@@ -1,0 +1,1 @@
+python d:\sfdhdjdtysjsy\sgdhfjasdkd\full_auto_knowledge_builder.py

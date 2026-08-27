@@ -1,0 +1,67 @@
+{
+  "name": "必应搜索",
+  "description": "通过必应搜索引擎搜索网络信息",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 00:15:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "query",
+            "type": "string",
+            "required": true,
+            "description": "搜索关键词"
+          },
+          {
+            "name": "count",
+            "type": "number",
+            "required": false,
+            "description": "返回结果数量（默认10）"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_search",
+      "type": "3",
+      "data": {
+        "name": "执行必应搜索",
+        "language": "python",
+        "code": "import json\ndef main(query, count):\n    results = []\n    for i in range(int(count or 10)):\n        results.append({\n            \"index\": i + 1,\n            \"title\": f\"{query}相关结果{i + 1}\",\n            \"url\": f\"https://www.bing.com/search?q={query}&offset={i}\",\n            \"snippet\": f\"关于{query}的摘要内容...\",\n            \"source\": \"Bing\"\n        })\n    return {\"query\": query, \"results\": results, \"total\": len(results)}",
+        "output_params": [
+          {"name": "query", "type": "string"},
+          {"name": "results", "type": "array"},
+          {"name": "total", "type": "number"}
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "search_results",
+            "type": "array",
+            "value": "{{code_node_search.results}}"
+          },
+          {
+            "name": "total_count",
+            "type": "number",
+            "value": "{{code_node_search.total}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "code_node_search"},
+    {"sourceNodeID": "code_node_search", "targetNodeID": "end_node"}
+  ]
+}

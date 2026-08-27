@@ -1,0 +1,3 @@
+为什么要转化？因为前端 schema 的 Node 结构体中“针对工作流的编辑态”，后端 schema 的 NodeSchema 结构体是“针对工作流的运行态”。
+
+如何转化？需要实现 NodeAdaptor 接口：

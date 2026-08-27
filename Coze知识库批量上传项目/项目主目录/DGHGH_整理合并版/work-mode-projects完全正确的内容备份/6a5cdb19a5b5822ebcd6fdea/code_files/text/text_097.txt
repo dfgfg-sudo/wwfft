@@ -1,0 +1,15 @@
+AI_Training_Factory_v3_0_Trae-CN/
+├── README_Trae-CN.md                 # Trae-CN专用说明文档
+├── requirements_trae.txt             # Trae-CN环境依赖包
+├── trae_config.json                  # Trae-CN项目配置
+├── ai_training_factory_trae.py       # 主程序文件
+├── project_structure_trae.md         # 项目结构文档
+├── pretrained_model/                 # 预训练模型目录
+├── trained_models/                   # 训练输出目录
+├── data_cache/                       # 数据缓存目录
+├── training_data/                    # 训练数据目录
+├── logs/                             # 日志目录
+└── docs/                             # 文档目录
+    ├── architecture_trae.md          # 架构说明
+    ├── user_guide_trae.md            # 使用指南
+    └── troubleshooting_trae.md       # 故障排除

@@ -1,0 +1,48 @@
+{
+  "name": "知识库批量上传",
+  "description": "批量上传知识库文档",
+  "version": "1.0.0",
+  "create_time": "2026-07-21 22:44:00",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7664976511384125467",
+  "original_name": "knowledge_batch_upload",
+  "type": "plugin",
+  "plugin_type": "云插件",
+  "functions": [
+    {
+      "name": "batch_upload",
+      "description": "批量上传知识库文档",
+      "input_params": [
+        {
+          "name": "documents",
+          "type": "array",
+          "required": true,
+          "description": "文档列表"
+        },
+        {
+          "name": "knowledge_base_id",
+          "type": "string",
+          "required": true,
+          "description": "知识库ID"
+        }
+      ],
+      "output_params": [
+        {
+          "name": "uploaded_count",
+          "type": "number",
+          "description": "上传数量"
+        },
+        {
+          "name": "failed_count",
+          "type": "number",
+          "description": "失败数量"
+        },
+        {
+          "name": "results",
+          "type": "array",
+          "description": "上传结果"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+工作流名称_版本.zip
+├── workflow.json              # 主工作流定义文件
+├── nodes/                    # 节点配置目录
+│   ├── postgres_node_1.json
+│   ├── http_request_node_2.json
+│   └── ...
+├── assets/                   # 资源文件
+│   ├── icons/
+│   ├── images/
+│   └── schemas/
+├── dependencies/             # 依赖配置
+│   └── packages.json
+├── metadata.json             # 元数据
+└── config.yaml               # 全局配置

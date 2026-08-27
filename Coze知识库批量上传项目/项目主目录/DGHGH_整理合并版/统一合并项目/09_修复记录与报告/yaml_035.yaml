@@ -1,0 +1,14 @@
+training:
+  base_model: "microsoft/deberta-v3-base"
+  batch_size: 8
+  epochs: 10
+  learning_rate: 5e-5
+  
+quantization:
+  enabled: true
+  bits: 4
+  
+lora:
+  enabled: true
+  r: 8
+  alpha: 32

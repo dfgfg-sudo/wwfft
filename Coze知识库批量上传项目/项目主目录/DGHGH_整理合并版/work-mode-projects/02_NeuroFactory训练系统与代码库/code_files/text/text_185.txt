@@ -1,0 +1,14 @@
+2. 核心组件
+
+组件 作用 常用工具
+版本控制 代码管理和协作 Git, SVN
+CI服务器 执行自动化任务 Jenkins, GitLab CI, GitHub Actions
+构建工具 编译打包应用 Maven, Gradle, Webpack
+测试框架 自动化测试 JUnit, Selenium, Jest
+容器化 环境一致性 Docker, Podman
+编排工具 部署和管理 Kubernetes, Docker Swarm
+监控告警 系统监控 Prometheus, Grafana
+
+二、CI/CD操作流程详解
+
+1. 代码提交阶段操作

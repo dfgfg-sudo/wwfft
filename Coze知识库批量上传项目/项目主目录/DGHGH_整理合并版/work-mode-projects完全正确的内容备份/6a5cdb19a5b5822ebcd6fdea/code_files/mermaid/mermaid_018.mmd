@@ -1,0 +1,143 @@
+graph TD
+    A[用户界面] --> B[API网关]
+    B --> C[统一配置管理系统]
+    B --> D[工作流执行引擎]
+    
+    C --> E[AI训练配置]
+    C --> F[Coze集成配置]
+    C --> G[OpenAPI配置]
+    C --> H[系统监控配置]
+    
+    D --> I[AI训练工作流]
+    D --> J[数据处理工作流]
+    D --> K[参数修复工作流]
+    D --> L[OpenAPI生成工作流]
+    
+    I --> M[数据验证]
+    I --> N[模型配置]
+    I --> O[训练执行]
+    I --> P[模型评估]
+    I --> Q[模型部署]
+    
+    J --> R[数据摄取]
+    J --> S[质量检查]
+    J --> T[数据清洗]
+    J --> U[特征工程]
+    J --> V[数据集分割]
+    
+    K --> W[参数验证]
+    K --> X[参数修复]
+    K --> Y[结果验证]
+    
+    L --> Z[端点收集]
+    L --> AA[规范生成]
+    L --> AB[规范验证]
+    L --> AC[规范修复]
+    
+    M --> AD[数据源]
+    N --> AE[模型仓库]
+    O --> AF[训练资源]
+    P --> AG[评估指标]
+    Q --> AH[部署平台]
+    
+    AD --> AI[本地文件系统]
+    AD --> AJ[云存储]
+    AD --> AK[数据库]
+    
+    AE --> AL[Hugging Face]
+    AE --> AM[自定义模型]
+    
+    AF --> AN[GPU集群]
+    AF --> AO[CPU服务器]
+    
+    AG --> AP[性能监控]
+    AG --> AQ[质量评估]
+    
+    AH --> AR[云服务]
+    AH --> AS[边缘设备]
+    AH --> AT[容器平台]
+    
+    %% 数据流向
+    AI --> M
+    AJ --> M
+    AK --> M
+    
+    AL --> N
+    AM --> N
+    
+    AN --> O
+    AO --> O
+    
+    AP --> P
+    AQ --> P
+    
+    AR --> Q
+    AS --> Q
+    AT --> Q
+    
+    %% 状态反馈
+    O --> AU[训练状态监控]
+    P --> AV[评估结果存储]
+    Q --> AW[部署状态跟踪]
+    
+    AU --> AX[实时仪表盘]
+    AV --> AX
+    AW --> AX
+    
+    AX --> AY[用户通知]
+    
+    %% 安全层
+    AZ[量子安全模块] --> BA[数据加密]
+    AZ --> BB[模型保护]
+    AZ --> BC[通信安全]
+    
+    BA --> AD
+    BB --> AE
+    BC --> B
+    
+    %% 扩展模块
+    BD[插件系统] --> BE[自定义工作流]
+    BD --> BF[第三方集成]
+    BD --> BG[工具扩展]
+    
+    BE --> D
+    BF --> H
+    BG --> C
+    
+    %% 监控系统
+    BH[健康检查] --> BI[资源监控]
+    BH --> BJ[性能监控]
+    BH --> BK[错误监控]
+    
+    BI --> BL[告警系统]
+    BJ --> BL
+    BK --> BL
+    
+    BL --> BM[自动修复]
+    BL --> BN[人工干预]
+    
+    BM --> D
+    BN --> A
+    
+    %% 数据流说明
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style AZ fill:#ffebee
+    
+    classDef config fill:#e8f5e8
+    classDef workflow fill:#fff3e0
+    classDef data fill:#e1f5fe
+    classDef model fill:#f3e5f5
+    classDef deploy fill:#fce4ec
+    classDef monitor fill:#fff8e1
+    classDef security fill:#ffebee
+    
+    class C,E,F,G,H config
+    class D,I,J,K,L,BE workflow
+    class AD,AI,AJ,AK data
+    class AE,AL,AM model
+    class AH,AR,AS,AT deploy
+    class AU,AV,AW,AX,AY,BH,BI,BJ,BK,BL,BM,BN monitor
+    class AZ,BA,BB,BC security

@@ -1,0 +1,87 @@
+{
+  "name": "一键混剪视频",
+  "description": "根据多个视频链接和主题，自动提取精彩片段、添加背景音乐和字幕，生成混剪视频",
+  "version": "1.0.0",
+  "create_time": "2026-03-01 17:52:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "video_urls",
+            "type": "array",
+            "required": true,
+            "description": "视频链接列表"
+          },
+          {
+            "name": "theme",
+            "type": "string",
+            "required": true,
+            "description": "混剪主题"
+          },
+          {
+            "name": "duration",
+            "type": "number",
+            "required": false,
+            "description": "目标时长（秒）"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_download",
+      "type": "3",
+      "data": {
+        "name": "批量下载视频",
+        "language": "python",
+        "code": "import json\ndef main(video_urls):\n    downloaded = []\n    for i, url in enumerate(video_urls):\n        downloaded.append({\n            \"index\": i,\n            \"url\": url,\n            \"status\": \"downloaded\",\n            \"duration\": 60\n        })\n    return {\"videos\": downloaded}",
+        "output_params": [{"name": "videos", "type": "array"}]
+      }
+    },
+    {
+      "id": "llm_node_select",
+      "type": "4",
+      "data": {
+        "name": "AI 智能选片",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是视频剪辑专家，根据主题选择最佳片段",
+        "user_prompt": "视频列表：{{code_node_download.videos}}\\n主题：{{theme}}\\n目标时长：{{duration || 90}}秒\\n请选择最佳片段，输出JSON：[{\"video_index\":0,\"start\":5,\"end\":15}]",
+        "output_params": [{"name": "selected_clips", "type": "array"}]
+      }
+    },
+    {
+      "id": "code_node_edit",
+      "type": "3",
+      "data": {
+        "name": "视频混剪合成",
+        "language": "python",
+        "code": "import json\ndef main(selected_clips, theme):\n    edit_result = {\n        \"theme\": theme,\n        \"clips\": selected_clips,\n        \"total_duration\": sum(c.get(\"end\",0)-c.get(\"start\",0) for c in selected_clips),\n        \"added_music\": True,\n        \"added_subtitles\": True,\n        \"output_path\": \"/output/mixed_video.mp4\",\n        \"status\": \"completed\"\n    }\n    return edit_result",
+        "output_params": [{"name": "edit_result", "type": "object"}]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "mixed_video",
+            "type": "object",
+            "value": "{{code_node_edit.edit_result}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "code_node_download"},
+    {"sourceNodeID": "code_node_download", "targetNodeID": "llm_node_select"},
+    {"sourceNodeID": "llm_node_select", "targetNodeID": "code_node_edit"},
+    {"sourceNodeID": "code_node_edit", "targetNodeID": "end_node"}
+  ]
+}

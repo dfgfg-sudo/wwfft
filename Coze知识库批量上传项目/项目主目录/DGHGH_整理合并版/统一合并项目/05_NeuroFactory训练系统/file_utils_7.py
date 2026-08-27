@@ -1,0 +1,3 @@
+"""
+调用 openclaw_hermes 工具，action = "ingest"，knowledge_base_id = "kb_abc123"，text_json = '[{"title":"视频1","content":"文案内容...","source_url":"https://..."}]'
+"""

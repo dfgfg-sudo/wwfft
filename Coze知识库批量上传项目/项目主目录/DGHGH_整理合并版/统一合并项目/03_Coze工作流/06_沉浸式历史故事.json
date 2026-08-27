@@ -1,0 +1,86 @@
+{
+  "name": "沉浸式历史故事",
+  "description": "根据用户输入的历史人物、事件或朝代，生成沉浸式历史故事，支持多角色对话和场景描写",
+  "version": "1.0.0",
+  "create_time": "2026-03-12 21:51:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "topic",
+            "type": "string",
+            "required": true,
+            "description": "历史主题（人物/事件/朝代）"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "required": false,
+            "description": "风格：古风/现代/悬疑/幽默"
+          },
+          {
+            "name": "length",
+            "type": "string",
+            "required": false,
+            "description": "篇幅：短篇/中篇/长篇"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_research",
+      "type": "4",
+      "data": {
+        "name": "AI 历史资料检索与整理",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是历史专家，精准整理相关历史资料",
+        "user_prompt": "主题：{{topic}}\\n请输出关键人物、时间线、历史背景，JSON格式",
+        "output_params": [
+          {"name": "characters", "type": "array"},
+          {"name": "timeline", "type": "array"},
+          {"name": "background", "type": "string"}
+        ]
+      }
+    },
+    {
+      "id": "llm_node_story",
+      "type": "4",
+      "data": {
+        "name": "AI 沉浸式故事创作",
+        "model": "doubao-pro-128k",
+        "system_prompt": "你是顶级历史小说家，创作身临其境的故事",
+        "user_prompt": "主题：{{topic}}\\n风格：{{style || '古风'}}\\n篇幅：{{length || '中篇'}}\\n人物：{{llm_node_research.characters}}\\n背景：{{llm_node_research.background}}\\n请创作沉浸式历史故事，包含对话、场景描写、心理活动",
+        "output_params": [{"name": "story", "type": "string"}]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "story_content",
+            "type": "string",
+            "value": "{{llm_node_story.story}}"
+          },
+          {
+            "name": "source_info",
+            "type": "object",
+            "value": "{{llm_node_research}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "llm_node_research"},
+    {"sourceNodeID": "llm_node_research", "targetNodeID": "llm_node_story"},
+    {"sourceNodeID": "llm_node_story", "targetNodeID": "end_node"}
+  ]
+}

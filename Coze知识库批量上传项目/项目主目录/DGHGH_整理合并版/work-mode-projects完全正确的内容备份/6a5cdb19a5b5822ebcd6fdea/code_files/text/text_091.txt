@@ -1,0 +1,18 @@
+NeuroForge-AI/
+├── 🚀 run.bat                          # 一键启动脚本（Windows）
+├── 🐍 main.py                          # 主程序入口（完整实现）
+├── ⚙️ config/
+│   ├── system_config.yaml              # 系统配置文件
+│   └── training_params.json            # 训练参数配置（可选）
+├── 📁 data/
+│   ├── uploads/                        # 用户数据投喂目录
+│   ├── processed/                      # 处理后的数据缓存
+│   └── encrypted/                      # 加密中间数据
+├── 🤖 models/
+│   ├── pretrained/                     # 基础模型存放处
+│   ├── training/                       # 训练中的模型检查点
+│   └── deployed/                       # 最终输出模型包
+├── 📊 logs/                            # 系统日志目录
+│   └── training.log                    # 训练过程日志
+├── 📋 README.md                        # 项目说明文档
+└── 🧪 test_system.py                   # 系统功能验证脚本（可选）

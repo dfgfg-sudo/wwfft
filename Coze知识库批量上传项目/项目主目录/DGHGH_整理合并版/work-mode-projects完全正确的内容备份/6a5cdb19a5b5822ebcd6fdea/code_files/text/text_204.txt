@@ -1,0 +1,21 @@
+贡献指南
+
+1. Fork 项目
+2. 创建功能分支
+3. 提交更改
+4. 推送到分支
+5. 创建 Pull Request
+
+许可证
+
+Apache License 2.0
+
+技术支持
+
+· 📧 邮箱: support@ultimate-ai.com
+· 🌐 网站: https://ultimate-ai.com
+· 📚 文档: https://docs.ultimate-ai.com
+
+引用
+
+如果您在研究中使用了本项目，请引用：

@@ -1,0 +1,19 @@
+# prometheus-alerts.yaml
+groups:
+- name: ci-cd-alerts
+  rules:
+  - alert: DeploymentFailed
+    expr: kube_deployment_status_replicas_unavailable > 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "部署失败: {{ $labels.deployment }}"
+      
+  - alert: HighErrorRate
+    expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: "高错误率: {{ $labels.service }}"

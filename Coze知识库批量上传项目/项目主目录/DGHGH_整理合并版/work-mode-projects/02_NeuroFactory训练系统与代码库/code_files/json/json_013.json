@@ -1,0 +1,56 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "全场景智能自动化超级中枢API",
+    "description": "端到端AI训练与工作流自动化系统 - 量子增强版",
+    "version": "7.0.0",
+    "contact": {"name": "NeuroFactory Team", "url": "https://github.com/neurofactory", "email": "contact@neurofactory.ai"},
+    "license": {"name": "Apache 2.0", "url": "http://www.apache.org/licenses/LICENSE-2.0.html"}
+  },
+  "servers": [
+    {"url": "https://api.neurofactory.ai/v1", "description": "生产"},
+    {"url": "https://staging-api.neurofactory.ai/v1", "description": "测试"}
+  ],
+  "paths": {
+    "/ai-training/start": {
+      "post": {
+        "summary": "启动AI训练任务",
+        "operationId": "startAITraining",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["dataset_path", "model_type", "training_config"],
+                "properties": {
+                  "dataset_path": {"type": "string"},
+                  "model_type": {"type": "string", "enum": ["llama", "gpt", "bert", "multimodal"]},
+                  "training_config": {
+                    "type": "object",
+                    "properties": {
+                      "epochs": {"type": "integer", "minimum": 1, "maximum": 1000, "default": 10},
+                      "batch_size": {"type": "integer", "minimum": 1, "maximum": 256, "default": 32},
+                      "learning_rate": {"type": "number", "minimum": 1e-7, "maximum": 1e-1, "default": 1e-4}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {"description": "成功", "content": {"application/json": {"schema": {"type": "object","properties": {"task_id": {"type":"string"},"status": {"type":"string"}}}}}},
+          "400": {"description": "参数错误"}
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "apiKey": {"type": "apiKey", "name": "X-API-Key", "in": "header"},
+      "bearerAuth": {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
+    }
+  },
+  "security": [{"apiKey": []}, {"bearerAuth": []}]
+}

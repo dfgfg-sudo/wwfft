@@ -1,0 +1,2988 @@
+import { Args } from "@/runtime";
+
+/**
+ * Coze 插件生成器 - 修复版本 (yryetrytudkz_fixed)
+ *
+ * 修复说明:
+ *   1. 模板字符串转义错误修复: \` -> `, \${ -> ${
+ *   2. 部分函数参数类型补全
+ *   3. 所有 TypeScript 类型注解校正
+ *   4. 补充缺失模块: WorkflowPluginMeta, WorkflowUIConfig, CozeInternalTool,
+ *      repairHandler, ExtractedFeatures 别名, @tool 注解
+ *
+ * 本文件包含以下模块:
+ *   - 主入口 handler(params)
+ *   - generatePluginCode(requirement) - 第一版 (string 参数)
+ *   - generatePluginConfig(requirement)
+ *   - PluginMeta 和 PluginInputParams 接口定义
+ *   - validateInputParams 函数
+ *   - extractPluginFeatures 函数
+ *   - generatePluginCode_v2 (第二版, 使用 ExtractedFeatures/PluginFeatures)
+ *   - generateHandler 函数
+ *   - UIConfig 配置
+ *   - WorkflowPluginMeta 和 workflowHandler - 工作流 JSON 导入器
+ *   - smartProcessorHandler - 全功能智能处理插件 (visualize/format/md2html/webParse/apiParse)
+ *   - CozePluginRepairTool - 插件修复工具 (repairHandler, CozePluginRepairEngine 类)
+ *   - 完整工具配置信息注释
+ */
+
+// ============================================================================
+// 第一部分: 核心函数
+// ============================================================================
+
+/**
+ * 主入口函数 handler(params)
+ *
+ * 接收用户传入的插件需求描述，自动生成完整的 Coze 插件代码、配置和使用说明。
+ *
+ * @param {Object} params - 入参对象
+ * @param {string} params.plugin_requirement - 必填，插件功能需求描述
+ * @param {string} [params.request] - 否，额外请求上下文
+ * @param {string} [params.query] - 否，查询补充信息
+ * @returns {Object} 返回对象
+ *   @returns {number} code - 状态码，0 表示成功，非 0 表示失败
+ *   @returns {string} message - 结果描述信息
+ *   @returns {Object} data - 数据对象
+ *   @returns {string} data.pluginName - 插件名称
+ *   @returns {string} data.pluginDescription - 插件描述
+ *   @returns {string} data.code - 生成的插件代码
+ *   @returns {Object} data.config - 插件配置对象
+ *   @returns {string} data.usageInstructions - 使用说明
+ *   @returns {string} data.generationTime - 生成时间
+ */
+async function handler(params: {
+  plugin_requirement: string;
+  request?: string;
+  query?: string;
+}): Promise<{
+  code: number;
+  message: string;
+  data: {
+    pluginName: string;
+    pluginDescription: string;
+    code: string;
+    config: Record<string, any>;
+    usageInstructions: string;
+    generationTime: string;
+  };
+}> {
+  try {
+    // 参数校验
+    if (!params || typeof params !== "object") {
+      return {
+        code: 1001,
+        message: "参数错误: params 必须为对象",
+        data: null as any,
+      };
+    }
+
+    const requirement: string = params.plugin_requirement;
+    if (!requirement || typeof requirement !== "string" || requirement.trim() === "") {
+      return {
+        code: 1002,
+        message: "参数错误: plugin_requirement 为必填项且必须为非空字符串",
+        data: null as any,
+      };
+    }
+
+    // 生成插件代码
+    const pluginCode: string = generatePluginCode(requirement);
+
+    // 生成插件配置
+    const pluginConfig: Record<string, any> = generatePluginConfig(requirement);
+
+    // 构建使用说明
+    const usageInstructions: string = buildUsageInstructions(pluginConfig);
+
+    const generationTime: string = new Date().toISOString();
+
+    return {
+      code: 0,
+      message: "插件生成成功",
+      data: {
+        pluginName: pluginConfig.pluginName,
+        pluginDescription: pluginConfig.pluginDescription,
+        code: pluginCode,
+        config: pluginConfig,
+        usageInstructions: usageInstructions,
+        generationTime: generationTime,
+      },
+    };
+  } catch (error: any) {
+    return {
+      code: 5000,
+      message: `插件生成失败: ${error?.message || String(error)}`,
+      data: null as any,
+    };
+  }
+}
+
+/**
+ * run - handler 的别名导出，兼容原始版本的 export const run = handler
+ */
+const run = handler;
+
+/**
+ * 生成插件代码 generatePluginCode(requirement)
+ *
+ * 根据需求描述生成包含 handler 函数、类型定义、错误处理的完整 TypeScript 代码。
+ *
+ * @param {string} requirement - 必填，插件功能需求描述
+ * @returns {string} 插件代码字符串，包含 handler 函数、类型定义、错误处理的完整 TypeScript 代码
+ */
+function generatePluginCode(requirement: string): string {
+  if (!requirement || typeof requirement !== "string") {
+    throw new Error("requirement 必须为非空字符串");
+  }
+
+  // 提取插件特征
+  const features: PluginFeatures = extractPluginFeatures(requirement);
+
+  const pluginName: string = features.pluginName;
+  const functionName: string = features.functionName;
+  const description: string = features.description;
+
+  // 生成完整的 TypeScript 插件代码
+  const code: string = `/**
+ * 自动生成的 Coze 插件代码
+ * 插件名称: ${pluginName}
+ * 功能描述: ${description}
+ * 生成时间: ${new Date().toISOString()}
+ */
+
+// ========== 类型定义 ==========
+
+interface ${functionName}InputParams {
+  /** 输入数据，必填 */
+  input: string;
+  /** 操作模式，可选 */
+  mode?: string;
+  /** 额外选项，可选 */
+  options?: Record<string, any>;
+}
+
+interface ${functionName}OutputResult {
+  code: number;
+  message: string;
+  data: {
+    result: string;
+    processed: boolean;
+    metadata: Record<string, any>;
+  };
+}
+
+// ========== 主处理函数 ==========
+
+/**
+ * ${description}
+ *
+ * @param {${functionName}InputParams} params - 入参对象
+ *   @param {string} params.input - 必填，输入数据
+ *   @param {string} [params.mode] - 可选，操作模式
+ *   @param {Object} [params.options] - 可选，额外选项
+ * @returns {${functionName}OutputResult} 处理结果
+ *   @returns {number} code - 状态码，0 成功 / 非 0 失败
+ *   @returns {string} message - 结果描述
+ *   @returns {Object} data - 结果数据
+ *   @returns {string} data.result - 处理结果文本
+ *   @returns {boolean} data.processed - 是否已处理
+ *   @returns {Object} data.metadata - 元数据
+ */
+async function ${functionName}Handler(params: ${functionName}InputParams): Promise<${functionName}OutputResult> {
+  try {
+    if (!params || !params.input || typeof params.input !== "string") {
+      return {
+        code: 1001,
+        message: "参数错误: input 为必填项且必须为字符串",
+        data: null as any,
+      };
+    }
+
+    const input: string = params.input;
+    const mode: string = params.mode || "default";
+    const options: Record<string, any> = params.options || {};
+
+    // 核心处理逻辑
+    let result: string = "";
+    const metadata: Record<string, any> = {
+      inputLength: input.length,
+      mode: mode,
+      timestamp: new Date().toISOString(),
+    };
+
+    switch (mode) {
+      case "transform":
+        result = transformData(input, options);
+        break;
+      case "analyze":
+        result = analyzeData(input, options);
+        break;
+      case "format":
+        result = formatData(input, options);
+        break;
+      default:
+        result = processData(input, options);
+        break;
+    }
+
+    metadata.outputLength = result.length;
+
+    return {
+      code: 0,
+      message: "处理成功",
+      data: {
+        result: result,
+        processed: true,
+        metadata: metadata,
+      },
+    };
+  } catch (error: any) {
+    return {
+      code: 5000,
+      message: `处理失败: ${error?.message || String(error)}`,
+      data: null as any,
+    };
+  }
+}
+
+// ========== 辅助函数 ==========
+
+function processData(input: string, options: Record<string, any>): string {
+  let output: string = input;
+  if (options.trim) {
+    output = output.trim();
+  }
+  if (options.toLowerCase) {
+    output = output.toLowerCase();
+  }
+  if (options.toUpperCase) {
+    output = output.toUpperCase();
+  }
+  return output;
+}
+
+function transformData(input: string, options: Record<string, any>): string {
+  try {
+    const parsed: any = JSON.parse(input);
+    return JSON.stringify(parsed, null, 2);
+  } catch {
+    return input;
+  }
+}
+
+function analyzeData(input: string, options: Record<string, any>): string {
+  const lines: string[] = input.split("\\n");
+  const words: string[] = input.split(/\\s+/);
+  const chars: number = input.length;
+  return JSON.stringify({
+    lineCount: lines.length,
+    wordCount: words.length,
+    charCount: chars,
+  }, null, 2);
+}
+
+function formatData(input: string, options: Record<string, any>): string {
+  const indent: number = options.indent || 2;
+  try {
+    const parsed: any = JSON.parse(input);
+    return JSON.stringify(parsed, null, indent);
+  } catch {
+    return input;
+  }
+}
+
+// ========== 导出 ==========
+
+export { ${functionName}Handler, ${functionName}InputParams, ${functionName}OutputResult };
+`;
+
+  return code;
+}
+
+/**
+ * 生成插件配置 generatePluginConfig(requirement)
+ *
+ * 根据需求描述生成完整的插件配置对象。
+ *
+ * @param {string} requirement - 必填，插件功能需求描述
+ * @returns {Object} 配置对象
+ *   @returns {string} pluginName - 插件名称
+ *   @returns {string} pluginDescription - 插件描述
+ *   @returns {string} runtime - 运行时环境
+ *   @returns {string} toolCreationMethod - 工具创建方式
+ *   @returns {string} authorizationMethod - 授权方式
+ *   @returns {string} requestUrl - 请求URL
+ *   @returns {Object} requestHeaders - 请求头
+ *   @returns {string} toolName - 工具名称
+ *   @returns {string} toolDescription - 工具描述
+ *   @returns {Array} inputParameters - 输入参数列表
+ *   @returns {Array} outputParameters - 输出参数列表
+ */
+function generatePluginConfig(requirement: string): {
+  pluginName: string;
+  pluginDescription: string;
+  runtime: string;
+  toolCreationMethod: string;
+  authorizationMethod: string;
+  requestUrl: string;
+  requestHeaders: Record<string, string>;
+  toolName: string;
+  toolDescription: string;
+  inputParameters: Array<{
+    name: string;
+    type: string;
+    description: string;
+    required: boolean;
+    default?: any;
+  }>;
+  outputParameters: Array<{
+    name: string;
+    type: string;
+    description: string;
+  }>;
+} {
+  if (!requirement || typeof requirement !== "string") {
+    throw new Error("requirement 必须为非空字符串");
+  }
+
+  const features: PluginFeatures = extractPluginFeatures(requirement);
+
+  return {
+    pluginName: features.pluginName,
+    pluginDescription: features.description,
+    runtime: "nodejs-18",
+    toolCreationMethod: "custom_code",
+    authorizationMethod: "none",
+    requestUrl: "",
+    requestHeaders: {
+      "Content-Type": "application/json",
+    },
+    toolName: features.functionName,
+    toolDescription: features.description,
+    inputParameters: [
+      {
+        name: "input",
+        type: "string",
+        description: "输入数据内容",
+        required: true,
+        default: "",
+      },
+      {
+        name: "mode",
+        type: "string",
+        description: "操作模式: default | transform | analyze | format",
+        required: false,
+        default: "default",
+      },
+      {
+        name: "options",
+        type: "object",
+        description: "额外处理选项",
+        required: false,
+        default: {},
+      },
+    ],
+    outputParameters: [
+      {
+        name: "code",
+        type: "number",
+        description: "状态码，0 表示成功",
+      },
+      {
+        name: "message",
+        type: "string",
+        description: "结果描述信息",
+      },
+      {
+        name: "data.result",
+        type: "string",
+        description: "处理结果文本",
+      },
+      {
+        name: "data.processed",
+        type: "boolean",
+        description: "是否已处理",
+      },
+      {
+        name: "data.metadata",
+        type: "object",
+        description: "元数据信息",
+      },
+    ],
+  };
+}
+
+// ============================================================================
+// 第二部分: coze_plugin_generator - Coze 插件自动生成神器
+// ============================================================================
+
+/**
+ * 插件元信息定义 PluginMeta
+ */
+interface PluginMeta {
+  name: string;
+  version: string;
+  author: string;
+  description: string;
+  runtime: string;
+  createdAt: string;
+  updatedAt: string;
+  tags: string[];
+}
+
+/**
+ * 插件输入参数接口 PluginInputParams
+ */
+interface PluginInputParams {
+  /** 插件功能需求描述，必填 */
+  plugin_requirement: string;
+  /** 插件名称，可选 */
+  plugin_name?: string;
+  /** 运行时环境，可选，默认 nodejs-18 */
+  runtime?: string;
+  /** 是否生成测试代码，可选，默认 false */
+  generateTest?: boolean;
+  /** 是否生成文档，可选，默认 true */
+  generateDoc?: boolean;
+  /** 额外配置选项，可选 */
+  options?: Record<string, any>;
+}
+
+/**
+ * 生成器输出接口 GeneratorOutput
+ */
+interface GeneratorOutput {
+  /** 状态码，0 成功 / 非 0 失败 */
+  code: number;
+  /** 结果描述信息 */
+  message: string;
+  /** 生成数据 */
+  data: {
+    pluginName: string;
+    pluginDescription: string;
+    code: string;
+    config: Record<string, any>;
+    testCode: string | null;
+    documentation: string | null;
+    meta: PluginMeta;
+    generationTime: string;
+  };
+}
+
+/**
+ * 插件特征提取结果
+ */
+interface PluginFeatures {
+  pluginName: string;
+  functionName: string;
+  description: string;
+  keywords: string[];
+  category: string;
+}
+
+/**
+ * ExtractedFeatures - 兼容原始版本的类型别名
+ * 原始文件中使用 ExtractedFeatures 接口，此处通过类型别名保持兼容
+ */
+type ExtractedFeatures = PluginFeatures;
+
+/**
+ * 验证输入参数 validateInputParams(params)
+ *
+ * 校验输入参数的完整性与合法性。
+ *
+ * @param {PluginInputParams} params - 输入参数对象
+ * @returns {{ valid: boolean; errors: string[] }} 校验结果
+ */
+function validateInputParams(params: PluginInputParams): {
+  valid: boolean;
+  errors: string[];
+} {
+  const errors: string[] = [];
+
+  if (!params || typeof params !== "object") {
+    errors.push("params 必须为对象");
+    return { valid: false, errors };
+  }
+
+  if (!params.plugin_requirement || typeof params.plugin_requirement !== "string") {
+    errors.push("plugin_requirement 为必填项且必须为字符串");
+  } else if (params.plugin_requirement.trim().length < 5) {
+    errors.push("plugin_requirement 描述长度不能少于 5 个字符");
+  }
+
+  if (params.plugin_name !== undefined && typeof params.plugin_name !== "string") {
+    errors.push("plugin_name 必须为字符串");
+  }
+
+  if (params.runtime !== undefined && typeof params.runtime !== "string") {
+    errors.push("runtime 必须为字符串");
+  }
+
+  if (params.generateTest !== undefined && typeof params.generateTest !== "boolean") {
+    errors.push("generateTest 必须为布尔值");
+  }
+
+  if (params.generateDoc !== undefined && typeof params.generateDoc !== "boolean") {
+    errors.push("generateDoc 必须为布尔值");
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors: errors,
+  };
+}
+
+/**
+ * 特征提取 extractPluginFeatures(requirement)
+ *
+ * 从需求描述中提取插件特征信息。
+ *
+ * @param {string} requirement - 插件功能需求描述
+ * @returns {PluginFeatures} 插件特征对象
+ */
+function extractPluginFeatures(requirement: string): PluginFeatures {
+  const text: string = requirement.trim();
+
+  // 提取关键词
+  const keywordMap: Record<string, string> = {
+    "翻译": "translate",
+    "转换": "convert",
+    "格式化": "format",
+    "解析": "parse",
+    "生成": "generate",
+    "计算": "calculate",
+    "查询": "query",
+    "搜索": "search",
+    "压缩": "compress",
+    "加密": "encrypt",
+    "解码": "decode",
+    "编码": "encode",
+    "导入": "import",
+    "导出": "export",
+    "修复": "repair",
+    "分析": "analyze",
+    "可视化": "visualize",
+    "处理": "process",
+  };
+
+  const keywords: string[] = [];
+  let category: string = "utility";
+
+  for (const [cn, en] of Object.entries(keywordMap)) {
+    if (text.includes(cn)) {
+      keywords.push(en);
+    }
+  }
+
+  // 确定分类
+  if (text.includes("翻译") || text.includes("转换")) {
+    category = "transform";
+  } else if (text.includes("解析") || text.includes("分析")) {
+    category = "analysis";
+  } else if (text.includes("生成") || text.includes("创建")) {
+    category = "generator";
+  } else if (text.includes("修复") || text.includes("repair") || text.includes("fix")) {
+    category = "repair";
+  } else if (text.includes("导入") || text.includes("导出")) {
+    category = "io";
+  }
+
+  // 生成插件名称
+  let pluginName: string = "custom_plugin";
+  if (keywords.length > 0) {
+    pluginName = keywords.join("_") + "_plugin";
+  }
+
+  // 生成函数名 (驼峰)
+  const functionName: string = keywords.length > 0
+    ? keywords.map((k, i) => i === 0 ? k : k.charAt(0).toUpperCase() + k.slice(1)).join("")
+    : "customProcess";
+
+  // 提取描述 (截取前 200 字符)
+  const description: string = text.length > 200 ? text.substring(0, 200) + "..." : text;
+
+  return {
+    pluginName: pluginName,
+    functionName: functionName,
+    description: description,
+    keywords: keywords,
+    category: category,
+  };
+}
+
+/**
+ * 代码生成 generatePluginCode_v2 (coze_plugin_generator 内部版本, 使用 ExtractedFeatures)
+ *
+ * 生成完整的插件代码，包含类型定义、处理函数和辅助函数。
+ * 对应原始文件的第二个 generatePluginCode(features: ExtractedFeatures) 版本。
+ *
+ * @param {ExtractedFeatures} features - 插件特征对象
+ * @returns {string} 完整的 TypeScript 插件代码
+ */
+function generatePluginCode_v2(features: ExtractedFeatures): string {
+  const meta: PluginMeta = {
+    name: features.pluginName,
+    version: "1.0.0",
+    author: "coze_plugin_generator",
+    description: features.description,
+    runtime: "nodejs-18",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    tags: features.keywords,
+  };
+
+  const code: string = `// 插件元信息
+const PLUGIN_META: PluginMeta = ${JSON.stringify(meta, null, 2)};
+
+// 插件入口
+async function main(params: PluginInputParams): Promise<GeneratorOutput> {
+  return generateHandler(params);
+}
+`;
+
+  return code;
+}
+
+/**
+ * 主处理器 generateHandler(params)
+ *
+ * Coze 插件生成器的主处理函数，整合验证、生成、组装流程。
+ *
+ * @param {PluginInputParams} params - 输入参数
+ * @returns {GeneratorOutput} 生成结果
+ */
+async function generateHandler(params: PluginInputParams): Promise<GeneratorOutput> {
+  // 验证输入
+  const validation: { valid: boolean; errors: string[] } = validateInputParams(params);
+  if (!validation.valid) {
+    return {
+      code: 1001,
+      message: `参数验证失败: ${validation.errors.join("; ")}`,
+      data: null as any,
+    };
+  }
+
+  const requirement: string = params.plugin_requirement;
+  const generateTest: boolean = params.generateTest ?? false;
+  const generateDoc: boolean = params.generateDoc ?? true;
+
+  // 生成代码
+  const pluginCode: string = generatePluginCode(requirement);
+
+  // 生成配置
+  const config: Record<string, any> = generatePluginConfig(requirement);
+
+  // 生成测试代码
+  let testCode: string | null = null;
+  if (generateTest) {
+    testCode = generateTestCode(config.pluginName, config.toolName);
+  }
+
+  // 生成文档
+  let documentation: string | null = null;
+  if (generateDoc) {
+    documentation = generateDocumentation(config);
+  }
+
+  // 构建元信息
+  const meta: PluginMeta = {
+    name: config.pluginName,
+    version: "1.0.0",
+    author: "coze_plugin_generator",
+    description: config.pluginDescription,
+    runtime: config.runtime,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    tags: extractPluginFeatures(requirement).keywords,
+  };
+
+  return {
+    code: 0,
+    message: "插件生成成功",
+    data: {
+      pluginName: config.pluginName,
+      pluginDescription: config.pluginDescription,
+      code: pluginCode,
+      config: config,
+      testCode: testCode,
+      documentation: documentation,
+      meta: meta,
+      generationTime: new Date().toISOString(),
+    },
+  };
+}
+
+/**
+ * UI 配置 UIConfig
+ */
+interface UIConfig {
+  /** 是否显示代码预览 */
+  showCodePreview: boolean;
+  /** 是否显示配置编辑器 */
+  showConfigEditor: boolean;
+  /** 代码高亮主题 */
+  codeTheme: string;
+  /** 是否支持下载 */
+  enableDownload: boolean;
+  /** 支持的下载格式 */
+  downloadFormats: string[];
+}
+
+/**
+ * 默认 UI 配置
+ */
+const DEFAULT_UI_CONFIG: UIConfig = {
+  showCodePreview: true,
+  showConfigEditor: true,
+  codeTheme: "github-dark",
+  enableDownload: true,
+  downloadFormats: ["ts", "js", "json", "md"],
+};
+
+/**
+ * 插件生成器 UI 参数配置
+ * 对应原始版本的 export const UIConfig = { parameters: [...] }
+ */
+const PLUGIN_UI_CONFIG: {
+  parameters: Array<{
+    name: string;
+    label: string;
+    type: string;
+    required: boolean;
+    placeholder?: string;
+    description: string;
+  }>;
+} = {
+  parameters: [
+    {
+      name: "plugin_name",
+      label: "插件名称",
+      type: "text",
+      required: true,
+      placeholder: "天气查询工具",
+      description: "插件的中文名称，简洁清晰",
+    },
+    {
+      name: "function_desc",
+      label: "功能描述",
+      type: "textarea",
+      required: true,
+      placeholder: "根据城市名称查询实时天气状况，返回温度、湿度等信息",
+      description: "详细描述插件核心功能、用途及场景",
+    },
+    {
+      name: "plugin_spec",
+      label: "合并参数",
+      type: "textarea",
+      required: true,
+      placeholder: "- 城市名称（字符串，必选，需查询的城市中文名）\n- 查询类型（枚举值，可选，now/forecast，默认now）\n网络错误：请检查网络连接后重试\n参数错误：请确认城市名称是否正确",
+      description: "包含插件所需参数和错误场景，支持OpenAPI/Swagger协议",
+    },
+    {
+      name: "permissions",
+      label: "所需权限",
+      type: "text",
+      required: false,
+      placeholder: "network, storage",
+      description: "插件需要的权限（用逗号分隔）",
+    },
+    {
+      name: "platforms",
+      label: "兼容平台",
+      type: "text",
+      required: false,
+      placeholder: "web, mobile",
+      description: "支持的平台（用逗号分隔）",
+    },
+  ],
+};
+
+/**
+ * 生成测试代码
+ */
+function generateTestCode(pluginName: string, toolName: string): string {
+  return `// 测试代码 - ${pluginName}
+const assert = require("assert");
+
+async function runTests() {
+  console.log("开始测试 ${toolName}...");
+
+  // 测试 1: 正常输入
+  const result1 = await ${toolName}Handler({
+    input: "test data",
+    mode: "default",
+  });
+  assert.strictEqual(result1.code, 0, "正常输入应返回 code=0");
+  console.log("  [PASS] 测试 1: 正常输入");
+
+  // 测试 2: 空输入
+  const result2 = await ${toolName}Handler({
+    input: "",
+  });
+  assert.notStrictEqual(result2.code, 0, "空输入应返回错误码");
+  console.log("  [PASS] 测试 2: 空输入");
+
+  // 测试 3: 缺少必填参数
+  const result3 = await ${toolName}Handler({} as any);
+  assert.notStrictEqual(result3.code, 0, "缺少必填参数应返回错误码");
+  console.log("  [PASS] 测试 3: 缺少必填参数");
+
+  console.log("所有测试通过!");
+}
+
+runTests().catch(console.error);
+`;
+}
+
+/**
+ * 生成文档
+ */
+function generateDocumentation(config: Record<string, any>): string {
+  let doc: string = `# ${config.pluginName}\n\n`;
+  doc += `## 描述\n\n${config.pluginDescription}\n\n`;
+  doc += `## 运行时\n\n${config.runtime}\n\n`;
+  doc += `## 输入参数\n\n`;
+  doc += `| 参数名 | 类型 | 必填 | 描述 |\n`;
+  doc += `|--------|------|------|------|\n`;
+  for (const param of config.inputParameters) {
+    doc += `| ${param.name} | ${param.type} | ${param.required ? "是" : "否"} | ${param.description} |\n`;
+  }
+  doc += `\n## 输出参数\n\n`;
+  doc += `| 参数名 | 类型 | 描述 |\n`;
+  doc += `|--------|------|------|\n`;
+  for (const param of config.outputParameters) {
+    doc += `| ${param.name} | ${param.type} | ${param.description} |\n`;
+  }
+  doc += `\n## 使用示例\n\n`;
+  doc += "```json\n";
+  doc += JSON.stringify({
+    input: "示例输入数据",
+    mode: "default",
+    options: {},
+  }, null, 2);
+  doc += "\n```\n";
+  return doc;
+}
+
+/**
+ * 构建使用说明
+ */
+function buildUsageInstructions(config: Record<string, any>): string {
+  let instructions: string = `插件名称: ${config.pluginName}\n`;
+  instructions += `功能描述: ${config.pluginDescription}\n`;
+  instructions += `运行时: ${config.runtime}\n\n`;
+  instructions += `输入参数:\n`;
+  for (const param of config.inputParameters) {
+    const req: string = param.required ? "必填" : "可选";
+    instructions += `  - ${param.name} (${param.type}, ${req}): ${param.description}\n`;
+  }
+  instructions += `\n输出参数:\n`;
+  for (const param of config.outputParameters) {
+    instructions += `  - ${param.name} (${param.type}): ${param.description}\n`;
+  }
+  return instructions;
+}
+
+// ============================================================================
+// 第三部分: Workflow_JSON_Importer - 工作流 JSON 全能导入器
+// ============================================================================
+
+/**
+ * 工作流插件元信息 WorkflowPluginMeta
+ */
+const WorkflowPluginMeta: {
+  name: string;
+  version: string;
+  author: string;
+  description: string;
+  icon: string;
+  category: string;
+  requiredPermissions: string[];
+  compatiblePlatforms: string[];
+} = {
+  name: "Workflow_JSON_Importer",
+  version: "1.0.2",
+  author: "Coze Toolkit",
+  description: "工作流JSON全能导入器，支持解析JSON数据并自动创建Coze工作流、节点及连接关系",
+  icon: "🔄",
+  category: "工作流工具",
+  requiredPermissions: ["workflow.create", "node.create", "edge.create"],
+  compatiblePlatforms: ["coze-web"],
+};
+
+/**
+ * CozeInternalTool - Coze 内部工具声明
+ * 声明 Coze 平台提供的内部工具接口，用于工作流创建
+ */
+declare namespace CozeInternalTool {
+  function createWorkflow(options: { name: string }): Promise<string>;
+  function createNode(
+    workflowId: string,
+    options: {
+      type: string;
+      name: string;
+      position: { x: number; y: number };
+      data: Record<string, any>;
+    }
+  ): Promise<string>;
+  function createEdge(
+    workflowId: string,
+    options: {
+      sourceNodeId: string;
+      targetNodeId: string;
+    }
+  ): Promise<void>;
+}
+
+/**
+ * 工作流输入接口
+ */
+interface WorkflowInput {
+  workflow_json: string;
+}
+
+/**
+ * 工作流输出接口
+ */
+interface WorkflowOutput {
+  success: boolean;
+  message: string;
+  workflow_id?: string;
+}
+
+/**
+ * 工作流 UI 配置 WorkflowUIConfig
+ */
+const WorkflowUIConfig: {
+  parameters: Array<{
+    name: string;
+    label: string;
+    type: string;
+    required: boolean;
+    placeholder: string;
+    description: string;
+  }>;
+} = {
+  parameters: [
+    {
+      name: "workflow_json",
+      label: "工作流JSON数据",
+      type: "textarea",
+      required: true,
+      placeholder: '{"nodes": [...], "edges": [...]}',
+      description: "支持直接包含nodes和edges字段，或嵌套在json对象中",
+    },
+  ],
+};
+
+/**
+ * 工作流节点接口
+ */
+interface WorkflowNode {
+  id: string;
+  type: string;
+  name: string;
+  config: Record<string, any>;
+  position: { x: number; y: number };
+}
+
+/**
+ * 工作流连接接口
+ */
+interface WorkflowConnection {
+  source: string;
+  target: string;
+  sourcePort: string;
+  targetPort: string;
+}
+
+/**
+ * 工作流数据接口
+ */
+interface WorkflowData {
+  nodes: WorkflowNode[];
+  connections: WorkflowConnection[];
+  metadata: Record<string, any>;
+}
+
+/**
+ * 敏感信息过滤关键词列表
+ */
+const SENSITIVE_KEYS: string[] = [
+  "password",
+  "secret",
+  "token",
+  "apiKey",
+  "api_key",
+  "privateKey",
+  "private_key",
+  "credential",
+  "authorization",
+];
+
+/**
+ * workflowHandler(params) - 工作流 JSON 全能导入器主函数
+ *
+ * 解析 JSON 数据，过滤敏感信息，创建工作流节点和连接。
+ *
+ * @param {Object} params - 入参对象
+ * @param {string} params.json_data - 必填，工作流 JSON 数据字符串
+ * @param {boolean} [params.filter_sensitive] - 可选，是否过滤敏感信息，默认 true
+ * @param {boolean} [params.validate_structure] - 可选，是否验证结构，默认 true
+ * @returns {Object} 处理结果
+ *   @returns {number} code - 状态码，0 成功 / 非 0 失败
+ *   @returns {string} message - 结果描述
+ *   @returns {Object} data - 结果数据
+ *   @returns {Array} data.nodes - 工作流节点列表
+ *   @returns {Array} data.connections - 工作流连接列表
+ *   @returns {Object} data.metadata - 元数据
+ *   @returns {number} data.nodeCount - 节点数量
+ *   @returns {number} data.connectionCount - 连接数量
+ */
+async function workflowHandler(params: {
+  json_data: string;
+  filter_sensitive?: boolean;
+  validate_structure?: boolean;
+}): Promise<{
+  code: number;
+  message: string;
+  data: {
+    nodes: WorkflowNode[];
+    connections: WorkflowConnection[];
+    metadata: Record<string, any>;
+    nodeCount: number;
+    connectionCount: number;
+  } | null;
+}> {
+  try {
+    // 参数校验
+    if (!params || !params.json_data || typeof params.json_data !== "string") {
+      return {
+        code: 1001,
+        message: "参数错误: json_data 为必填项且必须为字符串",
+        data: null,
+      };
+    }
+
+    const filterSensitive: boolean = params.filter_sensitive ?? true;
+    const validateStructure: boolean = params.validate_structure ?? true;
+
+    // 解析 JSON 数据
+    let rawData: any;
+    try {
+      rawData = JSON.parse(params.json_data);
+    } catch (parseError: any) {
+      return {
+        code: 1002,
+        message: `JSON 解析失败: ${parseError?.message || "无效的 JSON 格式"}`,
+        data: null,
+      };
+    }
+
+    // 过滤敏感信息
+    if (filterSensitive) {
+      rawData = filterSensitiveData(rawData);
+    }
+
+    // 验证结构
+    if (validateStructure) {
+      const structureError: string | null = validateWorkflowStructure(rawData);
+      if (structureError) {
+        return {
+          code: 1003,
+          message: `结构验证失败: ${structureError}`,
+          data: null,
+        };
+      }
+    }
+
+    // 创建工作流节点和连接
+    const nodes: WorkflowNode[] = createWorkflowNodes(rawData);
+    const connections: WorkflowConnection[] = createWorkflowConnections(rawData);
+    const metadata: Record<string, any> = extractWorkflowMetadata(rawData);
+
+    return {
+      code: 0,
+      message: "工作流导入成功",
+      data: {
+        nodes: nodes,
+        connections: connections,
+        metadata: metadata,
+        nodeCount: nodes.length,
+        connectionCount: connections.length,
+      },
+    };
+  } catch (error: any) {
+    return {
+      code: 5000,
+      message: `工作流导入失败: ${error?.message || String(error)}`,
+      data: null,
+    };
+  }
+}
+
+/**
+ * 过滤敏感信息
+ *
+ * @param {any} data - 原始数据
+ * @returns {any} 过滤后的数据
+ */
+function filterSensitiveData(data: any): any {
+  if (data === null || data === undefined) {
+    return data;
+  }
+
+  if (typeof data === "string") {
+    return data;
+  }
+
+  if (Array.isArray(data)) {
+    return data.map((item: any) => filterSensitiveData(item));
+  }
+
+  if (typeof data === "object") {
+    const result: Record<string, any> = {};
+    for (const key of Object.keys(data)) {
+      const lowerKey: string = key.toLowerCase();
+      if (SENSITIVE_KEYS.some((sk: string) => lowerKey.includes(sk))) {
+        result[key] = "***[FILTERED]***";
+      } else {
+        result[key] = filterSensitiveData(data[key]);
+      }
+    }
+    return result;
+  }
+
+  return data;
+}
+
+/**
+ * 验证工作流结构
+ *
+ * @param {any} data - 待验证数据
+ * @returns {string | null} 错误信息，null 表示验证通过
+ */
+function validateWorkflowStructure(data: any): string | null {
+  if (!data || typeof data !== "object") {
+    return "数据必须为对象";
+  }
+
+  // 兼容多种格式: nodes 字段或直接为数组
+  let nodesData: any = data.nodes || data.node_list || data;
+  if (!nodesData) {
+    return "未找到节点数据 (nodes/node_list)";
+  }
+
+  return null;
+}
+
+/**
+ * 创建工作流节点
+ *
+ * @param {any} data - 解析后的数据
+ * @returns {WorkflowNode[]} 节点列表
+ */
+function createWorkflowNodes(data: any): WorkflowNode[] {
+  const nodes: WorkflowNode[] = [];
+
+  // 支持多种数据格式
+  const rawNodes: any[] = Array.isArray(data) ? data : (data.nodes || data.node_list || []);
+
+  for (let i: number = 0; i < rawNodes.length; i++) {
+    const raw: any = rawNodes[i];
+    const node: WorkflowNode = {
+      id: raw.id || raw.node_id || `node_${i}`,
+      type: raw.type || raw.node_type || "default",
+      name: raw.name || raw.title || raw.label || `Node ${i}`,
+      config: raw.config || raw.properties || raw.data || {},
+      position: raw.position || { x: raw.x || 0, y: raw.y || 0 },
+    };
+    nodes.push(node);
+  }
+
+  return nodes;
+}
+
+/**
+ * 创建工作流连接
+ *
+ * @param {any} data - 解析后的数据
+ * @returns {WorkflowConnection[]} 连接列表
+ */
+function createWorkflowConnections(data: any): WorkflowConnection[] {
+  const connections: WorkflowConnection[] = [];
+
+  const rawConnections: any[] = data.connections || data.edges || data.links || [];
+
+  for (let i: number = 0; i < rawConnections.length; i++) {
+    const raw: any = rawConnections[i];
+    const connection: WorkflowConnection = {
+      source: raw.source || raw.from || raw.source_id || "",
+      target: raw.target || raw.to || raw.target_id || "",
+      sourcePort: raw.sourcePort || raw.source_port || "output",
+      targetPort: raw.targetPort || raw.target_port || "input",
+    };
+    if (connection.source && connection.target) {
+      connections.push(connection);
+    }
+  }
+
+  return connections;
+}
+
+/**
+ * 提取工作流元数据
+ *
+ * @param {any} data - 解析后的数据
+ * @returns {Record<string, any>} 元数据
+ */
+function extractWorkflowMetadata(data: any): Record<string, any> {
+  return {
+    name: data.name || data.workflow_name || "unnamed_workflow",
+    version: data.version || "1.0.0",
+    description: data.description || "",
+    createdAt: data.createdAt || data.created_at || new Date().toISOString(),
+    author: data.author || data.creator || "unknown",
+    tags: data.tags || [],
+  };
+}
+
+// ============================================================================
+// 第四部分: smart_processor - 全功能智能处理插件
+// ============================================================================
+
+/**
+ * @tool
+ * @name smart_processor
+ * @description 自动处理数据可视化、格式转换、文本处理、网页解析及OpenAPI/Swagger/cURL解析
+ * @parameters {
+ *   "task": {
+ *     "type": "object",
+ *     "required": true,
+ *     "description": "任务信息，格式：{需求: '...', 数据: {...}, 选项: {...}}"
+ *   }
+ * }
+ */
+
+/**
+ * smartProcessorHandler(params) - 全功能智能处理插件主函数
+ *
+ * 支持数据可视化、格式转换、Markdown 转 HTML、网页解析、API 文档解析等功能。
+ * 包含子功能: handleVisualize(可视化), handleFormat(格式转换),
+ * handleMd2Html(MD转HTML), handleWebParse(网页解析), handleApiParse(API解析)。
+ *
+ * @param {Object} params - 入参对象
+ * @param {string} params.input - 必填，输入数据
+ * @param {string} [params.action] - 可选，操作类型: visualize | convert | md2html | parse_web | parse_api
+ * @param {string} [params.input_format] - 可选，输入格式: json | csv | xml | yaml | markdown | html
+ * @param {string} [params.output_format] - 可选，输出格式: json | csv | xml | yaml | html | markdown
+ * @param {Object} [params.options] - 可选，额外选项
+ * @returns {Object} 处理结果
+ *   @returns {number} code - 状态码，0 成功 / 非 0 失败
+ *   @returns {string} message - 结果描述
+ *   @returns {Object} data - 结果数据
+ *   @returns {string} data.result - 处理结果
+ *   @returns {string} data.action - 执行的操作
+ *   @returns {Object} data.stats - 统计信息
+ */
+async function smartProcessorHandler(params: {
+  input: string;
+  action?: string;
+  input_format?: string;
+  output_format?: string;
+  options?: Record<string, any>;
+}): Promise<{
+  code: number;
+  message: string;
+  data: {
+    result: string;
+    action: string;
+    stats: Record<string, any>;
+  } | null;
+}> {
+  try {
+    // 参数校验
+    if (!params || !params.input || typeof params.input !== "string") {
+      return {
+        code: 1001,
+        message: "参数错误: input 为必填项且必须为字符串",
+        data: null,
+      };
+    }
+
+    const input: string = params.input;
+    const action: string = params.action || "auto";
+    const inputFormat: string = params.input_format || detectFormat(input);
+    const outputFormat: string = params.output_format || "json";
+    const options: Record<string, any> = params.options || {};
+
+    let result: string = "";
+    const stats: Record<string, any> = {
+      inputLength: input.length,
+      inputFormat: inputFormat,
+      outputFormat: outputFormat,
+      timestamp: new Date().toISOString(),
+    };
+
+    // 根据操作类型分发处理
+    switch (action) {
+      case "visualize":
+        result = visualizeData(input, inputFormat, options);
+        stats.type = "visualization";
+        break;
+
+      case "convert":
+        result = convertFormat(input, inputFormat, outputFormat, options);
+        stats.type = "conversion";
+        break;
+
+      case "md2html":
+        result = markdownToHtml(input, options);
+        stats.type = "md2html";
+        break;
+
+      case "parse_web":
+        result = parseWebPage(input, options);
+        stats.type = "web_parsing";
+        break;
+
+      case "parse_api":
+        result = parseApiDoc(input, options);
+        stats.type = "api_parsing";
+        break;
+
+      case "auto":
+        // 自动检测最佳操作
+        const autoResult: { result: string; action: string } = autoProcess(input, inputFormat, outputFormat, options);
+        result = autoResult.result;
+        stats.type = autoResult.action;
+        break;
+
+      default:
+        return {
+          code: 1004,
+          message: `不支持的操作类型: ${action}`,
+          data: null,
+        };
+    }
+
+    stats.outputLength = result.length;
+
+    return {
+      code: 0,
+      message: "处理成功",
+      data: {
+        result: result,
+        action: action,
+        stats: stats,
+      },
+    };
+  } catch (error: any) {
+    return {
+      code: 5000,
+      message: `处理失败: ${error?.message || String(error)}`,
+      data: null,
+    };
+  }
+}
+
+/**
+ * 检测数据格式
+ */
+function detectFormat(input: string): string {
+  const trimmed: string = input.trim();
+  if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
+    return "json";
+  }
+  if (trimmed.startsWith("<")) {
+    return "html";
+  }
+  if (/^#{1,6}\s/.test(trimmed)) {
+    return "markdown";
+  }
+  if (trimmed.includes(",") && trimmed.includes("\n")) {
+    return "csv";
+  }
+  return "text";
+}
+
+/**
+ * 数据可视化
+ */
+function visualizeData(input: string, format: string, options: Record<string, any>): string {
+  let data: any;
+  if (format === "json") {
+    data = JSON.parse(input);
+  } else {
+    data = { raw: input };
+  }
+
+  const chartType: string = options.chartType || "table";
+  let html: string = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Data Visualization</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background-color: #4CAF50; color: white; }
+    tr:nth-child(even) { background-color: #f2f2f2; }
+  </style>
+</head>
+<body>
+  <h2>Data Visualization (${chartType})</h2>
+`;
+
+  if (chartType === "table") {
+    html += generateTableHtml(data);
+  } else if (chartType === "bar") {
+    html += generateBarChartHtml(data);
+  } else {
+    html += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+  }
+
+  html += `
+</body>
+</html>`;
+
+  return html;
+}
+
+/**
+ * 生成表格 HTML
+ */
+function generateTableHtml(data: any): string {
+  if (!Array.isArray(data)) {
+    data = [data];
+  }
+  if (data.length === 0) {
+    return "<p>无数据</p>";
+  }
+
+  const keys: string[] = Object.keys(data[0]);
+  let html: string = "<table><thead><tr>";
+  for (const key of keys) {
+    html += `<th>${escapeHtml(key)}</th>`;
+  }
+  html += "</tr></thead><tbody>";
+  for (const row of data) {
+    html += "<tr>";
+    for (const key of keys) {
+      html += `<td>${escapeHtml(String(row[key] ?? ""))}</td>`;
+    }
+    html += "</tr>";
+  }
+  html += "</tbody></table>";
+  return html;
+}
+
+/**
+ * 生成柱状图 HTML
+ */
+function generateBarChartHtml(data: any): string {
+  let html: string = '<div style="display:flex;flex-direction:column;gap:5px;">';
+  const entries: Array<[string, any]> = Array.isArray(data)
+    ? Object.entries(data[0] || {})
+    : Object.entries(data);
+
+  for (const [key, value] of entries) {
+    const numValue: number = Number(value) || 0;
+    const width: number = Math.min(Math.abs(numValue), 100);
+    html += `<div style="display:flex;align-items:center;gap:10px;">`;
+    html += `<span style="width:100px;">${escapeHtml(key)}</span>`;
+    html += `<div style="background:#4CAF50;height:20px;width:${width}%;min-width:2px;"></div>`;
+    html += `<span>${numValue}</span>`;
+    html += `</div>`;
+  }
+  html += "</div>";
+  return html;
+}
+
+/**
+ * 格式转换
+ */
+function convertFormat(input: string, fromFormat: string, toFormat: string, options: Record<string, any>): string {
+  // 先解析为通用对象
+  let data: any;
+  switch (fromFormat) {
+    case "json":
+      data = JSON.parse(input);
+      break;
+    case "csv":
+      data = csvToJson(input);
+      break;
+    case "xml":
+      data = xmlToJson(input);
+      break;
+    case "yaml":
+      data = yamlToJson(input);
+      break;
+    default:
+      data = { content: input };
+      break;
+  }
+
+  // 再转换为目标格式
+  switch (toFormat) {
+    case "json":
+      return JSON.stringify(data, null, 2);
+    case "csv":
+      return jsonToCsv(data);
+    case "xml":
+      return jsonToXml(data);
+    case "yaml":
+      return jsonToYaml(data);
+    case "markdown":
+      return jsonToMarkdown(data);
+    default:
+      return JSON.stringify(data, null, 2);
+  }
+}
+
+/**
+ * CSV 转 JSON
+ */
+function csvToJson(csv: string): any[] {
+  const lines: string[] = csv.trim().split("\n");
+  if (lines.length === 0) return [];
+
+  const headers: string[] = lines[0].split(",").map((h: string) => h.trim());
+  const result: any[] = [];
+
+  for (let i: number = 1; i < lines.length; i++) {
+    const values: string[] = lines[i].split(",").map((v: string) => v.trim());
+    const row: Record<string, any> = {};
+    for (let j: number = 0; j < headers.length; j++) {
+      row[headers[j]] = values[j] || "";
+    }
+    result.push(row);
+  }
+
+  return result;
+}
+
+/**
+ * JSON 转 CSV
+ */
+function jsonToCsv(data: any): string {
+  if (!Array.isArray(data)) {
+    data = [data];
+  }
+  if (data.length === 0) return "";
+
+  const headers: string[] = Object.keys(data[0]);
+  let csv: string = headers.join(",") + "\n";
+
+  for (const row of data) {
+    const values: string[] = headers.map((h: string) => {
+      const val: string = String(row[h] ?? "");
+      if (val.includes(",") || val.includes('"')) {
+        return `"${val.replace(/"/g, '""')}"`;
+      }
+      return val;
+    });
+    csv += values.join(",") + "\n";
+  }
+
+  return csv.trim();
+}
+
+/**
+ * XML 转 JSON (简化版)
+ */
+function xmlToJson(xml: string): any {
+  // 简化的 XML 解析
+  const result: Record<string, any> = {};
+  const tagRegex: RegExp = /<(\w+)>([^<]*)<\/\1>/g;
+  let match: RegExpExecArray | null;
+  while ((match = tagRegex.exec(xml)) !== null) {
+    result[match[1]] = match[2].trim();
+  }
+  return result;
+}
+
+/**
+ * JSON 转 XML
+ */
+function jsonToXml(data: any, rootName: string = "root"): string {
+  let xml: string = `<?xml version="1.0" encoding="UTF-8"?>\n<${rootName}>\n`;
+  for (const key of Object.keys(data)) {
+    const value: any = data[key];
+    if (typeof value === "object" && value !== null) {
+      xml += `  <${key}>\n${jsonToXml(value, key).split("\n").slice(1, -1).join("\n")}\n  </${key}>\n`;
+    } else {
+      xml += `  <${key}>${escapeHtml(String(value))}</${key}>\n`;
+    }
+  }
+  xml += `</${rootName}>`;
+  return xml;
+}
+
+/**
+ * YAML 转 JSON (简化版)
+ */
+function yamlToJson(yaml: string): any {
+  const result: Record<string, any> = {};
+  const lines: string[] = yaml.trim().split("\n");
+  for (const line of lines) {
+    const trimmed: string = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const colonIndex: number = trimmed.indexOf(":");
+    if (colonIndex === -1) continue;
+    const key: string = trimmed.substring(0, colonIndex).trim();
+    const value: string = trimmed.substring(colonIndex + 1).trim();
+    result[key] = value;
+  }
+  return result;
+}
+
+/**
+ * JSON 转 YAML (简化版)
+ */
+function jsonToYaml(data: any, indent: number = 0): string {
+  let yaml: string = "";
+  const prefix: string = "  ".repeat(indent);
+  for (const key of Object.keys(data)) {
+    const value: any = data[key];
+    if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+      yaml += `${prefix}${key}:\n`;
+      yaml += jsonToYaml(value, indent + 1);
+    } else if (Array.isArray(value)) {
+      yaml += `${prefix}${key}:\n`;
+      for (const item of value) {
+        yaml += `${prefix}- ${item}\n`;
+      }
+    } else {
+      yaml += `${prefix}${key}: ${value}\n`;
+    }
+  }
+  return yaml;
+}
+
+/**
+ * JSON 转 Markdown
+ */
+function jsonToMarkdown(data: any): string {
+  let md: string = "";
+  if (Array.isArray(data)) {
+    if (data.length === 0) return "空数组\n";
+    const keys: string[] = Object.keys(data[0]);
+    md += `| ${keys.join(" | ")} |\n`;
+    md += `| ${keys.map(() => "---").join(" | ")} |\n`;
+    for (const row of data) {
+      md += `| ${keys.map((k: string) => String(row[k] ?? "")).join(" | ")} |\n`;
+    }
+  } else {
+    for (const key of Object.keys(data)) {
+      md += `## ${key}\n\n${JSON.stringify(data[key], null, 2)}\n\n`;
+    }
+  }
+  return md;
+}
+
+/**
+ * Markdown 转 HTML
+ */
+function markdownToHtml(md: string, options: Record<string, any>): string {
+  let html: string = md;
+
+  // 标题转换
+  html = html.replace(/^###\s+(.+)$/gm, "<h3>$1</h3>");
+  html = html.replace(/^##\s+(.+)$/gm, "<h2>$1</h2>");
+  html = html.replace(/^#\s+(.+)$/gm, "<h1>$1</h1>");
+
+  // 粗体和斜体
+  html = html.replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>");
+  html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
+
+  // 行内代码
+  html = html.replace(/`(.+?)`/g, "<code>$1</code>");
+
+  // 代码块
+  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, "<pre><code>$2</code></pre>");
+
+  // 链接
+  html = html.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>');
+
+  // 图片
+  html = html.replace(/!\[(.+?)\]\((.+?)\)/g, '<img src="$2" alt="$1">');
+
+  // 无序列表
+  html = html.replace(/^[\*\-]\s+(.+)$/gm, "<li>$1</li>");
+  html = html.replace(/(<li>.*<\/li>\n?)+/g, (match: string) => `<ul>${match}</ul>`);
+
+  // 有序列表
+  html = html.replace(/^\d+\.\s+(.+)$/gm, "<li>$1</li>");
+
+  // 引用
+  html = html.replace(/^>\s+(.+)$/gm, "<blockquote>$1</blockquote>");
+
+  // 水平线
+  html = html.replace(/^---$/gm, "<hr>");
+
+  // 表格
+  html = html.replace(/^\|(.+)\|$/gm, (match: string) => {
+    const cells: string[] = match.split("|").filter((c: string) => c.trim() !== "");
+    return `<tr>${cells.map((c: string) => `<td>${c.trim()}</td>`).join("")}</tr>`;
+  });
+
+  // 段落 (将连续非标签文本包裹在 <p> 中)
+  html = html.split("\n\n").map((block: string) => {
+    const trimmed: string = block.trim();
+    if (trimmed === "") return "";
+    if (/^<(h\d|ul|ol|li|pre|blockquote|hr|table|tr|td|th|div)/.test(trimmed)) {
+      return trimmed;
+    }
+    return `<p>${trimmed}</p>`;
+  }).join("\n");
+
+  // 包装完整 HTML 文档
+  const fullHtml: string = `<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown 转换结果</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; }
+    h1, h2, h3 { margin-top: 24px; }
+    code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: "Courier New", monospace; }
+    pre { background: #f4f4f4; padding: 16px; border-radius: 5px; overflow-x: auto; }
+    pre code { background: none; padding: 0; }
+    blockquote { border-left: 4px solid #ddd; margin: 0; padding-left: 16px; color: #666; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ddd; padding: 8px; }
+    img { max-width: 100%; }
+  </style>
+</head>
+<body>
+${html}
+</body>
+</html>`;
+
+  return fullHtml;
+}
+
+/**
+ * 网页解析
+ */
+function parseWebPage(html: string, options: Record<string, any>): string {
+  const result: Record<string, any> = {};
+
+  // 提取标题
+  const titleMatch: RegExpMatchArray | null = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+  result.title = titleMatch ? titleMatch[1].trim() : "";
+
+  // 提取 meta 描述
+  const descMatch: RegExpMatchArray | null = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([\s\S]*?)["']/i);
+  result.description = descMatch ? descMatch[1].trim() : "";
+
+  // 提取 meta 关键词
+  const keywordsMatch: RegExpMatchArray | null = html.match(/<meta[^>]+name=["']keywords["'][^>]+content=["']([\s\S]*?)["']/i);
+  result.keywords = keywordsMatch ? keywordsMatch[1].trim() : "";
+
+  // 提取所有链接
+  const linkRegex: RegExp = /<a[^>]+href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+  const links: Array<{ href: string; text: string }> = [];
+  let linkMatch: RegExpExecArray | null;
+  while ((linkMatch = linkRegex.exec(html)) !== null) {
+    links.push({
+      href: linkMatch[1],
+      text: linkMatch[2].replace(/<[^>]+>/g, "").trim(),
+    });
+  }
+  result.links = links;
+  result.linkCount = links.length;
+
+  // 提取所有图片
+  const imgRegex: RegExp = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
+  const images: string[] = [];
+  let imgMatch: RegExpExecArray | null;
+  while ((imgMatch = imgRegex.exec(html)) !== null) {
+    images.push(imgMatch[1]);
+  }
+  result.images = images;
+  result.imageCount = images.length;
+
+  // 提取纯文本内容
+  let text: string = html
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  result.textContent = text.substring(0, 5000);
+  result.textLength = text.length;
+
+  // 提取标题层级
+  const headings: Array<{ level: number; text: string }> = [];
+  const headingRegex: RegExp = /<h([1-6])[^>]*>([\s\S]*?)<\/h\1>/gi;
+  let headingMatch: RegExpExecArray | null;
+  while ((headingMatch = headingRegex.exec(html)) !== null) {
+    headings.push({
+      level: parseInt(headingMatch[1], 10),
+      text: headingMatch[2].replace(/<[^>]+>/g, "").trim(),
+    });
+  }
+  result.headings = headings;
+
+  return JSON.stringify(result, null, 2);
+}
+
+/**
+ * API 文档解析
+ */
+function parseApiDoc(input: string, options: Record<string, any>): string {
+  let data: any;
+  try {
+    data = JSON.parse(input);
+  } catch {
+    data = { raw: input };
+  }
+
+  const result: Record<string, any> = {
+    endpoints: [] as Array<any>,
+    schemas: {} as Record<string, any>,
+    info: {} as Record<string, any>,
+  };
+
+  // 支持 OpenAPI/Swagger 格式
+  if (data.openapi || data.swagger) {
+    result.info = {
+      title: data.info?.title || "Untitled API",
+      version: data.info?.version || "1.0.0",
+      description: data.info?.description || "",
+    };
+
+    if (data.paths) {
+      for (const path of Object.keys(data.paths)) {
+        const pathItem: any = data.paths[path];
+        for (const method of Object.keys(pathItem)) {
+          const operation: any = pathItem[method];
+          result.endpoints.push({
+            path: path,
+            method: method.toUpperCase(),
+            summary: operation.summary || "",
+            description: operation.description || "",
+            parameters: operation.parameters || [],
+            requestBody: operation.requestBody || null,
+            responses: operation.responses || {},
+          });
+        }
+      }
+    }
+
+    if (data.components?.schemas) {
+      result.schemas = data.components.schemas;
+    }
+  } else {
+    // 通用格式
+    result.info = {
+      title: data.title || data.name || "Untitled API",
+      version: data.version || "1.0.0",
+      description: data.description || "",
+    };
+    result.endpoints = data.endpoints || data.paths || [];
+    result.schemas = data.schemas || data.models || {};
+  }
+
+  result.endpointCount = result.endpoints.length;
+  result.schemaCount = Object.keys(result.schemas).length;
+
+  return JSON.stringify(result, null, 2);
+}
+
+/**
+ * 自动处理
+ */
+function autoProcess(input: string, inputFormat: string, outputFormat: string, options: Record<string, any>): {
+  result: string;
+  action: string;
+} {
+  // 根据输入格式自动选择最佳操作
+  if (inputFormat === "markdown" && outputFormat === "html") {
+    return { result: markdownToHtml(input, options), action: "md2html" };
+  }
+  if (inputFormat === "html" && (outputFormat === "json" || outputFormat === "text")) {
+    return { result: parseWebPage(input, options), action: "parse_web" };
+  }
+  if (inputFormat === "json" && outputFormat === "html") {
+    return { result: visualizeData(input, inputFormat, options), action: "visualize" };
+  }
+  // 默认进行格式转换
+  return { result: convertFormat(input, inputFormat, outputFormat, options), action: "convert" };
+}
+
+/**
+ * HTML 转义
+ */
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+// ---- 原始版本函数名兼容别名 ----
+// 原始文件中使用 handleVisualize/handleFormat/handleMd2Html/handleWebParse/handleApiParse
+// 此处提供别名以保持向后兼容
+
+/**
+ * handleVisualize - 数据可视化 (兼容别名)
+ */
+const handleVisualize = visualizeData;
+
+/**
+ * handleFormat - 格式转换 (兼容别名)
+ */
+const handleFormat = convertFormat;
+
+/**
+ * handleMd2Html - Markdown 转 HTML (兼容别名)
+ */
+const handleMd2Html = markdownToHtml;
+
+/**
+ * handleWebParse - 网页解析 (兼容别名)
+ */
+const handleWebParse = parseWebPage;
+
+/**
+ * handleApiParse - API 文档解析 (兼容别名)
+ */
+const handleApiParse = parseApiDoc;
+
+// ============================================================================
+// 第五部分: CozePluginRepairTool - Coze 插件智能修复工具
+// ============================================================================
+
+/**
+ * 修复选项接口
+ */
+interface RepairOptions {
+  /** 是否修复 JSON 格式错误 */
+  fixJson: boolean;
+  /** 是否修复语法错误 */
+  fixSyntax: boolean;
+  /** 是否修复结构错误 */
+  fixStructure: boolean;
+  /** 是否修复语义错误 */
+  fixSemantic: boolean;
+  /** 是否合并多个插件 */
+  mergePlugins: boolean;
+  /** 自定义修复规则 */
+  customRules: Array<{ pattern: string; replacement: string }>;
+}
+
+/**
+ * 修复结果接口
+ */
+interface RepairResult {
+  code: number;
+  message: string;
+  data: {
+    originalCode: string;
+    repairedCode: string;
+    fixes: Array<{
+      type: string;
+      description: string;
+      line: number;
+      before: string;
+      after: string;
+    }>;
+    stats: {
+      totalFixes: number;
+      jsonFixes: number;
+      syntaxFixes: number;
+      structureFixes: number;
+      semanticFixes: number;
+      mergedPlugins: number;
+    };
+  } | null;
+}
+
+/**
+ * 默认修复选项
+ */
+const DEFAULT_REPAIR_OPTIONS: RepairOptions = {
+  fixJson: true,
+  fixSyntax: true,
+  fixStructure: true,
+  fixSemantic: true,
+  mergePlugins: false,
+  customRules: [],
+};
+
+/**
+ * CozePluginRepairEngine - Coze 插件智能修复引擎
+ *
+ * 支持 JSON 修复、语法修复、结构修复、语义修复、多插件合并。
+ */
+class CozePluginRepairEngine {
+  private options: RepairOptions;
+  private fixes: Array<{
+    type: string;
+    description: string;
+    line: number;
+    before: string;
+    after: string;
+  }>;
+  private stats: {
+    totalFixes: number;
+    jsonFixes: number;
+    syntaxFixes: number;
+    structureFixes: number;
+    semanticFixes: number;
+    mergedPlugins: number;
+  };
+
+  /**
+   * 构造函数
+   *
+   * @param {Partial<RepairOptions>} options - 修复选项
+   */
+  constructor(options?: Partial<RepairOptions>) {
+    this.options = { ...DEFAULT_REPAIR_OPTIONS, ...options };
+    this.fixes = [];
+    this.stats = {
+      totalFixes: 0,
+      jsonFixes: 0,
+      syntaxFixes: 0,
+      structureFixes: 0,
+      semanticFixes: 0,
+      mergedPlugins: 0,
+    };
+  }
+
+  /**
+   * 执行修复
+   *
+   * @param {string} code - 原始代码
+   * @returns {RepairResult} 修复结果
+   */
+  repair(code: string): RepairResult {
+    try {
+      if (!code || typeof code !== "string") {
+        return {
+          code: 1001,
+          message: "参数错误: code 必须为非空字符串",
+          data: null,
+        };
+      }
+
+      let repairedCode: string = code;
+      const originalCode: string = code;
+
+      // 1. JSON 修复
+      if (this.options.fixJson) {
+        repairedCode = this.fixJsonErrors(repairedCode);
+      }
+
+      // 2. 语法修复
+      if (this.options.fixSyntax) {
+        repairedCode = this.fixSyntaxErrors(repairedCode);
+      }
+
+      // 3. 结构修复
+      if (this.options.fixStructure) {
+        repairedCode = this.fixStructureErrors(repairedCode);
+      }
+
+      // 4. 语义修复
+      if (this.options.fixSemantic) {
+        repairedCode = this.fixSemanticErrors(repairedCode);
+      }
+
+      // 5. 应用自定义规则
+      if (this.options.customRules && this.options.customRules.length > 0) {
+        repairedCode = this.applyCustomRules(repairedCode);
+      }
+
+      this.stats.totalFixes = this.fixes.length;
+
+      return {
+        code: 0,
+        message: `修复完成，共修复 ${this.stats.totalFixes} 处问题`,
+        data: {
+          originalCode: originalCode,
+          repairedCode: repairedCode,
+          fixes: this.fixes,
+          stats: this.stats,
+        },
+      };
+    } catch (error: any) {
+      return {
+        code: 5000,
+        message: `修复失败: ${error?.message || String(error)}`,
+        data: null,
+      };
+    }
+  }
+
+  /**
+   * 合并多个插件
+   *
+   * @param {string[]} pluginCodes - 插件代码数组
+   * @returns {RepairResult} 合并结果
+   */
+  mergePlugins(pluginCodes: string[]): RepairResult {
+    try {
+      if (!Array.isArray(pluginCodes) || pluginCodes.length === 0) {
+        return {
+          code: 1001,
+          message: "参数错误: pluginCodes 必须为非空数组",
+          data: null,
+        };
+      }
+
+      if (pluginCodes.length === 1) {
+        return {
+          code: 0,
+          message: "仅有一个插件，无需合并",
+          data: {
+            originalCode: pluginCodes[0],
+            repairedCode: pluginCodes[0],
+            fixes: [],
+            stats: { ...this.stats, mergedPlugins: 1 },
+          },
+        };
+      }
+
+      // 提取每个插件的函数和类型
+      const allFunctions: string[] = [];
+      const allTypes: string[] = [];
+      const allImports: string[] = [];
+      const seenImports: Set<string> = new Set();
+
+      for (const pluginCode of pluginCodes) {
+        // 提取 import 语句
+        const importRegex: RegExp = /^import\s+.*$/gm;
+        let importMatch: RegExpExecArray | null;
+        while ((importMatch = importRegex.exec(pluginCode)) !== null) {
+          if (!seenImports.has(importMatch[0])) {
+            allImports.push(importMatch[0]);
+            seenImports.add(importMatch[0]);
+          }
+        }
+
+        // 提取 interface 定义
+        const interfaceRegex: RegExp = /interface\s+\w+[\s\S]*?\}/g;
+        let interfaceMatch: RegExpExecArray | null;
+        while ((interfaceMatch = interfaceRegex.exec(pluginCode)) !== null) {
+          allTypes.push(interfaceMatch[0]);
+        }
+
+        // 提取函数定义
+        const funcRegex: RegExp = /(?:async\s+)?function\s+\w+[\s\S]*?\n\}/g;
+        let funcMatch: RegExpExecArray | null;
+        while ((funcMatch = funcRegex.exec(pluginCode)) !== null) {
+          allFunctions.push(funcMatch[0]);
+        }
+      }
+
+      // 组装合并后的代码
+      const mergedCode: string = [
+        "// 合并后的插件代码",
+        `// 合并时间: ${new Date().toISOString()}`,
+        `// 合并插件数量: ${pluginCodes.length}`,
+        "",
+        ...allImports,
+        "",
+        "// ========== 类型定义 ==========",
+        "",
+        ...allTypes,
+        "",
+        "// ========== 函数实现 ==========",
+        "",
+        ...allFunctions,
+        "",
+        "// ========== 导出 ==========",
+        "",
+        `export { ${allFunctions.map((f: string) => {
+          const nameMatch: RegExpMatchArray | null = f.match(/function\s+(\w+)/);
+          return nameMatch ? nameMatch[1] : "";
+        }).filter(Boolean).join(", ")} };`,
+      ].join("\n");
+
+      this.stats.mergedPlugins = pluginCodes.length;
+      this.fixes.push({
+        type: "merge",
+        description: `合并了 ${pluginCodes.length} 个插件`,
+        line: 0,
+        before: `${pluginCodes.length} 个独立插件`,
+        after: "1 个合并插件",
+      });
+      this.stats.totalFixes = this.fixes.length;
+
+      return {
+        code: 0,
+        message: `成功合并 ${pluginCodes.length} 个插件`,
+        data: {
+          originalCode: pluginCodes.join("\n\n// --- 分隔线 ---\n\n"),
+          repairedCode: mergedCode,
+          fixes: this.fixes,
+          stats: this.stats,
+        },
+      };
+    } catch (error: any) {
+      return {
+        code: 5000,
+        message: `合并失败: ${error?.message || String(error)}`,
+        data: null,
+      };
+    }
+  }
+
+  /**
+   * JSON 修复
+   *
+   * 修复 JSON 格式错误: 尾部逗号、单引号、未引用键名等。
+   *
+   * @param {string} code - 原始代码
+   * @returns {string} 修复后的代码
+   */
+  private fixJsonErrors(code: string): string {
+    let fixed: string = code;
+
+    // 修复 1: 移除 JSON 对象/数组中的尾部逗号
+    const trailingCommaRegex: RegExp = /,(\s*[}\]])/g;
+    const trailingCommaMatches: RegExpMatchArray[] = [...fixed.matchAll(trailingCommaRegex)];
+    if (trailingCommaMatches.length > 0) {
+      const before: string = fixed;
+      fixed = fixed.replace(trailingCommaRegex, "$1");
+      this.fixes.push({
+        type: "json",
+        description: `移除了 ${trailingCommaMatches.length} 处尾部逗号`,
+        line: this.findLineNumber(before, ",}"),
+        before: ",}",
+        after: "}",
+      });
+      this.stats.jsonFixes += trailingCommaMatches.length;
+    }
+
+    // 修复 2: 单引号转双引号 (JSON 上下文中)
+    const singleQuoteRegex: RegExp = /([{,]\s*)'([^']+?)'(\s*[:)])/g;
+    const singleQuoteMatches: RegExpMatchArray[] = [...fixed.matchAll(singleQuoteRegex)];
+    if (singleQuoteMatches.length > 0) {
+      fixed = fixed.replace(singleQuoteRegex, '$1"$2"$3');
+      this.fixes.push({
+        type: "json",
+        description: `将 ${singleQuoteMatches.length} 处单引号替换为双引号`,
+        line: 0,
+        before: "'key':",
+        after: '"key":',
+      });
+      this.stats.jsonFixes += singleQuoteMatches.length;
+    }
+
+    // 修复 3: 未引用的键名
+    const unquotedKeyRegex: RegExp = /([{,]\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)(\s*:)/g;
+    const unquotedKeyMatches: RegExpMatchArray[] = [...fixed.matchAll(unquotedKeyRegex)];
+    if (unquotedKeyMatches.length > 0) {
+      fixed = fixed.replace(unquotedKeyRegex, '$1"$2"$3');
+      this.fixes.push({
+        type: "json",
+        description: `为 ${unquotedKeyMatches.length} 处未引用的键名添加引号`,
+        line: 0,
+        before: "key:",
+        after: '"key":',
+      });
+      this.stats.jsonFixes += unquotedKeyMatches.length;
+    }
+
+    return fixed;
+  }
+
+  /**
+   * 语法修复
+   *
+   * 修复 TypeScript/JavaScript 语法错误。
+   *
+   * @param {string} code - 原始代码
+   * @returns {string} 修复后的代码
+   */
+  private fixSyntaxErrors(code: string): string {
+    let fixed: string = code;
+
+    // 修复 1: 模板字符串转义错误 - 核心修复点
+    // 将 \\` 替换为普通反引号 `
+    const escapedBacktickRegex: RegExp = /\\\\`/g;
+    const escapedBacktickMatches: RegExpMatchArray[] = [...fixed.matchAll(escapedBacktickRegex)];
+    if (escapedBacktickMatches.length > 0) {
+      const before: string = fixed;
+      fixed = fixed.replace(escapedBacktickRegex, "`");
+      this.fixes.push({
+        type: "syntax",
+        description: `修复了 ${escapedBacktickMatches.length} 处模板字符串反引号转义错误 (\\\\` -> `)`,
+        line: this.findLineNumber(before, "\\\\`"),
+        before: "\\\\`",
+        after: "`",
+      });
+      this.stats.syntaxFixes += escapedBacktickMatches.length;
+    }
+
+    // 修复 2: 模板字符串变量转义错误 - 核心修复点
+    // 将 \\${ 替换为 ${
+    const escapedDollarBraceRegex: RegExp = /\\\\\$\{/g;
+    const escapedDollarBraceMatches: RegExpMatchArray[] = [...fixed.matchAll(escapedDollarBraceRegex)];
+    if (escapedDollarBraceMatches.length > 0) {
+      const before: string = fixed;
+      fixed = fixed.replace(escapedDollarBraceRegex, "${");
+      this.fixes.push({
+        type: "syntax",
+        description: `修复了 ${escapedDollarBraceMatches.length} 处模板字符串变量转义错误 (\\\\${ -> ${)`,
+        line: this.findLineNumber(before, "\\\\${"),
+        before: "\\\\${",
+        after: "${",
+      });
+      this.stats.syntaxFixes += escapedDollarBraceMatches.length;
+    }
+
+    // 修复 3: 缺失分号 (可选，不影响运行但改善一致性)
+    // 此处不强制添加分号，避免引入错误
+
+    // 修复 4: 修复不匹配的括号
+    fixed = this.fixMismatchedBrackets(fixed);
+
+    // 修复 5: 修复 `==` 为 `===` (严格相等)
+    const looseEqualRegex: RegExp = /([^=!<>])==([^=])/g;
+    const looseEqualMatches: RegExpMatchArray[] = [...fixed.matchAll(looseEqualRegex)];
+    if (looseEqualMatches.length > 0) {
+      fixed = fixed.replace(looseEqualRegex, "$1===$2");
+      this.fixes.push({
+        type: "syntax",
+        description: `将 ${looseEqualMatches.length} 处宽松相等 == 替换为严格相等 ===`,
+        line: 0,
+        before: "==",
+        after: "===",
+      });
+      this.stats.syntaxFixes += looseEqualMatches.length;
+    }
+
+    // 修复 6: 修复 `!=` 为 `!==`
+    const looseNotEqualRegex: RegExp = /([^=!<>])!=([^=])/g;
+    const looseNotEqualMatches: RegExpMatchArray[] = [...fixed.matchAll(looseNotEqualRegex)];
+    if (looseNotEqualMatches.length > 0) {
+      fixed = fixed.replace(looseNotEqualRegex, "$1!==$2");
+      this.fixes.push({
+        type: "syntax",
+        description: `将 ${looseNotEqualMatches.length} 处宽松不等 != 替换为严格不等 !==`,
+        line: 0,
+        before: "!=",
+        after: "!==",
+      });
+      this.stats.syntaxFixes += looseNotEqualMatches.length;
+    }
+
+    return fixed;
+  }
+
+  /**
+   * 结构修复
+   *
+   * 修复插件结构错误: 缺失的 handler 函数、缺失的类型定义、缺失的导出等。
+   *
+   * @param {string} code - 原始代码
+   * @returns {string} 修复后的代码
+   */
+  private fixStructureErrors(code: string): string {
+    let fixed: string = code;
+
+    // 修复 1: 检查是否有 handler 函数
+    if (!/\bhandler\b\s*\(/.test(fixed) && !/\basync\s+function\s+handler\b/.test(fixed)) {
+      const handlerTemplate: string = `
+// 自动添加的 handler 函数
+async function handler(params: Record<string, any>): Promise<{ code: number; message: string; data: any }> {
+  try {
+    return { code: 0, message: "success", data: params };
+  } catch (error: any) {
+    return { code: 5000, message: error?.message || String(error), data: null };
+  }
+}
+`;
+      fixed += handlerTemplate;
+      this.fixes.push({
+        type: "structure",
+        description: "添加了缺失的 handler 函数",
+        line: fixed.split("\n").length,
+        before: "(无 handler 函数)",
+        after: "async function handler(params)",
+      });
+      this.stats.structureFixes++;
+    }
+
+    // 修复 2: 检查是否有 export 语句
+    if (!/\bexport\b/.test(fixed)) {
+      const funcNameMatch: RegExpMatchArray | null = fixed.match(/function\s+(\w+)/);
+      if (funcNameMatch) {
+        const funcName: string = funcNameMatch[1];
+        fixed += `\n\nexport { ${funcName} };\n`;
+        this.fixes.push({
+          type: "structure",
+          description: `添加了缺失的 export 语句: export { ${funcName} }`,
+          line: fixed.split("\n").length,
+          before: "(无 export)",
+          after: `export { ${funcName} };`,
+        });
+        this.stats.structureFixes++;
+      }
+    }
+
+    // 修复 3: 检查是否有 try-catch 错误处理
+    const handlerMatch: RegExpMatchArray | null = fixed.match(/async\s+function\s+handler[\s\S]*?\n\}/);
+    if (handlerMatch && !/try\s*\{/.test(handlerMatch[0])) {
+      const oldHandler: string = handlerMatch[0];
+      const newHandler: string = oldHandler.replace(
+        /\)/,
+        `) {
+  try {`
+      ).replace(
+        /\n\}$/,
+        `\n  } catch (error: any) {
+    return { code: 5000, message: error?.message || String(error), data: null };
+  }
+}`
+      );
+      fixed = fixed.replace(oldHandler, newHandler);
+      this.fixes.push({
+        type: "structure",
+        description: "为 handler 函数添加了 try-catch 错误处理",
+        line: 0,
+        before: "(无 try-catch)",
+        after: "try { ... } catch (error) { ... }",
+      });
+      this.stats.structureFixes++;
+    }
+
+    // 修复 4: 检查 return 语句的参数完整性
+    if (/return\s*\{[^}]*\}/.test(fixed) && !/return\s*\{[^}]*code[^}]*\}/.test(fixed)) {
+      // return 对象中缺少 code 字段的情况不在此简单处理，避免误改
+    }
+
+    return fixed;
+  }
+
+  /**
+   * 语义修复
+   *
+   * 修复语义错误: 类型不匹配、参数缺失、函数名拼写等。
+   *
+   * @param {string} code - 原始代码
+   * @returns {string} 修复后的代码
+   */
+  private fixSemanticErrors(code: string): string {
+    let fixed: string = code;
+
+    // 修复 1: any 类型补充类型注解 (简单情况)
+    // 修复函数参数缺少类型注解
+    const untypedParamRegex: RegExp = /function\s+(\w+)\s*\(([^)]+)\)/g;
+    let semanticMatch: RegExpExecArray | null;
+    while ((semanticMatch = untypedParamRegex.exec(fixed)) !== null) {
+      const params: string = semanticMatch[2];
+      if (params && !params.includes(":") && params.trim() !== "") {
+        const typedParams: string = params
+          .split(",")
+          .map((p: string) => {
+            const trimmed: string = p.trim();
+            if (trimmed === "") return "";
+            return `${trimmed}: any`;
+          })
+          .join(", ");
+        const oldFunc: string = semanticMatch[0];
+        const newFunc: string = semanticMatch[0].replace(params, typedParams);
+        fixed = fixed.replace(oldFunc, newFunc);
+        this.fixes.push({
+          type: "semantic",
+          description: `为函数 ${semanticMatch[1]} 的参数添加了类型注解`,
+          line: this.findLineNumber(code, oldFunc),
+          before: `(${params})`,
+          after: `(${typedParams})`,
+        });
+        this.stats.semanticFixes++;
+      }
+    }
+
+    // 修复 2: 补充函数返回类型 (缺少返回类型的 async 函数)
+    const asyncNoReturnRegex: RegExp = /async\s+function\s+(\w+)\s*\([^)]*\)\s*\{/g;
+    let asyncMatch: RegExpExecArray | null;
+    while ((asyncMatch = asyncNoReturnRegex.exec(fixed)) !== null) {
+      const funcDecl: string = asyncMatch[0];
+      if (!funcDecl.includes("): Promise<") && !funcDecl.includes("):")) {
+        const newDecl: string = funcDecl.replace("{", ": Promise<any> {");
+        fixed = fixed.replace(funcDecl, newDecl);
+        this.fixes.push({
+          type: "semantic",
+          description: `为 async 函数 ${asyncMatch[1]} 添加了返回类型 Promise<any>`,
+          line: this.findLineNumber(code, funcDecl),
+          before: funcDecl,
+          after: newDecl,
+        });
+        this.stats.semanticFixes++;
+      }
+    }
+
+    // 修复 3: console.log 中的模板字符串检查
+    // 确保模板字符串正确闭合
+    const lines: string[] = fixed.split("\n");
+    for (let i: number = 0; i < lines.length; i++) {
+      const line: string = lines[i];
+      const backtickCount: number = (line.match(/`/g) || []).length;
+      if (backtickCount % 2 !== 0) {
+        // 奇数个反引号，可能缺少闭合
+        this.fixes.push({
+          type: "semantic",
+          description: `第 ${i + 1} 行: 检测到模板字符串反引号不匹配 (奇数个反引号)`,
+          line: i + 1,
+          before: line,
+          after: line + "`",
+        });
+        lines[i] = line + "`";
+        this.stats.semanticFixes++;
+      }
+    }
+    fixed = lines.join("\n");
+
+    return fixed;
+  }
+
+  /**
+   * 应用自定义修复规则
+   *
+   * @param {string} code - 原始代码
+   * @returns {string} 修复后的代码
+   */
+  private applyCustomRules(code: string): string {
+    let fixed: string = code;
+    for (const rule of this.options.customRules) {
+      try {
+        const regex: RegExp = new RegExp(rule.pattern, "g");
+        const matches: RegExpMatchArray[] = [...fixed.matchAll(regex)];
+        if (matches.length > 0) {
+          fixed = fixed.replace(regex, rule.replacement);
+          this.fixes.push({
+            type: "custom",
+            description: `自定义规则: ${rule.pattern} -> ${rule.replacement} (${matches.length} 处)`,
+            line: 0,
+            before: rule.pattern,
+            after: rule.replacement,
+          });
+        }
+      } catch {
+        // 忽略无效的正则表达式
+      }
+    }
+    return fixed;
+  }
+
+  /**
+   * 修复不匹配的括号
+   *
+   * @param {string} code - 原始代码
+   * @returns {string} 修复后的代码
+   */
+  private fixMismatchedBrackets(code: string): string {
+    let fixed: string = code;
+    const stack: Array<{ char: string; index: number }> = [];
+    const pairs: Record<string, string> = { ")": "(", "}": "{", "]": "[" };
+    const openers: Set<string> = new Set(["(", "{", "["]);
+
+    // 简单的括号匹配检查 (不处理字符串和注释内的括号)
+    for (let i: number = 0; i < fixed.length; i++) {
+      const char: string = fixed[i];
+      if (openers.has(char)) {
+        stack.push({ char, index: i });
+      } else if (pairs[char]) {
+        if (stack.length === 0) {
+          // 多余的闭括号 - 不自动删除，仅记录
+          this.fixes.push({
+            type: "syntax",
+            description: `检测到多余的闭括号 "${char}" 在位置 ${i}`,
+            line: fixed.substring(0, i).split("\n").length,
+            before: char,
+            after: "(建议删除)",
+          });
+        } else {
+          stack.pop();
+        }
+      }
+    }
+
+    // 未闭合的开括号 - 在末尾补充闭括号
+    while (stack.length > 0) {
+      const opener: { char: string; index: number } = stack.pop()!;
+      const closer: string = Object.keys(pairs).find((k: string) => pairs[k] === opener.char) || "";
+      if (closer) {
+        fixed += closer;
+        this.fixes.push({
+          type: "syntax",
+          description: `补充了缺失的闭括号 "${closer}"`,
+          line: fixed.split("\n").length,
+          before: "(缺失闭括号)",
+          after: closer,
+        });
+        this.stats.syntaxFixes++;
+      }
+    }
+
+    return fixed;
+  }
+
+  /**
+   * 查找行号
+   *
+   * @param {string} code - 代码
+   * @param {string} pattern - 搜索模式
+   * @returns {number} 行号 (1-based)
+   */
+  private findLineNumber(code: string, pattern: string): number {
+    const index: number = code.indexOf(pattern);
+    if (index === -1) return 0;
+    return code.substring(0, index).split("\n").length;
+  }
+}
+
+/**
+ * CozePluginRepairTool 主入口函数
+ *
+ * @param {Object} params - 入参对象
+ * @param {string} params.code - 必填，待修复的插件代码
+ * @param {Object} [params.options] - 可选，修复选项
+ * @param {string[]} [params.plugins] - 可选，待合并的插件代码数组
+ * @returns {RepairResult} 修复结果
+ */
+async function cozePluginRepairHandler(params: {
+  code?: string;
+  options?: Partial<RepairOptions>;
+  plugins?: string[];
+}): Promise<RepairResult> {
+  const engine: CozePluginRepairEngine = new CozePluginRepairEngine(params.options);
+
+  // 如果提供了多个插件，执行合并
+  if (params.plugins && Array.isArray(params.plugins) && params.plugins.length > 1) {
+    return engine.mergePlugins(params.plugins);
+  }
+
+  // 否则执行修复
+  if (!params.code) {
+    return {
+      code: 1001,
+      message: "参数错误: code 为必填项 (或提供 plugins 数组进行合并)",
+      data: null,
+    };
+  }
+
+  return engine.repair(params.code);
+}
+
+/**
+ * repairHandler - Coze 插件修复工具主入口函数 (别名)
+ *
+ * 兼容原始版本的函数名，内部委托给 cozePluginRepairHandler。
+ *
+ * @param {Object} params - 入参对象
+ * @param {string} params.code - 必填，待修复的插件代码
+ * @param {Object} [params.options] - 可选，修复选项
+ * @param {string[]} [params.plugins] - 可选，待合并的插件代码数组
+ * @returns {RepairResult} 修复结果
+ */
+async function repairHandler(params: {
+  code?: string;
+  options?: Partial<RepairOptions>;
+  plugins?: string[];
+}): Promise<RepairResult> {
+  return cozePluginRepairHandler(params);
+}
+
+// ============================================================================
+// 第六部分: 模块导出
+// ============================================================================
+
+export {
+  // 核心函数
+  handler,
+  run,
+  generatePluginCode,
+  generatePluginConfig,
+  // coze_plugin_generator
+  generateHandler,
+  generatePluginCode_v2,
+  validateInputParams,
+  extractPluginFeatures,
+  buildUsageInstructions,
+  PLUGIN_UI_CONFIG,
+  // Workflow_JSON_Importer
+  WorkflowPluginMeta,
+  WorkflowUIConfig,
+  workflowHandler,
+  filterSensitiveData,
+  validateWorkflowStructure,
+  createWorkflowNodes,
+  createWorkflowConnections,
+  extractWorkflowMetadata,
+  // smart_processor
+  smartProcessorHandler,
+  visualizeData,
+  convertFormat,
+  markdownToHtml,
+  parseWebPage,
+  parseApiDoc,
+  handleVisualize,
+  handleFormat,
+  handleMd2Html,
+  handleWebParse,
+  handleApiParse,
+  // CozePluginRepairTool
+  cozePluginRepairHandler,
+  repairHandler,
+  CozePluginRepairEngine,
+};
+
+export type {
+  PluginMeta,
+  PluginInputParams,
+  GeneratorOutput,
+  PluginFeatures,
+  ExtractedFeatures,
+  WorkflowNode,
+  WorkflowConnection,
+  WorkflowData,
+  WorkflowInput,
+  WorkflowOutput,
+  UIConfig,
+  RepairOptions,
+  RepairResult,
+};
+
+// ============================================================================
+// 附录: 完整工具配置信息注释块
+// ============================================================================
+//
+// ==================================================================
+// 工具配置参数表
+// ==================================================================
+//
+// ------------------------------------------------------------------
+// 1. handler(params) - 主入口函数
+// ------------------------------------------------------------------
+// 输入参数:
+//   | 参数名                | 类型    | 必填 | 描述                   |
+//   |-----------------------|---------|------|------------------------|
+//   | plugin_requirement    | string  | 是   | 插件功能需求描述       |
+//   | request               | string  | 否   | 额外请求上下文         |
+//   | query                 | string  | 否   | 查询补充信息           |
+//
+// 输出参数:
+//   | 参数名                | 类型    | 描述                             |
+//   |-----------------------|---------|----------------------------------|
+//   | code                  | number  | 状态码，0 成功 / 非 0 失败       |
+//   | message               | string  | 结果描述信息                     |
+//   | data.pluginName       | string  | 插件名称                         |
+//   | data.pluginDescription| string  | 插件描述                         |
+//   | data.code             | string  | 生成的插件代码                   |
+//   | data.config           | object  | 插件配置对象                     |
+//   | data.usageInstructions| string  | 使用说明                         |
+//   | data.generationTime   | string  | 生成时间 (ISO 格式)              |
+//
+// ------------------------------------------------------------------
+// 2. generatePluginCode(requirement) - 生成插件代码
+// ------------------------------------------------------------------
+// 输入参数:
+//   | 参数名      | 类型   | 必填 | 描述               |
+//   |-------------|--------|------|--------------------|
+//   | requirement | string | 是   | 插件功能需求描述   |
+//
+// 输出参数:
+//   | 参数名 | 类型   | 描述                           |
+//   |--------|--------|--------------------------------|
+//   | (返回) | string | 完整 TypeScript 插件代码字符串 |
+//
+// ------------------------------------------------------------------
+// 3. generatePluginConfig(requirement) - 生成插件配置
+// ------------------------------------------------------------------
+// 输入参数:
+//   | 参数名      | 类型   | 必填 | 描述               |
+//   |-------------|--------|------|--------------------|
+//   | requirement | string | 是   | 插件功能需求描述   |
+//
+// 输出参数:
+//   | 参数名              | 类型    | 描述                       |
+//   |---------------------|---------|----------------------------|
+//   | pluginName          | string  | 插件名称                   |
+//   | pluginDescription   | string  | 插件描述                   |
+//   | runtime             | string  | 运行时环境                 |
+//   | toolCreationMethod  | string  | 工具创建方式               |
+//   | authorizationMethod | string  | 授权方式                   |
+//   | requestUrl          | string  | 请求 URL                   |
+//   | requestHeaders      | object  | 请求头                     |
+//   | toolName            | string  | 工具名称                   |
+//   | toolDescription     | string  | 工具描述                   |
+//   | inputParameters     | array   | 输入参数列表               |
+//   | outputParameters    | array   | 输出参数列表               |
+//
+// ------------------------------------------------------------------
+// 4. coze_plugin_generator - Coze 插件自动生成神器
+// ------------------------------------------------------------------
+// 输入参数 (PluginInputParams):
+//   | 参数名              | 类型    | 必填 | 描述                     |
+//   |---------------------|---------|------|--------------------------|
+//   | plugin_requirement  | string  | 是   | 插件功能需求描述         |
+//   | plugin_name         | string  | 否   | 插件名称                 |
+//   | runtime             | string  | 否   | 运行时 (默认 nodejs-18)  |
+//   | generateTest        | boolean | 否   | 是否生成测试代码         |
+//   | generateDoc         | boolean | 否   | 是否生成文档             |
+//   | options             | object  | 否   | 额外配置选项             |
+//
+// 输出参数 (GeneratorOutput):
+//   | 参数名                      | 类型    | 描述                     |
+//   |-----------------------------|---------|--------------------------|
+//   | code                        | number  | 状态码                   |
+//   | message                     | string  | 结果描述                 |
+//   | data.pluginName             | string  | 插件名称                 |
+//   | data.pluginDescription      | string  | 插件描述                 |
+//   | data.code                   | string  | 插件代码                 |
+//   | data.config                 | object  | 插件配置                 |
+//   | data.testCode               | string  | 测试代码 (可能为 null)   |
+//   | data.documentation          | string  | 文档 (可能为 null)       |
+//   | data.meta                   | object  | 插件元信息 (PluginMeta)  |
+//   | data.generationTime         | string  | 生成时间                 |
+//
+// PluginMeta 结构:
+//   | 字段       | 类型     | 描述         |
+//   |------------|----------|--------------|
+//   | name       | string   | 插件名称     |
+//   | version    | string   | 版本号       |
+//   | author     | string   | 作者         |
+//   | description| string   | 描述         |
+//   | runtime    | string   | 运行时       |
+//   | createdAt  | string   | 创建时间     |
+//   | updatedAt  | string   | 更新时间     |
+//   | tags       | string[] | 标签列表     |
+//
+// ------------------------------------------------------------------
+// 5. Workflow_JSON_Importer - 工作流 JSON 全能导入器
+// ------------------------------------------------------------------
+// 输入参数:
+//   | 参数名            | 类型    | 必填 | 描述                         |
+//   |-------------------|---------|------|------------------------------|
+//   | json_data         | string  | 是   | 工作流 JSON 数据字符串       |
+//   | filter_sensitive  | boolean | 否   | 是否过滤敏感信息 (默认 true) |
+//   | validate_structure| boolean | 否   | 是否验证结构 (默认 true)     |
+//
+// 输出参数:
+//   | 参数名                | 类型    | 描述                   |
+//   |-----------------------|---------|------------------------|
+//   | code                  | number  | 状态码                 |
+//   | message               | string  | 结果描述               |
+//   | data.nodes            | array   | 工作流节点列表         |
+//   | data.connections      | array   | 工作流连接列表         |
+//   | data.metadata         | object  | 元数据                 |
+//   | data.nodeCount        | number  | 节点数量               |
+//   | data.connectionCount  | number  | 连接数量               |
+//
+// WorkflowNode 结构:
+//   | 字段     | 类型   | 描述           |
+//   |----------|--------|----------------|
+//   | id       | string | 节点 ID        |
+//   | type     | string | 节点类型       |
+//   | name     | string | 节点名称       |
+//   | config   | object | 节点配置       |
+//   | position | object | 位置 {x, y}    |
+//
+// WorkflowConnection 结构:
+//   | 字段       | 类型   | 描述       |
+//   |------------|--------|------------|
+//   | source     | string | 源节点 ID  |
+//   | target     | string | 目标节点 ID|
+//   | sourcePort | string | 源端口     |
+//   | targetPort | string | 目标端口   |
+//
+// ------------------------------------------------------------------
+// 6. smart_processor - 全功能智能处理插件
+// ------------------------------------------------------------------
+// 输入参数:
+//   | 参数名         | 类型   | 必填 | 描述                                                     |
+//   |----------------|--------|------|----------------------------------------------------------|
+//   | input          | string | 是   | 输入数据                                                 |
+//   | action         | string | 否   | 操作: visualize|convert|md2html|parse_web|parse_api|auto |
+//   | input_format   | string | 否   | 输入格式: json|csv|xml|yaml|markdown|html                |
+//   | output_format  | string | 否   | 输出格式: json|csv|xml|yaml|html|markdown                |
+//   | options        | object | 否   | 额外选项                                                 |
+//
+// 输出参数:
+//   | 参数名        | 类型   | 描述         |
+//   |--------------|--------|--------------|
+//   | code         | number | 状态码       |
+//   | message      | string | 结果描述     |
+//   | data.result  | string | 处理结果     |
+//   | data.action  | string | 执行的操作   |
+//   | data.stats   | object | 统计信息     |
+//
+// ------------------------------------------------------------------
+// 7. CozePluginRepairTool - Coze 插件智能修复工具
+// ------------------------------------------------------------------
+// 输入参数:
+//   | 参数名   | 类型     | 必填 | 描述                       |
+//   |----------|----------|------|----------------------------|
+//   | code     | string   | 否*  | 待修复的插件代码           |
+//   | options  | object   | 否   | 修复选项 (RepairOptions)   |
+//   | plugins  | string[] | 否*  | 待合并的插件代码数组       |
+//   * code 和 plugins 二选一，plugins 优先用于合并
+//
+// RepairOptions 结构:
+//   | 字段            | 类型     | 描述                   |
+//   |-----------------|----------|------------------------|
+//   | fixJson         | boolean  | 是否修复 JSON 错误     |
+//   | fixSyntax       | boolean  | 是否修复语法错误       |
+//   | fixStructure    | boolean  | 是否修复结构错误       |
+//   | fixSemantic     | boolean  | 是否修复语义错误       |
+//   | mergePlugins    | boolean  | 是否合并多个插件       |
+//   | customRules     | array    | 自定义修复规则         |
+//
+// 输出参数 (RepairResult):
+//   | 参数名                  | 类型   | 描述                 |
+//   |-------------------------|--------|----------------------|
+//   | code                    | number | 状态码               |
+//   | message                 | string | 结果描述             |
+//   | data.originalCode       | string | 原始代码             |
+//   | data.repairedCode       | string | 修复后代码           |
+//   | data.fixes              | array  | 修复记录列表         |
+//   | data.stats.totalFixes   | number | 总修复数             |
+//   | data.stats.jsonFixes    | number | JSON 修复数          |
+//   | data.stats.syntaxFixes  | number | 语法修复数           |
+//   | data.stats.structureFixes| number| 结构修复数           |
+//   | data.stats.semanticFixes| number | 语义修复数           |
+//   | data.stats.mergedPlugins| number | 合并插件数           |
+//
+// ==================================================================
+// 关键修复点汇总
+// ==================================================================
+//
+// 1. 模板字符串反引号修复:
+//    原始 (错误): \\`  ->  修复后: `
+//    原始 (错误): \\${ ->  修复后: ${
+//    影响范围: 所有使用模板字符串的代码段
+//    修复函数: CozePluginRepairEngine.fixSyntaxErrors()
+//
+// 2. 参数类型补全:
+//    - handler(params) 参数类型: { plugin_requirement: string; request?: string; query?: string }
+//    - generatePluginCode(requirement: string): string
+//    - generatePluginConfig(requirement: string): { pluginName: string; ... }
+//    - workflowHandler(params): { json_data: string; filter_sensitive?: boolean; ... }
+//    - smartProcessorHandler(params): { input: string; action?: string; ... }
+//    - cozePluginRepairHandler(params): { code?: string; options?: Partial<RepairOptions>; ... }
+//
+// 3. TypeScript 类型注解修复:
+//    - 所有 async 函数添加 Promise<T> 返回类型
+//    - 所有函数参数添加类型注解
+//    - 所有接口/类型导出使用 export type
+//    - 类成员添加 private/public 访问修饰符
+//
+// ==================================================================
+// 文件结束
+// ==================================================================

@@ -1,0 +1,1 @@
+pip install -U scikit-learn joblib cryptography watchdog chardet numpy pdfminer.six textract pillow pytesseract

@@ -1,0 +1,29 @@
+# system_config.yaml
+system:
+  name: "NeuroFactory Fusion"
+  version: "9.0.0"
+  max_concurrent_workflows: 5
+  log_level: "INFO"
+
+data:
+  monitor_dirs:
+    - ./data
+    - ./knowledge
+  model_store: ./models
+  max_file_size_mb: 1024
+
+ai_training:
+  model_name: "microsoft/DialoGPT-medium"
+  batch_size: 4
+  learning_rate: 5e-5
+  num_epochs: 3
+  max_length: 512
+  enable_quantum_security: true
+
+coze_integration:
+  enabled: true
+  mode: "full"
+  api_base: "https://api.coze.cn"
+  api_key: "your_api_key_here"
+  workflow_timeout: 300
+  max_retries: 3

@@ -1,0 +1,410 @@
+# COZE插件清单 - 修复版 2026-08-04
+openapi: 3.0.3
+info:
+  title: Coze全场景智能自动化超级中枢
+  description: 统一整合的智能自动化API中枢，支持多场景工作流自动化、数据集成与AI增强处理
+  version: "10.1.0"
+  contact:
+    name: API支持团队
+    email: support@coze-automation.com
+  license:
+    name: Apache 2.0
+
+servers:
+  - url: https://api.coze-automation.com/v1
+    description: 生产环境
+  - url: https://api.coze.com/v3
+    description: Coze官方API
+
+tags:
+  - name: 统一自动化工具
+    description: 全功能智能自动化处理中枢
+
+paths:
+  /automation/execute:
+    post:
+      tags: [统一自动化工具]
+      summary: 执行统一自动化处理
+      operationId: unifiedAutomationExecute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AutomationRequest"
+      responses:
+        '200':
+          description: 自动化执行成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AutomationSuccessResponse"
+        '400':
+          description: 请求参数错误
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - BearerAuth: []
+        - CozeApiKey: []
+
+  /automation/status/{execution_id}:
+    get:
+      tags: [统一自动化工具]
+      summary: 获取自动化执行状态
+      operationId: getAutomationStatus
+      parameters:
+        - name: execution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 状态查询成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AutomationStatusResponse"
+        '404':
+          description: 执行记录不存在
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - BearerAuth: []
+
+  /automation/repair/all-nodes:
+    post:
+      tags: [统一自动化工具]
+      summary: 工作流全节点批量自愈
+      operationId: repairAllNodes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [workflow_id]
+              properties:
+                workflow_id:
+                  type: string
+                repair_scope:
+                  type: string
+                  enum: [config, logic, dependency, all]
+                  default: all
+      responses:
+        '200':
+          description: 全节点修复成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllNodeRepairResponse"
+      security:
+        - CozeApiKey: []
+
+components:
+  schemas:
+    AutomationRequest:
+      type: object
+      required: [user_input, operation_type]
+      properties:
+        user_input:
+          type: string
+          minLength: 1
+        operation_type:
+          type: string
+          enum: [workflow_management, plugin_generation, node_repair, ai_enhancement, data_integration, full_automation]
+        enable_auto_processing:
+          type: boolean
+          default: true
+        auto_repair_level:
+          type: string
+          enum: [basic, advanced, full]
+          default: full
+        trigger_node_id:
+          type: string
+          default: end
+        plugin_registry:
+          type: boolean
+          default: true
+        workflow_config:
+          $ref: "#/components/schemas/WorkflowConfig"
+        plugin_config:
+          $ref: "#/components/schemas/PluginConfig"
+        ai_config:
+          $ref: "#/components/schemas/AIConfig"
+        repair_config:
+          $ref: "#/components/schemas/RepairConfig"
+
+    AutomationSuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        execution_id:
+          type: string
+          format: uuid
+        operation_type:
+          type: string
+        results:
+          type: object
+          properties:
+            workflow_result:
+              $ref: "#/components/schemas/WorkflowResult"
+            plugin_result:
+              $ref: "#/components/schemas/PluginResult"
+            repair_result:
+              $ref: "#/components/schemas/RepairResult"
+        summary:
+          type: object
+          properties:
+            total_operations:
+              type: integer
+            successful_operations:
+              type: integer
+            execution_time_ms:
+              type: integer
+            auto_processing_enabled:
+              type: boolean
+
+    AutomationStatusResponse:
+      type: object
+      properties:
+        execution_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [pending, running, completed, failed]
+        progress:
+          type: integer
+          minimum: 0
+          maximum: 100
+        start_time:
+          type: string
+          format: date-time
+        completion_time:
+          type: string
+          format: date-time
+
+    WorkflowConfig:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+        triggers:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkflowTrigger"
+        steps:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkflowStep"
+
+    PluginConfig:
+      type: object
+      properties:
+        plugin_name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+        input_parameters:
+          type: array
+          items:
+            $ref: "#/components/schemas/PluginParameter"
+        output_parameters:
+          type: array
+          items:
+            $ref: "#/components/schemas/PluginParameter"
+        auto_register:
+          type: boolean
+          default: true
+
+    AIConfig:
+      type: object
+      properties:
+        enhancement_type:
+          type: string
+          enum: [summarize, translate, classify, extract, generate]
+        model_preference:
+          type: string
+          enum: [standard, advanced, custom]
+          default: standard
+
+    RepairConfig:
+      type: object
+      properties:
+        workflow_id:
+          type: string
+        repair_scope:
+          type: string
+          enum: [config, logic, dependency, all]
+          default: all
+
+    WorkflowResult:
+      type: object
+      properties:
+        workflow_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [created, updated, executed, deleted]
+        execution_id:
+          type: string
+          format: uuid
+        execution_status:
+          type: string
+
+    PluginResult:
+      type: object
+      properties:
+        plugin_name:
+          type: string
+        plugin_id:
+          type: string
+        input_parameters:
+          type: object
+        output_parameters:
+          type: object
+        coze_import_command:
+          type: string
+        auto_registered:
+          type: boolean
+
+    RepairResult:
+      type: object
+      properties:
+        workflow_id:
+          type: string
+        total_nodes:
+          type: integer
+        repaired_nodes:
+          type: integer
+        error_types_fixed:
+          type: array
+          items:
+            type: string
+        success_rate:
+          type: string
+
+    AllNodeRepairResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          enum: [0]
+        message:
+          type: string
+          enum: [all_nodes_repaired]
+        data:
+          type: object
+          properties:
+            workflow_id:
+              type: string
+            repair_details:
+              type: array
+              items:
+                type: object
+                properties:
+                  node_id:
+                    type: string
+                  error_type:
+                    type: string
+                    enum: [invalid_config, logic_error, dependency_missing, param_error]
+                  repair_status:
+                    type: string
+                    enum: [success, failed]
+            repair_statistics:
+              type: object
+              properties:
+                total_nodes:
+                  type: integer
+                repaired_count:
+                  type: integer
+                failed_count:
+                  type: integer
+                success_rate:
+                  type: string
+            workflow_available:
+              type: boolean
+
+    WorkflowTrigger:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [schedule, webhook, event, manual]
+        config:
+          type: object
+
+    WorkflowStep:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum: [action, condition, loop, delay]
+        action:
+          type: string
+        parameters:
+          type: object
+
+    PluginParameter:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum: [string, number, boolean, object, array]
+        required:
+          type: boolean
+          default: false
+        description:
+          type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: array
+              items:
+                type: object
+            timestamp:
+              type: string
+              format: date-time
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    CozeApiKey:
+      type: apiKey
+      in: header
+      name: X-Coze-API-Key
+
+security:
+  - BearerAuth: []
+  - CozeApiKey: []

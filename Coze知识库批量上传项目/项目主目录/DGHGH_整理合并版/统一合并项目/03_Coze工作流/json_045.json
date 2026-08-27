@@ -1,0 +1,8 @@
+{
+  "operation_type": "repair_nodes",
+  "intent": "修复工作流中的所有问题节点",
+  "parameters": {
+    "workflow_id": "wf_123456789",
+    "repair_scope": "all"
+  }
+}

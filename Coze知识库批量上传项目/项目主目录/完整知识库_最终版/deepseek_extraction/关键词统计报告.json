@@ -1,0 +1,307 @@
+{
+  "generated_at": "2026-07-25T13:27:56.645Z",
+  "source_directory": "d:\\sfdhdjdtysjsy\\sgdhfjasdkd\\完整知识库_最终版\\data",
+  "output_directory": "d:\\sfdhdjdtysjsy\\sgdhfjasdkd\\完整知识库_最终版\\deepseek_extraction",
+  "keywords": {
+    "all_keywords": [
+      "赚钱",
+      "变现",
+      "抖音",
+      "收入",
+      "接单",
+      "创业",
+      "财富",
+      "理财",
+      "自媒体",
+      "视频",
+      "创作",
+      "IP",
+      "推流",
+      "运营",
+      "直播",
+      "流量",
+      "副业",
+      "兼职",
+      "电商",
+      "带货",
+      "商业化",
+      "盈利",
+      "收益"
+    ],
+    "media_keywords": [
+      "抖音",
+      "自媒体",
+      "视频",
+      "创作",
+      "IP",
+      "推流",
+      "运营",
+      "直播",
+      "流量",
+      "带货"
+    ]
+  },
+  "source_files": {
+    "ALL_REQUESTS_COMPLETE.json": {
+      "total": 3996,
+      "matched": 883,
+      "matched_media": 679,
+      "errors": 0,
+      "encoding": "utf-8",
+      "array_found": true
+    },
+    "ALL_RESPONSES_COMPLETE.json": {
+      "total": 4131,
+      "matched": 1551,
+      "matched_media": 1364,
+      "errors": 0,
+      "encoding": "utf-8",
+      "array_found": true
+    },
+    "ALL_THINKS_COMPLETE.json": {
+      "total": 4005,
+      "matched": 769,
+      "matched_media": 543,
+      "errors": 0,
+      "encoding": "utf-8",
+      "array_found": true
+    },
+    "ALL_CODES_COMPLETE.json": {
+      "total": 18705,
+      "matched": 1630,
+      "matched_media": 1227,
+      "errors": 0,
+      "encoding": "utf-8",
+      "array_found": true
+    },
+    "FINAL_COMPLETE_CONTENT.txt": {
+      "note": "仅统计关键词出现次数,未写入输出文件(避免与JSON数据重复)",
+      "encoding": "utf-8",
+      "chunks_scanned": 17
+    },
+    "ALL_TOPICS_COMPLETE.json": {
+      "note": "已跳过 — 该文件(172MB)包含嵌入的完整消息,与独立的请求/回复/思考文件内容重复。主题标题可通过请求文件的首条记录获取。"
+    },
+    "STATISTICS_REPORT.json": {
+      "note": "参考文件(原始统计报告)",
+      "original_statistics": {
+        "total_conversations": 681,
+        "total_requests": 3996,
+        "total_responses": 4131,
+        "total_thinks": 4005,
+        "total_code_blocks": 18705,
+        "total_topics": 681
+      }
+    }
+  },
+  "keyword_counts": {
+    "赚钱": {
+      "requests": 237,
+      "responses": 339,
+      "thinks": 255,
+      "codes": 80,
+      "txt": 1148,
+      "total": 2059
+    },
+    "变现": {
+      "requests": 148,
+      "responses": 314,
+      "thinks": 169,
+      "codes": 124,
+      "txt": 321,
+      "total": 1076
+    },
+    "抖音": {
+      "requests": 260,
+      "responses": 443,
+      "thinks": 207,
+      "codes": 229,
+      "txt": 536,
+      "total": 1675
+    },
+    "收入": {
+      "requests": 61,
+      "responses": 216,
+      "thinks": 27,
+      "codes": 31,
+      "txt": 37,
+      "total": 372
+    },
+    "接单": {
+      "requests": 57,
+      "responses": 115,
+      "thinks": 66,
+      "codes": 32,
+      "txt": 182,
+      "total": 452
+    },
+    "创业": {
+      "requests": 84,
+      "responses": 187,
+      "thinks": 50,
+      "codes": 45,
+      "txt": 88,
+      "total": 454
+    },
+    "财富": {
+      "requests": 24,
+      "responses": 65,
+      "thinks": 19,
+      "codes": 14,
+      "txt": 36,
+      "total": 158
+    },
+    "理财": {
+      "requests": 23,
+      "responses": 42,
+      "thinks": 3,
+      "codes": 6,
+      "txt": 6,
+      "total": 80
+    },
+    "自媒体": {
+      "requests": 83,
+      "responses": 142,
+      "thinks": 66,
+      "codes": 53,
+      "txt": 107,
+      "total": 451
+    },
+    "视频": {
+      "requests": 479,
+      "responses": 917,
+      "thinks": 341,
+      "codes": 701,
+      "txt": 1205,
+      "total": 3643
+    },
+    "创作": {
+      "requests": 352,
+      "responses": 623,
+      "thinks": 183,
+      "codes": 329,
+      "txt": 261,
+      "total": 1748
+    },
+    "IP": {
+      "requests": 123,
+      "responses": 321,
+      "thinks": 44,
+      "codes": 162,
+      "txt": 81,
+      "total": 731
+    },
+    "推流": {
+      "requests": 5,
+      "responses": 14,
+      "thinks": 0,
+      "codes": 2,
+      "txt": 3,
+      "total": 24
+    },
+    "运营": {
+      "requests": 185,
+      "responses": 378,
+      "thinks": 105,
+      "codes": 131,
+      "txt": 168,
+      "total": 967
+    },
+    "直播": {
+      "requests": 93,
+      "responses": 133,
+      "thinks": 9,
+      "codes": 101,
+      "txt": 20,
+      "total": 356
+    },
+    "流量": {
+      "requests": 134,
+      "responses": 306,
+      "thinks": 40,
+      "codes": 93,
+      "txt": 82,
+      "total": 655
+    },
+    "副业": {
+      "requests": 24,
+      "responses": 61,
+      "thinks": 5,
+      "codes": 22,
+      "txt": 4,
+      "total": 116
+    },
+    "兼职": {
+      "requests": 6,
+      "responses": 14,
+      "thinks": 0,
+      "codes": 2,
+      "txt": 0,
+      "total": 22
+    },
+    "电商": {
+      "requests": 373,
+      "responses": 667,
+      "thinks": 96,
+      "codes": 607,
+      "txt": 120,
+      "total": 1863
+    },
+    "带货": {
+      "requests": 86,
+      "responses": 160,
+      "thinks": 17,
+      "codes": 80,
+      "txt": 23,
+      "total": 366
+    },
+    "商业化": {
+      "requests": 26,
+      "responses": 50,
+      "thinks": 9,
+      "codes": 9,
+      "txt": 10,
+      "total": 104
+    },
+    "盈利": {
+      "requests": 49,
+      "responses": 87,
+      "thinks": 21,
+      "codes": 14,
+      "txt": 26,
+      "total": 197
+    },
+    "收益": {
+      "requests": 92,
+      "responses": 201,
+      "thinks": 35,
+      "codes": 63,
+      "txt": 51,
+      "total": 442
+    }
+  },
+  "output_files": {
+    "赚钱变现相关_全部内容.txt": {
+      "size_bytes": 4157863,
+      "size_mb": 3.97,
+      "size_kb": 4060.41,
+      "item_count": 146,
+      "truncated": true,
+      "description": "包含所有匹配关键词(赚钱/变现/抖音等23个)的请求、回复、思考和代码块内容"
+    },
+    "抖音自媒体相关_全部内容.txt": {
+      "size_bytes": 4184096,
+      "size_mb": 3.99,
+      "size_kb": 4086.03,
+      "item_count": 149,
+      "truncated": true,
+      "description": "专门与抖音/自媒体/视频/直播/流量等媒体关键词相关的匹配内容"
+    }
+  },
+  "summary": {
+    "total_items_scanned": 30837,
+    "total_matches_all": 4833,
+    "total_matches_media": 3813,
+    "unique_conversations_matched": 449
+  }
+}

@@ -1,0 +1,739 @@
+# Coze全场景智能自动化超级工具 - 完整合并版
+
+## 一、工具概述
+
+这是一个整合了所有功能的完整统一工具，包含以下核心能力：
+
+- **工具总数**：166个基础工具 + 144个主题分类 = 完整功能体系
+- **模块总数**：21个核心功能模块
+- **API端点**：统一入口 `https://api.coze.cn/api/v1/automation`
+- **请求方法**：POST
+- **版本**：18.0.0
+
+## 二、核心统计数据
+
+| 指标 | 数值 |
+|------|------|
+| 总对话数 | 681条 |
+| 总消息数 | 12,132条 |
+| 提问数 | 3,996个 |
+| 回答数 | 4,131个 |
+| 思考数 | 4,005个 |
+| 代码片段 | 72,239条 |
+| 主题类别 | 18个 |
+| 工具函数 | 226-242个 |
+| 总插件数 | 83个 |
+
+## 三、21个功能模块分类
+
+### 1. 单位换算类 (5个工具)
+- 公斤与斤换算（1公斤 = 2斤）
+- 价格计算（单价 × 数量）
+- 长度换算
+- 重量换算
+- 温度换算
+
+### 2. 工具设计类 (1个工具)
+- 豆包对话框内容提取工具设计
+
+### 3. AI训练类 (14-21个工具)
+- 本地AI模型训练
+- Hugging Face Transformers
+- 梯度检查点
+- 混合精度训练
+- LLaMA Factory
+- LLaMA Factory Pro
+- 多GPU分布式训练
+- LoRA微调
+- QLoRA微调
+- 模型推理
+- 文本生成
+- 数据加密
+- 可视化监控(TensorBoard)
+- 智能编码检测
+- 文本清洗
+- 表格转换
+- 大文件分块
+- 自动跳过特殊标记
+- 批量投喂
+- AI编程工具
+- Claude 3 Opus
+- Devin
+- Cursor
+
+### 4. Coze插件类 (15-33个工具)
+- Coze插件配置
+- JSON修复
+- 工作流修复
+- OpenAPI生成
+- 插件自动生成
+- 零代码插件生成
+- 插件发布
+- 插件验证
+- 插件错误修复
+- 显性错误修复
+- 隐性错误修复
+- GitHub批量导入
+- 神经意识决策
+- 智能体自动化创建
+- 参数验证
+- URL前缀统一
+- Schema验证
+- 模板调用
+- 插件协同
+- 场景化工作流
+- 智能路由
+- 自动修复
+- 批量生成
+- 插件融合
+- 个人令牌管理
+- 认证配置
+- API调用
+- Webhook配置
+- 回调处理
+- 错误处理
+- 日志记录
+- 监控告警
+
+### 5. OpenAPI类 (3个工具)
+- OpenAPI文档整合
+- OpenAPI规范生成
+- API验证
+
+### 6. Python开发类 (2个工具)
+- Python全栈开发
+- pip优化
+
+### 7. 智能体类 (17-30个工具)
+- A6智能体
+- 自主智能体
+- 智能体创建
+- 智能体配置
+- 智能体提示词
+- 智能体训练
+- 智能体部署
+- 智能体监控
+- 智能体优化
+- 智能体调试
+- 智能体日志
+- 智能体版本管理
+- 智能体备份
+- 智能体恢复
+- 智能体迁移
+- 智能体扩展
+- 智能体集成
+- 智能体API
+- 智能体Webhooks
+- 智能体权限
+- 智能体角色
+- 智能体知识库
+- 智能体记忆
+- 智能体学习
+- 智能体进化
+- 智能体安全
+- 智能体审计
+- 智能体合规
+- 智能体文档
+- 智能体支持
+
+### 8. 工作流类 (10-21个工具)
+- AI绘画优化
+- 智能修复
+- 工作流创建
+- 工作流执行
+- 工作流监控
+- 工作流调试
+- 工作流优化
+- 工作流备份
+- 工作流导入导出
+- 工作流模板
+- 工作流生成
+- 工作流批量生成
+- 可视化构建
+- 跨平台执行
+- 自定义节点
+- 验证优化
+- 监控调度
+- 版本控制
+- 调试回滚
+- 克隆分享
+- 分析扩展
+
+### 9. 洛阳非遗类 (2个工具)
+- 洛阳职业发展
+- 洛阳非遗（唐三彩、宫灯、汉服）数字化保护
+
+### 10. Docker类 (5个工具)
+- Docker Hub
+- 镜像构建
+- 容器编排
+- Docker部署
+- Docker监控
+
+### 11. GitHub类 (2个工具)
+- GitHub Actions
+- GitHub集成
+
+### 12. 部署运维类 (7-13个工具)
+- 高可用
+- 环境规划
+- 负载均衡
+- 自动扩缩容
+- 日志管理
+- 备份恢复
+- CI/CD集成
+- 云端部署
+- 环境规划设计
+- 高可用架构设计
+- 自动化运维脚本
+
+### 13. 内容创作类 (5个工具)
+- 抖音提取
+- 脚本生成
+- 视频制作
+- 图文生成
+- 短视频制作
+
+### 14. 变现赚钱类 (13-15个工具)
+- 外贸赚钱
+- AI创收
+- 电商策略
+- 流量变现
+- 内容变现
+- 会员订阅
+- 广告变现
+- 佣金分成
+- 付费内容
+- 服务变现
+- 代理分成
+- 品牌合作
+- 活动变现
+- 数据变现
+- 工具变现
+
+### 15. 安全合规类 (4个工具)
+- 安全合规检查
+- 密码生成
+- 隐私保护
+
+### 16. OpenClaw类 (5-6个工具)
+- OpenClaw集成
+- 免费LLM
+- 浏览器自动化
+- 任务调度
+- 脚本执行
+
+### 17. 飞书类 (1个工具)
+- 飞书助手搭建
+
+### 18. DeepSeek对话处理类 (16个工具)
+- 对话解析
+- 代码提取
+- 主题分类
+- 报告生成
+- 数据合并
+- 搜索对话
+- 统计信息
+- 多格式导出
+- 主题提取
+- 工具列表
+
+### 19. 神经意识决策类 (6个工具)
+- 自动决策
+- 自我认知
+- 反馈优化
+- 强化学习
+- 动作控制
+- 记忆巩固
+
+### 20. 多媒体制作类 (12个工具)
+- 视频生成
+- 图片生成
+- 音频处理
+- 字幕生成
+- 视频编辑
+- 图片编辑
+- 语音克隆
+- 背景移除
+- 风格迁移
+- 图片放大
+- 字幕同步
+- 缩略图生成
+
+### 21. 行业分析类 (8个工具)
+- 自动分析
+- 行业分类
+- 政策解读
+- 市场分析
+- 竞品分析
+- 趋势预测
+- 风险评估
+- 机会识别
+
+## 四、核心工具函数
+
+### 对话处理 (4个)
+1. `parse_deepseek_export` - 解析DeepSeek JSON数据
+2. `extract_code_blocks` - 提取代码块
+3. `classify_conversations` - 主题分类
+4. `search_conversations` - 搜索对话
+
+### 报告生成 (4个)
+5. `generate_report` - 生成报告
+6. `generate_markdown_report` - 生成Markdown报告
+7. `generate_json_report` - 生成JSON报告
+8. `export_formats` - 多格式导出
+
+### 数据处理 (4个)
+9. `merge_all_data` - 合并数据
+10. `get_statistics` - 统计分析
+11. `data_cleaner` - 数据清洗
+12. `multi_format_processor` - 多格式数据处理
+
+### Coze开发 (5个)
+13. `coze_plugin_json_repair` - Coze插件JSON修复
+14. `coze_workflow_repair` - Coze工作流修复
+15. `coze_plugin_generator` - Coze插件生成
+16. `openapi_schema_generator` - OpenAPI规范生成
+17. `api_validator` - API验证
+
+### AI功能 (5个)
+18. `ai_model_trainer` - AI模型训练
+19. `neural_decision_execute` - 神经决策执行
+20. `content_create` - 内容创作
+21. `plugin_generator` - 插件生成
+22. `workflow_create` - 工作流创建
+
+## 五、输入输出参数规范
+
+### 输入参数 (input_schema)
+```json
+{
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string",
+      "description": "操作类型",
+      "enum": [
+        "parse_deepseek_export",
+        "extract_code_blocks",
+        "classify_conversations",
+        "search_conversations",
+        "generate_report",
+        "generate_markdown_report",
+        "generate_json_report",
+        "export_formats",
+        "merge_all_data",
+        "get_statistics",
+        "data_cleaner",
+        "multi_format_processor",
+        "coze_plugin_json_repair",
+        "coze_workflow_repair",
+        "coze_plugin_generator",
+        "openapi_schema_generator",
+        "api_validator",
+        "ai_model_trainer",
+        "neural_decision_execute",
+        "content_create",
+        "plugin_generator",
+        "workflow_create",
+        "unit_convert",
+        "fix_openapi",
+        "smart_repair",
+        "luoyang_heritage_validator",
+        "monetization_generator",
+        "scene_workflow_executor"
+      ]
+    },
+    "user_input": {
+      "description": "用户输入内容（自然语言描述）"
+    "options": {
+        "language": {
+          "default": "zh-CN"
+        "output_format": {
+          "enum": ["json", "text", "html"],
+          "default": "json"
+        "confidence_threshold": {
+          "type": "number",
+          "default": 0.6
+        "auto_repair": {
+          "type": "boolean",
+          "default": true
+        }
+```
+
+### 输出参数 (output_schema)
+```json
+  "success": "boolean",
+  "status": "string",
+  "module": "string",
+  "module_name": "string",
+  "detected_intent": "string",
+  "action": "string",
+  "result": {
+    "data": "any",
+    "message": "string",
+    "workflow_id": "string",
+    "workflow_name": "string",
+    "plugin_id": "string",
+    "plugin_name": "string",
+    "model_path": "string",
+    "total_conversations": "number",
+    "conversations": "array",
+    "code_blocks": "object",
+    "nodes": "array",
+    "edges": "array"
+  "performance_metrics": {
+    "processing_time_ms": "number",
+    "confidence_score": "number",
+    "modules_executed": "array"
+  "metadata": {
+    "timestamp": "number",
+    "version": "string",
+    "request_id": "string",
+    "automation_enabled": "boolean",
+    "total_modules": "number",
+    "total_tools": "number",
+    "routed_module": "string",
+    "routing_confidence": "number"
+```
+
+## 六、错误码自动修复表
+
+| 错误码 | 说明 | 自动修复策略 | 修复建议 |
+|--------|------|-------------|----------|
+| 101001 | INVALID_PARAMS | 参数验证错误 | 检查输入参数格式和类型 |
+| 101002 | API_PREFIX_ERROR | API URL前缀不一致 | 统一使用/api/v1前缀 |
+| 101003 | JSON_SCHEMA_ERROR | JSON Schema验证失败 | 检查JSON格式 |
+| 101004 | WORKFLOW_ERROR | 工作流执行错误 | 检查工作流配置 |
+| 101005 | PLUGIN_ERROR | 插件执行错误 | 检查插件代码 |
+| 101006 | EXPORT_FUNCTION_ERROR | 函数导出错误 | 重命名入口函数为handler |
+| 101008 | DEPENDENCY_ERROR | 第三方依赖错误 | 移除非原生模块 |
+| 101009 | TYPE_CONFLICT_ERROR | 类型冲突错误 | 重命名冲突类型 |
+| 101010 | PATH_ERROR | 路径错误 | 修复HTTP URL重复片段 |
+| 101011 | AUTH_ERROR | 认证错误 | 检查环境变量COZE_API_TOKEN |
+| 101012 | RATE_LIMIT_ERROR | 限流错误 | 等待后重试 |
+| 777777776 | 节点执行超时 | auto_fix_timeout | 增大超时阈值或拆分节点 |
+| 720712023 | 输出解析失败 | auto_fix_output_schema | 检查输出格式与Schema匹配 |
+| 720702002 | 缺少必填参数 | auto_fix_missing_params | 添加参数或使用默认值 |
+| 720702004 | 工作流不存在 | auto_fix_not_found | 检查ID或从回收站恢复 |
+| 720702011 | 工作流未发布 | auto_fix_unpublished | 自动发布工作流 |
+| 500 | 服务器内部错误 | retry_with_backoff | 指数退避重试 |
+| 502 | 网关错误 | retry_with_backoff | 指数退避重试 |
+| 503 | 服务完全不可用 | retry_with_backoff | 指数退避重试 |
+| 504 | 网关超时 | retry_with_backoff | 指数退避重试 |
+
+## 七、验证规则链
+
+1. 必填检查 → 2. 类型检查 → 3. 格式检查 → 4. 范围检查 → 5. 枚举检查
+
+## 八、API配置
+
+- **端点**：`https://api.coze.cn/api/v1/automation/execute`
+- **方法**：POST
+- **认证**：通过Authorization头提供有效认证信息
+- **Token**：pat_6u5MNVONbqdI9t5lCgqrO6DGG6wNMiC4P5DCNmZkAhNcKSfe19oS9wtOuenHaHav
+
+## 九、工具特性
+
+- ✅ 零代码与开发者双模式
+- ✅ 自然语言驱动
+- ✅ 自动参数生成
+- ✅ 智能路由
+- ✅ 自修复能力
+- ✅ 洛阳非遗特色功能
+- ✅ 全流程无人工干预
+- ✅ 零Token成本（使用个人访问令牌）
+- ✅ 安全输入过滤
+- ✅ 防注入保护
+- ✅ 审计日志
+- ✅ 输入净化与防注入
+- ✅ 参数验证
+- ✅ 环境变量保护
+- ✅ 完整的错误处理机制
+
+## 十、使用示例
+
+### 示例1：工作流生成
+```json
+  "action": "workflow_create",
+  "user_input": "帮我生成一个电商订单处理工作流"
+```
+
+### 示例2：JSON修复
+```json
+  "action": "coze_plugin_json_repair",
+  "user_input": "修复这个JSON格式错误"
+```
+
+### 示例3：AI训练
+```json
+  "action": "ai_model_trainer",
+  "user_input": "配置本地AI训练环境"
+```
+
+### 示例4：智能路由 - 自动识别意图
+```json
+  "user_input": "帮我生成一个Python插件"
+```
+
+### 示例5：DeepSeek对话整理
+```json
+  "action": "deepseek",
+  "sub_action": "parse_export",
+  "user_input": "/path/to/conversations.json"
+```
+
+## 十一、技术架构
+
+### 支持的文件格式（15+种）
+- TXT / PDF / CSV / XLSX / JSON / DOCX / 图片 / ZIP
+
+### 核心技术
+
+### 安全特性
+- 企业级数据加密
+- 审计日志
+- 权限控制
+- 防注入过滤
+
+## 十二、144个预定义主题分类
+
+主题分类涵盖：单位换算、工具设计、AI训练、Coze插件、OpenAPI、Python开发、智能体、工作流、洛阳非遗、Docker、GitHub、部署运维、内容创作、变现赚钱、安全合规、OpenClaw、飞书、其他工具
+
+## 十三、完整文件清单
+
+所有文件均位于 `d:\sfdhdjdtysjsy\sgdhfjasdkd\` 目录下：
+
+| 文件名 | 说明 |
+|--------|------|
+| 合并后_JS完整版.js | 合并后的完整JavaScript代码 |
+| 合并后_JSON完整版.json | 合并后的完整配置文件 |
+| 合并后_MD完整版.md | 合并后的完整文档 |
+| 合并后_TXT完整版.txt | 合并后的完整文本 |
+| deepseek_coze_ultimate_tools.py | 终极完整版代码（166个工具） |
+| unified_automation_plugin.json | 统一自动化插件配置 |
+| COZE_ULTIMATE_COMPLETE_MERGED.json | 终极合并版配置 |
+| deepseek_output/ | DeepSeek对话处理输出目录 |
+| Coze终极插件套件/ | Coze插件完整套件 |
+
+## 十四、18个类别详情
+
+### 1. 单位换算类 (1个)
+- 公斤与斤的换算关系
+
+### 2. 工具设计类 (1个)
+
+### 3. AI训练类 (21个)
+- 本地AI模型训练与数据处理方案
+- AI编程工具与未来开发趋势
+- 修复并完善AI训练代码
+- AI开发平台代码整合与优化
+- AI系统模块架构与功能说明
+- AI工厂系统终极版整合与优化
+- LLaMA Factory Pro代码整合与优化
+- 多源数据处理与AI模型训练系统
+- AI训练系统与量子安全模块整合
+- 多源数据AI模型训练系统构建
+- 多源数据AI模型训练系统整合
+- 完整AI项目整合与优化交付
+- 全自动多模态AI训练系统
+- Bunny-v1.0-3B多模态系统优化
+- 基于HuggingFace的文本分类实战指南
+- 完整智能训练系统架构设计
+- Bunny-v1.0-3B多模态系统优化代码
+- 文本分类全流程实战指南总结
+- 本地数据训练模型自动化流程
+- 整理并修复OmniAI-Trainer Pro代码
+- AI模型微调与部署最佳实践
+
+### 4. Coze插件类 (33个)
+- Coze插件完整配置与修复方案
+- Coze插件完整修复与实现
+- Coze插件JSON修复与格式化工具
+- Coze工作流详解与应用指南
+- Coze IDE插件工作流自动化修复
+- Coze插件创建与调试流程指南
+- Coze插件创建与调试指南
+- Coze插件配置错误修复指南
+- Coze插件创建与调试完整指南
+- Coze插件开发模板与实现指南
+- Coze全场景智能自动化API文档修复
+- Coze插件自动化修复流程
+- Coze插件创建与TypeScript使用指南
+- Coze插件修复方案整理与排序
+- Coze插件宇宙提升办公效率
+- Coze工作流导入节点开发指南
+- Coze本地与云端工作流指南
+- Coze工作流错误修复与调试指南
+- Coze工作流问题诊断与修复建议
+- Coze工作流配置自动化生成方案
+- Coze工作流错误修复智能体
+- Coze工作流智能自动化插件终极统一版
+- Coze插件开发指南
+- Coze完全自动化终极指南完整输出
+- Coze与散爆网络关联查询
+- Coze批量提取抖音文案脚本指南
+- Coze插件终极融合代码
+- Coze插件高级功能扩展-多语言支持
+- Coze插件高级功能扩展-多平台适配
+- Coze插件高级功能扩展-多模型集成
+- Coze插件性能优化-缓存机制
+- Coze插件性能优化-异步处理
+
+### 5. OpenAPI类 (3个)
+- OpenAPI文档整合与统一
+- OpenAPI插件JSON定义合并
+- Coze插件开发专家OpenAPI生成
+
+### 6. Python开发类 (2个)
+- Python全栈开发与认证指南
+- 优化pip下载速度的方法
+
+### 7. 智能体类 (30个)
+- 团队的A6AI智能体提示词大全
+- 单一全能中枢智能体
+- Trae-AI IDE的完整系统提示词
+- 自动化创建coze大模型节点
+- 创建生成完整大模型、插件、节点
+- coze插件工作流自动化生成器
+- 描述语和程序代码生成器
+- 代码运行生成器
+- 自动化配置生成器
+- 描述语言生成完整大模型、插件、节点
+- MCP创建MCP
+- 插件创建插件
+- 节点自动创建节点
+- 工作流自动创建工作流
+- 自动化生成工作流节点插件
+- 智能体框架架构设计
+- 智能体开发最佳实践
+- 智能体对话管理系统
+- 智能体任务调度系统
+- 智能体知识库管理
+- 智能体多模态处理
+- 智能体长对话管理
+- 智能体记忆系统
+- 智能体工具调用框架
+- 智能体决策系统
+- 智能体协作系统
+- 智能体评估系统
+- 智能体部署方案
+- 智能体监控系统
+- 智能体安全防护
+
+### 8. 工作流类 (10个)
+- 工作流自动化执行引擎
+- 工作流可视化设计器
+- 工作流条件分支处理
+- 工作流错误处理机制
+- 工作流并行执行
+- 工作流数据传递
+- 工作流定时触发
+- 工作流事件触发
+- 工作流版本管理
+- 工作流导出导入
+
+### 9. 洛阳非遗类 (2个)
+- 洛阳非遗数字化保护方案
+- 洛阳非遗电商全链路支持
+
+### 10. Docker类 (5个)
+- Docker镜像构建与优化
+- Docker容器编排
+- Docker网络配置
+- Docker存储管理
+- Docker安全加固
+
+### 11. GitHub类 (2个)
+- GitHub Actions自动化流程
+- GitHub仓库管理
+
+### 12. 部署运维类 (7个)
+- 云端部署方案
+- 监控告警系统
+- 日志管理系统
+- CI/CD流水线
+
+### 13. 内容创作类 (5个)
+- 实时外贸指南
+- 抖音视频信息提取
+- 文本润色优化
+- AI脚本生成
+- 视频剪辑指导
+
+### 14. 变现赚钱类 (15个)
+- AI安全自动化创收
+- 赚钱任务设计
+- 非赚钱任务管理
+- 外汇交易风险警告
+- 电商运营策略
+- 流量变现方案
+- 内容变现模式
+- 会员付费体系
+- 广告投放优化
+- 数据分析驱动变现
+- 跨境电商方案
+- 私域流量运营
+- 直播带货策略
+- 知识付费平台
+- 订阅制服务
+
+### 15. 安全合规类 (4个)
+- 安全与合规审计
+- 本地知识库安全
+- 内存溢出修复
+- 数据隐私保护
+
+### 16. OpenClaw类 (6个)
+- OpenClaw完整指南
+- 免费大模型推荐
+- OmniMCP工具集成
+- OpenClaw自动化脚本
+- OpenClaw插件开发
+- OpenClaw性能优化
+
+### 17. 飞书类 (1个)
+- 飞书智能助手搭建指导
+
+### 18. 其他工具类 (4个)
+- 通用工具集
+- 实用脚本库
+- 辅助工具集成
+- 开发工具链
+
+## 十五、681个对话主题列表（节选）
+
+```
+001. 空列
+002. 公斤与斤的换算关系
+003. 豆包对话框内容提取工具设计
+004. 本地AI模型训练与数据处理方案
+005. AI编程工具与未来开发趋势
+006. Coze插件完整配置与修复方案
+007. Coze插件完整修复与实现
+...
+681. Coze完全自动化终极指南完整输出
+```
+
+## 十六、统计数据报告
+
+| 指标 | 数量 |
+| 总对话数 | 681 |
+| 总提问数 | 3,996 |
+| 总回答数 | 4,131 |
+| 总思考数 | 4,005 |
+| 总模块数 | 21 |
+| 总工具数 | 226-242 |
+| 总主题数 | 144 |
+| 总类别数 | 18 |
+| 总插件数 | 83 |
+| 总文件数 | 35 |
+| 时间范围 | 2025-03-03 至 2026-05-13 |
+
+---
+
+**版本**：18.0.0  
+**更新日期**：2026-05-27  
+**兼容平台**：Coze IDE (Node.js 18+)  
+**许可证**：MIT

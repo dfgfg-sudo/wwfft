@@ -1,0 +1,129 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Coze全场景智能自动化超级中枢",
+  "name_for_model": "coze_omnipotent_automation_hub",
+  "description_for_human": "终极整合的智能自动化超级中枢 - 统一企业工作流编排 + 全栈自动化 + AI增强处理 + 48核心功能模块 + 洛阳非遗电商全链路支持",
+  "description_for_model": "终极整合的智能自动化超级中枢，具备全自动插件生成、工作流节点自愈、智能触发机制、多领域集成等48项核心能力。整合AutoPluginMaster + QuantumAutomationMaster + OmniAutoMaster + 企业工作流编排系统全栈能力，支持单一入口驱动、全自动逆向驱动、任意节点触发、零手动配置、全节点自愈、端到端插件生成等高级特性。包含48个完整功能模块，支持多版本兼容、参数自动验证和智能错误处理。",
+  
+  "auth": {
+    "type": "service_http",
+    "authorization_type": "bearer",
+    "verification_tokens": {
+      "openai": "embed_workflow_orchestrator_2024"
+    }
+  },
+  
+  "api": {
+    "type": "openapi",
+    "url": "https://api.coze.com/v1/openapi.yaml",
+    "has_user_authentication": true
+  },
+  
+  "logo_url": "https://api.coze.com/logo.png",
+  "contact_email": "support@coze.com",
+  "legal_info_url": "https://coze.com/legal",
+  
+  "input_parameters": {
+    "type": "object",
+    "properties": {
+      "operation_mode": {
+        "type": "string",
+        "enum": [
+          "activate_emergency",
+          "ai_enhancement", 
+          "analyze_industry",
+          "auto_repair",
+          "backup_revert",
+          "create_custom_node",
+          "create_workflow",
+          "delete_workflow",
+          "execute_workflow",
+          "feed_data",
+          "generate_workflow",
+          "get_data_connections",
+          "get_workflow_by_id",
+          "get_workflows",
+          "process_automation",
+          "process_luoyang_heritage",
+          "repair_all_nodes",
+          "train_model",
+          "trigger_auto_plugin_workflow",
+          "update_workflow",
+          "validate_parameters"
+        ],
+        "description": "选择要执行的操作模式"
+      },
+      "config": {
+        "type": "object",
+        "description": "操作配置参数",
+        "properties": {
+          "user_request": {
+            "type": "string",
+            "description": "用户需求描述"
+          },
+          "workflow_id": {
+            "type": "string", 
+            "description": "工作流ID"
+          },
+          "backup_id": {
+            "type": "string",
+            "description": "备份ID"
+          },
+          "enhancement_type": {
+            "type": "string",
+            "description": "增强处理类型"
+          },
+          "industry_name": {
+            "type": "string",
+            "description": "行业名称"
+          },
+          "repair_scope": {
+            "type": "string",
+            "description": "修复范围"
+          },
+          "training_data": {
+            "type": "string",
+            "description": "训练数据"
+          }
+        }
+      },
+      "version": {
+        "type": "string",
+        "enum": ["v1.0", "v2.0", "v3.0"],
+        "default": "v1.0"
+      },
+      "async_execution": {
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "required": ["operation_mode"]
+  },
+  
+  "output_parameters": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean",
+        "description": "操作是否成功"
+      },
+      "operation_id": {
+        "type": "string",
+        "description": "操作ID"
+      },
+      "result": {
+        "type": "object",
+        "description": "操作结果"
+      },
+      "message": {
+        "type": "string",
+        "description": "响应消息"
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "description": "响应时间"
+      }
+    }
+  }
+}

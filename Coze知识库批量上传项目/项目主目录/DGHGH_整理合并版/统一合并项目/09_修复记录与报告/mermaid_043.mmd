@@ -1,0 +1,44 @@
+flowchart TD
+    A[📥 用户数据投喂] --> B{📁 文件格式检测}
+    B -->|TXT| C[📝 文本读取]
+    B -->|JSON| D[📊 JSON解析]
+    B -->|CSV| E[📈 CSV处理]
+    B -->|ZIP| F[🗜️ ZIP解压]
+    F --> F1[递归扫描] --> B
+
+    C --> G[🔄 文本标准化]
+    D --> H[🔍 结构化提取]
+    E --> I[📋 表格转文本]
+    G --> J[🎯 内容验证]
+    H --> J
+    I --> J
+    J --> K{❓ 质量检查}
+    K -->|通过| L[✅ 有效数据]
+    K -->|失败| M[❌ 丢弃]
+
+    L --> N[📊 数据集构建]
+    N --> O[🐍 Pandas DataFrame]
+    O --> P[🤗 HuggingFace Dataset]
+    P --> Q[💾 缓存保存]
+    Q --> R[🚀 训练就绪]
+
+    subgraph C [TXT处理栈]
+        C1[UTF-8检测]
+        C2[多行合并]
+        C3[字符过滤]
+    end
+    subgraph D [JSON处理栈]
+        D1[递归解析]
+        D2[数组展开]
+        D3[展平嵌套]
+    end
+    subgraph E [CSV处理栈]
+        E1[Pandas读取]
+        E2[列名标准化]
+        E3[空值处理]
+    end
+    subgraph J [质量检查栈]
+        J1[长度验证]
+        J2[编码验证]
+        J3[内容有效性]
+    end

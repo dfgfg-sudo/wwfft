@@ -1,0 +1,95 @@
+{
+  "name": "文字生成图片高效利器",
+  "description": "根据文字描述生成高质量图片，支持多种风格和尺寸",
+  "version": "1.0.0",
+  "create_time": "2025-07-16 12:09:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "prompt",
+            "type": "string",
+            "required": true,
+            "description": "图片描述文字"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "required": false,
+            "description": "风格：写实/动漫/油画/素描"
+          },
+          {
+            "name": "size",
+            "type": "string",
+            "required": false,
+            "description": "尺寸：square/portrait/landscape"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_optimize",
+      "type": "4",
+      "data": {
+        "name": "AI 优化提示词",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是AI绘画提示词优化专家，生成高质量提示词",
+        "user_prompt": "原始描述：{{prompt}}\\n风格：{{style || '写实'}}\\n请优化成专业AI绘画提示词",
+        "output_params": [
+          {
+            "name": "optimized_prompt",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_generate",
+      "type": "3",
+      "data": {
+        "name": "生成图片",
+        "language": "python",
+        "code": "import json\ndef main(optimized_prompt, size):\n    result = {\n        \"prompt\": optimized_prompt,\n        \"image_url\": f\"https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt={optimized_prompt[:50]}&image_size={size or 'square'}\",\n        \"size\": size or \"square\",\n        \"status\": \"generated\"\n    }\n    return result",
+        "output_params": [
+          {
+            "name": "image_result",
+            "type": "object"
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "image",
+            "type": "object",
+            "value": "{{code_node_generate.image_result}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "start_node",
+      "targetNodeID": "llm_node_optimize"
+    },
+    {
+      "sourceNodeID": "llm_node_optimize",
+      "targetNodeID": "code_node_generate"
+    },
+    {
+      "sourceNodeID": "code_node_generate",
+      "targetNodeID": "end_node"
+    }
+  ]
+}

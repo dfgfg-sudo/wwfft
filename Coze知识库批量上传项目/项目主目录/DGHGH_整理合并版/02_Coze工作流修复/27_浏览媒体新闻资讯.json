@@ -1,0 +1,67 @@
+{
+  "name": "浏览媒体新闻资讯",
+  "description": "浏览媒体新闻、资讯",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:05:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "category",
+            "type": "string",
+            "required": false,
+            "description": "新闻分类：科技/财经/娱乐/体育/国际"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_fetch",
+      "type": "3",
+      "data": {
+        "name": "获取新闻",
+        "language": "python",
+        "code": "def main(category):\n    news = [\n        {\"title\": \"头条新闻1\", \"category\": category or \"综合\", \"summary\": \"新闻摘要...\", \"source\": \"新闻来源\"},\n        {\"title\": \"头条新闻2\", \"category\": category or \"综合\", \"summary\": \"新闻摘要...\", \"source\": \"新闻来源\"},\n        {\"title\": \"头条新闻3\", \"category\": category or \"综合\", \"summary\": \"新闻摘要...\", \"source\": \"新闻来源\"}\n    ]\n    return {\"category\": category or \"综合\", \"news_list\": news}",
+        "output_params": [
+          {
+            "name": "category",
+            "type": "string"
+          },
+          {
+            "name": "news_list",
+            "type": "array"
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "news",
+            "type": "array",
+            "value": "{{code_node_fetch.news_list}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "start_node",
+      "targetNodeID": "code_node_fetch"
+    },
+    {
+      "sourceNodeID": "code_node_fetch",
+      "targetNodeID": "end_node"
+    }
+  ]
+}

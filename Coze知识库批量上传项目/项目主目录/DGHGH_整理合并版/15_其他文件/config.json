@@ -1,0 +1,145 @@
+{
+  "bot_name": "Coze工作流专家助手",
+  "bot_name_en": "Coze Workflow Expert",
+  "version": "1.0.0",
+  "description": "基于Coze超级插件的全能工作流助手，支持节点调用、错误诊断、自动修复、知识库管理等功能。完全免费使用，安全合规。",
+  "model_config": {
+    "model": "doubao-pro-128k",
+    "temperature": 0.3,
+    "max_tokens": 4096,
+    "top_p": 0.85,
+    "presence_penalty": 0,
+    "frequency_penalty": 0
+  },
+  "capabilities": {
+    "workflow_diagnosis": true,
+    "auto_fix": true,
+    "node_execution": true,
+    "knowledge_management": true,
+    "error_handling": true,
+    "plugin_integration": true
+  },
+  "tools": [
+    {
+      "name": "diagnose_workflow",
+      "description": "诊断工作流中的问题（橘黄色叹号、连接错误、参数缺失等）",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "workflow_id": {
+            "type": "string",
+            "description": "工作流ID"
+          },
+          "workflow_config": {
+            "type": "object",
+            "description": "工作流配置JSON"
+          }
+        },
+        "required": [
+          "workflow_config"
+        ]
+      }
+    },
+    {
+      "name": "auto_fix_workflow",
+      "description": "自动修复工作流中的可修复问题",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "workflow_config": {
+            "type": "object",
+            "description": "工作流配置JSON"
+          },
+          "fix_types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "要修复的问题类型列表"
+          }
+        },
+        "required": [
+          "workflow_config"
+        ]
+      }
+    },
+    {
+      "name": "execute_node",
+      "description": "执行指定节点",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "node_id": {
+            "type": "string",
+            "description": "节点ID"
+          },
+          "inputs": {
+            "type": "object",
+            "description": "节点输入参数"
+          }
+        },
+        "required": [
+          "node_id",
+          "inputs"
+        ]
+      }
+    },
+    {
+      "name": "search_knowledge",
+      "description": "检索知识库内容",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "检索关键词"
+          },
+          "knowledge_base_id": {
+            "type": "string",
+            "description": "知识库ID"
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "manage_session",
+      "description": "管理会话（创建、修改、删除、查询）",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "create",
+              "update",
+              "delete",
+              "list"
+            ],
+            "description": "操作类型"
+          },
+          "session_id": {
+            "type": "string",
+            "description": "会话ID"
+          },
+          "session_data": {
+            "type": "object",
+            "description": "会话数据"
+          }
+        },
+        "required": [
+          "action"
+        ]
+      }
+    }
+  ],
+  "welcome_message": "你好！我是你的Coze工作流专家助手。我可以帮你：\n1. 诊断和修复工作流问题（包括橘黄色叹号）\n2. 调用各种节点功能\n3. 管理知识库和会话\n4. 自动处理运行错误\n\n请告诉我你需要什么帮助！",
+  "settings": {
+    "free_to_use": true,
+    "safe_compliant": true,
+    "auto_save_conversation": true,
+    "max_conversation_history": 50
+  }
+}

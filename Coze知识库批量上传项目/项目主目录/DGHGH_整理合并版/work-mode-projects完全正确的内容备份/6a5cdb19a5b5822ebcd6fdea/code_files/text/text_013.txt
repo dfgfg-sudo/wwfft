@@ -1,0 +1,329 @@
+---
+
+第五部分：完整参数配置表
+
+以下为所有参数的完整列表，包含参数名称、描述、类型、传入方法、必填性和默认值。
+
+基础参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值 示例
+operation_type 要执行的自动化操作类型 String Body 是 - "text_processing"
+validation_config 验证配置 Object Body 否 {} {"auto_validate": true}
+auto_validate 是否自动验证参数 Boolean Body 否 true true
+error_handling 错误处理策略 String Body 否 "adaptive" "strict"
+validation_strictness 验证严格程度 String Body 否 "standard" "strict"
+version 功能版本号 String Body 否 "v1.0" "v2.0"
+async_execution 是否异步执行 Boolean Body 否 false true
+automation_enabled 是否启用自动化处理 Boolean Body 否 true true
+callback_url 异步回调URL String Body 否 - "https://callback.example.com"
+operation_config 自动化操作配置参数 Object Body 是 - {"text_config": {...}}
+
+文本处理参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+text_config.content 需要处理的文本内容 String Body 是 -
+text_config.operation_type 文本处理类型 String Body 是 -
+text_config.options.language 处理语言 String Body 否 "zh-CN"
+text_config.options.output_format 输出格式 String Body 否 "json"
+text_config.options.quality 处理质量级别 String Body 否 "standard"
+
+数据分析参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+data_config.data 需要处理的数据 Object Body 是 -
+data_config.analysis_type 数据分析类型 String Body 是 -
+data_config.parameters 分析参数配置 Object Body 否 {}
+
+文化遗产处理参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+heritage_config.action_type 文化遗产操作类型 String Body 否 "query"
+heritage_config.heritage_type 文化遗产类型 String Body 否 "intangible"
+heritage_config.heritage_category 文化遗产分类 String Body 否 "traditional_craft"
+heritage_config.heritage_data 文化遗产数据内容 Object Body 否 {}
+heritage_config.digital_assets 数字资产资源列表 Array<String> Body 否 []
+heritage_config.cultural_context 文化背景信息 Object Body 否 {}
+heritage_config.location 文化遗产地理位置 String Body 否 -
+heritage_config.preservation_level 文化遗产保护级别 String Body 否 "standard"
+heritage_config.processing_mode 文化遗产处理模式 String Body 否 "cataloging"
+
+插件配置参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+plugin_config.plugin_description 插件功能描述 String Body 否 -
+plugin_config.node_types 支持的节点类型 Array<String> Body 否 []
+plugin_config.execution_priority 插件执行优先级 String Body 否 "normal"
+plugin_config.self_healing_enabled 是否启用自愈功能 Boolean Body 否 false
+plugin_config.trigger_conditions 插件触发条件 Object Body 否 {}
+
+应急配置参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+emergency_config.emergency_level 应急事件级别 String Body 否 "medium"
+emergency_config.notification_contacts 紧急通知联系人列表 Array<String> Body 否 []
+emergency_config.recovery_strategy 系统恢复策略 String Body 否 "gradual"
+emergency_config.activation_reason 应急机制激活原因 String Body 否 -
+emergency_config.auto_recovery 是否启用自动恢复 Boolean Body 否 true
+
+修复配置参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+repair_config.repair_type 修复类型分类 String Body 否 "system"
+repair_config.repair_scope 修复操作范围 String Body 否 "configuration"
+repair_config.repair_strategy 修复策略选择 String Body 否 "auto"
+repair_config.diagnosis_mode 诊断模式选择 String Body 否 "quick"
+repair_config.diagnosis_level 问题诊断深度 String Body 否 "standard"
+repair_config.target_components 目标修复组件 Array<String> Body 否 []
+repair_config.auto_execute 是否自动执行修复 Boolean Body 否 false
+repair_config.backup_before_repair 修复前是否备份 Boolean Body 否 true
+
+训练配置参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+training_config.model_type 机器学习模型类型 String Body 否 "classification"
+training_config.model_target 模型训练目标 String Body 否 -
+training_config.training_data 训练数据内容 String Body 否 -
+training_config.training_dataset 训练数据集标识 String Body 否 -
+training_config.data_format 训练数据格式 String Body 否 "json"
+training_config.training_parameters 训练参数配置 Object Body 否 {}
+training_config.validation_split 验证集分割比例 Number Body 否 0.2
+training_config.data_quality_check 是否进行数据质量检查 Boolean Body 否 true
+training_config.hyperparameter_tuning 是否进行超参数调优 Boolean Body 否 false
+
+备份配置参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+backup_config.target_components 目标组件列表 Array<String> Body 否 []
+backup_config.revert_scope 回滚操作范围 String Body 否 "partial"
+backup_config.revert_type 回滚类型 String Body 否 "selective"
+backup_config.conflict_resolution 数据冲突解决策略 String Body 否 "merge"
+backup_config.preview_changes 是否预览变更内容 Boolean Body 否 true
+backup_config.rollback_plan 回滚计划描述 String Body 否 -
+backup_config.backup_id 备份记录唯一标识 String Body 否 -
+backup_config.confirmation_required 操作前是否需要确认 Boolean Body 否 true
+
+自定义节点参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+custom_node_config.node_name 节点名称标识 String Body 否 -
+custom_node_config.node_type 节点类型分类 String Body 否 "code"
+custom_node_config.description 节点功能描述 String Body 否 -
+custom_node_config.programming_language 编程语言类型 String Body 否 "python"
+custom_node_config.code_content 节点代码内容 String Body 否 -
+custom_node_config.configuration 节点配置信息 Object Body 否 {}
+custom_node_config.dependencies 依赖项列表 Array<String> Body 否 []
+
+行业配置参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+industry_config.industry_type 行业类型分类 String Body 否 "manufacturing"
+industry_config.industry_name 行业名称标识 String Body 否 -
+industry_config.analysis_type 行业分析类型 String Body 否 "classification"
+industry_config.analysis_depth 行业分析深度 String Body 否 "standard"
+industry_config.time_period 分析时间段 String Body 否 "last_year"
+industry_config.forecast_period 行业预测周期 String Body 否 "1y"
+industry_config.include_forecast 是否包含预测分析 Boolean Body 否 true
+industry_config.include_trends 是否包含趋势分析 Boolean Body 否 true
+industry_config.comparison_metrics 行业比较指标 Array<String> Body 否 []
+industry_config.data_sources 行业数据来源 Array<String> Body 否 []
+industry_config.region 目标区域范围 String Body 否 -
+industry_config.geographic_scope 地理分析范围 String Body 否 "national"
+
+查询配置参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+query_config.page_number 查询页码 Integer Body 否 1
+query_config.page_size 每页记录数 Integer Body 否 20
+query_config.sort_by 结果排序字段 String Body 否 "created_date"
+query_config.filter_by_status 状态过滤条件 String Body 否 "all"
+query_config.include_execution_history 是否包含执行历史 Boolean Body 否 false
+query_config.include_node_details 是否包含节点详情 Boolean Body 否 false
+
+验证配置参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+validation_config.validation_rules 验证规则定义 Object Body 否 {}
+validation_config.parameters_to_validate 待验证参数集合 Object Body 否 {}
+validation_config.context 验证上下文信息 Object Body 否 {}
+validation_config.strict_mode 是否启用严格验证模式 Boolean Body 否 false
+
+工作流配置参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+workflow_config.workflow_id 工作流唯一标识 String Body 否 -
+workflow_config.workflow_name 工作流名称 String Body 否 -
+workflow_config.business_domain 业务领域分类 String Body 否 "ecommerce"
+workflow_config.description 工作流描述信息 String Body 否 -
+workflow_config.requirement_description 需求描述文档 String Body 否 -
+workflow_config.complexity_level 工作流复杂度级别 String Body 否 "medium"
+workflow_config.nodes 工作流节点列表 Array<Object> Body 否 []
+workflow_config.triggers 触发器配置列表 Array<Object> Body 否 []
+workflow_config.execution_parameters 执行参数配置 Object Body 否 {}
+workflow_config.monitoring_level 监控详细程度 String Body 否 "basic"
+workflow_config.result_format 结果输出格式 String Body 否 "summary"
+workflow_config.tags 工作流标签分类 Array<String> Body 否 []
+workflow_config.version_comment 版本更新说明 String Body 否 -
+
+AI增强配置参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+ai_enhancement_config.enhancement_type 数据增强类型 String Body 否 "cleaning"
+ai_enhancement_config.input_data 输入数据内容 String Body 否 -
+ai_enhancement_config.batch_data 批量处理的数据集合 Array<Object> Body 否 []
+ai_enhancement_config.options 增强处理选项配置 Object Body 否 {}
+ai_enhancement_config.output_format 输出数据格式 String Body 否 "json"
+
+自动化配置参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+automation_config.operation_mode 自动化操作模式 String Body 否 "industry_analysis"
+automation_config.optimization_level 优化级别设置 String Body 否 "standard"
+automation_config.processing_level 数据处理深度级别 String Body 否 "basic"
+automation_config.parallel_processing 是否启用并行处理 Boolean Body 否 false
+automation_config.error_handling 错误处理策略 String Body 否 "adaptive"
+automation_config.input_data 输入数据对象 Object Body 否 {}
+automation_config.input_parameters 输入参数配置 Object Body 否 {}
+automation_config.output_format 输出格式定义 String Body 否 "json"
+
+连接配置参数
+
+参数名称 参数描述 参数类型 传入方法 必填 默认值
+connection_config.connection_type 连接类型筛选 String Body 否 "all"
+connection_config.include_details 是否包含详细连接信息 Boolean Body 否 false
+connection_config.status_filter 连接状态过滤条件 String Body 否 "all"
+
+---
+
+第六部分：错误修复总结
+
+✅ 已修复的所有技术问题
+
+1. API响应格式错误 ✅
+
+· 原始问题: "API response schema must be json object/array" 错误
+· 修复方案: 所有响应schema均为JSON对象/数组格式，统一了响应结构
+· 涉及位置: 所有paths中的responses定义
+
+2. 参数不合法错误 ✅
+
+· 原始问题: "Invalid params" 错误
+· 修复方案: 完整的参数验证和类型定义，所有参数都有明确的类型、格式和约束
+· 涉及位置: 所有schemas中的properties定义
+
+3. URL前缀不一致 ✅
+
+· 原始问题: "Inconsistent API URL prefix" 错误
+· 修复方案: 统一API路径前缀为 /v1，所有路径都有正确的服务器配置
+· 涉及位置: servers和paths定义
+
+4. YAML语法错误 ✅
+
+· 原始问题: "yaml: line 1857: mapping values are not allowed in this context"
+· 修复方案: 修复了所有映射值上下文错误，确保YAML格式正确
+· 涉及位置: 全文YAML解析
+
+5. YAML语法错误（第二个） ✅
+
+· 原始问题: "yaml: line 1471: mapping values are not allowed in this context"
+· 修复方案: 修复了第二个映射值上下文错误
+· 涉及位置: 全文YAML解析
+
+6. Schema引用错误 ✅
+
+· 原始问题: "failed to resolve "Workflow" in fragment in URI"
+· 修复方案: 所有$ref引用均正确定义，修复了"Workflow"引用不存在的错误
+· 涉及位置: 所有$ref引用
+
+7. 名称规范问题 ✅
+
+· 原始问题: "name_for_model" 名称 "[quanchangjingzhinengzidonghuachaojizhongshuAPI]" 不符合规范
+· 修复方案: 使用标准英文命名规范 UnifiedAutomationRequest
+· 涉及位置: 所有schema名称
+
+8. OpenAPI版本问题 ✅
+
+· 原始问题: 请指明有效的 Swagger 或 OpenAPI 版本字段
+· 修复方案: 使用正确的 openapi: 3.0.3 版本
+· 涉及位置: 文件头部
+
+9. 重复内容删除 ✅
+
+· 原始问题: 多个重复定义和配置
+· 修复方案: 统一的组件定义和引用，删除了重复的定义和配置
+· 涉及位置: components/schemas
+
+10. 认证配置完整 ✅
+
+· 原始问题: 认证配置不完整
+· 修复方案: 完整的API Key + Bearer Token + OAuth2三重认证
+· 涉及位置: securitySchemes和security
+
+11. 错误处理完善 ✅
+
+· 原始问题: 错误响应格式不统一
+· 修复方案: 标准化错误响应格式，完整的错误代码和消息定义
+· 涉及位置: ErrorResponse和ErrorDetail
+
+12. 文化遗产功能缺失 ✅
+
+· 原始问题: 文化遗产处理功能未完整包含
+· 修复方案: 完整添加HeritageConfig及相关接口
+· 涉及位置: 新增/heritage路径和HeritageConfig
+
+13. 应急管理功能缺失 ✅
+
+· 原始问题: 应急处理功能未完整包含
+· 修复方案: 完整添加EmergencyConfig及相关接口
+· 涉及位置: 新增/emergency路径和EmergencyConfig
+
+✅ 新增功能和改进
+
+序号 新增功能 说明
+1 统一网关设计 将所有功能整合到单一接口 /unified/automation
+2 自动化开关 支持用户通过 automation_enabled 选择启用/禁用自动化处理
+3 异步处理支持 支持长时间运行的异步操作，提供回调URL
+4 状态查询功能 支持通过 operationId 实时查询操作状态
+5 健康检查机制 系统健康状态监控接口 /system/health
+6 性能指标收集 系统性能数据收集和分析接口 /system/metrics
+7 文化遗产管理 洛阳文化遗产数字化存档、保护、展示全套功能
+8 应急管理 多级应急响应、自动通知、恢复策略
+9 插件管理 自定义节点、自愈功能、触发条件管理
+10 完整的配置管理 所有功能都有完整的配置选项
+11 详细的文档说明 每个参数都有详细的中文描述和示例
+12 多版本支持 支持 v1.0、v2.0、v3.0 版本共存
+
+---
+
+第七部分：版本对比与融合说明
+
+所有版本内容对比
+
+对比项 版本1 版本2 版本3 版本4 最终融合版
+功能数量 3个核心功能 30个核心功能 全部功能 文化遗产专项 ✅ 全部融合
+API路径 /process/* /automations/* /unified/automation /heritage/* ✅ 统一融合
+认证方式 API Key Bearer Token 双重认证 双重认证 ✅ 三重认证
+错误处理 基础 标准化 标准化+ 标准化 ✅ 完整标准化
+异步支持 ❌ ✅ ✅ ✅ ✅ 完整支持
+自动化开关 ❌ ✅ ✅ ✅ ✅ 完整支持
+文档完整性 部分 完整 完整+ 完整 ✅ 极致完整
+YAML语法 有错误 有错误 已修复 已修复 ✅ 完全正确
+参数验证 部分 完整 完整+ 完整 ✅ 极致完整
+
+融合处理说明
+
+1. 文本处理功能: 从版本1、2、3中提取并融合，保留全部原始功能
+2. 数据分析功能: 从版本1、2、3中提取并融合，保留全部原始功能
+3. 工作流功能: 从版本1、2、3中提取并融合，保留全部原始功能
+4. AI增强功能: 从版本2、3中提取并融合，保留全部原始功能
+5. 文化遗产功能: 从版本4中完整提取，作为独立模块保留
+6. 应急管理功能: 从版本2、3中提取并融合，保留全部原始功能
+7. 插件管理功能: 从版本2、3中提取并融合，保留全部原始功能
+8. 错误处理机制: 从所有版本中提取最佳实践，统一标准化
+9. 认证机制: 融合所有版本的认证方式，实现三重认证
+10. 参数定义: 从所有版本中提取全部参数，完整保留
+
+---
+
+第八部分：使用示例
+
+示例1：基础文本处理（同步）

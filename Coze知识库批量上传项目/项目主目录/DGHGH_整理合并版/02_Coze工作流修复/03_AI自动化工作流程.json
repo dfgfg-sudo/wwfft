@@ -1,0 +1,120 @@
+{
+  "name": "AI自动化工作流程",
+  "description": "AI 驱动的智能工作流：自动分析任务、检索信息、决策执行，覆盖通用自动化流程场景",
+  "version": "1.0.0",
+  "create_time": "2026-02-01 22:23:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "task_description",
+            "type": "string",
+            "required": true,
+            "description": "任务描述"
+          },
+          {
+            "name": "context",
+            "type": "object",
+            "required": false,
+            "description": "上下文信息"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_analyze",
+      "type": "4",
+      "data": {
+        "name": "AI 分析任务",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是任务分析专家，将用户任务拆解为可执行步骤",
+        "user_prompt": "任务：{{task_description}}\\n上下文：{{context}}\\n请输出 JSON 格式的步骤列表 [{\"step\":1,\"action\":\"...\",\"tool\":\"...\"}]",
+        "output_params": [
+          {
+            "name": "steps",
+            "type": "array"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_search",
+      "type": "3",
+      "data": {
+        "name": "知识库检索",
+        "language": "python",
+        "code": "def main(task_description):\n    knowledge = {\n        \"matched_docs\": [\n            {\"title\": \"相关文档1\", \"content\": \"示例内容\", \"score\": 0.92},\n            {\"title\": \"相关文档2\", \"content\": \"示例内容\", \"score\": 0.85}\n        ]\n    }\n    return knowledge",
+        "output_params": [
+          {
+            "name": "knowledge",
+            "type": "object"
+          }
+        ]
+      }
+    },
+    {
+      "id": "loop_node_1",
+      "type": "6",
+      "data": {
+        "name": "遍历执行步骤",
+        "loop_var": "step",
+        "loop_array": "{{llm_node_analyze.steps}}",
+        "loop_body": [
+          {
+            "id": "llm_node_execute",
+            "type": "4",
+            "data": {
+              "name": "执行单步",
+              "model": "doubao-pro-32k",
+              "system_prompt": "你是执行专家，根据步骤调用工具完成任务",
+              "user_prompt": "步骤：{{step}}\\n知识：{{code_node_search.knowledge}}",
+              "output_params": [
+                {
+                  "name": "result",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "execution_results",
+            "type": "array",
+            "value": "{{loop_node_1.results}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "start_node",
+      "targetNodeID": "llm_node_analyze"
+    },
+    {
+      "sourceNodeID": "llm_node_analyze",
+      "targetNodeID": "code_node_search"
+    },
+    {
+      "sourceNodeID": "code_node_search",
+      "targetNodeID": "loop_node_1"
+    },
+    {
+      "sourceNodeID": "loop_node_1",
+      "targetNodeID": "end_node"
+    }
+  ]
+}

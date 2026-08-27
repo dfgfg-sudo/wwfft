@@ -1,0 +1,6 @@
+---
+
+## 第四部分：构建带 UI 的管理平台
+
+### 4.1 架构设计
+由于 GitHub Actions 本身无 UI，需构建独立前端应用，通过 GitHub API 与 Actions 交互。

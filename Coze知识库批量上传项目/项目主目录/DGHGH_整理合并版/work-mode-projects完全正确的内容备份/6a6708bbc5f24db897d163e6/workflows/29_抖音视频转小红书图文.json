@@ -1,0 +1,78 @@
+{
+  "name": "抖音视频转小红书图文",
+  "description": "将抖音视频内容转换为适合小红书平台的图文内容",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:05:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "video_url",
+            "type": "string",
+            "required": true,
+            "description": "抖音视频链接"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_extract",
+      "type": "3",
+      "data": {
+        "name": "提取视频内容",
+        "language": "python",
+        "code": "def main(video_url):\n    content = {\n        \"video_url\": video_url,\n        \"original_text\": \"视频中的文案内容...\",\n        \"key_points\": [\"要点1\", \"要点2\", \"要点3\"],\n        \"video_info\": {\"duration\": 60, \"likes\": 12580}\n    }\n    return content",
+        "output_params": [{"name": "content", "type": "object"}]
+      }
+    },
+    {
+      "id": "llm_node_convert",
+      "type": "4",
+      "data": {
+        "name": "AI 转小红书风格",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是小红书运营专家，将内容转为小红书风格",
+        "user_prompt": "原文案：{{code_node_extract.content.original_text}}\\n要点：{{code_node_extract.content.key_points}}\\n请改写为小红书风格图文内容，包含标题、正文、标签",
+        "output_params": [
+          {"name": "xiaohongshu_title", "type": "string"},
+          {"name": "xiaohongshu_content", "type": "string"},
+          {"name": "tags", "type": "array"}
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "title",
+            "type": "string",
+            "value": "{{llm_node_convert.xiaohongshu_title}}"
+          },
+          {
+            "name": "content",
+            "type": "string",
+            "value": "{{llm_node_convert.xiaohongshu_content}}"
+          },
+          {
+            "name": "tags",
+            "type": "array",
+            "value": "{{llm_node_convert.tags}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "code_node_extract"},
+    {"sourceNodeID": "code_node_extract", "targetNodeID": "llm_node_convert"},
+    {"sourceNodeID": "llm_node_convert", "targetNodeID": "end_node"}
+  ]
+}

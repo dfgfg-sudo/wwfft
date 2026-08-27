@@ -1,0 +1,73 @@
+{
+  "name": "网页内容总结",
+  "description": "输入特定网站URL，以及对网页想问的问题（可选），总结回答内容",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:05:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "url",
+            "type": "string",
+            "required": true,
+            "description": "网页URL"
+          },
+          {
+            "name": "question",
+            "type": "string",
+            "required": false,
+            "description": "对网页的问题（可选）"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_fetch",
+      "type": "3",
+      "data": {
+        "name": "获取网页内容",
+        "language": "python",
+        "code": "def main(url):\n    page_content = \"从网页获取的内容...\"\n    return {\"url\": url, \"content\": page_content[:3000]}",
+        "output_params": [
+          {"name": "url", "type": "string"},
+          {"name": "content", "type": "string"}
+        ]
+      }
+    },
+    {
+      "id": "llm_node_summary",
+      "type": "4",
+      "data": {
+        "name": "AI 总结回答",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是网页内容总结专家",
+        "user_prompt": "网页内容：{{code_node_fetch.content}}\\n问题：{{question || '请总结网页内容'}}\\n请给出总结回答",
+        "output_params": [{"name": "summary", "type": "string"}]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "summary_result",
+            "type": "string",
+            "value": "{{llm_node_summary.summary}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "code_node_fetch"},
+    {"sourceNodeID": "code_node_fetch", "targetNodeID": "llm_node_summary"},
+    {"sourceNodeID": "llm_node_summary", "targetNodeID": "end_node"}
+  ]
+}

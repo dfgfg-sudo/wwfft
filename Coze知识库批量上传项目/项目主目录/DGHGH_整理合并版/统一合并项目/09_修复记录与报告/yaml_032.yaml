@@ -1,0 +1,18 @@
+# 在仓库中创建目录
+mkdir -p .github/workflows
+
+# 常用工作流模板
+# 1. 触发条件
+on:
+  push:
+    branches: [ main, develop ]
+    tags: [ 'v*.*.*' ]
+  pull_request:
+    types: [opened, synchronize, reopened]
+  schedule:
+    - cron: '0 2 * * *'  # 每天凌晨2点
+
+# 2. 环境变量管理
+env:
+  NODE_VERSION: '18.x'
+  DOCKER_REGISTRY: ghcr.io

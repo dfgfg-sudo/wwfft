@@ -1,0 +1,75 @@
+{
+  "name": "文字转语音",
+  "description": "将文字内容转换为自然流畅的语音音频",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:08:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "text",
+            "type": "string",
+            "required": true,
+            "description": "待转换文字"
+          },
+          {
+            "name": "voice",
+            "type": "string",
+            "required": false,
+            "description": "音色：男/女/童声"
+          },
+          {
+            "name": "rate",
+            "type": "number",
+            "required": false,
+            "description": "语速（0.8-1.5）"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_convert",
+      "type": "3",
+      "data": {
+        "name": "语音合成",
+        "language": "python",
+        "code": "import json\ndef main(text, voice, rate):\n    audio = {\n        \"text_length\": len(text),\n        \"voice\": voice or \"女\",\n        \"rate\": rate or 1.0,\n        \"audio_url\": \"https://api.example.com/tts?text=\" + text[:20],\n        \"duration\": len(text) / 3 * (1.0 / (rate or 1.0)),\n        \"status\": \"completed\"\n    }\n    return audio",
+        "output_params": [
+          {
+            "name": "audio",
+            "type": "object"
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "audio_result",
+            "type": "object",
+            "value": "{{code_node_convert.audio}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "start_node",
+      "targetNodeID": "code_node_convert"
+    },
+    {
+      "sourceNodeID": "code_node_convert",
+      "targetNodeID": "end_node"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+访问 http://localhost:7860 即可打开控制面板。
+
+功能概览
+
+模块 功能
+🛠️ 训练控制中心 配置 LoRA 参数，启动/停止训练，监控损失曲线
+💬 智能对话实验室 多轮对话，支持记忆检索和生成参数调节
+🔧 模型手术台 切换模型版本，查询记忆片段
+🔒 安全中心 模型加密、完整性校验、API 密钥验证
+
+---
+
+✅ 整合修复说明
+
+· 所有历史版本功能合并：保留原 SystemConfig、NeuroConfig、ModelVault、DataChef、NeuroTrainer、NeuroThinker、QuantumMemory、NeuroDashboard 全部类。
+· 修复问题：
+  · 修复缩进与语法错误
+  · 补全缺失的方法参数（如 _generate_response 增加 top_p 和 memory_slider）
+  · 修复记忆检索时的键错误
+  · 完善异常处理与提示信息
+  · 确保界面回调函数与组件正确绑定
+· 代码结构：按模块清晰分割，添加文档注释，保持可读性。
+
+此版本可直接投入使用，覆盖从数据预处理、模型训练到安全部署的完整链路。如有任何问题，欢迎反馈。还有添加进去Neuro Factory Ultimate - 全功能AI工厂系统 v4.0
+
+📌 项目概述
+
+Neuro Factory Ultimate 是一个集成了深度学习模型微调、多模态数据处理、安全加密、分布式训练与跨平台GUI的一站式AI开发工厂。
+本系统支持 LLaMA / Qwen 等主流大语言模型的LoRA微调、4bit量化训练、实时监控与一键部署。
+
+---
+
+🏗️ 系统架构图（Mermaid）

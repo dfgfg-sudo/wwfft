@@ -1,0 +1,12 @@
+OmniAI_Projects/
+├── data/
+│   ├── raw/              # 原始数据投喂区
+│   └── processed/        # 处理后的训练数据
+├── models/
+│   ├── base/             # 基础预训练模型
+│   └── trained/          # 训练输出模型
+├── logs/                 # 系统日志与错误日志
+├── security/             # 加密密钥与安全配置
+├── cache/                # 数据集缓存
+├── build_output/         # 打包输出
+└── configurations/       # YAML 配置文件

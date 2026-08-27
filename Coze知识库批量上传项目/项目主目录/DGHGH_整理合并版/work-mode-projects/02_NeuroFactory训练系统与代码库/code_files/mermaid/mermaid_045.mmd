@@ -1,0 +1,46 @@
+graph TD
+    subgraph UI[用户交互层]
+        ND[NeuroDashboard<br/>企业级控制面板]
+    end
+
+    subgraph Core[核心配置层]
+        NC[NeuroConfig<br/>单例配置管理]
+    end
+
+    subgraph Quantum[量子增强层]
+        QP[QuantumProcessor<br/>量子门/嵌入/混合推理]
+    end
+
+    subgraph Data[数据处理层]
+        DE[DataEngine<br/>多模态数据加载与解析]
+    end
+
+    subgraph Train[训练引擎层]
+        QT[QuantumTrainer<br/>LoRA微调+量子增强]
+    end
+
+    subgraph Security[安全防护层]
+        SM[SecurityManager<br/>加密/解密/完整性验证]
+    end
+
+    subgraph External[外部依赖]
+        HF[HuggingFace Transformers]
+        Torch[PyTorch]
+        DS[Datasets]
+        FS[FAISS]
+    end
+
+    ND --> NC
+    NC --> DE
+    NC --> QT
+    NC --> SM
+    DE --> QT
+    QP --> QT
+    QT --> SM
+    QT --> ND
+    SM --> ND
+
+    HF --> QT
+    Torch --> QT
+    DS --> DE
+    FS --> QP

@@ -1,0 +1,11 @@
+omnineuro_project/
+├── data/                           # 数据投喂目录（用户放入文件）
+│   ├── 产品手册.pdf
+│   ├── 客户数据.csv
+│   └── 技术文档/
+├── models/                         # 自动生成的加密模型
+│   ├── singularity_v1.enc
+│   ├── singularity_v2.enc
+│   └── training_metadata.json
+├── omnineuro_asi.py                # 主程序（最终合并版）
+└── omnineuro.log                   # 运行日志

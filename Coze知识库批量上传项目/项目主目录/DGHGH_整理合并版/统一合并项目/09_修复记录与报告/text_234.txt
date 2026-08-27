@@ -1,0 +1,8 @@
+---
+
+## 第六部分：安全与优化最佳实践
+
+### 6.1 敏感信息管理
+- 所有密码、密钥存放在 GitHub Secrets（Settings → Secrets and variables → Actions）。
+- 在工作流中通过 `${{ secrets.KEY }}` 引用。
+- 示例：

@@ -1,0 +1,95 @@
+flowchart TD
+    Start(["🚀 系统启动"]) --> Init["系统初始化"]
+    Init --> ConfigLoad["📋 加载配置文件"]
+    ConfigLoad --> DirCheck["📁 检查监控目录"]
+    DirCheck --> ObserverStart["👁️ 启动文件监控"]
+
+    ObserverStart --> WaitEvent["⏳ 等待文件事件"]
+
+    WaitEvent --> FileEvent{"📄 文件事件"}
+    FileEvent -->|"新文件/修改"| FileProcess["🔄 文件处理引擎"]
+    FileEvent -->|"无事件"| UserCmd{"💬 用户命令"}
+
+    FileProcess --> FormatDetect{"🔍 格式检测"}
+
+    FormatDetect -->|"CSV/Excel"| ParseStructured["📊 结构化解析"]
+    FormatDetect -->|"TXT/LOG/PDF"| ParseUnstructured["📝 非结构化解析"]
+    FormatDetect -->|"JSON/XML"| ParseSemi["🔤 半结构化解析"]
+    FormatDetect -->|"JPG/PNG"| ParseImage["🖼️ 图像OCR识别"]
+    FormatDetect -->|"PY/IPYNB"| ParseCode["💻 代码语义分析"]
+    FormatDetect -->|"ZIP/RAR"| ParseArchive["📦 压缩包解析"]
+
+    ParseStructured --> DataValid["✅ 数据质量验证"]
+    ParseUnstructured --> DataValid
+    ParseSemi --> DataValid
+    ParseImage --> DataValid
+    ParseCode --> DataValid
+    ParseArchive --> DataValid
+
+    DataValid --> QualityCheck{"📈 质量评估"}
+
+    QualityCheck -->|"合格"| KnowledgeDistill["🧠 知识蒸馏"]
+    QualityCheck -->|"不合格"| LogPoor["📝 记录低质量数据"]
+
+    KnowledgeDistill --> UpdateGraph["🕸️ 更新知识图谱"]
+    UpdateGraph --> TrainingCheck{"🤖 训练条件检查"}
+
+    TrainingCheck -->|"满足条件"| StartTraining["⚡ 启动模型训练"]
+    TrainingCheck -->|"不满足"| WaitEvent
+
+    StartTraining --> ModelTraining["🏗️ 执行训练"]
+    ModelTraining --> ModelEncrypt["🔐 模型加密"]
+    ModelEncrypt --> ModelSave["💾 保存模型"]
+    ModelSave --> RegistryUpdate["📋 更新注册表"]
+
+    RegistryUpdate --> Success["✅ 处理完成"]
+    Success --> WaitEvent
+
+    %% 用户命令处理
+    UserCmd -->|"status"| ShowStatus["📊 显示状态"]
+    UserCmd -->|"models"| ListModels["📋 列出模型"]
+    UserCmd -->|"knowledge"| ShowKnowledge["🧠 显示知识库"]
+    UserCmd -->|"train"| ManualTrain["🔧 手动训练"]
+    UserCmd -->|"predict"| MakePrediction["🔮 执行预测"]
+    UserCmd -->|"fix"| FixParams["🛠️ 参数修复"]
+    UserCmd -->|"help"| ShowHelp["📚 显示帮助"]
+    UserCmd -->|"exit"| Shutdown["🛑 关闭系统"]
+
+    ShowStatus --> WaitEvent
+    ListModels --> WaitEvent
+    ShowKnowledge --> WaitEvent
+    ManualTrain --> StartTraining
+    MakePrediction --> WaitEvent
+    FixParams --> WaitEvent
+    ShowHelp --> WaitEvent
+    Shutdown --> End(["🏁 系统关闭"])
+
+    %% 错误处理
+    FileProcess --> FileError["❌ 文件错误"]
+    DataValid --> ValidError["❌ 验证失败"]
+    KnowledgeDistill --> DistillError["❌ 蒸馏失败"]
+    ModelTraining --> TrainError["❌ 训练失败"]
+
+    FileError --> ErrorHandling["🛠️ 错误处理"]
+    ValidError --> ErrorHandling
+    DistillError --> ErrorHandling
+    TrainError --> ErrorHandling
+
+    ErrorHandling --> LogError["📝 记录错误"]
+    LogError --> Recovery["🔄 自动恢复"]
+    Recovery --> WaitEvent
+
+    %% 样式
+    classDef startEnd fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:#fff
+    classDef process fill:#2196F3,stroke:#1976D2,stroke-width:2px,color:#fff
+    classDef decision fill:#FF9800,stroke:#F57C00,stroke-width:2px,color:#fff
+    classDef error fill:#F44336,stroke:#D32F2F,stroke-width:2px,color:#fff
+    classDef success fill:#8BC34A,stroke:#689F38,stroke-width:2px,color:#fff
+    classDef userCmd fill:#9C27B0,stroke:#7B1FA2,stroke-width:2px,color:#fff
+
+    class Start,End startEnd
+    class Init,ConfigLoad,DirCheck,ObserverStart,FileProcess,ParseStructured,ParseUnstructured,ParseSemi,ParseImage,ParseCode,ParseArchive,DataValid,KnowledgeDistill,UpdateGraph,ModelTraining,ModelEncrypt,ModelSave,RegistryUpdate,ErrorHandling,Recovery process
+    class WaitEvent,FormatDetect,QualityCheck,TrainingCheck,FileEvent,UserCmd decision
+    class FileError,ValidError,DistillError,TrainError,LogPoor,LogError error
+    class ShowStatus,ListModels,ShowKnowledge,ManualTrain,MakePrediction,FixParams,ShowHelp success
+    class UserCmd,Shutdown userCmd

@@ -1,0 +1,42 @@
+6.2 其他规范版本
+
+· OpenAPI 3.0.0 – 全自动参数修复插件规范（已整合）
+· OpenAPI 3.0.3 – Coze全场景自动化插件API（已整合）
+· Schema v1 – Coze全场景自动化API规范整合（已整合）
+
+---
+
+7. 学习认证与职业发展路径
+
+7.1 Python快速学习与认证
+
+· 免费路径：Codecademy / Kaggle Learn → 官方文档 → 项目实战
+· 认证考试：
+  · 工信部Python技术开发证书（初级/中级）
+  · Python大数据证书（数据分析方向）
+  · 大专生可考取茶艺师、厨师证等复合技能
+
+7.2 Web开发高效学习
+
+· 前端：HTML/CSS → JavaScript → React/Vue
+· 后端：Python + Flask/Django → 数据库 → RESTful API
+· 实践项目：博客系统、电商后台、AI管理面板
+
+---
+
+8. 问题解决方案汇总
+
+问题 解决方案
+GitHub访问失败 配置代理或使用镜像（ghproxy.com）
+训练内存不足 减小batch_size，使用梯度累积，混合精度
+模型类型不匹配 检查模型配置与数据维度是否对齐
+Coze插件配置错误 使用 ParameterFixer 自动修复
+循环导入 重组模块，将共同依赖提取到 common.py
+pip下载慢 更换国内源（清华、阿里云）
+训练失败 alloc_c 降低batch_size或使用CPU模式
+
+---
+
+9. 部署与运维指南
+
+9.1 本地部署

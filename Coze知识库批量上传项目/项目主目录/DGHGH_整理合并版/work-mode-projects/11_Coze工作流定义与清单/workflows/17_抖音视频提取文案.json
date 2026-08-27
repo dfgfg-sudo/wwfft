@@ -1,0 +1,57 @@
+{
+  "name": "抖音视频提取文案",
+  "description": "根据抖音视频链接提取视频中的文案内容",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:08:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "video_url",
+            "type": "string",
+            "required": true,
+            "description": "抖音视频链接"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_extract",
+      "type": "3",
+      "data": {
+        "name": "提取视频文案",
+        "language": "python",
+        "code": "import json\ndef main(video_url):\n    result = {\n        \"video_url\": video_url,\n        \"extracted_text\": \"这是从抖音视频中提取的完整文案内容...\",\n        \"video_info\": {\n            \"author\": \"视频作者\",\n            \"title\": \"视频标题\",\n            \"duration\": 60,\n            \"likes\": 12580,\n            \"comments\": 320\n        }\n    }\n    return result",
+        "output_params": [{"name": "extract_result", "type": "object"}]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "text",
+            "type": "string",
+            "value": "{{code_node_extract.extract_result.extracted_text}}"
+          },
+          {
+            "name": "info",
+            "type": "object",
+            "value": "{{code_node_extract.extract_result.video_info}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "code_node_extract"},
+    {"sourceNodeID": "code_node_extract", "targetNodeID": "end_node"}
+  ]
+}

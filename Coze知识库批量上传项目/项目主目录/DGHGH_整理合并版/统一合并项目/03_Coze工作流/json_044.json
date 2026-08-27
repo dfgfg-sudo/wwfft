@@ -1,0 +1,8 @@
+{
+  "operation_type": "generate_plugin",
+  "intent": "生成股票数据分析插件",
+  "parameters": {
+    "user_demand": "需要分析股票价格趋势和生成交易信号",
+    "plugin_type": "data_analysis"
+  }
+}

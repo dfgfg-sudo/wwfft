@@ -1,0 +1,1 @@
+curl https://api.aiworkflowplatform.com/v1/supported-operations

@@ -1,0 +1,22 @@
+{
+  "name": "conversations-parser",
+  "version": "1.0.0",
+  "description": "Coze IDE插件 - 完整处理conversations.json内容",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "coze",
+    "plugin",
+    "json",
+    "parser",
+    "conversations"
+  ],
+  "author": "Coze Plugin Generator",
+  "license": "MIT",
+  "dependencies": {
+    "json5": "^2.2.3"
+  }
+}

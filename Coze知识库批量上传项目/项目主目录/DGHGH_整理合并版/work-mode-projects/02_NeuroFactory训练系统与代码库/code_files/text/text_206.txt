@@ -1,0 +1,16 @@
+云服务部署
+
+· AWS: scripts/deploy_aws.sh
+· Azure: scripts/deploy_azure.sh
+· GCP: scripts/deploy_gcp.sh
+
+性能基准
+
+任务类型 延迟 吞吐量 准确率
+文本分类 <5ms 2000 QPS 98.7%
+图像识别 <15ms 800 QPS 97.3%
+多模态推理 <50ms 280 QPS 96.8%
+
+开发指南
+
+代码规范

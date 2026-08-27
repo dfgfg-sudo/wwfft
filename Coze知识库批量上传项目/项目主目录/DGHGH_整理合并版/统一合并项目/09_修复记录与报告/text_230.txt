@@ -1,0 +1,5 @@
+### 4.3 方案二：独立 Web 应用（推荐）
+- 后端使用 Node.js (Express) 或 Python (Flask)，封装 GitHub API 调用。
+- 前端通过 Ajax 请求后端，后端使用 GitHub App 或个人访问令牌（PAT）安全认证。
+
+**后端示例（Node.js）**

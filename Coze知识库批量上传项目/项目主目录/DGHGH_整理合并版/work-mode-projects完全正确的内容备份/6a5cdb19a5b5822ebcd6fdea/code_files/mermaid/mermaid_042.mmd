@@ -1,0 +1,43 @@
+graph LR
+    %% ======================
+    %% 核心依赖关系
+    %% ======================
+    NC[NeuroConfig] --> DC[DataChef]
+    NC --> NT[NeuroTrainer]
+    NC --> NTH[NeuroThinker]
+    NC --> MV[ModelVault]
+    NC --> QM[QuantumMemory]
+    
+    DC --> NT
+    NT --> NTH
+    QM --> NTH
+    MV --> NT
+    MV --> NTH
+    
+    %% ======================
+    %% 外部依赖关系
+    %% ======================
+    PT[PyTorch] --> NT
+    PT --> NTH
+    
+    TR[Transformers] --> NT
+    TR --> NTH
+    
+    PF[PEFT] --> NT
+    FS[FAISS] --> QM
+    GR[Gradio] --> ND[NeuroDashboard]
+    CR[Cryptography] --> MV
+    
+    %% ======================
+    %% 数据流关系
+    %% ======================
+    DATA[数据文件] --> DC
+    DC --> DS[Dataset]
+    DS --> NT
+    NT --> MODEL[训练模型]
+    MODEL --> NTH
+    
+    USER[用户输入] --> NTH
+    NTH --> RESP[响应输出]
+    NTH --> MEM[记忆存储]
+    MEM --> QM

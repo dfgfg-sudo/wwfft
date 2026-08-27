@@ -1,0 +1,5 @@
+{
+  "description": "原始文件内容（JSON格式错误，已包装为字符串）",
+  "original_content": "{\\n  \\\"success\\\": true,\\n  \\\"operation_id\\\": \\\"op_123456\\\",\\n  \\\"operation_type\\\": \\\"generate_workflow\\\",\\n  \\\"result\\\": {\\n    \\\"workflow_id\\\": \\\"wf_abc\\\",\\n    \\\"workflow_definition\\\": { ... },\\n    \\\"message\\\": \\\"工作流生成成功\\\"\\n  },\\n  \\\"execution_time\\\": 2.45,\\n  \\\"timestamp\\\": \\\"2026-06-25T10:30:00Z\\\"\\n}",
+  "error": "Expecting property name enclosed in double quotes: line 7 column 30 (char 171)"
+}

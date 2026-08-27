@@ -1,0 +1,28 @@
+graph LR
+    A[图像输入 3x224x224] --> B[ImageEncoder]
+    C[文本输入 IDs & Mask] --> D[TextEncoder]
+    B --> E[图像特征向量 768D]
+    D --> F[文本特征向量 768D]
+    E --> G[特征拼接 1536D]
+    F --> G
+    G --> H[融合层 FC 1536->768]
+    H --> I[ReLU激活]
+    I --> J[Dropout 0.1]
+    J --> K[融合层 FC 768->384]
+    K --> L[ReLU激活]
+    L --> M[Dropout 0.1]
+    M --> N[分类器 FC 384->10]
+    N --> O[输出logits]
+
+    subgraph ImageEncoder详细结构
+        B1[ResNet50/ViT Backbone] --> B2[全局池化]
+        B2 --> B3[特征投影 2048->768]
+        B3 --> B4[Dropout]
+    end
+    subgraph TextEncoder详细结构
+        D1[BertModel] --> D2[Pooler输出]
+        D2 --> D3[特征投影 768->768]
+        D3 --> D4[Dropout]
+    end
+    B --> B1
+    D --> D1

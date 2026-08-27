@@ -1,0 +1,1 @@
+mkdir -p templates/my-new-template/{frontend,backend,database,deploy}

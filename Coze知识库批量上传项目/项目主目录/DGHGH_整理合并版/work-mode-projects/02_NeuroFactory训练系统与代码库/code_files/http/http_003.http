@@ -1,0 +1,12 @@
+GET /api/templates
+
+GET /api/templates/{id}
+
+POST /api/templates/{id}/generate
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "name": "string",
+  "customizations": {}
+}

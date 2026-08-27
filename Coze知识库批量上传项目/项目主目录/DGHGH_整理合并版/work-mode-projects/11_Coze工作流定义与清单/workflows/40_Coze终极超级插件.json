@@ -1,0 +1,25 @@
+{
+  "name": "Coze终极超级插件",
+  "description": "Coze平台超级插件，具备完整自动化能力",
+  "version": "1.0.0",
+  "create_time": "2026-05-27 10:08:00",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7644157900436275234",
+  "original_name": "Coze终极超级插件",
+  "type": "plugin",
+  "plugin_type": "云插件",
+  "functions": [
+    {
+      "name": "execute_automation",
+      "description": "执行自动化任务",
+      "input_params": [
+        {"name": "task_type", "type": "string", "required": true, "description": "任务类型"},
+        {"name": "params", "type": "object", "required": true, "description": "任务参数"}
+      ],
+      "output_params": [
+        {"name": "result", "type": "object", "description": "执行结果"},
+        {"name": "status", "type": "string", "description": "任务状态"}
+      ]
+    }
+  ]
+}

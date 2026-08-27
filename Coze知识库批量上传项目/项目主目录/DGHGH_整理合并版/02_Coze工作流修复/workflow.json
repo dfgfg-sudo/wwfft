@@ -1,0 +1,265 @@
+{
+  "workflow_name": "Coze工作流专家助手工作流",
+  "version": "1.0.0",
+  "description": "主工作流：接收用户输入，识别意图，路由到对应处理节点",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "name": "开始",
+      "outputs": [
+        "user_input"
+      ]
+    },
+    {
+      "id": "input_parser",
+      "type": "input",
+      "name": "输入解析",
+      "inputs": [
+        "user_input"
+      ],
+      "outputs": [
+        "parsed_input"
+      ]
+    },
+    {
+      "id": "intent_classifier",
+      "type": "intent_recognition",
+      "name": "意图识别",
+      "inputs": [
+        "parsed_input"
+      ],
+      "outputs": [
+        "intent",
+        "confidence"
+      ],
+      "config": {
+        "intents": [
+          "diagnose_workflow",
+          "auto_fix",
+          "execute_node",
+          "search_knowledge",
+          "manage_session",
+          "general_question"
+        ]
+      }
+    },
+    {
+      "id": "selector",
+      "type": "selector",
+      "name": "路由选择器",
+      "inputs": [
+        "intent",
+        "confidence"
+      ],
+      "branches": [
+        {
+          "condition": "intent == 'diagnose_workflow'",
+          "target": "diagnosis_node"
+        },
+        {
+          "condition": "intent == 'auto_fix'",
+          "target": "auto_fix_node"
+        },
+        {
+          "condition": "intent == 'execute_node'",
+          "target": "node_executor"
+        },
+        {
+          "condition": "intent == 'search_knowledge'",
+          "target": "knowledge_searcher"
+        },
+        {
+          "condition": "intent == 'manage_session'",
+          "target": "session_manager"
+        },
+        {
+          "condition": "default",
+          "target": "general_handler"
+        }
+      ]
+    },
+    {
+      "id": "diagnosis_node",
+      "type": "plugin",
+      "name": "工作流诊断",
+      "plugin_id": "coze-super-plugin",
+      "action": "diagnose_workflow",
+      "inputs": [
+        "parsed_input"
+      ],
+      "outputs": [
+        "diagnosis_result"
+      ]
+    },
+    {
+      "id": "auto_fix_node",
+      "type": "plugin",
+      "name": "自动修复",
+      "plugin_id": "coze-super-plugin",
+      "action": "auto_fix_workflow",
+      "inputs": [
+        "parsed_input"
+      ],
+      "outputs": [
+        "fix_result"
+      ]
+    },
+    {
+      "id": "node_executor",
+      "type": "plugin",
+      "name": "节点执行器",
+      "plugin_id": "coze-super-plugin",
+      "action": "execute_node",
+      "inputs": [
+        "parsed_input"
+      ],
+      "outputs": [
+        "execution_result"
+      ]
+    },
+    {
+      "id": "knowledge_searcher",
+      "type": "plugin",
+      "name": "知识库检索",
+      "plugin_id": "coze-super-plugin",
+      "action": "search_knowledge",
+      "inputs": [
+        "parsed_input"
+      ],
+      "outputs": [
+        "search_result"
+      ]
+    },
+    {
+      "id": "session_manager",
+      "type": "plugin",
+      "name": "会话管理",
+      "plugin_id": "coze-super-plugin",
+      "action": "manage_session",
+      "inputs": [
+        "parsed_input"
+      ],
+      "outputs": [
+        "session_result"
+      ]
+    },
+    {
+      "id": "general_handler",
+      "type": "llm",
+      "name": "通用处理",
+      "inputs": [
+        "parsed_input"
+      ],
+      "outputs": [
+        "response"
+      ],
+      "config": {
+        "model": "doubao-pro",
+        "temperature": 0.3,
+        "system_prompt": "你是Coze工作流专家助手，请根据用户问题提供专业解答。"
+      }
+    },
+    {
+      "id": "output_formatter",
+      "type": "output",
+      "name": "输出格式化",
+      "inputs": [
+        "diagnosis_result",
+        "fix_result",
+        "execution_result",
+        "search_result",
+        "session_result",
+        "response"
+      ],
+      "outputs": [
+        "final_output"
+      ]
+    },
+    {
+      "id": "end",
+      "type": "end",
+      "name": "结束",
+      "inputs": [
+        "final_output"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "start",
+      "to": "input_parser"
+    },
+    {
+      "from": "input_parser",
+      "to": "intent_classifier"
+    },
+    {
+      "from": "intent_classifier",
+      "to": "selector"
+    },
+    {
+      "from": "selector",
+      "to": "diagnosis_node",
+      "condition": "intent == 'diagnose_workflow'"
+    },
+    {
+      "from": "selector",
+      "to": "auto_fix_node",
+      "condition": "intent == 'auto_fix'"
+    },
+    {
+      "from": "selector",
+      "to": "node_executor",
+      "condition": "intent == 'execute_node'"
+    },
+    {
+      "from": "selector",
+      "to": "knowledge_searcher",
+      "condition": "intent == 'search_knowledge'"
+    },
+    {
+      "from": "selector",
+      "to": "session_manager",
+      "condition": "intent == 'manage_session'"
+    },
+    {
+      "from": "selector",
+      "to": "general_handler",
+      "condition": "default"
+    },
+    {
+      "from": "diagnosis_node",
+      "to": "output_formatter"
+    },
+    {
+      "from": "auto_fix_node",
+      "to": "output_formatter"
+    },
+    {
+      "from": "node_executor",
+      "to": "output_formatter"
+    },
+    {
+      "from": "knowledge_searcher",
+      "to": "output_formatter"
+    },
+    {
+      "from": "session_manager",
+      "to": "output_formatter"
+    },
+    {
+      "from": "general_handler",
+      "to": "output_formatter"
+    },
+    {
+      "from": "output_formatter",
+      "to": "end"
+    }
+  ],
+  "error_handling": {
+    "timeout": 30000,
+    "retry_count": 3,
+    "fallback": "general_handler"
+  }
+}

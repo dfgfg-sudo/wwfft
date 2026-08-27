@@ -1,0 +1,14 @@
+{
+  "user_id": "92bc0533-6cb3-4514-bceb-ac2738cdb058",
+  "email": null,
+  "mobile": {
+    "mobile_number": "13783797186",
+    "area_code": "+86"
+  },
+  "oauth_profiles": [
+    {
+      "provider": "WECHAT",
+      "profile_json": "{\"provider\":\"WECHAT\",\"id\":\"888b7de3-86dd-47c0-9883-7f266de715d1\",\"name\":\"蔡景轩\",\"picture\":\"https://static.deepseek.com/user-avatar/mW6LUDgo-iVfax7JBKvECinb\",\"locale\":\"zh_CN\",\"email\":null}"
+    }
+  ]
+}

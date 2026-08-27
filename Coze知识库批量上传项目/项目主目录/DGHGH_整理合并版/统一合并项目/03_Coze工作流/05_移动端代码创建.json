@@ -1,0 +1,103 @@
+{
+  "name": "移动端代码创建",
+  "description": "根据平台（iOS/Android/Flutter）和需求描述，自动生成移动端项目代码与目录结构",
+  "version": "1.0.0",
+  "create_time": "2014-12-20 15:17:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "platform",
+            "type": "string",
+            "required": true,
+            "description": "目标平台：iOS / Android / Flutter / React Native"
+          },
+          {
+            "name": "requirement",
+            "type": "string",
+            "required": true,
+            "description": "需求描述"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_design",
+      "type": "4",
+      "data": {
+        "name": "AI 架构设计",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是移动端架构师，给出目录结构与核心模块设计",
+        "user_prompt": "平台：{{platform}}\\n需求：{{requirement}}\\n请输出 JSON：{\"dirs\":[...],\"modules\":[...]}",
+        "output_params": [
+          {"name": "dirs", "type": "array"},
+          {"name": "modules", "type": "array"}
+        ]
+      }
+    },
+    {
+      "id": "loop_node_modules",
+      "type": "6",
+      "data": {
+        "name": "逐模块生成代码",
+        "loop_var": "module",
+        "loop_array": "{{llm_node_design.modules}}",
+        "loop_body": [
+          {
+            "id": "llm_node_code",
+            "type": "4",
+            "data": {
+              "name": "生成模块代码",
+              "model": "doubao-pro-128k",
+              "system_prompt": "你是{{platform}} 开发专家，按规范生成完整可运行代码",
+              "user_prompt": "模块：{{module}}\\n目录：{{llm_node_design.dirs}}",
+              "output_params": [
+                {"name": "code", "type": "string"},
+                {"name": "path", "type": "string"}
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_zip",
+      "type": "3",
+      "data": {
+        "name": "打包项目文件",
+        "language": "python",
+        "code": "import json\nimport base64\ndef main(loop_node_modules_results, platform):\n    files = []\n    for item in loop_node_modules_results:\n        files.append({\"path\": item.get(\"path\"), \"code\": item.get(\"code\")})\n    return {\"platform\": platform, \"files\": files, \"total\": len(files)}",
+        "output_params": [
+          {"name": "platform", "type": "string"},
+          {"name": "files", "type": "array"},
+          {"name": "total", "type": "number"}
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "project_files",
+            "type": "object",
+            "value": "{{code_node_zip}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "llm_node_design"},
+    {"sourceNodeID": "llm_node_design", "targetNodeID": "loop_node_modules"},
+    {"sourceNodeID": "loop_node_modules", "targetNodeID": "code_node_zip"},
+    {"sourceNodeID": "code_node_zip", "targetNodeID": "end_node"}
+  ]
+}

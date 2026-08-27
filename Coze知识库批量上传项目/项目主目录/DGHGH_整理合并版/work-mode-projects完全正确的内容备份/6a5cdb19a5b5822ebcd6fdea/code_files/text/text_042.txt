@@ -1,0 +1,76 @@
+7.2.4 路径合并策略
+
+原始路径 合并后路径 说明
+/unified-automation /unified-automation 核心统一端点
+/process/text /process/text 传统文本处理
+/process/data /process/data 传统数据处理
+/workflow/execute /workflow/execute 传统工作流执行
+/automations /automations 传统自动化端点
+/operations/{operation_id} /operations/{operation_id} 操作状态查询
+/health /health 健康检查
+/validate /validate 参数验证
+
+7.3 兼容性保证
+
+兼容性维度 说明
+向后兼容 保留所有传统API端点，现有系统无需修改
+向前兼容 新增核心统一端点，支持未来功能扩展
+平台兼容 完全兼容Coze平台导入规范
+版本兼容 支持v1.0、v2.0、v3.0版本参数
+
+---
+
+8. 版本对比与变更记录
+
+8.1 版本演进历史
+
+版本号 发布日期 主要变更
+v1.0.0 初始版本 基础文本处理、数据分析功能
+v2.0.0 功能扩展 新增工作流引擎、文化遗产系统
+v3.0.0 架构升级 引入统一自动化网关
+v10.0.0 企业级 集成30个核心功能模块
+v20.0.0 完全统一 单一端点架构，58项功能整合
+
+8.2 功能模块数量统计
+
+模块类别 功能数量 说明
+文本处理 4 clean, summarize, format, translate
+数据分析 4 statistical, predictive, clustering, classification
+工作流管理 4 create, execute, update, delete
+AI增强 4 emergency, enhancement, repair, backup
+系统管理 5 custom_node, feed_data, generate, connections, workflows
+行业分析 2 analyze_industry, process_automation
+文化遗产 1 process_luoyang_heritage
+模型训练 1 train_model
+插件系统 1 trigger_auto_plugin_workflow
+参数验证 1 validate_parameters
+其他辅助 31 配置对象、辅助功能
+总计 58 核心功能模块
+
+8.3 Schema对象统计
+
+对象类型 数量 说明
+请求对象 6 SimpleUserRequest, ProfessionalRequest, TextProcessRequest, DataProcessRequest, WorkflowExecuteRequest, UnifiedAutomationRequest
+响应对象 9 UnifiedSuccessResponse, TextProcessResponse, DataProcessResponse, WorkflowExecuteResponse, UnifiedAutomationResponse, AsyncOperationResponse, AsyncAutomationResponse, OperationStatus, HealthStatus
+配置对象 16 WorkflowConfig, AIEnhancementConfig, AutomationConfig, BackupConfig, ConnectionConfig, CustomNodeConfig, EmergencyConfig, HeritageConfig, IndustryConfig, PluginConfig, QueryConfig, RepairConfig, TrainingConfig, ValidationConfig, ProcessingOptions, ProcessingStatistics
+辅助对象 4 WorkflowStep, ResponseMetadata, ErrorResponse, ErrorResponseV2
+验证对象 2 ValidationRequest, ValidationResponse
+总计 37 Schema对象
+
+---
+
+9. 部署与使用说明
+
+9.1 快速开始
+
+步骤1：导入到Coze平台
+
+1. 复制完整YAML配置内容
+2. 在Coze插件管理界面选择"导入OpenAPI"
+3. 粘贴YAML内容
+4. 配置认证信息
+5. 测试连接
+
+步骤2：认证配置
+
+API Key认证：

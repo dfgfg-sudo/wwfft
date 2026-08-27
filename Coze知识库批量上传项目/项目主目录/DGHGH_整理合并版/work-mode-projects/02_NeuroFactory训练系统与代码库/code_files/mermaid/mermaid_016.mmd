@@ -1,0 +1,73 @@
+flowchart TD
+    Start[🚀 启动系统] --> Input[📥 输入源数据]
+    
+    Input --> Process1[🔍 扫描分析阶段]
+    Process1 --> Analyze[📊 文件格式分析]
+    Analyze --> DuplicateCheck[🔄 重复文件检测]
+    DuplicateCheck --> FormatGroups[📁 格式分组]
+    
+    FormatGroups --> Decision1{📈 是否需要合并?}
+    Decision1 -->|是| MergeProcess[🔄 智能合并处理]
+    Decision1 -->|否| CompareProcess[🔍 直接对比处理]
+    
+    MergeProcess --> StrategySelect[⚙️ 选择合并策略]
+    StrategySelect --> MergeByType[📋 按类型合并]
+    
+    subgraph "合并类型处理"
+        MergeByType --> TextMerge[📝 文本文件合并]
+        MergeByType --> JSONMerge[🔣 JSON文件合并]
+        MergeByType --> CSVMerge[📊 CSV文件合并]
+        MergeByType --> YAMLMerge[⚙️ YAML文件合并]
+        MergeByType --> GenericMerge[📁 通用文件合并]
+    end
+    
+    TextMerge --> OutputMerge[📤 合并输出]
+    JSONMerge --> OutputMerge
+    CSVMerge --> OutputMerge
+    YAMLMerge --> OutputMerge
+    GenericMerge --> OutputMerge
+    
+    OutputMerge --> CompareProcess
+    
+    CompareProcess --> ContentCompare[🔍 内容对比分析]
+    ContentCompare --> DetailedCompare[📋 详细对比]
+    DetailedCompare --> SimilarityCalc[📈 相似度计算]
+    SimilarityCalc --> DiffAnalysis[📊 差异分析]
+    
+    DiffAnalysis --> Optimization[⚡ 优化处理]
+    Optimization --> Compression[🗜️ 文件压缩]
+    Compression --> Cleanup[🧹 清理优化]
+    Cleanup --> Validation[✅ 完整性验证]
+    
+    Validation --> ReportGen[📋 报告生成阶段]
+    
+    subgraph "报告生成"
+        ReportGen --> JSONReport[📄 JSON格式报告]
+        ReportGen --> TextReport[📝 文本格式报告]
+        ReportGen --> HTMLReport[🌐 HTML格式报告]
+        ReportGen --> VisualReport[📊 可视化报告]
+    end
+    
+    JSONReport --> FinalOutput[🎯 最终输出]
+    TextReport --> FinalOutput
+    HTMLReport --> FinalOutput
+    VisualReport --> FinalOutput
+    
+    FinalOutput --> End[✅ 流程完成]
+    
+    %% 样式定义
+    classDef start fill:#e3f2fd,stroke:#1565c0
+    classDef process fill:#f3e5f5,stroke:#7b1fa2
+    classDef merge fill:#e8f5e8,stroke:#2e7d32
+    classDef compare fill:#fff3e0,stroke:#ef6c00
+    classDef optimize fill:#e0f2f1,stroke:#00695c
+    classDef report fill:#fce4ec,stroke:#c2185b
+    classDef end fill:#c8e6c9,stroke:#388e3c
+    
+    class Start,Input start
+    class Process1,Analyze,DuplicateCheck,FormatGroups,Decision1 process
+    class MergeProcess,StrategySelect,MergeByType,TextMerge,JSONMerge,CSVMerge,YAMLMerge,GenericMerge,OutputMerge merge
+    class CompareProcess,ContentCompare,DetailedCompare,SimilarityCalc,DiffAnalysis,CompareProcess compare
+    class Optimization,Compression,Cleanup,Validation optimize
+    class ReportGen,JSONReport,TextReport,HTMLReport,VisualReport report
+    class FinalOutput,End end

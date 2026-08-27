@@ -1,0 +1,37 @@
+{
+  "name": "DeepSeek AI工厂终极版",
+  "description": "集成Coze插件，包含20个模块、300+工具、完整知识库、智能路由系统、零Token成本、安全合规。满足认知型知识库、Agent知识库和RAG知识库要求。",
+  "version": "1.0.0",
+  "create_time": "2026-06-26 01:40:00",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7655387580434939958",
+  "original_name": "DeepSeek AI Factory Ultimate",
+  "type": "plugin",
+  "plugin_type": "云插件",
+  "functions": [
+    {
+      "name": "smart_route",
+      "description": "智能路由分发",
+      "input_params": [
+        {"name": "query", "type": "string", "required": true, "description": "用户查询"},
+        {"name": "context", "type": "object", "required": false, "description": "上下文"}
+      ],
+      "output_params": [
+        {"name": "module", "type": "string", "description": "选中模块"},
+        {"name": "response", "type": "string", "description": "处理结果"}
+      ]
+    },
+    {
+      "name": "knowledge_base_query",
+      "description": "知识库查询",
+      "input_params": [
+        {"name": "query", "type": "string", "required": true, "description": "查询词"},
+        {"name": "kb_type", "type": "string", "required": true, "description": "知识库类型"}
+      ],
+      "output_params": [
+        {"name": "results", "type": "array", "description": "查询结果"},
+        {"name": "source", "type": "string", "description": "数据来源"}
+      ]
+    }
+  ]
+}

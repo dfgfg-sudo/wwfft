@@ -1,0 +1,141 @@
+graph TD
+    %% ====================== Trae-CN环境层 ======================
+    T[Trae-CN软件环境] --> T1[Trae-AI-IDE开发平台]
+    T --> T2[Trae-CN Python运行时]
+    T --> T3[Trae-CN包管理系统]
+    T --> T4[Trae-CN GPU加速支持]
+    
+    %% ====================== 系统配置层 ======================
+    A[系统核心配置] --> A1[DEVICE: CPU设备]
+    A --> A2[TRAIN_MODEL_PATH: D盘训练模型目录]
+    A --> A3[SAVE_MODEL_PATH: C盘存储目录]
+    A --> A4[DEFAULT_DATA_DIR: 数据目录]
+    
+    %% ====================== 数据处理层 ======================
+    B[数据处理模块 - DataProcessor] --> B1[知识库队列]
+    B --> B2[文件计数器]
+    B --> B3[图像转换流水线]
+    
+    B1 --> B1_1[限制数据量: 1000条]
+    B2 --> B2_1[文件处理统计]
+    B3 --> B3_1[Resize 224x224]
+    B3 --> B3_2[ToTensor转换]
+    B3 --> B3_3[图像归一化]
+    
+    %% ====================== 文件格式处理 ======================
+    C[支持文件格式] --> C1[.txt文本文件]
+    C --> C2[.csv表格文件]
+    C --> C3[.pdf文档文件]
+    C --> C4[.docx Word文档]
+    C --> C5[.png图像文件]
+    C --> C6[.jpg图像文件]
+    
+    %% ====================== 模型训练层 ======================
+    D[模型训练模块 - ModelTrainer] --> D1[模型配置]
+    D --> D2[预训练模型]
+    D --> D3[Tokenizer]
+    D --> D4[LoRA配置]
+    
+    D1 --> D1_1[AutoConfig加载]
+    D1 --> D1_2[信任远程代码]
+    D1 --> D1_3[CPU设备映射]
+    
+    D2 --> D2_1[AutoModelForCausalLM]
+    D2 --> D2_2[float32精度]
+    D2 --> D2_3[低CPU内存使用]
+    
+    D3 --> D3_1[AutoTokenizer加载]
+    
+    D4 --> D4_1[秩r=8]
+    D4 --> D4_2[Lora Alpha=32]
+    D4 --> D4_3[目标模块: q_proj, v_proj]
+    D4 --> D4_4[Dropout=0.05]
+    D4 --> D4_5[偏置: none]
+    
+    %% ====================== 训练流程 ======================
+    E[训练流程] --> E1[3轮训练循环]
+    E --> E2[AdamW优化器]
+    E --> E3[学习率2e-5]
+    E --> E4[批次大小=1]
+    
+    E1 --> E1_1[单轮训练]
+    E1_1 --> E1_1_1[损失计算]
+    E1_1 --> E1_1_2[反向传播]
+    E1_1 --> E1_1_3[梯度更新]
+    
+    %% ====================== 图形界面层 ======================
+    F[图形界面模块 - TrainingGUI] --> F1[主窗口]
+    F --> F2[进度显示区]
+    F --> F3[功能按钮区]
+    F --> F4[日志显示区]
+    
+    F1 --> F1_1[标题: AI训练工厂 v3.0]
+    F1 --> F1_2[尺寸: 1000x800]
+    
+    F2 --> F2_1[状态标签]
+    F2 --> F2_2[进度条]
+    
+    F3 --> F3_1[选择训练数据按钮]
+    F3 --> F3_2[开始训练按钮]
+    F3 --> F3_3[保存模型按钮]
+    
+    F4 --> F4_1[滚动文本区域]
+    F4 --> F4_2[时间戳日志]
+    F4 --> F4_3[错误高亮显示]
+    
+    %% ====================== 数据流 ======================
+    G[用户交互] --> G1[选择数据目录]
+    G --> G2[启动训练]
+    G --> G3[保存模型]
+    
+    G1 --> H[文件处理流程]
+    H --> H1[递归扫描目录]
+    H --> H2[格式识别]
+    H --> H3[分格式处理]
+    H --> H4[错误捕获]
+    
+    G2 --> I[训练执行流程]
+    I --> I1[后台线程训练]
+    I --> I2[进度更新]
+    I --> I3[异常处理]
+    
+    G3 --> J[模型保存流程]
+    J --> J1[时间戳目录]
+    J --> J2[模型保存]
+    J --> J3[Tokenizer保存]
+    
+    %% ====================== Trae-CN集成层 ======================
+    TR[Trae-CN集成特性] --> TR1[Trae-CN项目管理]
+    TR --> TR2[Trae-CN代码高亮]
+    TR --> TR3[Trae-CN调试支持]
+    TR --> TR4[Trae-CN部署工具]
+    
+    %% ====================== 连接关系 ======================
+    T --> A
+    A --> B
+    B --> D
+    D --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+    
+    C --> H
+    E --> I
+    
+    %% 样式定义
+    classDef trae fill:#e0f7fa,stroke:#006064,stroke-width:3px
+    classDef config fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef data fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef model fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef gui fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef process fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef tech fill:#e0f2f1,stroke:#004d40,stroke-width:2px
+    
+    class T,T1,T2,T3,T4,TR,TR1,TR2,TR3,TR4 trae
+    class A,A1,A2,A3,A4 config
+    class B,B1,B2,B3,C,C1,C2,C3,C4,C5,C6 data
+    class D,D1,D2,D3,D4,E,E1,E2,E3,E4 model
+    class F,F1,F2,F3,F4 gui
+    class G,H,I,J process
+    class K,K1,K2,K3,K4,K5 tech

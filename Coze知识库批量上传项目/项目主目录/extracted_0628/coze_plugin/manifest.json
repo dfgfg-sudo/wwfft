@@ -1,0 +1,45 @@
+{
+  "name": "ConversationsParser",
+  "version": "1.0.0",
+  "description": "完整处理conversations.json内容的Coze IDE插件",
+  "author": "Coze Plugin Generator",
+  "main": "index.js",
+  "dependencies": {
+    "json5": "^2.2.3"
+  },
+  "capabilities": [
+    "fileRead",
+    "fileWrite",
+    "jsonParse",
+    "codeAnalysis",
+    "systemPrompt",
+    "workflowIntegration"
+  ],
+  "settings": {
+    "defaultFilePath": "d:\\sfdhdjdtysjsy\\sgdhfjasdkd\\extracted_0628\\conversations.json",
+    "outputFormat": "markdown",
+    "enableAutoParse": true
+  },
+  "commands": [
+    {
+      "name": "parseConversations",
+      "title": "解析对话内容",
+      "description": "完整解析conversations.json文件"
+    },
+    {
+      "name": "extractCodeBlocks",
+      "title": "提取代码块",
+      "description": "从对话中提取所有代码块"
+    },
+    {
+      "name": "generateDocumentation",
+      "title": "生成文档",
+      "description": "根据对话内容生成技术文档"
+    },
+    {
+      "name": "listSystems",
+      "title": "列出系统模块",
+      "description": "列出对话中包含的所有系统模块"
+    }
+  ]
+}

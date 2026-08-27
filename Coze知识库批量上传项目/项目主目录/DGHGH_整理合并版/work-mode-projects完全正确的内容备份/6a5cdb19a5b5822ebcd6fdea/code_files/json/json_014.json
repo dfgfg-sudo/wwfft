@@ -1,0 +1,63 @@
+{
+  "name": "complete-content-processing-system",
+  "version": "1.0.0",
+  "description": "完整内容处理系统 - 兼容 Trae-AI-IDE 和 Trae-CN 软件",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest",
+    "test:unit": "jest --testPathPattern=unit",
+    "test:integration": "jest --testPathPattern=integration",
+    "test:e2e": "jest --testPathPattern=e2e",
+    "build": "webpack --config webpack.config.js",
+    "lint": "eslint src/",
+    "format": "prettier --write src/",
+    "generate-docs": "node scripts/generate-docs.js",
+    "validate-content": "node scripts/validate-content.js",
+    "generate-diagrams": "node scripts/generate-diagrams.js"
+  },
+  "keywords": [
+    "content-processing",
+    "mermaid",
+    "architecture-diagrams",
+    "trae-ai-ide",
+    "trae-cn",
+    "complete-system"
+  ],
+  "author": "完整内容处理团队",
+  "license": "MIT",
+  "dependencies": {
+    "mermaid": "^9.0.0",
+    "express": "^4.18.0",
+    "js-yaml": "^4.1.0",
+    "joi": "^17.9.0",
+    "jsonwebtoken": "^9.0.0",
+    "winston": "^3.8.0",
+    "axios": "^1.3.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "eslint": "^8.35.0",
+    "prettier": "^2.8.4",
+    "webpack": "^5.76.0",
+    "nodemon": "^2.0.20",
+    "@types/node": "^18.15.0",
+    "trae-ai-ide-sdk": "^2.5.0",
+    "trae-cn-sdk": "^1.8.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "trae-ai-ide": ">=2.5.0",
+    "trae-cn": ">=1.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/complete-content/processing-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/complete-content/processing-system/issues"
+  },
+  "homepage": "https://github.com/complete-content/processing-system#readme"
+}

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Coze 知识库 - 文件夹批量上传节点</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f7fa; color: #1f2329; padding: 24px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .header {
+    background: linear-gradient(135deg, #4f7cff, #6a5cff); color: #fff;
+    padding: 24px 32px; border-radius: 12px; margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(80, 100, 200, 0.18);
+  }
+  .header h1 { font-size: 22px; margin-bottom: 6px; }
+  .header p { opacity: 0.92; font-size: 13px; }
+  .card {
+    background: #fff; padding: 20px 24px; border-radius: 10px;
+    margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .card h2 { font-size: 16px; margin-bottom: 14px; color: #1f2329; border-left: 3px solid #4f7cff; padding-left: 10px; }
+  .form-row { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+  .form-item { flex: 1; min-width: 220px; }
+  label { display: block; font-size: 13px; color: #4e5969; margin-bottom: 6px; font-weight: 500; }
+  input[type=text], input[type=password], select, textarea {
+    width: 100%; padding: 8px 12px; border: 1px solid #c9cdd4; border-radius: 6px;
+    font-size: 13px; outline: none; transition: border-color .2s;
+  }
+  input:focus, select:focus, textarea:focus { border-color: #4f7cff; }
+  textarea { resize: vertical; min-height: 60px; font-family: ui-monospace, Menlo, monospace; }
+  .hint { font-size: 11px; color: #86909c; margin-top: 4px; }
+
+  .upload-zone {
+    border: 2px dashed #4f7cff; border-radius: 10px; padding: 28px; text-align: center;
+    background: #f8faff; cursor: pointer; transition: all .2s;
+  }
+  .upload-zone:hover { background: #eef3ff; border-color: #6a5cff; }
+  .upload-zone.dragover { background: #e0eaff; border-color: #6a5cff; transform: scale(1.01); }
+  .upload-zone .icon { font-size: 38px; margin-bottom: 10px; }
+  .upload-zone .title { font-size: 15px; color: #1f2329; font-weight: 600; margin-bottom: 6px; }
+  .upload-zone .desc { font-size: 12px; color: #86909c; }
+
+  .btn {
+    padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px;
+    cursor: pointer; transition: all .2s; font-weight: 500;
+  }
+  .btn-primary { background: #4f7cff; color: #fff; }
+  .btn-primary:hover { background: #3d6ae8; }
+  .btn-success { background: #00b42a; color: #fff; }
+  .btn-success:hover { background: #009a25; }
+  .btn-secondary { background: #e5e6eb; color: #4e5969; }
+  .btn-secondary:hover { background: #d4d6dd; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-group { display: flex; gap: 10px; margin-top: 12px; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 12px; }
+  .stat-item { background: #f7f8fa; padding: 14px; border-radius: 8px; text-align: center; }
+  .stat-item .num { font-size: 22px; font-weight: 700; color: #4f7cff; }
+  .stat-item .num.success { color: #00b42a; }
+  .stat-item .num.fail { color: #f53f3f; }
+  .stat-item .num.skip { color: #ff7d00; }
+  .stat-item .label { font-size: 12px; color: #86909c; margin-top: 4px; }
+
+  .progress-bar { height: 8px; background: #e5e6eb; border-radius: 4px; overflow: hidden; margin-top: 10px; }
+  .progress-bar .fill { height: 100%; background: linear-gradient(90deg, #4f7cff, #6a5cff); width: 0; transition: width .3s; }
+
+  .file-list { max-height: 280px; overflow-y: auto; border: 1px solid #e5e6eb; border-radius: 6px; margin-top: 10px; }
+  .file-item { padding: 8px 12px; font-size: 12px; border-bottom: 1px solid #f0f2f5; display: flex; justify-content: space-between; }
+  .file-item:last-child { border-bottom: none; }
+  .file-item .name { color: #1f2329; word-break: break-all; flex: 1; padding-right: 10px; }
+  .file-item .size { color: #86909c; white-space: nowrap; }
+  .file-item .status { padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-left: 8px; }
+  .file-item .status.success { background: #e8ffea; color: #00b42a; }
+  .file-item .status.fail { background: #ffece8; color: #f53f3f; }
+  .file-item .status.pending { background: #fff7e8; color: #ff7d00; }
+
+  .log { background: #1f2329; color: #c9d1d9; padding: 14px; border-radius: 6px; font-family: ui-monospace, Menlo, monospace; font-size: 12px; max-height: 240px; overflow-y: auto; }
+  .log .line { margin-bottom: 4px; }
+  .log .line.success { color: #56d364; }
+  .log .line.fail { color: #f85149; }
+  .log .line.warn { color: #d29922; }
+  .log .line.info { color: #79c0ff; }
+
+  .switch-group { display: flex; gap: 18px; flex-wrap: wrap; }
+  .switch { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #4e5969; }
+  .switch input { width: 16px; height: 16px; }
+
+  .tabs { display: flex; gap: 6px; margin-bottom: 14px; border-bottom: 1px solid #e5e6eb; }
+  .tab { padding: 8px 16px; cursor: pointer; font-size: 13px; color: #4e5969; border-bottom: 2px solid transparent; }
+  .tab.active { color: #4f7cff; border-bottom-color: #4f7cff; font-weight: 500; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .toast { position: fixed; top: 24px; right: 24px; padding: 12px 18px; background: #4f7cff; color: #fff; border-radius: 6px; font-size: 13px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 9999; }
+  .toast.show { opacity: 1; }
+  .toast.error { background: #f53f3f; }
+  .toast.success { background: #00b42a; }
+
+  .footer { text-align: center; color: #86909c; font-size: 12px; margin-top: 20px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>📁 知识库文件夹批量上传节点 <span style="font-size:12px;font-weight:400;">v1.0.0</span></h1>
+    <p>在 Coze 工作流中扩展原生知识库节点 — 支持鼠标选中文件管理器中的整个目录、完整文件夹、单篇/多篇文件批量上传到 Coze 知识库</p>
+  </div>
+
+  <div class="card">
+    <h2>1. Coze 知识库连接配置</h2>
+    <div class="form-row">
+      <div class="form-item">
+        <label>Dataset ID（知识库 ID）<span style="color:#f53f3f">*</span></label>
+        <input type="text" id="dataset_id" placeholder="在 Coze 平台预先创建知识库后获取的 ID">
+        <div class="hint">Coze 控制台 → 知识库 → 选择/创建知识库 → 复制 ID</div>
+      </div>
+      <div class="form-item">
+        <label>Access Token（访问令牌）<span style="color:#f53f3f">*</span></label>
+        <input type="password" id="access_token" placeholder="Coze PAT 访问令牌">
+        <div class="hint">Coze 控制台 → 个人中心 → API Token → 生成 PAT</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2. 选择待上传的文件夹或文件</h2>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="folder">📁 选择整个文件夹（鼠标选中）</div>
+      <div class="tab" data-tab="files">📄 选择多个文件</div>
+      <div class="tab" data-tab="path">💻 按路径输入（IDE 端）</div>
+    </div>
+
+    <!-- Tab1: 文件夹选择 -->
+    <div class="tab-content active" id="tab-folder">
+      <div class="upload-zone" id="folderZone">
+        <div class="icon">📂</div>
+        <div class="title">点击此处，或拖拽文件夹到此处</div>
+        <div class="desc">在弹出的文件管理器中，鼠标选中任意文件夹，所有子目录内容会一并上传</div>
+        <input type="file" id="folderInput" webkitdirectory directory multiple style="display:none;">
+      </div>
+    </div>
+
+    <!-- Tab2: 多文件选择 -->
+    <div class="tab-content" id="tab-files">
+      <div class="upload-zone" id="filesZone">
+        <div class="icon">📄</div>
+        <div class="title">点击此处选择多个文件</div>
+        <div class="desc">支持 Ctrl / Shift 多选，或反复选择追加</div>
+        <input type="file" id="filesInput" multiple style="display:none;">
+      </div>
+    </div>
+
+    <!-- Tab3: 按路径 -->
+    <div class="tab-content" id="tab-path">
+      <label>文件夹或文件绝对路径（每行一个，支持多个）</label>
+      <textarea id="pathInput" placeholder="D:\sfdhdjdtysjsy\sgdhfjasdkd\完整知识库_最终版&#10;D:\my_kb_folder&#10;D:\docs\file.txt"></textarea>
+      <div class="hint">仅在 IDE 插件本地运行时可用，浏览器端无法直接读取本地路径</div>
+    </div>
+
+    <div id="fileListWrap" style="display:none;">
+      <label style="margin-top:14px;">待上传文件清单（共 <span id="fileCount">0</span> 个）</label>
+      <div class="file-list" id="fileList"></div>
+      <div class="btn-group">
+        <button class="btn btn-secondary" id="clearBtn">清空列表</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>3. 上传参数配置</h2>
+    <div class="form-row">
+      <div class="form-item">
+        <label>上传模式</label>
+        <select id="upload_mode">
+          <option value="document">document - 自动文档切片（推荐）</option>
+          <option value="file">file - 整文件作为一篇文档</option>
+          <option value="chunk">chunk - 自定义分块</option>
+        </select>
+      </div>
+      <div class="form-item">
+        <label>切片大小（字符）</label>
+        <input type="text" id="chunk_size" value="500">
+      </div>
+      <div class="form-item">
+        <label>切片重叠（字符）</label>
+        <input type="text" id="chunk_overlap" value="50">
+      </div>
+      <div class="form-item">
+        <label>并发数</label>
+        <input type="text" id="concurrency" value="5">
+      </div>
+    </div>
+    <div class="switch-group">
+      <label class="switch"><input type="checkbox" id="recursive" checked> 递归子目录</label>
+      <label class="switch"><input type="checkbox" id="deduplicate" checked> 内容去重（MD5）</label>
+      <label class="switch"><input type="checkbox" id="preserve_structure" checked> 保留目录结构</label>
+      <label class="switch"><input type="checkbox" id="enable_retry" checked> 失败自动重试</label>
+      <label class="switch"><input type="checkbox" id="return_preview"> 返回内容预览</label>
+    </div>
+    <div class="form-row" style="margin-top:12px;">
+      <div class="form-item">
+        <label>排除目录（逗号分隔）</label>
+        <input type="text" id="exclude_dirs" value="node_modules,.git,.svn,__pycache__,dist,build">
+      </div>
+      <div class="form-item">
+        <label>自定义扩展名（覆盖默认白名单，逗号分隔，留空则用默认）</label>
+        <input type="text" id="custom_extensions" placeholder="例如: .txt,.md,.json">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>4. 上传执行</h2>
+    <div class="btn-group">
+      <button class="btn btn-primary" id="startBtn">🚀 开始批量上传</button>
+      <button class="btn btn-secondary" id="resetBtn">重置</button>
+    </div>
+    <div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+    <div class="stats">
+      <div class="stat-item"><div class="num" id="statTotal">0</div><div class="label">总文件数</div></div>
+      <div class="stat-item"><div class="num success" id="statSuccess">0</div><div class="label">成功上传</div></div>
+      <div class="stat-item"><div class="num fail" id="statFail">0</div><div class="label">失败</div></div>
+      <div class="stat-item"><div class="num skip" id="statSkip">0</div><div class="label">去重/跳过</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>5. 执行日志</h2>
+    <div class="log" id="logBox">
+      <div class="line info">[info] 等待开始上传...</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Coze IDE 插件 · 知识库文件夹批量上传节点 · 安全运行 · 不限制批量上传数量
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ==================== 全局状态 ====================
+const state = {
+  files: [],          // 待上传文件列表 [{name, relativePath, size, content, file}]
+  uploading: false,
+  mode: 'folder'      // 当前选中的 tab
+};
+
+// ==================== DOM 工具 ====================
+const $ = id => document.getElementById(id);
+function toast(msg, type = '') {
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => { t.className = 'toast ' + type; }, 2400);
+}
+function log(msg, type = 'info') {
+  const box = $('logBox');
+  const line = document.createElement('div');
+  line.className = 'line ' + type;
+  const ts = new Date().toLocaleTimeString();
+  line.textContent = `[${ts}] [${type}] ${msg}`;
+  box.appendChild(line);
+  box.scrollTop = box.scrollHeight;
+}
+
+// ==================== Tab 切换 ====================
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    const tabName = tab.dataset.tab;
+    $('tab-' + tabName).classList.add('active');
+    state.mode = tabName;
+  });
+});
+
+// ==================== 文件夹选择（webkitdirectory） ====================
+$('folderZone').addEventListener('click', () => $('folderInput').click());
+$('folderInput').addEventListener('change', (e) => {
+  const files = Array.from(e.target.files || []);
+  if (files.length === 0) return;
+  addFiles(files.map(f => ({
+    name: f.name,
+    relativePath: f.webkitRelativePath || f.name,
+    size: f.size,
+    file: f
+  })));
+  toast(`已选择 ${files.length} 个文件`, 'success');
+});
+
+// 拖拽支持
+const folderZone = $('folderZone');
+['dragenter','dragover'].forEach(ev => folderZone.addEventListener(ev, e => {
+  e.preventDefault(); e.stopPropagation();
+  folderZone.classList.add('dragover');
+}));
+['dragleave','drop'].forEach(ev => folderZone.addEventListener(ev, e => {
+  e.preventDefault(); e.stopPropagation();
+  folderZone.classList.remove('dragover');
+}));
+folderZone.addEventListener('drop', e => {
+  const items = e.dataTransfer.items;
+  if (!items) return;
+  const files = [];
+  const promises = [];
+  function traverseEntry(entry, path = '') {
+    return new Promise(resolve => {
+      if (entry.isFile) {
+        entry.file(file => {
+          files.push({
+            name: file.name,
+            relativePath: path + file.name,
+            size: file.size,
+            file: file
+          });
+          resolve();
+        });
+      } else if (entry.isDirectory) {
+        const reader = entry.createReader();
+        const allEntries = [];
+        function readEntries() {
+          reader.readEntries(async (results) => {
+            if (results.length === 0) {
+              for (const child of allEntries) {
+                await traverseEntry(child, path + entry.name + '/');
+              }
+              resolve();
+            } else {
+              allEntries.push(...results);
+              readEntries();
+            }
+          });
+        }
+        readEntries();
+      } else {
+        resolve();
+      }
+    });
+  }
+  const entries = [];
+  for (let i = 0; i < items.length; i++) {
+    const entry = items[i].webkitGetAsEntry && items[i].webkitGetAsEntry();
+    if (entry) entries.push(entry);
+  }
+  Promise.all(entries.map(e => traverseEntry(e))).then(() => {
+    if (files.length > 0) {
+      addFiles(files);
+      toast(`拖拽入 ${files.length} 个文件`, 'success');
+    }
+  });
+});
+
+// ==================== 多文件选择 ====================
+$('filesZone').addEventListener('click', () => $('filesInput').click());
+$('filesInput').addEventListener('change', (e) => {
+  const files = Array.from(e.target.files || []);
+  if (files.length === 0) return;
+  addFiles(files.map(f => ({
+    name: f.name,
+    relativePath: f.name,
+    size: f.size,
+    file: f
+  })));
+  toast(`已选择 ${files.length} 个文件`, 'success');
+});
+
+// ==================== 路径模式：发起上传时再处理 ====================
+// 浏览器端无法直接读取本地路径，需要通过 IDE 插件后端处理
+// 这里把路径列表附加到上传参数，由 handler 中的 collectFiles 函数读取
+
+// ==================== 文件清单管理 ====================
+const ALLOWED_EXT = ['.txt','.md','.markdown','.json','.js','.ts','.jsx','.tsx','.py','.java','.go','.rs','.c','.cpp','.h','.hpp','.yaml','.yml','.xml','.html','.htm','.css','.csv','.tsv','.log','.ini','.conf','.cfg','.rst','.asciidoc','.adoc','.org','.tex'];
+const BLOCKED_EXT = ['.exe','.bat','.cmd','.sh','.ps1','.dll','.so','.dylib','.bin','.dat','.db','.sqlite','.zip','.rar','.7z','.jpg','.jpeg','.png','.gif','.bmp','.tiff','.webp','.mp3','.mp4','.avi','.mov','.mkv','.flv','.pdf','.doc','.docx','.xls','.xlsx','.ppt','.pptx'];
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+function getExt(name) {
+  const i = name.lastIndexOf('.');
+  return i >= 0 ? name.slice(i).toLowerCase() : '';
+}
+
+function isAllowed(name, customExt) {
+  const ext = getExt(name);
+  if (BLOCKED_EXT.includes(ext)) return false;
+  if (customExt && customExt.length > 0) return customExt.includes(ext);
+  return ALLOWED_EXT.includes(ext);
+}
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/1024/1024).toFixed(2) + ' MB';
+}
+
+function addFiles(newFiles) {
+  const customExtRaw = $('custom_extensions').value.trim();
+  const customExt = customExtRaw ? customExtRaw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean) : null;
+  const excludeDirsRaw = $('exclude_dirs').value.trim();
+  const excludeDirs = excludeDirsRaw ? excludeDirsRaw.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+  let added = 0, skipped = 0;
+  for (const f of newFiles) {
+    // 排除目录
+    const parts = (f.relativePath || f.name).split('/');
+    if (parts.some(p => excludeDirs.includes(p))) { skipped++; continue; }
+    // 排除前缀
+    if (f.name.startsWith('.') || f.name.startsWith('~') || f.name === 'Thumbs.db') { skipped++; continue; }
+    // 扩展名检查
+    if (!isAllowed(f.name, customExt)) { skipped++; continue; }
+    // 大小检查
+    if (f.size > MAX_FILE_SIZE) { skipped++; continue; }
+    // 去重（基于 relativePath）
+    if (state.files.some(x => x.relativePath === f.relativePath)) { skipped++; continue; }
+    state.files.push({ ...f, status: 'pending' });
+    added++;
+  }
+  log(`添加 ${added} 个文件，跳过 ${skipped} 个（类型/大小/重复）`, 'info');
+  renderFileList();
+}
+
+function renderFileList() {
+  const list = $('fileList');
+  $('fileCount').textContent = state.files.length;
+  if (state.files.length === 0) {
+    $('fileListWrap').style.display = 'none';
+    list.innerHTML = '';
+    return;
+  }
+  $('fileListWrap').style.display = 'block';
+  list.innerHTML = state.files.map((f, i) => `
+    <div class="file-item">
+      <span class="name">${f.relativePath || f.name}</span>
+      <span class="size">${formatSize(f.size)}</span>
+      <span class="status ${f.status}">${f.status === 'pending' ? '待上传' : f.status === 'success' ? '成功' : '失败'}</span>
+    </div>
+  `).join('');
+  // 更新统计
+  $('statTotal').textContent = state.files.length;
+}
+
+$('clearBtn').addEventListener('click', () => {
+  if (state.uploading) return toast('上传中，无法清空', 'error');
+  state.files = [];
+  renderFileList();
+  toast('已清空列表');
+});
+
+$('resetBtn').addEventListener('click', () => {
+  if (state.uploading) return toast('上传中，无法重置', 'error');
+  state.files = [];
+  renderFileList();
+  $('statTotal').textContent = '0';
+  $('statSuccess').textContent = '0';
+  $('statFail').textContent = '0';
+  $('statSkip').textContent = '0';
+  $('progressFill').style.width = '0%';
+  $('logBox').innerHTML = '<div class="line info">[info] 已重置</div>';
+});
+
+// ==================== 读取文件内容（浏览器端） ====================
+function readFileContent(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsText(file, 'utf-8');
+  });
+}
+
+// ==================== 调用 Coze 知识库 API ====================
+async function callCozeApi(path, payload, accessToken) {
+  const baseUrl = 'https://api.coze.cn';
+  const maxRetry = $('enable_retry').checked ? 3 : 0;
+  let lastErr = null;
+  for (let attempt = 0; attempt <= maxRetry; attempt++) {
+    try {
+      const resp = await fetch(baseUrl + path, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + accessToken,
+          'Content-Type': 'application/json',
+          'User-Agent': 'Coze-KB-Folder-Uploader/1.0.0'
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await resp.json();
+      if (!resp.ok || data.code !== 0) {
+        throw new Error('Coze API ' + data.code + ': ' + (data.msg || resp.statusText));
+      }
+      return { success: true, data: data.data || data };
+    } catch (err) {
+      lastErr = err;
+      if (attempt < maxRetry) {
+        log(`第 ${attempt + 1} 次重试: ${err.message}`, 'warn');
+        await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+      }
+    }
+  }
+  return { success: false, error: lastErr ? lastErr.message : 'Unknown' };
+}
+
+// ==================== 并发池 ====================
+async function runWithConcurrency(tasks, concurrency) {
+  const executing = new Set();
+  for (const task of tasks) {
+    const p = Promise.resolve().then(() => task());
+    executing.add(p);
+    p.finally(() => executing.delete(p));
+    if (executing.size >= concurrency) await Promise.race(executing);
+  }
+  await Promise.all(executing);
+}
+
+// ==================== 限流器（每秒 N 个） ====================
+function createRateLimiter(maxPerSecond) {
+  let tokens = maxPerSecond;
+  let lastRefill = Date.now();
+  return () => new Promise(resolve => {
+    const tryAcquire = () => {
+      const now = Date.now();
+      const newTokens = Math.floor((now - lastRefill) / 1000) * maxPerSecond;
+      if (newTokens > 0) { tokens = Math.min(maxPerSecond, tokens + newTokens); lastRefill = now; }
+      if (tokens > 0) { tokens -= 1; resolve(); }
+      else setTimeout(tryAcquire, 100);
+    };
+    tryAcquire();
+  });
+}
+
+// ==================== 内容去重（MD5） ====================
+async function md5Hex(text) {
+  if (window.crypto && window.crypto.subtle) {
+    const buf = new TextEncoder().encode(text);
+    const hash = await window.crypto.subtle.digest('MD5', buf);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+  // 兜底：简单哈希
+  let h = 0;
+  for (let i = 0; i < text.length; i++) h = ((h << 5) - h + text.charCodeAt(i)) | 0;
+  return 'fallback_' + (h >>> 0).toString(16);
+}
+
+// ==================== 主上传流程 ====================
+$('startBtn').addEventListener('click', async () => {
+  if (state.uploading) return toast('正在上传中，请稍候', 'error');
+
+  const datasetId = $('dataset_id').value.trim();
+  const accessToken = $('access_token').value.trim();
+  if (!datasetId) return toast('请填写 Dataset ID', 'error');
+  if (!accessToken) return toast('请填写 Access Token', 'error');
+
+  // 路径模式：把路径传给 IDE 后端
+  if (state.mode === 'path') {
+    return await uploadByPath();
+  }
+
+  if (state.files.length === 0) return toast('请先选择文件或文件夹', 'error');
+
+  state.uploading = true;
+  $('startBtn').disabled = true;
+  $('statSuccess').textContent = '0';
+  $('statFail').textContent = '0';
+  $('statSkip').textContent = '0';
+
+  const uploadMode = $('upload_mode').value;
+  const chunkSize = parseInt($('chunk_size').value) || 500;
+  const chunkOverlap = parseInt($('chunk_overlap').value) || 50;
+  const concurrency = Math.max(1, Math.min(parseInt($('concurrency').value) || 5, 20));
+  const dedup = $('deduplicate').checked;
+  const preserve = $('preserve_structure').checked;
+  const returnPreview = $('return_preview').checked;
+
+  const rateLimiter = createRateLimiter(10);
+  const seenHashes = new Set();
+  let success = 0, fail = 0, skip = 0;
+
+  log(`开始上传：共 ${state.files.length} 个文件，并发 ${concurrency}，模式 ${uploadMode}`, 'info');
+
+  const tasks = state.files.map((fileObj, idx) => async () => {
+    await rateLimiter();
+    try {
+      // 读取内容
+      const content = await readFileContent(fileObj.file);
+      const trimmed = (content || '').trim();
+      if (!trimmed) { skip++; fileObj.status = 'fail'; log(`空内容: ${fileObj.relativePath}`, 'warn'); updateProgress(idx+1, state.files.length); return; }
+      // 去重
+      if (dedup) {
+        const hash = await md5Hex(trimmed);
+        if (seenHashes.has(hash)) { skip++; fileObj.status = 'fail'; log(`重复跳过: ${fileObj.relativePath}`, 'warn'); updateProgress(idx+1, state.files.length); return; }
+        seenHashes.add(hash);
+      }
+      // 文档名（保留相对路径）
+      let docName = fileObj.relativePath ? fileObj.relativePath.replace(/[/\\]/g, '_') : fileObj.name;
+      // 构造 payload
+      const payload = {
+        dataset_id: datasetId,
+        document_bases: [{
+          name: docName,
+          source_info: {
+            file_base64: btoa(unescape(encodeURIComponent(trimmed))),
+            file_type: 'text'
+          }
+        }],
+        chunk_strategy: {
+          chunk_type: uploadMode === 'chunk' ? 0 : (uploadMode === 'file' ? 2 : 1),
+          max_tokens: chunkSize,
+          overlap_tokens: chunkOverlap
+        }
+      };
+      if (preserve) {
+        payload.document_bases[0].source_info.meta_info = JSON.stringify({
+          source_path: fileObj.relativePath, size: fileObj.size
+        });
+      }
+      const result = await callCozeApi('/open_api/v2/knowledge/document/create', payload, accessToken);
+      if (result.success) {
+        success++;
+        fileObj.status = 'success';
+        log(`✓ ${docName}`, 'success');
+      } else {
+        fail++;
+        fileObj.status = 'fail';
+        log(`✗ ${docName}: ${result.error}`, 'fail');
+      }
+    } catch (err) {
+      fail++;
+      fileObj.status = 'fail';
+      log(`✗ ${fileObj.relativePath}: ${err.message}`, 'fail');
+    }
+    updateProgress(idx + 1, state.files.length);
+    renderFileList();
+  });
+
+  await runWithConcurrency(tasks, concurrency);
+
+  $('statSuccess').textContent = success;
+  $('statFail').textContent = fail;
+  $('statSkip').textContent = skip;
+
+  log(`上传完成：成功 ${success}，失败 ${fail}，跳过 ${skip}`, success === 0 ? 'fail' : 'success');
+  toast(`上传完成：${success} 成功，${fail} 失败`, success > 0 ? 'success' : 'error');
+
+  state.uploading = false;
+  $('startBtn').disabled = false;
+});
+
+function updateProgress(current, total) {
+  const pct = total > 0 ? (current / total * 100).toFixed(1) : 0;
+  $('progressFill').style.width = pct + '%';
+}
+
+// ==================== 路径模式：交给 IDE 后端处理 ====================
+async function uploadByPath() {
+  const paths = $('pathInput').value.trim().split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+  if (paths.length === 0) return toast('请输入至少一行路径', 'error');
+
+  const datasetId = $('dataset_id').value.trim();
+  const accessToken = $('access_token').value.trim();
+
+  const payload = {
+    folder_path: paths.length === 1 ? paths[0] : paths,
+    dataset_id: datasetId,
+    access_token: accessToken,
+    upload_mode: $('upload_mode').value,
+    chunk_size: parseInt($('chunk_size').value) || 500,
+    chunk_overlap: parseInt($('chunk_overlap').value) || 50,
+    recursive: $('recursive').checked,
+    deduplicate: $('deduplicate').checked,
+    preserve_structure: $('preserve_structure').checked,
+    enable_retry: $('enable_retry').checked,
+    return_preview: $('return_preview').checked,
+    exclude_dirs: $('exclude_dirs').value.split(',').map(s => s.trim()).filter(Boolean),
+    custom_extensions: $('custom_extensions').value.split(',').map(s => s.trim()).filter(Boolean),
+    concurrency: parseInt($('concurrency').value) || 5
+  };
+
+  log('通过 IDE 后端处理路径上传: ' + JSON.stringify(paths), 'info');
+  toast('已提交到 IDE 插件后端', 'success');
+
+  // 这里通过 IDE 插件 API 通道调用后端 handler
+  // IDE 端会通过 postMessage 或 fetch('http://127.0.0.1:18789/...') 调用
+  if (window.cozeIDE && window.cozeIDE.invokePlugin) {
+    try {
+      const result = await window.cozeIDE.invokePlugin('knowledge_base_folder_upload', payload);
+      log('IDE 后端返回: ' + JSON.stringify(result).slice(0, 500), 'success');
+      if (result.summary) {
+        $('statTotal').textContent = result.summary.total_files_scanned || 0;
+        $('statSuccess').textContent = result.summary.uploaded_succeeded || 0;
+        $('statFail').textContent = result.summary.uploaded_failed || 0;
+        $('statSkip').textContent = (result.summary.skipped_duplicate || 0) + (result.summary.skipped_empty || 0);
+      }
+    } catch (err) {
+      log('IDE 调用失败: ' + err.message, 'fail');
+      toast('IDE 调用失败', 'error');
+    }
+  } else {
+    log('当前环境非 IDE 插件宿主，请将本插件加载到 Coze IDE 中使用路径模式', 'warn');
+    toast('路径模式需在 IDE 中使用', 'error');
+  }
+}
+</script>
+</body>
+</html>

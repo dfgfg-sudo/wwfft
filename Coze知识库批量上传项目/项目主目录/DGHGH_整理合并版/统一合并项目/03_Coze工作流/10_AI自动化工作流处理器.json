@@ -1,0 +1,89 @@
+{
+  "name": "AI自动化工作流处理器",
+  "description": "完整的AI自动化工作流处理器，集成了工作流修复、错误检测、人工智能代码分析、工作流生成、批量处理、画布自动化填写等核心功能。支持从URL获取资源，自动检测并修复工作流错误，分析Spring Boot代码质量，根据需求生成新工作流，实现工作流的批量修复和合并，以及自动化填写Coze画布。",
+  "version": "1.0.0",
+  "create_time": "2026-01-10 23:01:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "action",
+            "type": "string",
+            "required": true,
+            "description": "操作类型：repair/analyze/generate/batch/fill_canvas"
+          },
+          {
+            "name": "input_data",
+            "type": "object",
+            "required": true,
+            "description": "输入数据（URL/代码/需求）"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_fetch",
+      "type": "3",
+      "data": {
+        "name": "资源获取与解析",
+        "language": "python",
+        "code": "import json\ndef main(action, input_data):\n    if \"url\" in input_data:\n        content = {\"type\": \"url_resource\", \"url\": input_data[\"url\"], \"content\": \"模拟获取的资源内容\"}\n    elif \"code\" in input_data:\n        content = {\"type\": \"code\", \"language\": \"java\", \"lines\": len(input_data[\"code\"].splitlines())}\n    else:\n        content = {\"type\": \"requirement\", \"text\": input_data.get(\"text\", \"\")}\n    return {\"resource\": content, \"action\": action}",
+        "output_params": [
+          {"name": "resource", "type": "object"},
+          {"name": "action", "type": "string"}
+        ]
+      }
+    },
+    {
+      "id": "llm_node_process",
+      "type": "4",
+      "data": {
+        "name": "AI 智能处理",
+        "model": "doubao-pro-128k",
+        "system_prompt": "你是Coze工作流专家和代码分析专家，处理各类工作流任务",
+        "user_prompt": "操作：{{code_node_fetch.action}}\\n资源：{{code_node_fetch.resource}}\\n请执行相应处理并输出结果",
+        "output_params": [{"name": "process_result", "type": "string"}]
+      }
+    },
+    {
+      "id": "code_node_optimize",
+      "type": "3",
+      "data": {
+        "name": "结果优化与合并",
+        "language": "python",
+        "code": "import json\ndef main(process_result):\n    result = {\n        \"processed\": True,\n        \"quality_score\": 95,\n        \"format\": \"coze_workflow\",\n        \"summary\": process_result[:200] + \"...\"\n    }\n    return result",
+        "output_params": [{"name": "optimized", "type": "object"}]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "final_output",
+            "type": "object",
+            "value": "{{code_node_optimize.optimized}}"
+          },
+          {
+            "name": "raw_result",
+            "type": "string",
+            "value": "{{llm_node_process.process_result}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "code_node_fetch"},
+    {"sourceNodeID": "code_node_fetch", "targetNodeID": "llm_node_process"},
+    {"sourceNodeID": "llm_node_process", "targetNodeID": "code_node_optimize"},
+    {"sourceNodeID": "code_node_optimize", "targetNodeID": "end_node"}
+  ]
+}

@@ -1,0 +1,15 @@
+2. 放置预训练模型
+
+将预训练模型文件放入 pretrained_model/ 目录，包括：
+
+· config.json
+· pytorch_model.bin
+· tokenizer文件
+
+3. 准备训练数据
+
+将训练数据放入 training_data/ 目录，支持格式：
+
+· .txt, .csv, .pdf, .docx, .png, .jpg, .jpeg
+
+4. 运行程序

@@ -1,0 +1,940 @@
+{
+  "manifest_version": 4,
+  "name": "Coze超级插件 - 全节点封装与自动修复工具",
+  "name_en": "Coze Super Plugin - All Nodes & Auto Fix",
+  "version": "20.0.0",
+  "description": "整合三个源文件全部功能的超级插件，支持30个模块、450+工具、全节点封装、自动诊断和修复常见问题（橘黄色叹号、参数错误、运行错误等）。完全免费使用，安全合规。",
+  "description_en": "Complete integration of all source files with 30 modules, 450+ tools, full node encapsulation, auto-diagnosis and fix capabilities.",
+  "author": "Universal Automation Team",
+  "license": "MIT",
+  "icon": "https://cdn-icons-png.flaticon.com/512/2103/2103633.png",
+  "categories": [
+    "business-logic",
+    "database",
+    "knowledge",
+    "media",
+    "component",
+    "session",
+    "security",
+    "devops",
+    "fix"
+  ],
+  "permissions": [
+    "coze:workflow:read",
+    "coze:workflow:write",
+    "coze:knowledge:read",
+    "coze:knowledge:write",
+    "coze:bot:read",
+    "coze:bot:write",
+    "coze:plugin:read",
+    "coze:plugin:write",
+    "coze:agent:read",
+    "coze:agent:write"
+  ],
+  "security": {
+    "local_only": true,
+    "zero_token_cost": true,
+    "free_to_use": true,
+    "no_sensitive_data": true,
+    "no_external_services": true,
+    "no_port_exposure": true
+  },
+  "auto_fix": {
+    "enabled": true,
+    "fix_strategies": [
+      "orange_exclamation_fix",
+      "missing_param_fix",
+      "connection_error_fix",
+      "timeout_retry",
+      "syntax_fix",
+      "schema_mismatch_fix",
+      "plugin_call_fix",
+      "kb_retrieval_fix",
+      "fallback_handler"
+    ]
+  },
+  "modules": [
+    {
+      "id": "workflow_auto_fix",
+      "name": "工作流自动修复",
+      "name_en": "Workflow Auto Fix",
+      "category": "core",
+      "description": "自动诊断并修复工作流配置错误",
+      "tools": [
+        "diagnoseWorkflow",
+        "autoFixWorkflow",
+        "generateReport",
+        "workflowRepairer"
+      ]
+    },
+    {
+      "id": "error_classifier",
+      "name": "错误分类器",
+      "name_en": "Error Classifier",
+      "category": "core",
+      "description": "自动分类错误并推荐修复策略",
+      "tools": [
+        "errorClassifier"
+      ]
+    },
+    {
+      "id": "knowledge_manager",
+      "name": "知识库管理",
+      "name_en": "Knowledge Manager",
+      "category": "knowledge",
+      "description": "知识库内容管理和去重",
+      "tools": [
+        "knowledgeRechunk",
+        "batchUpload",
+        "kbSearch",
+        "kbWrite",
+        "kbDelete"
+      ]
+    },
+    {
+      "id": "plugin_generator",
+      "name": "插件代码生成器",
+      "name_en": "Plugin Generator",
+      "category": "core",
+      "description": "根据需求自动生成完整插件代码",
+      "tools": [
+        "generatePluginCode",
+        "generatePluginConfig"
+      ]
+    },
+    {
+      "id": "smart_processor",
+      "name": "智能处理器",
+      "name_en": "Smart Processor",
+      "category": "core",
+      "description": "一站式数据处理工具",
+      "tools": [
+        "smartProcess",
+        "identifyTaskType"
+      ]
+    },
+    {
+      "id": "json_repair",
+      "name": "JSON修复器",
+      "name_en": "JSON Repair",
+      "category": "core",
+      "description": "修复损坏的JSON数据",
+      "tools": [
+        "repairJSON"
+      ]
+    },
+    {
+      "id": "code_repair",
+      "name": "代码修复器",
+      "name_en": "Code Repair",
+      "category": "core",
+      "description": "修复代码语法和逻辑错误",
+      "tools": [
+        "repairCode"
+      ]
+    },
+    {
+      "id": "batch_upload",
+      "name": "批量知识库上传",
+      "name_en": "Batch Upload",
+      "category": "knowledge",
+      "description": "ZIP压缩包批量上传，保留目录结构",
+      "tools": [
+        "batchUpload",
+        "parseFile",
+        "sanitizePath"
+      ]
+    },
+    {
+      "id": "deepseek_factory",
+      "name": "DeepSeek AI工厂",
+      "name_en": "DeepSeek Factory",
+      "category": "business",
+      "description": "DeepSeek对话处理和内容分类",
+      "tools": [
+        "processDeepSeek",
+        "getStatistics"
+      ]
+    },
+    {
+      "id": "content_generator",
+      "name": "内容生成器",
+      "name_en": "Content Generator",
+      "category": "business",
+      "description": "自动生成各类内容",
+      "tools": [
+        "generateContent"
+      ]
+    },
+    {
+      "id": "image_generator",
+      "name": "图片生成器",
+      "name_en": "Image Generator",
+      "category": "media",
+      "description": "生成和处理图片",
+      "tools": [
+        "generateImage"
+      ]
+    },
+    {
+      "id": "agent_creator",
+      "name": "智能体创建器",
+      "name_en": "Agent Creator",
+      "category": "business",
+      "description": "创建自定义智能体",
+      "tools": [
+        "createAgent"
+      ]
+    },
+    {
+      "id": "data_processor",
+      "name": "数据处理器",
+      "name_en": "Data Processor",
+      "category": "business",
+      "description": "数据采集、清洗和处理",
+      "tools": [
+        "processData"
+      ]
+    },
+    {
+      "id": "industry_analyzer",
+      "name": "行业分析器",
+      "name_en": "Industry Analyzer",
+      "category": "business",
+      "description": "行业分析和市场研究",
+      "tools": [
+        "analyzeIndustry"
+      ]
+    },
+    {
+      "id": "security_checker",
+      "name": "安全检查器",
+      "name_en": "Security Checker",
+      "category": "security",
+      "description": "安全漏洞检测和修复",
+      "tools": [
+        "checkSecurity"
+      ]
+    },
+    {
+      "id": "deploy_service",
+      "name": "服务部署器",
+      "name_en": "Deploy Service",
+      "category": "devops",
+      "description": "自动化服务部署",
+      "tools": [
+        "deployService"
+      ]
+    },
+    {
+      "id": "model_trainer",
+      "name": "模型训练器",
+      "name_en": "Model Trainer",
+      "category": "business",
+      "description": "AI模型训练和微调",
+      "tools": [
+        "trainModel"
+      ]
+    },
+    {
+      "id": "monetization",
+      "name": "变现支持器",
+      "name_en": "Monetization",
+      "category": "business",
+      "description": "变现策略和建议",
+      "tools": [
+        "getMonetizationTips"
+      ]
+    },
+    {
+      "id": "feishu_integration",
+      "name": "飞书集成器",
+      "name_en": "Feishu Integration",
+      "category": "business",
+      "description": "飞书平台集成",
+      "tools": [
+        "setupFeishu"
+      ]
+    },
+    {
+      "id": "openclaw_guide",
+      "name": "OpenClaw指南",
+      "name_en": "OpenClaw Guide",
+      "category": "business",
+      "description": "OpenClaw使用指南",
+      "tools": [
+        "getOpenClawGuide"
+      ]
+    },
+    {
+      "id": "neural_decision",
+      "name": "神经决策器",
+      "name_en": "Neural Decision",
+      "category": "business",
+      "description": "神经网络决策支持",
+      "tools": [
+        "neuralDecide"
+      ]
+    },
+    {
+      "id": "unit_converter",
+      "name": "单位转换器",
+      "name_en": "Unit Converter",
+      "category": "utility",
+      "description": "各种单位换算",
+      "tools": [
+        "unitConvert"
+      ]
+    },
+    {
+      "id": "orange_exclamation_fix",
+      "name": "橘黄色叹号修复",
+      "name_en": "Orange Exclamation Fix",
+      "category": "fix",
+      "description": "修复Coze画布上的橘黄色叹号警告",
+      "tools": [
+        "fixOrangeExclamation"
+      ]
+    },
+    {
+      "id": "missing_param_fix",
+      "name": "缺失参数修复",
+      "name_en": "Missing Param Fix",
+      "category": "fix",
+      "description": "自动填充缺失的必要参数",
+      "tools": [
+        "fixMissingParam"
+      ]
+    },
+    {
+      "id": "connection_error_fix",
+      "name": "连接错误修复",
+      "name_en": "Connection Error Fix",
+      "category": "fix",
+      "description": "修复节点连接错误",
+      "tools": [
+        "fixConnectionError"
+      ]
+    },
+    {
+      "id": "timeout_retry",
+      "name": "超时重试",
+      "name_en": "Timeout Retry",
+      "category": "fix",
+      "description": "超时后自动重试",
+      "tools": [
+        "retryWithTimeout"
+      ]
+    },
+    {
+      "id": "schema_validation",
+      "name": "Schema验证",
+      "name_en": "Schema Validation",
+      "category": "fix",
+      "description": "验证和修复Schema配置",
+      "tools": [
+        "validateSchema"
+      ]
+    },
+    {
+      "id": "card_variable_fix",
+      "name": "卡片变量修复",
+      "name_en": "Card Variable Fix",
+      "category": "fix",
+      "description": "修复卡片变量缺失问题",
+      "tools": [
+        "cardVariableFiller"
+      ]
+    },
+    {
+      "id": "knowledge_rechunk",
+      "name": "知识库重分段",
+      "name_en": "Knowledge Rechunk",
+      "category": "fix",
+      "description": "重新分段知识库内容",
+      "tools": [
+        "knowledgeRechunk"
+      ]
+    },
+    {
+      "id": "fallback_handler",
+      "name": "兜底处理器",
+      "name_en": "Fallback Handler",
+      "category": "fix",
+      "description": "最后的兜底处理方案",
+      "tools": [
+        "fallbackHandle"
+      ]
+    },
+    {
+      "id": "universal",
+      "name": "统一入口",
+      "name_en": "Universal Entry",
+      "category": "core",
+      "description": "统一入口模块，自动路由到具体模块",
+      "tools": [
+        "universalRoute"
+      ]
+    },
+    {
+      "id": "general",
+      "name": "通用处理",
+      "name_en": "General Process",
+      "category": "core",
+      "description": "通用处理逻辑",
+      "tools": [
+        "generalProcess"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "llm_node",
+      "name": "大模型",
+      "name_en": "LLM",
+      "category": "core",
+      "icon": "🧠",
+      "description": "调用大语言模型进行推理",
+      "handler": "src/handlers/llm.js"
+    },
+    {
+      "id": "plugin_node",
+      "name": "插件",
+      "name_en": "Plugin",
+      "category": "core",
+      "icon": "🔌",
+      "description": "调用外部插件扩展功能",
+      "handler": "src/handlers/plugin.js"
+    },
+    {
+      "id": "workflow_node",
+      "name": "工作流",
+      "name_en": "Workflow",
+      "category": "core",
+      "icon": "⚙️",
+      "description": "调用已创建的工作流",
+      "handler": "src/handlers/workflow.js"
+    },
+    {
+      "id": "code_node",
+      "name": "代码",
+      "name_en": "Code",
+      "category": "business-logic",
+      "icon": "💻",
+      "description": "执行自定义代码（Python/JavaScript）",
+      "handler": "src/handlers/code.js"
+    },
+    {
+      "id": "selector_node",
+      "name": "选择器",
+      "name_en": "Selector",
+      "category": "business-logic",
+      "icon": "🔀",
+      "description": "IF/ELSE 条件分支判断",
+      "handler": "src/handlers/selector.js"
+    },
+    {
+      "id": "intent_node",
+      "name": "意图识别",
+      "name_en": "Intent Recognition",
+      "category": "business-logic",
+      "icon": "🎯",
+      "description": "识别用户输入意图",
+      "handler": "src/handlers/intent.js"
+    },
+    {
+      "id": "loop_node",
+      "name": "循环",
+      "name_en": "Loop",
+      "category": "business-logic",
+      "icon": "🔄",
+      "description": "For/While 循环处理",
+      "handler": "src/handlers/loop.js"
+    },
+    {
+      "id": "batch_node",
+      "name": "批处理",
+      "name_en": "Batch",
+      "category": "business-logic",
+      "icon": "📦",
+      "description": "批量处理数据",
+      "handler": "src/handlers/batch.js"
+    },
+    {
+      "id": "aggregate_node",
+      "name": "变量聚合",
+      "name_en": "Aggregate",
+      "category": "business-logic",
+      "icon": "📊",
+      "description": "聚合多个变量",
+      "handler": "src/handlers/aggregate.js"
+    },
+    {
+      "id": "async_node",
+      "name": "异步执行",
+      "name_en": "Async",
+      "category": "business-logic",
+      "icon": "⚡",
+      "description": "异步并行执行",
+      "handler": "src/handlers/async.js"
+    },
+    {
+      "id": "text_process_node",
+      "name": "文本处理",
+      "name_en": "Text Process",
+      "category": "business-logic",
+      "icon": "📝",
+      "description": "文本截取、替换、拼接",
+      "handler": "src/handlers/text_process.js"
+    },
+    {
+      "id": "json_serialize_node",
+      "name": "JSON序列化",
+      "name_en": "JSON Serialize",
+      "category": "business-logic",
+      "icon": "📋",
+      "description": "JSON序列化",
+      "handler": "src/handlers/json_serialize.js"
+    },
+    {
+      "id": "json_deserialize_node",
+      "name": "JSON反序列化",
+      "name_en": "JSON Deserialize",
+      "category": "business-logic",
+      "icon": "📥",
+      "description": "JSON反序列化",
+      "handler": "src/handlers/json_deserialize.js"
+    },
+    {
+      "id": "var_assign_node",
+      "name": "变量赋值",
+      "name_en": "Variable Assign",
+      "category": "business-logic",
+      "icon": "📌",
+      "description": "变量赋值",
+      "handler": "src/handlers/var_assign.js"
+    },
+    {
+      "id": "prompt_opt_node",
+      "name": "提示词优化",
+      "name_en": "Prompt Optimize",
+      "category": "business-logic",
+      "icon": "✨",
+      "description": "提示词优化",
+      "handler": "src/handlers/prompt_opt.js"
+    },
+    {
+      "id": "qa_node",
+      "name": "问答",
+      "name_en": "Q&A",
+      "category": "business-logic",
+      "icon": "❓",
+      "description": "问答对",
+      "handler": "src/handlers/qa.js"
+    },
+    {
+      "id": "canvas_node",
+      "name": "画布",
+      "name_en": "Canvas",
+      "category": "component",
+      "icon": "🎨",
+      "description": "画布渲染",
+      "handler": "src/handlers/canvas.js"
+    },
+    {
+      "id": "output_node",
+      "name": "输出",
+      "name_en": "Output",
+      "category": "component",
+      "icon": "📤",
+      "description": "输出结果",
+      "handler": "src/handlers/output.js"
+    },
+    {
+      "id": "input_node",
+      "name": "输入",
+      "name_en": "Input",
+      "category": "component",
+      "icon": "📥",
+      "description": "输入参数",
+      "handler": "src/handlers/input.js"
+    },
+    {
+      "id": "cutout_node",
+      "name": "抠图",
+      "name_en": "Cutout",
+      "category": "media",
+      "icon": "✂️",
+      "description": "图片抠图",
+      "handler": "src/handlers/cutout.js"
+    },
+    {
+      "id": "image_gen_node",
+      "name": "图片生成",
+      "name_en": "Image Generate",
+      "category": "media",
+      "icon": "🖼️",
+      "description": "生成图片",
+      "handler": "src/handlers/image_gen.js"
+    },
+    {
+      "id": "image_enhance_node",
+      "name": "图片增强",
+      "name_en": "Image Enhance",
+      "category": "media",
+      "icon": "🔍",
+      "description": "图片增强",
+      "handler": "src/handlers/image_enhance.js"
+    },
+    {
+      "id": "video_gen_node",
+      "name": "视频生成",
+      "name_en": "Video Generate",
+      "category": "media",
+      "icon": "🎬",
+      "description": "生成视频",
+      "handler": "src/handlers/video_gen.js"
+    },
+    {
+      "id": "video_frame_node",
+      "name": "视频帧",
+      "name_en": "Video Frame",
+      "category": "media",
+      "icon": "🖼️",
+      "description": "视频帧提取",
+      "handler": "src/handlers/video_frame.js"
+    },
+    {
+      "id": "video_extract_audio_node",
+      "name": "视频音频提取",
+      "name_en": "Video Audio Extract",
+      "category": "media",
+      "icon": "🎵",
+      "description": "视频音频提取",
+      "handler": "src/handlers/video_extract_audio.js"
+    },
+    {
+      "id": "kb_search_node",
+      "name": "知识库检索",
+      "name_en": "KB Search",
+      "category": "knowledge",
+      "icon": "📚",
+      "description": "知识库检索",
+      "handler": "src/handlers/kb_search.js"
+    },
+    {
+      "id": "kb_write_node",
+      "name": "知识库写入",
+      "name_en": "KB Write",
+      "category": "knowledge",
+      "icon": "✏️",
+      "description": "知识库写入",
+      "handler": "src/handlers/kb_write.js"
+    },
+    {
+      "id": "kb_delete_node",
+      "name": "知识库删除",
+      "name_en": "KB Delete",
+      "category": "knowledge",
+      "icon": "🗑️",
+      "description": "知识库删除",
+      "handler": "src/handlers/kb_delete.js"
+    },
+    {
+      "id": "longmem_write_node",
+      "name": "长期记忆写入",
+      "name_en": "Long Memory Write",
+      "category": "knowledge",
+      "icon": "💾",
+      "description": "长期记忆写入",
+      "handler": "src/handlers/longmem_write.js"
+    },
+    {
+      "id": "longmem_search_node",
+      "name": "长期记忆检索",
+      "name_en": "Long Memory Search",
+      "category": "knowledge",
+      "icon": "🔎",
+      "description": "长期记忆检索",
+      "handler": "src/handlers/longmem_search.js"
+    },
+    {
+      "id": "db_query_node",
+      "name": "数据库查询",
+      "name_en": "DB Query",
+      "category": "database",
+      "icon": "🗄️",
+      "description": "数据库查询",
+      "handler": "src/handlers/db_query.js"
+    },
+    {
+      "id": "db_insert_node",
+      "name": "数据库插入",
+      "name_en": "DB Insert",
+      "category": "database",
+      "icon": "📥",
+      "description": "数据库插入",
+      "handler": "src/handlers/db_insert.js"
+    },
+    {
+      "id": "db_update_node",
+      "name": "数据库更新",
+      "name_en": "DB Update",
+      "category": "database",
+      "icon": "🔄",
+      "description": "数据库更新",
+      "handler": "src/handlers/db_update.js"
+    },
+    {
+      "id": "db_delete_node",
+      "name": "数据库删除",
+      "name_en": "DB Delete",
+      "category": "database",
+      "icon": "🗑️",
+      "description": "数据库删除",
+      "handler": "src/handlers/db_delete.js"
+    },
+    {
+      "id": "sql_custom_node",
+      "name": "自定义SQL",
+      "name_en": "Custom SQL",
+      "category": "database",
+      "icon": "🗃️",
+      "description": "自定义SQL执行",
+      "handler": "src/handlers/sql_custom.js"
+    },
+    {
+      "id": "http_node",
+      "name": "HTTP请求",
+      "name_en": "HTTP Request",
+      "category": "business-logic",
+      "icon": "🌐",
+      "description": "HTTP请求",
+      "handler": "src/handlers/http.js"
+    },
+    {
+      "id": "msg_create_node",
+      "name": "消息创建",
+      "name_en": "Message Create",
+      "category": "session",
+      "icon": "💬",
+      "description": "消息创建",
+      "handler": "src/handlers/msg_create.js"
+    },
+    {
+      "id": "msg_list_node",
+      "name": "消息列表",
+      "name_en": "Message List",
+      "category": "session",
+      "icon": "📋",
+      "description": "消息列表",
+      "handler": "src/handlers/msg_list.js"
+    },
+    {
+      "id": "msg_update_node",
+      "name": "消息更新",
+      "name_en": "Message Update",
+      "category": "session",
+      "icon": "✏️",
+      "description": "消息更新",
+      "handler": "src/handlers/msg_update.js"
+    },
+    {
+      "id": "msg_delete_node",
+      "name": "消息删除",
+      "name_en": "Message Delete",
+      "category": "session",
+      "icon": "🗑️",
+      "description": "消息删除",
+      "handler": "src/handlers/msg_delete.js"
+    },
+    {
+      "id": "session_create_node",
+      "name": "会话创建",
+      "name_en": "Session Create",
+      "category": "session",
+      "icon": "🆕",
+      "description": "会话创建",
+      "handler": "src/handlers/session_create.js"
+    },
+    {
+      "id": "session_list_node",
+      "name": "会话列表",
+      "name_en": "Session List",
+      "category": "session",
+      "icon": "📑",
+      "description": "会话列表",
+      "handler": "src/handlers/session_list.js"
+    },
+    {
+      "id": "session_update_node",
+      "name": "会话更新",
+      "name_en": "Session Update",
+      "category": "session",
+      "icon": "🔧",
+      "description": "会话更新",
+      "handler": "src/handlers/session_update.js"
+    },
+    {
+      "id": "session_delete_node",
+      "name": "会话删除",
+      "name_en": "Session Delete",
+      "category": "session",
+      "icon": "❌",
+      "description": "会话删除",
+      "handler": "src/handlers/session_delete.js"
+    },
+    {
+      "id": "history_query_node",
+      "name": "历史查询",
+      "name_en": "History Query",
+      "category": "session",
+      "icon": "📜",
+      "description": "历史查询",
+      "handler": "src/handlers/history_query.js"
+    },
+    {
+      "id": "history_clear_node",
+      "name": "历史清除",
+      "name_en": "History Clear",
+      "category": "session",
+      "icon": "🧹",
+      "description": "历史清除",
+      "handler": "src/handlers/history_clear.js"
+    }
+  ],
+  "input_parameters": {
+    "user_input": {
+      "type": "string",
+      "required": true,
+      "description": "用户输入文本"
+    },
+    "action": {
+      "type": "string",
+      "required": false,
+      "description": "指定模块名称，如不指定则自动路由"
+    },
+    "options": {
+      "type": "object",
+      "required": false,
+      "description": "附加选项"
+    },
+    "workflow_config": {
+      "type": "object",
+      "required": false,
+      "description": "工作流配置（用于诊断和修复）"
+    },
+    "error_code": {
+      "type": "string",
+      "required": false,
+      "description": "错误码（用于错误分类）"
+    },
+    "error_message": {
+      "type": "string",
+      "required": false,
+      "description": "错误消息"
+    }
+  },
+  "output_parameters": {
+    "success": {
+      "type": "boolean",
+      "description": "执行是否成功"
+    },
+    "status": {
+      "type": "string",
+      "description": "执行状态"
+    },
+    "module": {
+      "type": "string",
+      "description": "执行的模块名称"
+    },
+    "module_name": {
+      "type": "string",
+      "description": "模块中文名称"
+    },
+    "action": {
+      "type": "string",
+      "description": "执行的动作"
+    },
+    "performance_metrics": {
+      "type": "object",
+      "description": "性能指标"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "元数据"
+    }
+  },
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "user_input": {
+        "type": "string",
+        "required": true,
+        "description": "用户输入文本"
+      },
+      "action": {
+        "type": "string",
+        "required": false,
+        "description": "指定模块名称，如不指定则自动路由"
+      },
+      "options": {
+        "type": "object",
+        "required": false,
+        "description": "附加选项"
+      },
+      "workflow_config": {
+        "type": "object",
+        "required": false,
+        "description": "工作流配置（用于诊断和修复）"
+      },
+      "error_code": {
+        "type": "string",
+        "required": false,
+        "description": "错误码（用于错误分类）"
+      },
+      "error_message": {
+        "type": "string",
+        "required": false,
+        "description": "错误消息"
+      }
+    },
+    "required": [
+      "user_input"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean",
+        "description": "执行是否成功"
+      },
+      "status": {
+        "type": "string",
+        "description": "执行状态"
+      },
+      "module": {
+        "type": "string",
+        "description": "执行的模块名称"
+      },
+      "module_name": {
+        "type": "string",
+        "description": "模块中文名称"
+      },
+      "action": {
+        "type": "string",
+        "description": "执行的动作"
+      },
+      "performance_metrics": {
+        "type": "object",
+        "description": "性能指标"
+      },
+      "metadata": {
+        "type": "object",
+        "description": "元数据"
+      }
+    },
+    "required": []
+  }
+}

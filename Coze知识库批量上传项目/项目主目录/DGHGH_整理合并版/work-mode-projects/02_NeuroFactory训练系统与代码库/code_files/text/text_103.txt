@@ -1,0 +1,41 @@
+模块说明
+
+量子计算模块
+
+· quantum/processor.py: 量子处理器核心
+· quantum/encoder.py: 量子态编码器
+· quantum/fusion.py: 量子-经典融合层
+
+多模态模块
+
+· multimodal/fusion_engine.py: 多模态融合引擎
+· multimodal/text_encoder.py: 文本编码器
+· multimodal/image_encoder.py: 图像编码器
+
+推理模块
+
+· reasoning/neuro_symbolic.py: 神经符号推理
+· reasoning/expert_modules.py: 专家系统
+· reasoning/logic_engine.py: 逻辑引擎
+
+意识模块
+
+· consciousness/memory.py: 记忆系统
+· consciousness/goal_system.py: 目标系统
+· consciousness/self_awareness.py: 自我意识
+
+安全模块
+
+· security/post_quantum.py: 后量子加密
+· security/anomaly_detection.py: 异常检测
+· security/encryption.py: 加密系统
+
+配置说明
+
+主要配置文件
+
+· config.json: 主配置文件
+· .trae-config.json: Trae-AI-IDE配置
+· .env: 环境变量配置
+
+配置参数

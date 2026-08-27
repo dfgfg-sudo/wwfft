@@ -1,0 +1,10 @@
+{self.system_config.BASE_DIR}/
+├── ai_training_factory_trae.py    # 主程序
+├── requirements_trae.txt          # 依赖列表
+├── trae_config.json              # Trae-CN配置
+├── README_Trae-CN.md             # 说明文档
+├── pretrained_model/             # 预训练模型
+├── trained_models/               # 训练输出
+├── training_data/                # 训练数据
+├── data_cache/                   # 数据缓存
+└── logs/                         # 系统日志

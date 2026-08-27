@@ -1,0 +1,1 @@
+调用 openclaw_hermes 工具，action = "batch_extract"，homepage_url = "https://www.douyin.com/user/xxx"，max_videos = 50，knowledge_base_id = "kb_abc123"

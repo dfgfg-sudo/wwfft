@@ -1,0 +1,14 @@
+﻿model:
+  default: deepseek-chat
+  provider: deepseek
+  base_url: https://api.deepseek.com/v1
+
+terminal:
+  backend: local
+  timeout: 180
+
+gateway:
+  platforms:
+    - api
+  enabled: true
+  port: 8080

@@ -1,0 +1,29 @@
+核心语言层：
+├── Python 3.9+ (主逻辑处理)
+├── Bash (系统脚本)
+├── JavaScript (Web界面)
+└── SQL (数据库操作)
+
+框架层：
+├── FastAPI (REST API服务)
+├── Gradio (Web界面)
+├── PyQt5 (桌面应用)
+└── React (前端界面)
+
+AI/ML层：
+├── PyTorch (深度学习)
+├── Transformers (NLP处理)
+├── scikit-learn (机器学习)
+└── FAISS (向量搜索)
+
+数据处理层：
+├── Pandas (数据分析)
+├── NumPy (数值计算)
+├── OpenCV (图像处理)
+└── Librosa (音频处理)
+
+基础设施层：
+├── Docker (容器化)
+├── Kubernetes (编排)
+├── Redis (缓存)
+└── PostgreSQL (数据库)

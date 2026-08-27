@@ -1,0 +1,36 @@
+{
+  "name": "工作流自动修复引擎",
+  "description": "Coze 工作流全自动安全修复引擎 自动诊断并修复工作流配置错误",
+  "version": "1.0.0",
+  "create_time": "2026-05-07 22:13:00",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7633048546228535336",
+  "original_name": "WorkflowAutoFixer",
+  "type": "plugin",
+  "plugin_type": "云插件",
+  "functions": [
+    {
+      "name": "diagnose_workflow",
+      "description": "诊断工作流配置错误",
+      "input_params": [
+        {"name": "workflow_data", "type": "string", "required": true, "description": "工作流数据"}
+      ],
+      "output_params": [
+        {"name": "issues", "type": "array", "description": "问题列表"},
+        {"name": "severity", "type": "string", "description": "严重程度"}
+      ]
+    },
+    {
+      "name": "auto_fix",
+      "description": "自动修复工作流配置",
+      "input_params": [
+        {"name": "workflow_data", "type": "string", "required": true, "description": "工作流数据"},
+        {"name": "issues", "type": "array", "required": true, "description": "问题列表"}
+      ],
+      "output_params": [
+        {"name": "fixed_workflow", "type": "string", "description": "修复后的工作流"},
+        {"name": "fix_report", "type": "string", "description": "修复报告"}
+      ]
+    }
+  ]
+}

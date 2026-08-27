@@ -1,0 +1,36 @@
+{
+  "projectType": "content-processing-system",
+  "version": "1.0.0",
+  "compatibility": {
+    "traeAI": ">=2.5.0",
+    "traeCN": ">=1.8.0",
+    "node": ">=16.0.0",
+    "mermaid": ">=9.0.0"
+  },
+  "features": {
+    "contentProcessing": true,
+    "codeFixing": true,
+    "mermaidDiagrams": true,
+    "architectureGeneration": true,
+    "versionControl": true,
+    "qualityValidation": true
+  },
+  "workflow": {
+    "inputValidation": true,
+    "contentProcessing": true,
+    "diagramGeneration": true,
+    "outputFormatting": true,
+    "qualityAssurance": true
+  },
+  "formats": {
+    "input": ["text", "markdown", "json"],
+    "output": ["mermaid", "json", "html", "markdown"],
+    "diagrams": ["graph-td", "flowchart", "sequence"]
+  },
+  "settings": {
+    "preserveOriginalContent": true,
+    "fixOnlyCodeIssues": true,
+    "validateAllOutput": true,
+    "generateCompleteDiagrams": true
+  }
+}

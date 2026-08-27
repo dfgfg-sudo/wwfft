@@ -1,0 +1,43 @@
+6.2 Coze 插件自动化修复策略
+
+· 参数校验：自动补全缺失字段（如 model_id 默认 bert-base）。
+· 类型转换：字符串数字自动转为 int/float。
+· 错误重试：网络超时自动重试 3 次，指数退避。
+· 日志记录：所有操作记录到 coze_debug.log。
+
+---
+
+7. 学习认证与职业发展路径
+
+7.1 Python 快速学习与认证
+
+· 免费路径：Codecademy / Kaggle Learn → 官方文档 → 项目实战。
+· 认证考试：
+  · 工信部 Python 技术开发证书（初级/中级）
+  · Python 大数据证书（数据分析方向）
+  · 大专生可考取茶艺师、厨师证等复合技能。
+
+7.2 Web 开发高效学习
+
+· 前端：HTML/CSS → JavaScript → React/Vue
+· 后端：Python + Flask/Django → 数据库 → RESTful API
+· 实践项目：博客系统、电商后台、AI 管理面板
+
+---
+
+8. 问题解决方案汇总
+
+问题 解决方案
+GitHub 访问失败 配置代理或使用镜像（ghproxy.com）
+训练内存不足 减小 batch_size，使用梯度累积，混合精度
+模型类型不匹配 检查模型配置与数据维度是否对齐
+Coze 插件配置错误 使用 CozePluginManager.auto_fix_workflow 自动修复
+循环导入 重组模块，将共同依赖提取到 common.py
+pip 下载慢 更换国内源（清华、阿里云）
+训练失败 alloc_c 降低 batch_size 或使用 CPU 模式
+
+---
+
+9. 部署与运维指南
+
+9.1 本地部署

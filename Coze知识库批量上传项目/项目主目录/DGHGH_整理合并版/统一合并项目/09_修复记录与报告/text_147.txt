@@ -1,0 +1,19 @@
+---
+
+📦 自定义模块清单（共8个）
+
+序号 类名 功能描述
+1 QuantumProcessingUnit 量子计算核心，提供量子门操作与混合推理
+2 NeuroConfig 全局配置中心（单例），统一管理所有参数
+3 QuantumMemorySystem 基于Faiss的量子增强记忆系统，支持向量检索
+4 SecurityCenter 企业级安全中心，提供加密/解密/完整性验证
+5 DataEngine 多模态数据处理引擎，支持TXT/JSON/CSV解析
+6 QuantumEnhancedTrainer 量子增强训练引擎，集成4-bit量化与LoRA
+7 ProjectAnalyzer 项目结构解析器（分析入口、依赖、配置等）
+8 SingularityUI / NeuroDashboard 双模式用户界面（Tkinter桌面版 + Gradio Web版）
+
+---
+
+📊 系统架构与数据流图
+
+整体架构层次

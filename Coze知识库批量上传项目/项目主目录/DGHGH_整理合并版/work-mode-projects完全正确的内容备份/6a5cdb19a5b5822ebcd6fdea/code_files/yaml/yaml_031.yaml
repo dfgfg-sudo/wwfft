@@ -1,0 +1,16 @@
+# templates/my-new-template/template.yaml
+name: "我的新模板"
+description: "这是一个新的项目模板"
+category: "自定义"
+features:
+  - 用户管理
+  - 数据展示
+  - 后台管理
+technology_stack:
+  frontend:
+    technology: "React"
+    framework: "Next.js"
+  backend:
+    technology: "Node.js"
+    framework: "NestJS"
+  database: "PostgreSQL"

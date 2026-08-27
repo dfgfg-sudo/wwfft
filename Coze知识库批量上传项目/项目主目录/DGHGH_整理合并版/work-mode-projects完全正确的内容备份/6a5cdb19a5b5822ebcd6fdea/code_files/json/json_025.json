@@ -1,0 +1,33 @@
+{
+  "system": {
+    "name": "Coze自动化企业版",
+    "version": "3.0.0",
+    "mode": "enterprise"
+  },
+  "automation": {
+    "auto_merge_duplicates": true,
+    "detailed_comparison": true,
+    "backup_before_merge": true,
+    "parallel_workers": 8,
+    "timeout_seconds": 300
+  },
+  "security": {
+    "encryption_enabled": true,
+    "access_control": true,
+    "audit_logging": true
+  },
+  "monitoring": {
+    "enabled": true,
+    "alert_thresholds": {
+      "cpu": 80,
+      "memory": 85,
+      "disk": 90
+    },
+    "notification_channels": ["email", "slack", "webhook"]
+  },
+  "reporting": {
+    "formats": ["json", "html", "pdf"],
+    "schedule": "daily",
+    "retention_days": 365
+  }
+}

@@ -1,0 +1,7 @@
+输出变量：
+  - status: 处理状态
+  - message: 结果消息
+  - cleaned_text: 清洗后的文本
+  - statistics: 统计信息
+  - processing_time: 处理时间
+  - original_preview: 原始文本预览

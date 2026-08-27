@@ -1,0 +1,1 @@
+这个 Node 结构体在能够执行之前，先要转换成后端的 backend/domain/workflow/internal/schema/node_schema.go 中的 NodeSchema 结构体。原文完整定义如下：

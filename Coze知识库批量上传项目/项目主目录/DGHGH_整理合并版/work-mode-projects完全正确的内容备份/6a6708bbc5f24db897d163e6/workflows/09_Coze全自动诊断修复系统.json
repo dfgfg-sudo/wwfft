@@ -1,0 +1,96 @@
+{
+  "name": "Coze全自动诊断修复系统",
+  "description": "构建终极自动化系统，用户仅需提供自然语言需求或问题代码，系统即可在30秒内通过两次点击自动完成诊断、修复、代码生成与验证，输出100%符合Coze平台规范的成品（工作流或插件）。支持自然语言生成和错误JSON修复。",
+  "version": "1.0.0",
+  "create_time": "2026-03-01 17:47:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "input_type",
+            "type": "string",
+            "required": true,
+            "description": "输入类型：requirement（需求）/ error_json（错误JSON）/ code（问题代码）"
+          },
+          {
+            "name": "content",
+            "type": "string",
+            "required": true,
+            "description": "输入内容"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_diagnose",
+      "type": "4",
+      "data": {
+        "name": "AI 智能诊断",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是Coze平台专家，精准诊断问题并给出修复方案",
+        "user_prompt": "输入类型：{{input_type}}\\n内容：{{content}}\\n请诊断问题并输出JSON：{\"problem_type\":\"...\",\"issues\":[...],\"solution\":\"...\"}",
+        "output_params": [
+          {"name": "problem_type", "type": "string"},
+          {"name": "issues", "type": "array"},
+          {"name": "solution", "type": "string"}
+        ]
+      }
+    },
+    {
+      "id": "llm_node_generate",
+      "type": "4",
+      "data": {
+        "name": "AI 代码生成与修复",
+        "model": "doubao-pro-128k",
+        "system_prompt": "你是Coze工作流开发专家，生成100%符合Coze规范的代码",
+        "user_prompt": "问题类型：{{llm_node_diagnose.problem_type}}\\n问题列表：{{llm_node_diagnose.issues}}\\n解决方案：{{llm_node_diagnose.solution}}\\n请生成完整的Coze工作流或插件JSON代码",
+        "output_params": [{"name": "generated_code", "type": "string"}]
+      }
+    },
+    {
+      "id": "code_node_validate",
+      "type": "3",
+      "data": {
+        "name": "Coze规范验证",
+        "language": "python",
+        "code": "import json\nimport jsonschema\ndef main(generated_code):\n    try:\n        data = json.loads(generated_code)\n        required_fields = [\"name\", \"description\", \"nodes\", \"edges\"]\n        valid = all(f in data for f in required_fields)\n        return {\n            \"valid\": valid,\n            \"errors\": [] if valid else [\"缺少必要字段\"],\n            \"json_size\": len(generated_code),\n            \"status\": \"validated\"\n        }\n    except Exception as e:\n        return {\n            \"valid\": False,\n            \"errors\": [str(e)],\n            \"json_size\": 0,\n            \"status\": \"validation_failed\"\n        }",
+        "output_params": [{"name": "validation", "type": "object"}]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "final_code",
+            "type": "string",
+            "value": "{{llm_node_generate.generated_code}}"
+          },
+          {
+            "name": "validation_result",
+            "type": "object",
+            "value": "{{code_node_validate.validation}}"
+          },
+          {
+            "name": "diagnosis",
+            "type": "object",
+            "value": "{{llm_node_diagnose}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "llm_node_diagnose"},
+    {"sourceNodeID": "llm_node_diagnose", "targetNodeID": "llm_node_generate"},
+    {"sourceNodeID": "llm_node_generate", "targetNodeID": "code_node_validate"},
+    {"sourceNodeID": "code_node_validate", "targetNodeID": "end_node"}
+  ]
+}

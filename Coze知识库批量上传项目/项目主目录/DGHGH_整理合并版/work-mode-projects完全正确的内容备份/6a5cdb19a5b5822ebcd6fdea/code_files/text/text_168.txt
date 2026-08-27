@@ -1,0 +1,20 @@
+---
+
+🧰 技术栈
+
+类别 技术
+深度学习框架 PyTorch + HuggingFace Transformers
+模型微调 LoRA + 4bit量化 (bitsandbytes)
+数据处理 Pandas + Datasets + 自定义多模态解析器
+安全加密 Fernet对称加密 + SHA-256完整性校验
+GUI框架 DearPyGui (主) / PyQt5 (可选)
+系统监控 psutil + pynvml
+打包部署 PyInstaller + Docker
+版本管理 Python 3.8+
+
+---
+
+📄 完整源代码（单文件版）
+
+说明：以下代码整合了全部功能模块，修复了所有已知错误，可直接运行。
+主界面基于 DearPyGui，同时保留了对 PyQt5 的兼容性注释。

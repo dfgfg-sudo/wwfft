@@ -1,0 +1,92 @@
+{
+  "name": "自动化操作创建",
+  "description": "根据用户输入的操作类型和参数，自动创建定时任务或自动化操作",
+  "version": "1.0.0",
+  "create_time": "2026-02-01 17:42:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "operation_type",
+            "type": "string",
+            "required": true,
+            "description": "操作类型（定时/触发/周期）"
+          },
+          {
+            "name": "operation_config",
+            "type": "object",
+            "required": true,
+            "description": "操作配置参数"
+          }
+        ]
+      }
+    },
+    {
+      "id": "condition_node_1",
+      "type": "8",
+      "data": {
+        "name": "判断操作类型",
+        "conditions": [
+          {"if": "{{operation_type}} == '定时'", "to": "code_node_timer"},
+          {"if": "{{operation_type}} == '触发'", "to": "code_node_trigger"},
+          {"if": "{{operation_type}} == '周期'", "to": "code_node_periodic"}
+        ]
+      }
+    },
+    {
+      "id": "code_node_timer",
+      "type": "3",
+      "data": {
+        "name": "创建定时任务",
+        "language": "python",
+        "code": "import json\ndef main(operation_config):\n    task = {\n        \"type\": \"scheduled\",\n        \"cron\": operation_config.get(\"cron\", \"0 0 * * *\"),\n        \"action\": operation_config.get(\"action\", \"\"),\n        \"status\": \"created\"\n    }\n    return {\"task\": task}",
+        "output_params": [{"name": "task", "type": "object"}]
+      }
+    },
+    {
+      "id": "code_node_trigger",
+      "type": "3",
+      "data": {
+        "name": "创建触发任务",
+        "language": "python",
+        "code": "import json\ndef main(operation_config):\n    task = {\n        \"type\": \"trigger\",\n        \"event\": operation_config.get(\"event\", \"\"),\n        \"action\": operation_config.get(\"action\", \"\"),\n        \"status\": \"created\"\n    }\n    return {\"task\": task}",
+        "output_params": [{"name": "task", "type": "object"}]
+      }
+    },
+    {
+      "id": "code_node_periodic",
+      "type": "3",
+      "data": {
+        "name": "创建周期任务",
+        "language": "python",
+        "code": "import json\ndef main(operation_config):\n    task = {\n        \"type\": \"periodic\",\n        \"interval_seconds\": operation_config.get(\"interval\", 3600),\n        \"action\": operation_config.get(\"action\", \"\"),\n        \"status\": \"created\"\n    }\n    return {\"task\": task}",
+        "output_params": [{"name": "task", "type": "object"}]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "created_task",
+            "type": "object",
+            "value": "{{code_node_timer.task || code_node_trigger.task || code_node_periodic.task}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "condition_node_1"},
+    {"sourceNodeID": "code_node_timer", "targetNodeID": "end_node"},
+    {"sourceNodeID": "code_node_trigger", "targetNodeID": "end_node"},
+    {"sourceNodeID": "code_node_periodic", "targetNodeID": "end_node"}
+  ]
+}

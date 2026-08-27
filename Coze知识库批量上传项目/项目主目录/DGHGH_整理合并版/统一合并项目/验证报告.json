@@ -1,0 +1,142 @@
+{
+  "verified_at": "2026-08-01 11:04:46",
+  "summary": {
+    "js": {
+      "total": 84,
+      "ok": 71,
+      "issues": 13,
+      "files": [
+        {
+          "file": "COZE_IDE_TYPE_SAFE_FULL.js",
+          "path": "02_Coze插件代码\\COZE_IDE_TYPE_SAFE_FULL.js",
+          "issues": [
+            "缺少导出语句"
+          ]
+        },
+        {
+          "file": "generate_test_base64.js",
+          "path": "02_Coze插件代码\\generate_test_base64.js",
+          "issues": [
+            "Python def残留"
+          ]
+        },
+        {
+          "file": "index.js",
+          "path": "02_Coze插件代码\\index.js",
+          "issues": [
+            "缺少导出语句"
+          ]
+        },
+        {
+          "file": "javascript_007.js",
+          "path": "02_Coze插件代码\\javascript_007.js",
+          "issues": [
+            "缺少导出语句"
+          ]
+        },
+        {
+          "file": "javascript_008.js",
+          "path": "02_Coze插件代码\\javascript_008.js",
+          "issues": [
+            "缺少导出语句"
+          ]
+        },
+        {
+          "file": "javascript_012.js",
+          "path": "02_Coze插件代码\\javascript_012.js",
+          "issues": [
+            "缺少导出语句"
+          ]
+        },
+        {
+          "file": "javascript_014.js",
+          "path": "02_Coze插件代码\\javascript_014.js",
+          "issues": [
+            "缺少导出语句"
+          ]
+        },
+        {
+          "file": "javascript_015.js",
+          "path": "02_Coze插件代码\\javascript_015.js",
+          "issues": [
+            "缺少导出语句"
+          ]
+        },
+        {
+          "file": "run.test.js",
+          "path": "02_Coze插件代码\\run.test.js",
+          "issues": [
+            "Python def残留",
+            "缺少导出语句"
+          ]
+        },
+        {
+          "file": "security.js",
+          "path": "02_Coze插件代码\\security.js",
+          "issues": [
+            "缺少导出语句"
+          ]
+        },
+        {
+          "file": "test_all_modes.js",
+          "path": "02_Coze插件代码\\test_all_modes.js",
+          "issues": [
+            "缺少导出语句"
+          ]
+        },
+        {
+          "file": "test_plugins.js",
+          "path": "02_Coze插件代码\\test_plugins.js",
+          "issues": [
+            "缺少导出语句"
+          ]
+        },
+        {
+          "file": "zip-processor.js",
+          "path": "02_Coze插件代码\\zip-processor.js",
+          "issues": [
+            "缺少导出语句"
+          ]
+        }
+      ]
+    },
+    "json": {
+      "total": 103,
+      "ok": 103,
+      "issues": 0,
+      "files": []
+    },
+    "python": {
+      "total": 457,
+      "ok": 457,
+      "issues": 0,
+      "files": []
+    },
+    "html": {
+      "total": 18,
+      "ok": 18,
+      "issues": 0,
+      "files": []
+    },
+    "other": {
+      "total": 1195
+    },
+    "total_ok": 649,
+    "total_issues": 13
+  },
+  "all_issues": [
+    "JS: COZE_IDE_TYPE_SAFE_FULL.js - 缺少导出语句",
+    "JS: generate_test_base64.js - Python def残留",
+    "JS: index.js - 缺少导出语句",
+    "JS: javascript_007.js - 缺少导出语句",
+    "JS: javascript_008.js - 缺少导出语句",
+    "JS: javascript_012.js - 缺少导出语句",
+    "JS: javascript_014.js - 缺少导出语句",
+    "JS: javascript_015.js - 缺少导出语句",
+    "JS: run.test.js - Python def残留, 缺少导出语句",
+    "JS: security.js - 缺少导出语句",
+    "JS: test_all_modes.js - 缺少导出语句",
+    "JS: test_plugins.js - 缺少导出语句",
+    "JS: zip-processor.js - 缺少导出语句"
+  ]
+}

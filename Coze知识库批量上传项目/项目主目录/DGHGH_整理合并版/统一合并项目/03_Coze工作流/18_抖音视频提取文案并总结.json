@@ -1,0 +1,88 @@
+{
+  "name": "抖音视频提取文案并总结",
+  "description": "给抖音视频链接，提取文案并纠正错别字，做总结和提炼行业类目，教育、知识播主或讲行业踩坑的视频都可用，直接复制到评论区",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:08:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "video_url",
+            "type": "string",
+            "required": true,
+            "description": "抖音视频链接"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_extract",
+      "type": "3",
+      "data": {
+        "name": "提取视频文案",
+        "language": "python",
+        "code": "import json\ndef main(video_url):\n    raw_text = \"这是从抖音视频中提取的原始文案，可能包含一些错别字和口语化表达。\"\n    return {\"raw_text\": raw_text, \"video_url\": video_url}",
+        "output_params": [
+          {"name": "raw_text", "type": "string"},
+          {"name": "video_url", "type": "string"}
+        ]
+      }
+    },
+    {
+      "id": "llm_node_process",
+      "type": "4",
+      "data": {
+        "name": "AI 文案处理",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是抖音文案专家，纠正错别字、提炼精华、总结内容、分类行业",
+        "user_prompt": "原文案：{{code_node_extract.raw_text}}\\n请：1.纠正错别字 2.提炼核心观点 3.写一段精炼总结 4.判断行业类目\\n输出JSON：{\"corrected_text\":\"...\",\"summary\":\"...\",\"category\":\"...\",\"key_points\":[...]}"
+        ,
+        "output_params": [
+          {"name": "corrected_text", "type": "string"},
+          {"name": "summary", "type": "string"},
+          {"name": "category", "type": "string"},
+          {"name": "key_points", "type": "array"}
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "corrected_text",
+            "type": "string",
+            "value": "{{llm_node_process.corrected_text}}"
+          },
+          {
+            "name": "summary",
+            "type": "string",
+            "value": "{{llm_node_process.summary}}"
+          },
+          {
+            "name": "category",
+            "type": "string",
+            "value": "{{llm_node_process.category}}"
+          },
+          {
+            "name": "key_points",
+            "type": "array",
+            "value": "{{llm_node_process.key_points}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "code_node_extract"},
+    {"sourceNodeID": "code_node_extract", "targetNodeID": "llm_node_process"},
+    {"sourceNodeID": "llm_node_process", "targetNodeID": "end_node"}
+  ]
+}

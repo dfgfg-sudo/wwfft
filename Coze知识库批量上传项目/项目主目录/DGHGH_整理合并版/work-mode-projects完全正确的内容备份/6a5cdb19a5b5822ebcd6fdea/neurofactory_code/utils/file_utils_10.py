@@ -1,0 +1,1 @@
+调用 openclaw_hermes 工具，action = "query"，knowledge_base_id = "kb_abc123"，question = "OpenClaw博主关于执行力最核心的3个方法是什么？"，top_k = 5

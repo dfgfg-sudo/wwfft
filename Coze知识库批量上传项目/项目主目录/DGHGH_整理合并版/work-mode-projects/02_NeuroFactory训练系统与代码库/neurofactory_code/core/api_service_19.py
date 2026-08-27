@@ -1,0 +1,15 @@
+"""
+NODE_ENV=production
+API_PORT=3000
+DATABASE_URL=mongodb://localhost:27017/automation
+JWT_SECRET=your_jwt_secret
+COZE_API_KEY=your_coze_api_key
+LOG_LEVEL=info
+SPRING_PROFILES_ACTIVE=production
+DB_URL=jdbc:postgresql://postgres:5432/ewio_db
+DB_USERNAME=ewio_user
+DB_PASSWORD=ewio_password_123
+REDIS_HOST=redis
+REDIS_PORT=6379
+MONGO_URI=mongodb://ewio_admin:ewio_admin_123@mongodb:27017/ewio_ai_db
+"""

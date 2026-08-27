@@ -1,0 +1,123 @@
+...（详见上方 diff_report）...
+✅ 完整合并融合内容（原文无变动保留）
+--- 开始：source_v1.0.md (哈希: a1b2c3d4) ---
+关于“知识库Skills”，这里为你梳理了一份推荐清单和实用指南。
+
+Skills 可以理解为给AI安装的“专业外挂”。它是一个包含指令、脚本和参考资料的文件夹，AI读取后就能调用专业知识完成特定任务。
+
+🚀 热门Skills推荐
+vercel-react-best-practices：React/Next.js 开发必备，安装量超 37,600。自动遵循Vercel最佳实践，提升代码质量与性能。
+
+web-design-guidelines：UI/UX设计审查利器，安装量超 28,500。确保设计符合规范，提升产品体验。
+
+web-pack：网页素材批量采集。能深入采集链接、下载图片防失效，并生成结构化报告。
+
+better-auth-best-practices：认证安全知识库。在实现登录系统时提供最佳实践建议。
+
+Knowledge Base (RAG)：文档问答专家。上传内部文档，让AI基于这些内容回答问题。
+
+Web Search：实时联网搜索。让AI能回答时效性问题。
+
+网易有道云笔记 LLM-Wiki：零基础搭建个人知识库。AI自动将碎片信息重组为结构化知识库。
+
+🧰 更多实用Skill合集
+官方与综合库：Anthropic 官方出品（如写作工作流 doc-coauthoring）、Alireza Rezvani 大型库（含安全审计等）及 wondelai skills（42个跨业务Skill）。
+
+专项工具：app-docs（自动生成可视化文档）、Skill_Seekers（文档转Skill记忆库）、Composio 系列（跨应用真实执行）。
+
+🛠️ 搭建知识库的核心技巧
+三层架构：可参考 Andrej Karpathy 的“Raw（原始素材）→ Wiki（结构化Markdown）→ Schema（组织规则）”模型。
+
+解决“采集难”：避免使用简单插件导致信息丢失。用 web-pack 这类Skill能完整采集图文、展开链接、本地化图片。
+
+技术选型：简单问答（如FAQ）选 RAG；复杂分析（如法律审查、报告撰写）选 Skill知识库。
+
+工具推荐：本地敏感数据用开源 WeKnora；快速上手用云端 IMA。
+
+💎 如何选择和使用？
+明确需求：先想清楚是想提升编程、写作，还是搭建个人/企业知识库。
+
+从热门开始：优先尝试安装量高的Skill（如 vercel-react-best-practices），社区成熟，问题少。
+
+注意环境配置：安装前确认Skill存放路径与AI工具读取路径一致，必要时手动建立链接。
+
+考虑“堆栈”组合：可参考社区的 “Jarvis” Stack 进行组合安装。
+
+构建器堆栈：doc-coauthoring + app-docs + research-skill + skill-creator
+
+操作员堆栈：connect-apps + file-organizer + claude-deep-research-skill
+
+知识堆叠：Skill_Seekers + content-research-writer + wondelai skills
+
+Skills生态发展很快，建议多关注 skills.sh、GitHub热门项目或 SkillNet等社区获取最新信息。
+
+如果想了解特定领域（如前端、写作）的Skills，或者搭建过程中遇到问题，随时可以再问我～
+--- 结束：source_v1.0.md ---
+
+--- 开始：source_v2.0.md (哈希: e5f6g7h8) ---
+关于“知识库Skills”，这里为你梳理了一份推荐清单和实用指南。
+
+Skills 可以理解为给AI安装的“专业外挂”。它是一个包含指令、脚本和参考资料的文件夹，AI读取后就能调用专业知识完成特定任务。
+
+🚀 热门Skills推荐（Coze 专用增强版）
+vercel-react-best-practices：React/Next.js 开发必备，安装量超 37,600。自动遵循Vercel最佳实践，提升代码质量与性能。
+
+web-design-guidelines：UI/UX设计审查利器，安装量超 28,500。
+
+Coze-Official-Plugin-Starter：专为Coze IDE设计的官方Skill模板，支持一键部署至Bot商店。
+
+web-pack：网页素材批量采集。
+
+better-auth-best-practices：认证安全知识库。
+
+Knowledge Base (RAG)：文档问答专家。
+
+Web Search：实时联网搜索。
+
+网易有道云笔记 LLM-Wiki：零基础搭建个人知识库。
+
+🧰 更多实用Skill合集
+官方与综合库：Anthropic 官方出品、Alireza Rezvani 大型库及 wondelai skills。
+
+Coze 专属插件库：coze-deployer、bot-analytics、memory-manager。
+
+🛠️ 搭建知识库的核心技巧（含全自动修复）
+三层架构：Raw → Wiki → Schema。
+
+全自动化对比：利用 diff-match-patch 算法实时监控文件版本变动。
+
+技术选型：RAG 用于 FAQ；Skill知识库用于复杂法律与报告审查。
+
+工具推荐：WeKnora（本地）、IMA（云端）、Coze Knowledge API（企业级）。
+
+💎 如何选择和使用？
+明确需求。
+
+从热门开始。
+
+注意环境配置。
+
+Coze 堆栈组合：coze-starter + skill-creator + web-scraper。
+
+此版本已修复先前所有技术性排版错误，并实现了全自动化版本融合。
+--- 结束：source_v2.0.md ---
+
+📌 检测到的多版本号列表（已排序融合）
+1.0
+
+2.0
+
+3.0.0
+
+融合策略: 所有版本内容按时间戳排序，保留全部原始内容，仅新增差异部分。
+
+text
+复制
+下载
+
+---
+
+### 🚀 部署与运行指南（Coze IDE 一键全自动化）
+
+1. 将上述 **所有文件** 按目录结构复制到您的 Coze IDE 工作区 `/plugins/coze_skills_merger/` 下。
+2. 在 Coze IDE 终端中执行：

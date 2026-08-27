@@ -1,0 +1,10 @@
+system:
+  name: "全功能AI训练系统"
+  version: "4.0.0"
+  environment: "production"
+  debug: false
+
+paths:
+  data_dir: "./data"
+  model_dir: "./models"
+  output_dir: "./output"

@@ -1,0 +1,106 @@
+{
+  "name": "绘本创作",
+  "description": "根据主题和年龄段创作儿童绘本故事，包含插图描述",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:05:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "theme",
+            "type": "string",
+            "required": true,
+            "description": "绘本主题（如：友情、勇气、环保）"
+          },
+          {
+            "name": "age_group",
+            "type": "string",
+            "required": false,
+            "description": "年龄段：3-5岁/6-8岁/9-12岁"
+          },
+          {
+            "name": "pages",
+            "type": "number",
+            "required": false,
+            "description": "页数（默认10页）"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_outline",
+      "type": "4",
+      "data": {
+        "name": "AI 生成绘本大纲",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是儿童绘本作家，创作符合年龄特点的故事大纲",
+        "user_prompt": "主题：{{theme}}\\n年龄段：{{age_group || '6-8岁'}}\\n页数：{{pages || 10}}\\n\\n请生成绘本大纲，每页包含：\\n1. 故事文字（适合年龄的语言）\\n2. 插图描述（画面内容、色彩、角色）\\n\\n输出JSON数组格式",
+        "output_params": [{"name": "outline", "type": "array"}]
+      }
+    },
+    {
+      "id": "loop_node_pages",
+      "type": "6",
+      "data": {
+        "name": "逐页创作",
+        "loop_var": "page",
+        "loop_array": "{{llm_node_outline.outline}}",
+        "loop_body": [
+          {
+            "id": "llm_node_page",
+            "type": "4",
+            "data": {
+              "name": "AI 创作单页",
+              "model": "doubao-pro-32k",
+              "system_prompt": "你是绘本创作专家，丰富每页内容",
+              "user_prompt": "页面大纲：{{page}}\\n请扩展文字并细化插图描述",
+              "output_params": [
+                {"name": "text", "type": "string"},
+                {"name": "illustration", "type": "string"}
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_assemble",
+      "type": "3",
+      "data": {
+        "name": "组装完整绘本",
+        "language": "python",
+        "code": "import json\ndef main(loop_node_pages_results, theme):\n    pages = []\n    for i, r in enumerate(loop_node_pages_results, 1):\n        pages.append({\n            \"page\": i,\n            \"text\": r.get(\"text\", \"\"),\n            \"illustration\": r.get(\"illustration\", \"\")\n        })\n    return {\"title\": f\"{theme}绘本\", \"pages\": pages, \"total_pages\": len(pages)}",
+        "output_params": [
+          {"name": "title", "type": "string"},
+          {"name": "pages", "type": "array"},
+          {"name": "total_pages", "type": "number"}
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "picture_book",
+            "type": "object",
+            "value": "{{code_node_assemble}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "llm_node_outline"},
+    {"sourceNodeID": "llm_node_outline", "targetNodeID": "loop_node_pages"},
+    {"sourceNodeID": "loop_node_pages", "targetNodeID": "code_node_assemble"},
+    {"sourceNodeID": "code_node_assemble", "targetNodeID": "end_node"}
+  ]
+}

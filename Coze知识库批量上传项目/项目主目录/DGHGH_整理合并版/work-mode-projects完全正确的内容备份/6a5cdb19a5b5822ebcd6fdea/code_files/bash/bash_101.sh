@@ -1,0 +1,1 @@
+pip install pandas watchdog pyyaml scikit-learn

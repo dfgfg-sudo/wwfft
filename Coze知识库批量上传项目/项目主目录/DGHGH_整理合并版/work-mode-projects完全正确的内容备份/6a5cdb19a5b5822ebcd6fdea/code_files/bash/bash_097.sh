@@ -1,0 +1,1 @@
+python omnineuro_asi.py --data-dirs ./data1 ./data2 --watch

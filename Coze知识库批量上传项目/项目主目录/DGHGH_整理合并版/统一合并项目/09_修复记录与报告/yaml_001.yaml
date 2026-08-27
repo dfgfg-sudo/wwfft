@@ -1,0 +1,1926 @@
+openapi: 3.1.0
+info:
+  title: 全场景智能自动化超级中枢
+  version: 20.0.0-Complete-Unified
+  description: |
+    🚀 完全统一的单一智能自动化工具 - 深度整合所有功能模块
+    ✅ 单一端点处理所有58项核心功能 | ✅ 智能路由决策 | ✅ 全链路监控
+    ✅ 企业级稳定性 | ✅ 支持自然语言和参数化两种模式
+    ✅ 支持用户选择是否启用自动化处理 | ✅ 无缝融合8大核心插件
+  contact:
+    name: 全场景智能自动化技术支持团队
+    url: https://universal-automation.com
+    email: support@universal-automation.com
+  license:
+    name: Apache 2.0 & 商业许可
+    url: https://universal-automation.com/license
+externalDocs:
+  description: 全场景智能自动化引擎完整文档
+  url: https://docs.universal-automation.com
+servers:
+  - url: https://api.universal-automation.com/v1
+  - url: https://api.coze.com/v1
+tags:
+  - name: 统一智能自动化
+    description: 单一工具处理所有自动化功能，支持58项核心操作
+  - name: 系统监控
+    description: 操作状态监控、健康检查和管理
+  - name: 参数验证
+    description: 参数验证和智能修复服务
+  - name: 工作流管理
+    description: 工作流生成、执行、优化全生命周期管理
+  - name: 插件生态
+    description: 插件生成、修复、部署和管理
+  - name: 数据智能
+    description: 数据增强、分析、训练和智能处理
+  - name: 领域专业
+    description: 行业分析、非遗保护和领域专业化处理
+  - name: 系统运维
+    description: 监控、健康检查、紧急情况处理
+
+paths:
+  /unified-automation:
+    post:
+      summary: 统一自动化执行端点
+      description: |
+        单一端点处理所有自动化功能，支持智能路由和自动参数处理
+        
+        💡 **使用模式选择**：
+        - **简单模式**：使用自然语言描述需求，系统自动分析并执行
+        - **专业模式**：使用结构化参数精确控制执行流程
+        
+        🔧 **自动化处理选项**：
+        - `enable_automation=true`：系统自动完成参数补全、错误修复、智能路由
+        - `enable_automation=false`：严格按照用户输入执行，需完整参数
+      tags:
+        - 统一智能自动化
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+        - CozeAPIKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/SimpleUserRequest'
+                - $ref: '#/components/schemas/ProfessionalRequest'
+                - $ref: '#/components/schemas/CompleteUnifiedRequest'
+            examples:
+              简单模式:
+                summary: 简单自然语言模式（推荐新手）
+                value:
+                  user_request: "帮我创建一个电商订单处理工作流，包含订单确认、库存检查、物流通知功能"
+                  timeout: 300
+                  enable_automation: true
+                  preferred_action: "generate_workflow"
+              专业模式:
+                summary: 专业参数模式（推荐开发者）
+                value:
+                  operation_type: "generate_workflow"
+                  operation_config:
+                    workflow_config:
+                      business_domain: "ecommerce"
+                      complexity_level: "medium"
+                      requirement_description: "生成电商订单自动发货工作流"
+                    validation_config:
+                      auto_validate: true
+                      validation_strictness: "standard"
+                  async_execution: false
+                  version: "v3.0"
+                  enable_automation: true
+              完整模式:
+                summary: 完整智能模式（高级用户）
+                value:
+                  operation_intent: "分析电商数据并生成智能工作流，自动修复节点问题"
+                  operation_config:
+                    business_domain: "ecommerce"
+                    execution_mode: "auto"
+                    priority: "high"
+                    resource_allocation:
+                      cpu_priority: "high"
+                      memory_limit: "2GB"
+                      timeout_ms: 60000
+                  smart_parameters:
+                    auto_detect_plugins: true
+                    auto_repair: true
+                    error_masking: "partial"
+                    validation_strictness: "standard"
+                  enable_automation: true
+      responses:
+        '200':
+          description: 同步操作成功
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/UnifiedSuccessResponse'
+                  - $ref: '#/components/schemas/UnifiedAutomationResponse'
+                  - $ref: '#/components/schemas/SuccessResponse'
+              examples:
+                工作流生成成功:
+                  value:
+                    success: true
+                    operation_id: "op_8d7c2b9e1a3f4e5d"
+                    timestamp: "2025-11-07T14:20:00Z"
+                    execution_time: 2.5
+                    result_data:
+                      workflow_id: "wf_8d7c2b9e1a3f4e5d"
+                      workflow_name: "电商订单自动发货流程"
+                      status: "created"
+                    automation_applied: true
+                数据处理成功:
+                  value:
+                    success: true
+                    operation_id: "op_9e3f5d7c2b4a6e8d"
+                    timestamp: "2025-11-07T14:21:00Z"
+                    execution_time: 1.2
+                    result:
+                      data:
+                        processed_items: 1500
+                        quality_score: 0.95
+                        enhanced_data: {}
+                行业分析成功:
+                  value:
+                    code: 0
+                    data:
+                      analysis_result: {}
+                      recommendations: ["优化供应链", "加强数字化"]
+                    message: "行业分析完成"
+        '202':
+          description: 异步操作已接受
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/AsyncOperationResponse'
+                  - $ref: '#/components/schemas/AsyncAcceptResponse'
+                  - $ref: '#/components/schemas/AsyncResponse'
+              examples:
+                异步接受:
+                  value:
+                    success: true
+                    operation_id: "op_8d7c2b9e1a3f4e5d"
+                    status: "accepted"
+                    monitor_url: "https://api.universal-automation.com/v1/operations/op_8d7c2b9e1a3f4e5d"
+                    estimated_completion: "2025-11-07T14:25:00Z"
+                    timestamp: "2025-11-07T14:20:00Z"
+        '400':
+          description: 参数验证失败
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - $ref: '#/components/schemas/ErrorResponseWithFix'
+              examples:
+                参数错误:
+                  value:
+                    code: 4001
+                    message: "参数验证失败"
+                    errors:
+                      - field: "parameters.demand"
+                        message: "长度需大于10个字符"
+                        value: "生成工作流"
+                        suggestion: "请提供更详细的需求描述"
+                    timestamp: "2025-11-07T14:22:00Z"
+                    request_id: "req_8d7c2b9e1a3f4e5d"
+                带修复建议的错误:
+                  value:
+                    error_code: "VALIDATION_ERROR"
+                    error_message: "参数验证失败"
+                    fix_suggestions:
+                      - "请提供完整的业务领域信息"
+                      - "需求描述应至少包含10个字符"
+                    auto_fix_applied: false
+                    parameter_issues:
+                      - parameter_name: "business_domain"
+                        issue_type: "missing"
+                        current_value: null
+                        suggested_fix: "设置为'ecommerce'、'finance'等有效值"
+        '500':
+          description: 服务器内部错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseWithRecovery'
+              examples:
+                服务器错误:
+                  value:
+                    error_code: "INTERNAL_SERVER_ERROR"
+                    error_message: "处理请求时发生内部错误"
+                    system_status: "degraded"
+                    estimated_recovery_time: 60
+                    recovery_actions:
+                      - "正在重启受影响的服务"
+                      - "检查数据库连接"
+
+  /operations/{operation_id}:
+    get:
+      summary: 获取操作状态和结果
+      description: 查询异步操作的执行状态、进度和最终结果
+      tags:
+        - 系统监控
+      parameters:
+        - name: operation_id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^op_[a-fA-F0-9]{16}$'
+          description: 操作唯一标识符
+          example: "op_8d7c2b9e1a3f4e5d"
+      responses:
+        '200':
+          description: 操作状态信息
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/OperationStatus'
+                  - $ref: '#/components/schemas/OperationStatusResponse'
+              examples:
+                处理中状态:
+                  value:
+                    operation_id: "op_8d7c2b9e1a3f4e5d"
+                    status: "processing"
+                    progress: 75
+                    created_at: "2025-11-07T14:20:00Z"
+                    updated_at: "2025-11-07T14:22:30Z"
+                    estimated_remaining: 45.5
+                完成状态:
+                  value:
+                    operation_id: "op_8d7c2b9e1a3f4e5d"
+                    status: "completed"
+                    progress: 100
+                    created_at: "2025-11-07T14:20:00Z"
+                    updated_at: "2025-11-07T14:24:00Z"
+                    result:
+                      workflow_id: "wf_8d7c2b9e1a3f4e5d"
+                      workflow_name: "电商订单自动发货流程"
+        '404':
+          description: 操作不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /health:
+    get:
+      summary: 系统健康状态检查
+      description: 检查系统各组件的健康状态和性能指标
+      tags:
+        - 系统监控
+      responses:
+        '200':
+          description: 系统健康状态报告
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/HealthCheckResponse'
+                  - $ref: '#/components/schemas/SystemStatusReport'
+              examples:
+                健康状态:
+                  value:
+                    status: "healthy"
+                    timestamp: "2025-11-07T14:20:00Z"
+                    uptime: 86400
+                    version: "20.0.0-Complete-Unified"
+                    components:
+                      database: "connected"
+                      workflow_engine: "up"
+                      ai_services: "up"
+                      plugin_system: "up"
+                    performance_metrics:
+                      response_time: 125
+                      throughput: 850
+                      error_rate: 0.01
+                系统状态报告:
+                  value:
+                    overall_status: "healthy"
+                    component_status:
+                      database: "up"
+                      cache: "up"
+                      queue: "up"
+                    performance_metrics:
+                      cpu_usage: 45
+                      memory_usage: 60
+                      disk_usage: 70
+                    resource_utilization:
+                      total_requests: 10000
+                      success_rate: 99.8
+                    recommendations:
+                      - "建议增加缓存容量"
+                      - "数据库连接池可优化"
+        '503':
+          description: 服务不可用
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseWithRecovery'
+
+  /validate:
+    post:
+      summary: 参数验证服务
+      description: 验证操作参数的完整性和正确性，提供修复建议
+      tags:
+        - 参数验证
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidationRequest'
+      responses:
+        '200':
+          description: 验证结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResponse'
+              examples:
+                验证通过:
+                  value:
+                    valid: true
+                    errors: []
+                    warnings: []
+                    suggestions: ["建议增加数据验证步骤", "推荐使用更高的分析深度"]
+                    auto_fix_applied: false
+                验证失败:
+                  value:
+                    valid: false
+                    errors:
+                      - field: "parameters.demand"
+                        message: "长度需大于10个字符"
+                        code: "LENGTH_TOO_SHORT"
+                    warnings:
+                      - field: "parameters.timeout"
+                        message: "超时时间较短，建议至少300秒"
+                    suggestions: ["请提供更详细的需求描述"]
+                    auto_fix_applied: true
+
+components:
+  schemas:
+    # ==================== 请求对象 ====================
+    SimpleUserRequest:
+      type: object
+      description: 简单用户请求模式 - 使用自然语言描述需求
+      properties:
+        user_request:
+          type: string
+          description: 用户自然语言需求描述（系统自动分析并执行）
+          minLength: 10
+          maxLength: 2000
+          example: "帮我创建一个电商订单处理工作流，包含订单确认、库存检查、物流通知功能"
+        preferred_action:
+          type: string
+          description: 用户偏好的功能类型（可选）
+          enum:
+            - generate_workflow
+            - ai_enhancement
+            - analyze_industry
+            - auto_repair
+            - process_luoyang_heritage
+          example: generate_workflow
+        timeout:
+          type: integer
+          description: 执行超时时间（10-3600秒）
+          default: 300
+          minimum: 10
+          maximum: 3600
+          example: 300
+        enable_automation:
+          type: boolean
+          description: 是否启用自动化处理
+          default: true
+          example: true
+      required:
+        - user_request
+
+    ProfessionalRequest:
+      type: object
+      description: 专业请求模式 - 使用结构化参数精确控制
+      allOf:
+        - $ref: '#/components/schemas/UniversalRequest'
+        - type: object
+          properties:
+            enable_automation:
+              type: boolean
+              description: 是否启用自动化处理
+              default: true
+              example: true
+            timeout:
+              type: integer
+              description: 执行超时时间（秒）
+              default: 300
+              minimum: 10
+              maximum: 3600
+
+    CompleteUnifiedRequest:
+      type: object
+      description: 完整统一请求 - 支持智能参数和自动化处理
+      properties:
+        operation_intent:
+          type: string
+          description: 操作意图描述
+          examples:
+            - 分析电商数据并生成智能工作流
+            - 修复所有插件节点配置错误
+            - 洛阳非遗产品数字化处理和模型训练
+          example: "分析电商数据并生成智能工作流"
+        operation_config:
+          type: object
+          description: 操作配置
+          properties:
+            business_domain:
+              type: string
+              description: 业务领域
+              enum:
+                - ecommerce
+                - industry
+                - finance
+                - healthcare
+                - education
+                - heritage
+              example: ecommerce
+            execution_mode:
+              type: string
+              description: 执行模式
+              default: auto
+              enum:
+                - auto
+                - manual
+                - hybrid
+              example: auto
+            priority:
+              type: string
+              description: 优先级
+              default: normal
+              enum:
+                - low
+                - normal
+                - high
+                - critical
+              example: high
+            resource_allocation:
+              type: object
+              description: 资源分配配置
+              properties:
+                cpu_priority:
+                  type: string
+                  description: CPU优先级
+                  default: medium
+                  enum:
+                    - low
+                    - medium
+                    - high
+                  example: high
+                memory_limit:
+                  type: string
+                  description: 内存限制
+                  default: 1GB
+                  example: 2GB
+                timeout_ms:
+                  type: integer
+                  description: 超时时间（毫秒）
+                  default: 30000
+                  example: 60000
+        smart_parameters:
+          type: object
+          description: 智能参数配置
+          properties:
+            auto_detect_plugins:
+              type: boolean
+              description: 自动检测插件
+              default: true
+              example: true
+            auto_repair:
+              type: boolean
+              description: 自动修复
+              default: true
+              example: true
+            error_masking:
+              type: string
+              description: 错误屏蔽级别
+              default: partial
+              enum:
+                - none
+                - partial
+                - full
+              example: partial
+            validation_strictness:
+              type: string
+              description: 验证严格程度
+              default: standard
+              enum:
+                - relaxed
+                - standard
+                - strict
+              example: standard
+        enable_automation:
+          type: boolean
+          description: 是否启用自动化处理
+          default: true
+          example: true
+      required:
+        - operation_intent
+
+    UniversalRequest:
+      type: object
+      description: 通用请求对象
+      properties:
+        operation_type:
+          type: string
+          description: 要执行的操作类型
+          enum:
+            - activate_emergency
+            - ai_enhancement
+            - analyze_industry
+            - auto_repair
+            - backup_revert
+            - create_custom_node
+            - create_workflow
+            - delete_workflow
+            - execute_workflow
+            - feed_data
+            - generate_workflow
+            - get_data_connections
+            - get_workflow_by_id
+            - get_workflows
+            - process_automation
+            - process_luoyang_heritage
+            - repair_all_nodes
+            - train_model
+            - trigger_auto_plugin_workflow
+            - update_workflow
+            - validate_parameters
+          example: generate_workflow
+        operation_config:
+          type: object
+          description: 操作配置参数
+          properties:
+            ai_enhancement_config:
+              $ref: '#/components/schemas/AIEnhancementConfig'
+            automation_config:
+              $ref: '#/components/schemas/AutomationConfig'
+            backup_config:
+              $ref: '#/components/schemas/BackupConfig'
+            connection_config:
+              $ref: '#/components/schemas/ConnectionConfig'
+            custom_node_config:
+              $ref: '#/components/schemas/CustomNodeConfig'
+            emergency_config:
+              $ref: '#/components/schemas/EmergencyConfig'
+            heritage_config:
+              $ref: '#/components/schemas/HeritageConfig'
+            industry_config:
+              $ref: '#/components/schemas/IndustryConfig'
+            plugin_config:
+              $ref: '#/components/schemas/PluginConfig'
+            query_config:
+              $ref: '#/components/schemas/QueryConfig'
+            repair_config:
+              $ref: '#/components/schemas/RepairConfig'
+            training_config:
+              $ref: '#/components/schemas/TrainingConfig'
+            validation_config:
+              $ref: '#/components/schemas/ValidationConfig'
+            workflow_config:
+              $ref: '#/components/schemas/WorkflowConfig'
+          additionalProperties: true
+        async_execution:
+          type: boolean
+          description: 是否异步执行
+          default: false
+          example: false
+        callback_url:
+          type: string
+          format: uri
+          description: 异步回调URL
+          example: "https://webhook.company.com/callback"
+        version:
+          type: string
+          description: API版本
+          default: v3.0
+          enum:
+            - v1.0
+            - v2.0
+            - v3.0
+          example: v3.0
+      required:
+        - operation_type
+        - operation_config
+
+    UnifiedAutomationRequest:
+      type: object
+      description: 统一自动化请求
+      properties:
+        intent:
+          type: string
+          description: 操作意图描述
+          example: "创建电商订单处理工作流"
+        operation_type:
+          type: string
+          description: 操作类型
+          enum:
+            - generate_workflow
+            - execute_workflow
+            - create_workflow
+            - update_workflow
+            - delete_workflow
+            - get_workflows
+            - get_workflow_by_id
+            - generate_plugin
+            - repair_nodes
+            - ai_enhancement
+            - analyze_industry
+            - activate_emergency
+            - process_heritage
+            - train_model
+            - feed_data
+            - create_custom_node
+            - get_data_connections
+            - validate_parameters
+            - backup_revert
+            - process_automation
+          example: generate_workflow
+        parameters:
+          type: object
+          description: 操作参数
+          properties:
+            activation_reason:
+              type: string
+              description: 激活原因
+            analysis_type:
+              type: string
+              description: 分析类型
+            async_execution:
+              type: boolean
+              description: 是否异步执行
+              default: false
+            auto_recovery:
+              type: boolean
+              description: 自动恢复
+            auto_repair_level:
+              type: string
+              description: 自动修复级别
+              enum:
+                - basic
+                - advanced
+                - full
+            business_domain:
+              type: string
+              description: 业务领域
+              enum:
+                - ecommerce
+                - finance
+                - healthcare
+                - manufacturing
+                - education
+            callback_url:
+              type: string
+              format: uri
+              description: 回调URL
+            complexity_level:
+              type: string
+              description: 复杂度级别
+              enum:
+                - simple
+                - medium
+                - complex
+            emergency_level:
+              type: string
+              description: 紧急级别
+              enum:
+                - low
+                - medium
+                - high
+                - critical
+            enhancement_type:
+              type: string
+              description: 增强类型
+              enum:
+                - cleaning
+                - enrichment
+                - transformation
+            industry_name:
+              type: string
+              description: 行业名称
+            input_data:
+              type: object
+              description: 输入数据
+            plugin_type:
+              type: string
+              description: 插件类型
+            repair_scope:
+              type: string
+              description: 修复范围
+              enum:
+                - config
+                - logic
+                - dependency
+                - all
+            requirement_description:
+              type: string
+              description: 需求描述
+            user_demand:
+              type: string
+              description: 用户需求
+            workflow_id:
+              type: string
+              description: 工作流ID
+            workflow_name:
+              type: string
+              description: 工作流名称
+        config:
+          type: object
+          description: 执行配置
+          properties:
+            priority:
+              type: string
+              description: 优先级
+              default: normal
+              enum:
+                - low
+                - normal
+                - high
+                - critical
+            timeout:
+              type: integer
+              description: 超时时间（毫秒）
+              default: 30000
+        enable_automation:
+          type: boolean
+          description: 是否启用自动化处理
+          default: true
+      required:
+        - operation_type
+        - intent
+
+    ValidationRequest:
+      type: object
+      description: 参数验证请求
+      properties:
+        action:
+          type: string
+          description: 功能类型
+          enum:
+            - activate_emergency
+            - ai_enhancement
+            - analyze_industry
+            - auto_repair
+            - backup_revert
+            - create_custom_node
+            - create_workflow
+            - delete_workflow
+            - execute_workflow
+            - feed_data
+            - generate_workflow
+            - get_data_connections
+            - get_workflow_by_id
+            - get_workflows
+            - process_automation
+            - process_luoyang_heritage
+            - repair_all_nodes
+            - train_model
+            - trigger_auto_plugin_workflow
+            - update_workflow
+          example: generate_workflow
+        params_to_validate:
+          type: object
+          description: 要验证的参数
+          example:
+            demand: "生成简单工作流"
+            industry: "电商"
+        return_suggestions:
+          type: boolean
+          description: 是否返回建议
+          default: true
+          example: true
+        validation_strictness:
+          type: string
+          description: 验证严格程度
+          default: standard
+          enum:
+            - relaxed
+            - standard
+            - strict
+          example: strict
+      required:
+        - action
+        - params_to_validate
+
+    # ==================== 响应对象 ====================
+    UnifiedSuccessResponse:
+      type: object
+      description: 统一成功响应
+      properties:
+        success:
+          type: boolean
+          description: 操作是否成功
+          example: true
+        operation_id:
+          type: string
+          description: 操作唯一标识符
+          pattern: '^op_[a-fA-F0-9]{16}$'
+          example: "op_8d7c2b9e1a3f4e5d"
+        timestamp:
+          type: string
+          format: date-time
+          description: 响应时间戳
+          example: "2025-11-07T14:20:00Z"
+        execution_time:
+          type: number
+          description: 执行时间（秒）
+          example: 2.5
+        result_data:
+          type: object
+          description: 操作结果数据
+          additionalProperties: true
+        automation_applied:
+          type: boolean
+          description: 是否应用了自动化处理
+          example: true
+      required:
+        - success
+        - operation_id
+        - timestamp
+
+    SuccessResponse:
+      type: object
+      description: 简单成功响应
+      properties:
+        code:
+          type: integer
+          description: 错误码（0表示成功）
+          example: 0
+        data:
+          type: object
+          description: 执行结果数据（JSON对象）
+          example:
+            name: "电商订单自动发货流程"
+            status: "created"
+            workflow_id: "wf_8d7c2b9e1a3f4e5d"
+        message:
+          type: string
+          description: 成功提示信息
+          example: "操作成功"
+      required:
+        - code
+        - data
+        - message
+
+    UnifiedAutomationResponse:
+      type: object
+      description: 统一自动化响应
+      properties:
+        success:
+          type: boolean
+          description: 操作是否成功
+          example: true
+        operation_id:
+          type: string
+          description: 操作唯一标识
+          example: "op_8d7c2b9e1a3f4e5d"
+        operation_type:
+          type: string
+          description: 操作类型
+          example: "generate_workflow"
+        timestamp:
+          type: string
+          format: date-time
+          description: 时间戳
+          example: "2025-11-07T14:20:00Z"
+        execution_time:
+          type: number
+          description: 执行时间（秒）
+          example: 2.5
+        result:
+          type: object
+          description: 操作结果
+          properties:
+            analysis_result:
+              type: object
+              description: 分析结果
+            coze_import_command:
+              type: string
+              description: Coze导入命令
+            data:
+              type: object
+              description: 数据
+            enhanced_data:
+              type: object
+              description: 增强后的数据
+            message:
+              type: string
+              description: 消息
+            plugin_id:
+              type: string
+              description: 插件ID
+            plugin_name:
+              type: string
+              description: 插件名称
+            processing_time:
+              type: number
+              description: 处理时间
+            repair_report:
+              type: object
+              description: 修复报告
+            repaired_nodes:
+              type: integer
+              description: 修复的节点数量
+            workflow_definition:
+              type: object
+              description: 工作流定义
+            workflow_id:
+              type: string
+              description: 工作流ID
+      required:
+        - success
+        - operation_id
+        - result
+
+    CompleteUnifiedResponse:
+      type: object
+      description: 完整统一响应
+      properties:
+        success:
+          type: boolean
+          description: 操作是否成功
+          example: true
+        execution_id:
+          type: string
+          description: 执行ID
+          example: "exec_8d7c2b9e1a3f4e5d"
+        execution_trace:
+          type: object
+          description: 执行追踪
+          properties:
+            operation_flow:
+              type: array
+              description: 操作流程
+              items:
+                type: object
+            resource_usage:
+              type: object
+              description: 资源使用情况
+        intelligent_insights:
+          type: object
+          description: 智能洞察
+          properties:
+            optimization_suggestions:
+              type: array
+              description: 优化建议
+              items:
+                type: string
+            performance_metrics:
+              type: object
+              description: 性能指标
+            predictive_analytics:
+              type: object
+              description: 预测分析
+        operation_summary:
+          type: object
+          description: 操作摘要
+          properties:
+            execution_time_ms:
+              type: number
+              description: 执行时间（毫秒）
+            successful_operations:
+              type: integer
+              description: 成功操作数
+            total_operations:
+              type: integer
+              description: 总操作数
+        results:
+          type: object
+          description: 操作结果
+          properties:
+            data_results:
+              $ref: '#/components/schemas/DataProcessingResult'
+            domain_results:
+              $ref: '#/components/schemas/DomainProcessingResult'
+            plugin_results:
+              $ref: '#/components/schemas/PluginOperationResult'
+            workflow_results:
+              $ref: '#/components/schemas/WorkflowOperationResult'
+
+    AsyncOperationResponse:
+      type: object
+      description: 异步操作响应
+      properties:
+        success:
+          type: boolean
+          description: 操作是否成功接受
+          default: true
+          example: true
+        operation_id:
+          type: string
+          description: 操作唯一标识符
+          pattern: '^op_[a-fA-F0-9]{16}$'
+          example: "op_8d7c2b9e1a3f4e5d"
+        status:
+          type: string
+          description: 操作状态
+          enum:
+            - accepted
+          example: accepted
+        monitor_url:
+          type: string
+          format: uri
+          description: 监控URL
+          example: "https://api.universal-automation.com/v1/operations/op_8d7c2b9e1a3f4e5d"
+        estimated_completion:
+          type: string
+          format: date-time
+          description: 预计完成时间
+          example: "2025-11-07T14:25:00Z"
+        timestamp:
+          type: string
+          format: date-time
+          description: 响应时间戳
+          example: "2025-11-07T14:20:00Z"
+      required:
+        - success
+        - operation_id
+        - status
+        - monitor_url
+        - timestamp
+
+    AsyncAcceptResponse:
+      type: object
+      description: 异步接受响应
+      properties:
+        success:
+          type: boolean
+          description: 是否成功接受
+          default: true
+          example: true
+        operation_id:
+          type: string
+          description: 操作ID
+          pattern: '^op_[a-fA-F0-9]{16}$'
+          example: "op_8d7c2b9e1a3f4e5d"
+        status:
+          type: string
+          description: 状态
+          enum:
+            - accepted
+          example: accepted
+        monitor_url:
+          type: string
+          format: uri
+          description: 监控URL
+          example: "https://api.universal-automation.com/v1/operations/op_8d7c2b9e1a3f4e5d"
+        estimated_completion:
+          type: string
+          format: date-time
+          description: 预计完成时间
+          example: "2025-11-07T14:25:00Z"
+        timestamp:
+          type: string
+          format: date-time
+          description: 时间戳
+          example: "2025-11-07T14:20:00Z"
+      required:
+        - success
+        - operation_id
+        - monitor_url
+        - timestamp
+
+    AsyncResponse:
+      type: object
+      description: 异步响应
+      properties:
+        success:
+          type: boolean
+          description: 是否成功
+          example: true
+        status:
+          type: string
+          description: 状态
+          enum:
+            - accepted
+          example: accepted
+        operation_id:
+          type: string
+          description: 操作ID
+          example: "op_8d7c2b9e1a3f4e5d"
+        monitor_url:
+          type: string
+          format: uri
+          description: 监控URL
+          example: "https://api.universal-automation.com/v1/operations/op_8d7c2b9e1a3f4e5d"
+        estimated_completion:
+          type: string
+          format: date-time
+          description: 预计完成时间
+          example: "2025-11-07T14:25:00Z"
+        timestamp:
+          type: string
+          format: date-time
+          description: 时间戳
+          example: "2025-11-07T14:20:00Z"
+
+    OperationStatus:
+      type: object
+      description: 操作状态信息
+      properties:
+        operation_id:
+          type: string
+          description: 操作唯一标识符
+          pattern: '^op_[a-fA-F0-9]{16}$'
+          example: "op_8d7c2b9e1a3f4e5d"
+        status:
+          type: string
+          description: 操作状态
+          enum:
+            - pending
+            - processing
+            - completed
+            - failed
+            - cancelled
+          example: processing
+        progress:
+          type: integer
+          description: 执行进度（0-100）
+          minimum: 0
+          maximum: 100
+          example: 75
+        created_at:
+          type: string
+          format: date-time
+          description: 创建时间
+          example: "2025-11-07T14:20:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          description: 最后更新时间
+          example: "2025-11-07T14:22:30Z"
+        estimated_remaining:
+          type: number
+          description: 预计剩余时间（秒）
+          example: 45.5
+        result:
+          type: object
+          description: 操作结果（仅当状态为completed时存在）
+        error:
+          type: object
+          description: 错误信息（仅当状态为failed时存在）
+      required:
+        - operation_id
+        - status
+        - created_at
+
+    OperationStatusResponse:
+      type: object
+      description: 操作状态响应
+      properties:
+        operation_id:
+          type: string
+          description: 操作ID
+          pattern: '^op_[a-fA-F0-9]{16}$'
+          example: "op_8d7c2b9e1a3f4e5d"
+        status:
+          type: string
+          description: 状态
+          enum:
+            - pending
+            - processing
+            - completed
+            - failed
+            - cancelled
+          example: processing
+        progress:
+          type: integer
+          description: 进度
+          minimum: 0
+          maximum: 100
+          example: 75
+        created_at:
+          type: string
+          format: date-time
+          description: 创建时间
+          example: "2025-11-07T14:20:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          description: 更新时间
+          example: "2025-11-07T14:22:30Z"
+        estimated_remaining:
+          type: number
+          description: 预计剩余时间
+          example: 45.5
+        result:
+          type: object
+          description: 结果
+          additionalProperties: true
+        error:
+          type: object
+          description: 错误信息
+          properties:
+            error_code:
+              type: string
+              description: 错误代码
+            error_message:
+              type: string
+              description: 错误信息
+      required:
+        - operation_id
+        - status
+        - created_at
+
+    HealthCheckResponse:
+      type: object
+      description: 健康检查响应
+      properties:
+        status:
+          type: string
+          description: 整体状态
+          enum:
+            - healthy
+            - degraded
+            - unhealthy
+          example: healthy
+        timestamp:
+          type: string
+          format: date-time
+          description: 检查时间
+          example: "2025-11-07T14:20:00Z"
+        uptime:
+          type: number
+          description: 运行时间
+          example: 86400
+        version:
+          type: string
+          description: 版本
+          example: "20.0.0-Complete-Unified"
+        components:
+          type: object
+          description: 组件状态
+          properties:
+            database:
+              type: string
+              description: 数据库状态
+              enum:
+                - connected
+                - disconnected
+              example: connected
+            workflow_engine:
+              type: string
+              description: 工作流引擎状态
+              enum:
+                - up
+                - down
+                - degraded
+              example: up
+            ai_services:
+              type: string
+              description: AI服务状态
+              enum:
+                - up
+                - down
+                - degraded
+              example: up
+      required:
+        - status
+        - timestamp
+
+    SystemStatusReport:
+      type: object
+      description: 系统状态报告
+      properties:
+        overall_status:
+          type: string
+          description: 整体状态
+          enum:
+            - healthy
+            - degraded
+            - unhealthy
+          example: healthy
+        component_status:
+          type: object
+          description: 组件状态
+        performance_metrics:
+          type: object
+          description: 性能指标
+        recommendations:
+          type: array
+          description: 系统建议
+          items:
+            type: string
+        resource_utilization:
+          type: object
+          description: 资源使用率
+
+    ValidationResponse:
+      type: object
+      description: 参数验证响应
+      properties:
+        valid:
+          type: boolean
+          description: 参数是否有效
+          example: true
+        errors:
+          type: array
+          description: 验证错误列表
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: 错误字段路径
+              message:
+                type: string
+                description: 错误信息
+              code:
+                type: string
+                description: 错误代码
+          example: []
+        warnings:
+          type: array
+          description: 警告信息列表
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: 警告字段路径
+              message:
+                type: string
+                description: 警告信息
+          example: []
+        suggestions:
+          type: array
+          description: 改进建议
+          items:
+            type: string
+          example: ["建议增加数据验证步骤", "推荐使用更高的分析深度"]
+        auto_fix_applied:
+          type: boolean
+          description: 是否应用了自动修复
+          example: false
+      required:
+        - valid
+
+    # ==================== 错误响应对象 ====================
+    ErrorResponse:
+      type: object
+      description: 错误响应
+      properties:
+        code:
+          type: integer
+          description: 错误码（4xx参数错，5xx服务错）
+          example: 4001
+        message:
+          type: string
+          description: 错误概要信息
+          example: "参数验证失败"
+        errors:
+          type: array
+          description: 错误详情列表
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: 错误参数字段
+                example: "parameters.demand"
+              message:
+                type: string
+                description: 错误具体描述
+                example: "长度需大于10个字符"
+          example: []
+        timestamp:
+          type: string
+          format: date-time
+          description: 错误发生时间
+          example: "2025-11-07T14:22:00Z"
+        request_id:
+          type: string
+          description: 请求ID
+          example: "req_8d7c2b9e1a3f4e5d"
+      required:
+        - code
+        - message
+        - errors
+
+    ErrorResponseWithFix:
+      type: object
+      description: 带修复建议的错误响应
+      properties:
+        auto_fix_applied:
+          type: boolean
+          description: 是否已自动修复
+          example: false
+        error_code:
+          type: string
+          description: 错误代码
+          example: "VALIDATION_ERROR"
+        error_message:
+          type: string
+          description: 错误信息
+          example: "参数验证失败"
+        fix_suggestions:
+          type: array
+          description: 修复建议
+          items:
+            type: string
+          example: ["请提供更详细的需求描述"]
+        parameter_issues:
+          type: array
+          description: 参数问题
+          items:
+            type: object
+            properties:
+              current_value:
+                type: string
+                description: 当前值
+              issue_type:
+                type: string
+                description: 问题类型
+              parameter_name:
+                type: string
+                description: 参数名称
+              suggested_fix:
+                type: string
+                description: 建议修复
+
+    ErrorResponseWithRecovery:
+      type: object
+      description: 带恢复信息的错误响应
+      properties:
+        error_code:
+          type: string
+          description: 错误代码
+          example: "INTERNAL_SERVER_ERROR"
+        error_message:
+          type: string
+          description: 错误信息
+          example: "处理请求时发生内部错误"
+        estimated_recovery_time:
+          type: integer
+          description: 预计恢复时间（秒）
+          example: 60
+        recovery_actions:
+          type: array
+          description: 恢复操作
+          items:
+            type: string
+          example: ["正在重启受影响的服务", "检查数据库连接"]
+        system_status:
+          type: string
+          description: 系统状态
+          example: "degraded"
+
+    # ==================== 专业结果对象 ====================
+    DataProcessingResult:
+      type: object
+      description: 数据处理结果
+      properties:
+        operation_type:
+          type: string
+          description: 操作类型
+        processing_id:
+          type: string
+          description: 处理ID
+        processed_data:
+          type: object
+          description: 处理后的数据
+        enhancement_report:
+          type: object
+          description: 增强报告
+        quality_metrics:
+          type: object
+          description: 质量指标
+
+    DomainProcessingResult:
+      type: object
+      description: 领域处理结果
+      properties:
+        domain_type:
+          type: string
+          description: 领域类型
+        operation_type:
+          type: string
+          description: 操作类型
+        processing_results:
+          type: object
+          description: 处理结果
+        domain_insights:
+          type: object
+          description: 领域洞察
+        recommendations:
+          type: array
+          description: 推荐建议
+          items:
+            type: string
+
+    PluginOperationResult:
+      type: object
+      description: 插件操作结果
+      properties:
+        operation_type:
+          type: string
+          description: 操作类型
+        plugin_id:
+          type: string
+          description: 插件ID
+        deployment_status:
+          type: string
+          description: 部署状态
+        result_data:
+          type: object
+          description: 结果数据
+        coze_integration:
+          type: object
+          description: Coze集成信息
+
+    WorkflowOperationResult:
+      type: object
+      description: 工作流操作结果
+      properties:
+        operation_type:
+          type: string
+          description: 操作类型
+        workflow_id:
+          type: string
+          description: 工作流ID
+        result_data:
+          type: object
+          description: 结果数据
+        performance_metrics:
+          type: object
+          description: 性能指标
+        validation_report:
+          type: object
+          description: 验证报告
+
+    SystemOperationResult:
+      type: object
+      description: 系统操作结果
+      properties:
+        operation_type:
+          type: string
+          description: 操作类型
+        operation_id:
+          type: string
+          description: 操作ID
+        result_status:
+          type: string
+          description: 结果状态
+        operation_details:
+          type: object
+          description: 操作详情
+        affected_components:
+          type: array
+          description: 受影响组件
+          items:
+            type: string
+
+    WorkflowBase:
+      type: object
+      description: 工作流基础信息
+      properties:
+        workflow_id:
+          type: string
+          description: 工作流ID
+          pattern: '^wf_[0-9a-f]{16}$'
+          example: "wf_8d7c2b9e1a3f4e5d"
+        name:
+          type: string
+          description: 工作流名称
+          example: "电商订单自动发货流程"
+        status:
+          type: string
+          description: 状态
+          enum:
+            - draft
+            - active
+            - disabled
+            - deleted
+          example: active
+        create_time:
+          type: string
+          format: date-time
+          description: 创建时间
+          example: "2025-11-07T14:20:00Z"
+
+    # ==================== 配置对象 ====================
+    WorkflowConfig:
+      type: object
+      description: 工作流配置
+      properties:
+        business_domain:
+          type: string
+          description: 业务领域
+          enum:
+            - ecommerce
+            - industry
+            - programming
+            - finance
+            - healthcare
+            - manufacturing
+            - retail
+            - education
+          example: ecommerce
+        complexity_level:
+          type: string
+          description: 复杂度级别
+          enum:
+            - simple
+            - medium
+            - complex
+          example: medium
+        requirement_description:
+          type: string
+          description: 需求描述
+          example: "生成电商订单自动发货工作流"
+
+    AIEnhancementConfig:
+      type: object
+      description: AI增强配置
+      properties:
+        enhancement_type:
+          type: string
+          description: 增强类型
+          enum:
+            - cleaning
+            - enrichment
+            - completion
+            - quality_improvement
+          example: enrichment
+        input_data:
+          type: string
+          description: 输入数据
+          example: "原始用户反馈数据..."
+
+    AutomationConfig:
+      type: object
+      description: 自动化配置
+      properties:
+        operation_mode:
+          type: string
+          description: 操作模式
+          enum:
+            - industry_analysis
+            - workflow_generation
+            - auto_repair
+            - luoyang_heritage
+            - custom
+          example: workflow_generation
+
+    BackupConfig:
+      type: object
+      description: 备份配置
+      properties:
+        backup_id:
+          type: string
+          description: 备份ID
+          example: "bak_8d7c2b9e1a3f4e5d"
+        revert_scope:
+          type: string
+          description: 恢复范围
+          enum:
+            - full
+            - partial
+            - data_only
+          example: partial
+
+    ConnectionConfig:
+      type: object
+      description: 连接配置
+      properties:
+        connection_type:
+          type: string
+          description: 连接类型
+          enum:
+            - all
+            - database
+            - api
+            - file
+            - streaming
+          example: database
+
+    CustomNodeConfig:
+      type: object
+      description: 自定义节点配置
+      properties:
+        node_type:
+          type: string
+          description: 节点类型
+          enum:
+            - code
+            - plugin
+            - metadata
+          example: code
+        programming_language:
+          type: string
+          description: 编程语言
+          enum:
+            - python
+            - javascript
+            - typescript
+          example: python
+
+    EmergencyConfig:
+      type: object
+      description: 紧急情况配置
+      properties:
+        activation_reason:
+          type: string
+          description: 激活原因
+          example: "系统核心节点故障"
+        auto_recovery:
+          type: boolean
+          description: 是否自动恢复
+          example: true
+        emergency_level:
+          type: string
+          description: 紧急级别
+          enum:
+            - low
+            - medium
+            - high
+            - critical
+          example: high
+
+    HeritageConfig:
+      type: object
+      description: 文化遗产配置
+      properties:
+        action_type:
+          type: string
+          description: 操作类型
+          enum:
+            - query
+            - register
+            - update
+            - preserve
+          example: preserve
+        heritage_type:
+          type: string
+          description: 遗产类型
+          enum:
+            - intangible
+            - tangible
+            - cultural_practice
+          example: intangible
+        luoyang_heritage_id:
+          type: string
+          description: 洛阳遗产ID
+          example: "heritage_8d7c2b9e1a3f4e5d"
+        user_request:
+          type: string
+          description: 用户请求
+          example: "数字化保存洛阳剪纸技艺"
+
+    IndustryConfig:
+      type: object
+      description: 行业分析配置
+      properties:
+        analysis_depth:
+          type: string
+          description: 分析深度
+          enum:
+            - basic
+            - standard
+            - comprehensive
+          example: comprehensive
+        industry_type:
+          type: string
+          description: 行业类型
+          enum:
+            - manufacturing
+            - retail
+            - healthcare
+            - finance
+            - education
+          example: retail
+        user_request:
+          type: string
+          description: 用户请求
+          example: "分析电商行业发展趋势"
+
+    PluginConfig:
+      type: object
+      description: 插件配置
+      properties:
+        plugin_description:
+          type: string
+          description: 插件描述
+          example: "订单处理插件"
+        self_healing_enabled:
+          type: boolean
+          description: 是否启用自愈
+          example: true
+
+    QueryConfig:
+      type: object
+      description: 查询配置
+      properties:
+        page_number:
+          type: integer
+          description: 页码
+          minimum: 1
+          example: 1
+        page_size:
+          type: integer
+          description: 每页大小
+          minimum: 1
+          maximum: 100
+          example: 20
+
+    RepairConfig:
+      type: object
+      description: 修复配置
+      properties:
+        diagnosis_level:
+          type: string
+          description: 诊断级别
+          enum:
+            - quick
+            - standard
+            - comprehensive
+          example: standard
+        repair_type:
+          type: string
+          description: 修复类型
+          enum:
+            - system
+            - network
+            - database
+            - application
+            - performance
+          example: system
+
+    TrainingConfig:
+      type: object
+      description: 训练配置
+      properties:
+        model_type:
+          type: string
+          description: 模型类型
+          enum:
+            - classification
+            - regression
+            - clustering
+            - nlp
+          example: classification
+        training_data:
+          type: string
+          description: 训练数据
+          example: "训练数据集URL或内容"
+
+    ValidationConfig:
+      type: object
+      description: 验证配置
+      properties:
+        parameters_to_validate:
+          type: object
+          description: 要验证的参数
+        strict_mode:
+          type: boolean
+          description: 严格模式
+          example: true
+        auto_validate:
+          type: boolean
+          description: 自动验证
+          example: true
+        validation_strictness:
+          type: string
+          description: 验证严格程度
+          enum:
+            - relaxed
+            - standard
+            - strict
+          example: standard
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer Token认证
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API密钥认证
+    CozeAPIKey:
+      type: apiKey
+      in: header
+      name: X-Coze-API-Key
+      description: Coze平台API密钥（从Coze控制台→API密钥管理获取）
+    NoAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 无认证模式（用于测试）
+
+security:
+  - BearerAuth: []
+  - ApiKeyAuth: []
+  - CozeAPIKey: []

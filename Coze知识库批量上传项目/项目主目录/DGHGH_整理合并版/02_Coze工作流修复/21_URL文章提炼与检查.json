@@ -1,0 +1,122 @@
+{
+  "name": "URL文章提炼与检查",
+  "description": "输入URL——大模型提炼——大模型检查——输出（可以自定义prompt）",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:05:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "url",
+            "type": "string",
+            "required": true,
+            "description": "网页URL"
+          },
+          {
+            "name": "custom_prompt",
+            "type": "string",
+            "required": false,
+            "description": "自定义提示词"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_fetch",
+      "type": "3",
+      "data": {
+        "name": "获取网页内容",
+        "language": "python",
+        "code": "def main(url):\n    content = \"从网页获取的完整文章内容...\"\n    return {\"url\": url, \"content\": content[:5000]}",
+        "output_params": [
+          {
+            "name": "url",
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_extract",
+      "type": "4",
+      "data": {
+        "name": "AI 提炼精华",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是内容提炼专家，提取文章核心要点",
+        "user_prompt": "网页内容：{{code_node_fetch.content}}\\n{{custom_prompt || '请提炼核心要点和关键信息'}}",
+        "output_params": [
+          {
+            "name": "extracted",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_check",
+      "type": "4",
+      "data": {
+        "name": "AI 质量检查",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是内容审核专家，检查提炼内容的准确性和完整性",
+        "user_prompt": "原文：{{code_node_fetch.content}}\\n提炼结果：{{llm_node_extract.extracted}}\\n请检查准确性并提出改进建议",
+        "output_params": [
+          {
+            "name": "checked",
+            "type": "string"
+          },
+          {
+            "name": "suggestions",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "final_result",
+            "type": "string",
+            "value": "{{llm_node_check.checked}}"
+          },
+          {
+            "name": "suggestions",
+            "type": "string",
+            "value": "{{llm_node_check.suggestions}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "start_node",
+      "targetNodeID": "code_node_fetch"
+    },
+    {
+      "sourceNodeID": "code_node_fetch",
+      "targetNodeID": "llm_node_extract"
+    },
+    {
+      "sourceNodeID": "llm_node_extract",
+      "targetNodeID": "llm_node_check"
+    },
+    {
+      "sourceNodeID": "llm_node_check",
+      "targetNodeID": "end_node"
+    }
+  ]
+}

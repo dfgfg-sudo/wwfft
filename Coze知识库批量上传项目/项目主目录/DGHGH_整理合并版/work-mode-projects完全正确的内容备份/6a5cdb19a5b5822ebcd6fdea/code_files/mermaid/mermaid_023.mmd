@@ -1,0 +1,79 @@
+graph TD
+    A[🚀 run.bat 启动脚本] --> B[🐍 main.py 主程序入口]
+    B --> C[⚙️ SystemConfig 系统配置]
+    C --> D[📁 目录结构初始化]
+    C --> E[📝 日志系统配置]
+    C --> F[🔍 智能路径检测]
+    D --> D1[data/uploads 数据投喂]
+    D --> D2[models/pretrained 基础模型]
+    D --> D3[models/deployed 输出模型]
+    D --> D4[logs 训练日志]
+    F --> F1[用户指定路径]
+    F --> F2[默认路径]
+    F --> F3[新目录初始化]
+
+    B --> G[🍽️ DataOmnivore 数据吞噬引擎]
+    G --> H[📄 多格式文件处理]
+    H --> H1[📝 TXT文本]
+    H --> H2[📊 JSON]
+    H --> H3[📈 CSV]
+    H --> H4[🗜️ ZIP]
+    H4 --> H4a[自动解压]
+    H4 --> H4b[递归处理]
+    G --> I[🔄 数据转换引擎]
+    I --> I1[文本标准化]
+    I --> I2[格式统一化]
+    I --> I3[数据质量检测]
+
+    B --> J[🧠 AITrainer 智能训练系统]
+    J --> K[🤖 模型初始化]
+    K --> K1[HuggingFace加载]
+    K --> K2[本地加载]
+    K --> K3[Tokenizer配置]
+    J --> L[⚡ 增量训练引擎]
+    L --> L1[训练参数配置]
+    L --> L2[数据加载器]
+    L --> L3[训练循环]
+    L --> L4[模型保存]
+    L1 --> L1a[自适应批处理]
+    L1 --> L1b[学习率调度]
+    L1 --> L1c[混合精度训练]
+
+    B --> M[🔐 QuantumEncryptor 量子加密]
+    M --> N[🔑 密钥生成]
+    M --> O[🗜️ 模型加密]
+    N --> N1[系统熵源]
+    N --> N2[XChaCha20密钥]
+    N --> N3[Nonce生成]
+    O --> O1[模型序列化]
+    O --> O2[XChaCha20加密]
+    O --> O3[完整性校验]
+
+    B --> P[📦 ModelPackager 模型打包]
+    P --> Q[🗂️ ZIP压缩]
+    P --> R[🔒 加密封装]
+    P --> S[📋 元数据生成]
+
+    B --> T[🎛️ TrainingOrchestrator 主控制器]
+    T --> U[🔄 全流程协调]
+    T --> V[📊 进度监控]
+    T --> W[❌ 异常处理]
+    U --> U1[数据加载阶段]
+    U --> U2[模型训练阶段]
+    U --> U3[加密打包阶段]
+
+    D1 --> G
+    D2 --> K
+    L4 --> O1
+    O3 --> Q
+    Q --> R
+    R --> D3
+
+    style A fill:#ff6b6b
+    style B fill:#ff9e64
+    style C fill:#ffd166
+    style G fill:#06d6a0
+    style J fill:#118ab2
+    style M fill:#073b4c
+    style P fill:#7209b7
+    style T fill:#f72585

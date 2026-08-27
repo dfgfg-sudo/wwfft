@@ -1,0 +1,1 @@
+pip install torch transformers datasets pandas opencv-python fastapi uvicorn

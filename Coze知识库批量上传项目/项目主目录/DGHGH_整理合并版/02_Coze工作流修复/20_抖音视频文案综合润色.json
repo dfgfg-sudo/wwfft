@@ -1,0 +1,105 @@
+{
+  "name": "抖音视频文案综合润色",
+  "description": "通过多条抖音视频链接，综合润色成一条短视频文案",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 00:54:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "video_urls",
+            "type": "array",
+            "required": true,
+            "description": "抖音视频链接列表"
+          },
+          {
+            "name": "theme",
+            "type": "string",
+            "required": false,
+            "description": "主题方向"
+          }
+        ]
+      }
+    },
+    {
+      "id": "loop_node_extract",
+      "type": "6",
+      "data": {
+        "name": "批量提取文案",
+        "loop_var": "url",
+        "loop_array": "{{video_urls}}",
+        "loop_body": [
+          {
+            "id": "code_node_single_extract",
+            "type": "3",
+            "data": {
+              "name": "提取单条文案",
+              "language": "python",
+              "code": "def main(url):\n    return {\"url\": url, \"text\": \"从视频提取的文案内容...\"}",
+              "output_params": [
+                {
+                  "name": "extracted",
+                  "type": "object"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_merge",
+      "type": "4",
+      "data": {
+        "name": "AI 综合润色",
+        "model": "doubao-pro-128k",
+        "system_prompt": "你是短视频文案专家，将多条文案融合润色成一条精彩文案",
+        "user_prompt": "多条文案：{{loop_node_extract.results}}\\n主题：{{theme || '综合'}}\\n请融合润色成一条短视频文案，保留精华，连贯流畅",
+        "output_params": [
+          {
+            "name": "merged_text",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "final_copy",
+            "type": "string",
+            "value": "{{llm_node_merge.merged_text}}"
+          },
+          {
+            "name": "source_count",
+            "type": "number",
+            "value": "{{length(video_urls)}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "start_node",
+      "targetNodeID": "loop_node_extract"
+    },
+    {
+      "sourceNodeID": "loop_node_extract",
+      "targetNodeID": "llm_node_merge"
+    },
+    {
+      "sourceNodeID": "llm_node_merge",
+      "targetNodeID": "end_node"
+    }
+  ]
+}

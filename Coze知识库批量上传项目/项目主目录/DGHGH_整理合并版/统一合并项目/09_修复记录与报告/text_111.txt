@@ -1,0 +1,33 @@
+数据投放
+
+将任意支持格式的文件放入监控目录（默认 ~/Documents/AI_Factory/data），系统将自动处理并触发训练。
+
+输出
+
+· 训练日志：ai_factory.log
+· 模型版本：~/Documents/AI_Factory/models/bert-base-uncased/versions/v*
+
+---
+
+版本历史与修复记录
+
+版本号 主要修复与改进
+v12.0 初始稳定版，含基础验证、标注、训练
+v12.1 增强验证系统，动态哈希计算
+v12.2 修复路径语法错误，补充核心类定义
+v13.0 引入 dataclass 配置，优化异常处理
+v14.0 完善自愈机制，增强多模态支持
+v15.0 终极整合：修复所有已知 bug，统一代码风格，加入详细文档
+
+关键问题修复
+
+· ✅ 修复 DATA_SOURCES 路径括号缺失与转义问题
+· ✅ 补全缺失的 IndustrialTrainer 和 AIWatchdog 类
+· ✅ 替换 MD5 为 BLAKE2b 防止哈希碰撞
+· ✅ 增加 SYSTEM 和 TRAINING 配置项
+· ✅ 完善模型结构验证（config.json 解析）
+· ✅ 统一使用 os.path.expanduser 处理 Windows 路径
+
+---
+
+附录：Mermaid 架构图源代码

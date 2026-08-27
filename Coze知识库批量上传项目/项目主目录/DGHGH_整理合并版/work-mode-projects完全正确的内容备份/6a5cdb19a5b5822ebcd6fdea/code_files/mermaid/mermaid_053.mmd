@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant User
+    participant UI as NeuroDashboard
+    participant Data as DataEngine
+    participant Quantum as QuantumProcessor
+    participant Train as QuantumTrainer
+    participant Sec as SecurityManager
+
+    User->>UI: 指定项目路径
+    UI->>Data: 加载数据文件
+    Data->>Data: 解析 TXT/JSON/CSV
+    Data->>Data: 构建 Dataset
+    Data-->>UI: 返回数据集
+
+    User->>UI: 开始训练
+    UI->>Train: 传入数据集
+    Train->>Quantum: 量子特征编码
+    Quantum-->>Train: 增强数据
+    Train->>Train: LoRA 微调训练
+    Train->>Sec: 保存并加密模型
+    Sec-->>UI: 返回加密状态
+    UI-->>User: 显示训练完成

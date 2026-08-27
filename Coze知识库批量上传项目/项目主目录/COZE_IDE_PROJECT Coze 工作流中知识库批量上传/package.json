@@ -1,0 +1,52 @@
+{
+  "name": "coze-omni-automation-hub",
+  "version": "32.0.0",
+  "description": "Coze IDE全场景智能自动化中枢 - 21个功能模块、600+工具函数、智能路由、RAG检索、认知推理、安全合规，符合认知型/Agent/RAG三种知识库类型",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node -e \"const m=require('./index.js');m.handler({user_input:'测试智能路由系统'}).then(r=>console.log(JSON.stringify(r,null,2)))\"",
+    "kb:upload": "node knowledge_base_folder_upload.js",
+    "kb:ui": "node kb_ui_server.js"
+  },
+  "keywords": [
+    "coze",
+    "coze-ide",
+    "automation",
+    "ai",
+    "workflow",
+    "plugin",
+    "deepseek",
+    "knowledge",
+    "rag",
+    "agent",
+    "cognitive",
+    "智能自动化",
+    "知识库",
+    "智能体",
+    "认知推理",
+    "IDE插件"
+  ],
+  "author": "Universal Automation Team",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "coze": {
+    "entry_point": "handler",
+    "runtime": "nodejs18",
+    "api_version": "v1",
+    "min_coze_version": "2024.08",
+    "security": {
+      "input_sanitization": true,
+      "parameter_validation": true,
+      "injection_prevention": true,
+      "audit_logging": true,
+      "rate_limiting": true,
+      "data_encryption": true
+    }
+  },
+  "packageManager": "pnpm@11.15.0+sha512.266f8957a30d2be6e9468e5e66bcdedd35a794175f71b067ba8504d686cce1d0c0f429b33c323c3c569ad4891e667574a49ff71d1b89a22cc66f13c65818c578"
+}

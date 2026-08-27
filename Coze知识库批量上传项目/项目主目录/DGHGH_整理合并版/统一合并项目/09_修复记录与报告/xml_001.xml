@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions 
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:zeebe="http://camunda.org/schema/zeebe/1.0"
+  targetNamespace="http://bpmn.io/schema/bpmn">
+
+  <process id="WorkflowProcess" name="工作流流程" isExecutable="true">
+    
+    <!-- ==================== 开始事件 ==================== -->
+    <startEvent id="StartEvent_1" name="开始">
+      <extensionElements>
+        <zeebe:taskDefinition type="start" />
+      </extensionElements>
+    </startEvent>
+
+    <!-- ==================== 任务节点 ==================== -->
+    <!-- 基于状态机状态生成 -->
+    <serviceTask id="Task_Validate" name="验证数据">
+      <extensionElements>
+        <zeebe:taskDefinition type="validate" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="timeout" value="30000" />
+        </zeebe:taskHeaders>
+      </extensionElements>
+      <ioSpecification>
+        <dataInput id="Input_Validate" name="inputData" />
+        <dataOutput id="Output_Validate" name="validationResult" />
+      </ioSpecification>
+    </serviceTask>
+
+    <serviceTask id="Task_Process" name="处理业务">
+      <extensionElements>
+        <zeebe:taskDefinition type="process" retries="3" />
+      </extensionElements>
+    </serviceTask>
+
+    <serviceTask id="Task_Notify" name="发送通知">
+      <extensionElements>
+        <zeebe:taskDefinition type="notify" retries="2" />
+      </extensionElements>
+    </serviceTask>
+
+    <!-- ==================== 网关节点 ==================== -->
+    <!-- 基于守卫条件生成 -->
+    <exclusiveGateway id="Gateway_Decision" name="条件判断" />
+
+    <parallelGateway id="Gateway_ParallelSplit" name="并行分支" />
+    <parallelGateway id="Gateway_ParallelJoin" name="并行汇聚" />
+
+    <!-- ==================== 序列流 ==================== -->
+    <!-- 基于状态转移生成 -->
+    <sequenceFlow id="Flow_Start_Validate" sourceRef="StartEvent_1" targetRef="Task_Validate" />
+
+    <sequenceFlow id="Flow_Validate_Decision" sourceRef="Task_Validate" targetRef="Gateway_Decision" />
+
+    <!-- 条件分支 -->
+    <sequenceFlow id="Flow_Decision_Low" sourceRef="Gateway_Decision" targetRef="Task_Process">
+      <conditionExpression xsi:type="tFormalExpression">
+        <![CDATA[${amount <= 10000}]]>
+      </conditionExpression>
+    </sequenceFlow>
+
+    <sequenceFlow id="Flow_Decision_High" sourceRef="Gateway_Decision" targetRef="Gateway_ParallelSplit">
+      <conditionExpression xsi:type="tFormalExpression">
+        <![CDATA[${amount > 10000}]]>
+      </conditionExpression>
+    </sequenceFlow>
+
+    <!-- 并行分支 -->
+    <sequenceFlow id="Flow_Parallel_Manager" sourceRef="Gateway_ParallelSplit" targetRef="Task_ManagerApproval" />
+    <sequenceFlow id="Flow_Parallel_Director" sourceRef="Gateway_ParallelSplit" targetRef="Task_DirectorApproval" />
+    
+    <sequenceFlow id="Flow_Manager_Join" sourceRef="Task_ManagerApproval" targetRef="Gateway_ParallelJoin" />
+    <sequenceFlow id="Flow_Director_Join" sourceRef="Task_DirectorApproval" targetRef="Gateway_ParallelJoin" />
+
+    <sequenceFlow id="Flow_Join_Process" sourceRef="Gateway_ParallelJoin" targetRef="Task_Process" />
+
+    <!-- ==================== 结束事件 ==================== -->
+    <sequenceFlow id="Flow_Process_End" sourceRef="Task_Process" targetRef="EndEvent_1" />
+    <sequenceFlow id="Flow_Process_Notify" sourceRef="Task_Process" targetRef="Task_Notify" />
+    <sequenceFlow id="Flow_Notify_End" sourceRef="Task_Notify" targetRef="EndEvent_1" />
+
+    <endEvent id="EndEvent_1" name="结束" />
+
+    <!-- ==================== 错误处理 ==================== -->
+    <!-- 基于 Saga 模式生成 -->
+    <boundaryEvent id="Boundary_Timeout" name="超时" attachedToRef="Task_Validate">
+      <timerEventDefinition>
+        <timeDuration>PT24H</timeDuration>
+      </timerEventDefinition>
+    </boundaryEvent>
+
+    <boundaryEvent id="Boundary_Error" name="错误" attachedToRef="Task_Validate">
+      <errorEventDefinition />
+    </boundaryEvent>
+
+    <!-- 补偿处理器 -->
+    <serviceTask id="Task_Compensate" name="补偿操作" isForCompensation="true">
+      <extensionElements>
+        <zeebe:taskDefinition type="compensate" />
+      </extensionElements>
+    </serviceTask>
+
+    <association id="Association_Compensate" sourceRef="Task_Validate" targetRef="Task_Compensate" associationDirection="None" />
+
+  </process>
+</definitions>

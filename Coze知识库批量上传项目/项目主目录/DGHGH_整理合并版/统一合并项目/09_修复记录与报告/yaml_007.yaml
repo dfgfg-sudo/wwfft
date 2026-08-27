@@ -1,0 +1,492 @@
+openapi: 3.1.0
+info:
+  title: 智能工作流自动化超级中枢API - 终极完整融合版
+  description: |
+    完全整合的智能工作流自动化终极解决方案
+    统一处理意图识别、工作流执行、插件调度、内容修复、版本对比等功能
+    真正实现"只需用户输入user_input，自动解决所有问题"的完美自动化体验
+  version: 3.0.0
+  contact:
+    name: Coze插件开发团队
+    email: support@coze-platform.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  - url: https://api.coze-platform.com/v1
+    description: 生产环境
+  - url: https://sandbox.coze-platform.com/v1
+    description: 测试环境
+
+paths:
+  /workflow/execute:
+    post:
+      operationId: executeWorkflow
+      summary: 执行智能工作流（统一入口）
+      description: 自动处理用户输入，返回结构化结果
+      tags:
+        - 工作流引擎
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowRequest'
+            examples:
+              basic:
+                summary: 基础查询
+                value:
+                  query: "今天北京天气怎么样？"
+                  user_id: "user_12345"
+                  session_id: "session_67890"
+                  auto_processing: true
+              repair:
+                summary: 内容修复
+                value:
+                  query: "修复这个TXT文件的重复内容：\n第一行\n第二行\n第一行\n第三行"
+                  user_id: "user_12345"
+                  session_id: "session_67890"
+                  auto_processing: true
+                  config:
+                    repair_mode: ultimate
+      responses:
+        '200':
+          description: 成功响应
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowResponse'
+        '400':
+          description: 参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 服务器错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /intent/analyze:
+    post:
+      operationId: analyzeIntent
+      summary: 意图分析
+      tags:
+        - 意图识别
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntentRequest'
+      responses:
+        '200':
+          description: 意图分析成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntentResponse'
+
+  /plugin/execute:
+    post:
+      operationId: executePlugin
+      summary: 执行插件
+      tags:
+        - 插件管理
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PluginRequest'
+      responses:
+        '200':
+          description: 插件执行成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginResponse'
+
+  /content/repair:
+    post:
+      operationId: repairContent
+      summary: 内容修复
+      tags:
+        - 内容修复
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContentRepairRequest'
+      responses:
+        '200':
+          description: 内容修复成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentRepairResponse'
+
+  /version/compare:
+    post:
+      operationId: compareVersions
+      summary: 版本对比
+      tags:
+        - 版本管理
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VersionCompareRequest'
+      responses:
+        '200':
+          description: 版本对比成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionCompareResponse'
+
+components:
+  schemas:
+    WorkflowRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: 用户输入内容
+          minLength: 1
+          maxLength: 5000
+        user_id:
+          type: string
+        session_id:
+          type: string
+        auto_processing:
+          type: boolean
+          default: true
+        config:
+          $ref: '#/components/schemas/WorkflowConfig'
+
+    WorkflowConfig:
+      type: object
+      properties:
+        timeout:
+          type: integer
+          default: 30000
+          minimum: 1000
+          maximum: 300000
+        enable_fallback:
+          type: boolean
+          default: true
+        detailed_response:
+          type: boolean
+          default: false
+        language:
+          type: string
+          enum: [zh-CN, en-US, ja-JP]
+          default: zh-CN
+        repair_mode:
+          type: string
+          enum: [auto, code, similar, basic, ultimate]
+          default: auto
+
+    WorkflowResponse:
+      type: object
+      required:
+        - success
+        - data
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/ResponseData'
+        metadata:
+          $ref: '#/components/schemas/ResponseMetadata'
+
+    ResponseData:
+      type: object
+      required:
+        - response
+        - intent
+      properties:
+        response:
+          type: string
+        intent:
+          type: string
+          enum: [weather, knowledge, news, translation, calculation, service, entertainment, txt_repair, json_repair, yaml_repair, version_compare, other]
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+        entities:
+          type: object
+          additionalProperties: true
+        suggestions:
+          type: array
+          items:
+            type: string
+        timestamp:
+          type: string
+          format: date-time
+        repaired_file_path:
+          type: string
+        repair_statistics:
+          type: object
+          properties:
+            original_size:
+              type: integer
+            final_size:
+              type: integer
+            duplicate_removed:
+              type: integer
+            structure_fixed:
+              type: integer
+            missing_repaired:
+              type: integer
+
+    ResponseMetadata:
+      type: object
+      properties:
+        processing_time:
+          type: integer
+        nodes_executed:
+          type: integer
+        api_calls:
+          type: integer
+        intent_detection_time:
+          type: integer
+        content_analysis_time:
+          type: integer
+
+    IntentRequest:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+        language:
+          type: string
+          default: zh-CN
+
+    IntentResponse:
+      type: object
+      required:
+        - intent
+        - confidence
+      properties:
+        intent:
+          type: string
+        confidence:
+          type: number
+        entities:
+          type: object
+        alternative_intents:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlternativeIntent'
+
+    AlternativeIntent:
+      type: object
+      properties:
+        intent:
+          type: string
+        confidence:
+          type: number
+
+    PluginRequest:
+      type: object
+      required:
+        - plugin_name
+        - action
+      properties:
+        plugin_name:
+          type: string
+        action:
+          type: string
+        parameters:
+          type: object
+
+    PluginResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        result:
+          type: object
+        execution_time:
+          type: integer
+
+    ContentRepairRequest:
+      type: object
+      required:
+        - content
+        - content_type
+      properties:
+        content:
+          type: string
+        content_type:
+          type: string
+          enum: [txt, json, yaml, xml, md, html]
+        repair_mode:
+          type: string
+          enum: [auto, duplicate_removal, structure_fix, missing_repair, all]
+          default: auto
+        options:
+          type: object
+          properties:
+            keep_versions:
+              type: boolean
+              default: true
+            similarity_threshold:
+              type: number
+              minimum: 0.1
+              maximum: 1.0
+              default: 0.85
+            batch_processing:
+              type: boolean
+              default: false
+
+    ContentRepairResponse:
+      type: object
+      required:
+        - success
+        - repaired_content
+      properties:
+        success:
+          type: boolean
+        repaired_content:
+          type: string
+        statistics:
+          $ref: '#/components/schemas/RepairStatistics'
+        analysis:
+          type: object
+        quality_scores:
+          type: object
+          properties:
+            completeness:
+              type: number
+            structure:
+              type: number
+            content_quality:
+              type: number
+
+    RepairStatistics:
+      type: object
+      properties:
+        original_size:
+          type: integer
+        final_size:
+          type: integer
+        duplicate_removed:
+          type: integer
+        structure_fixed:
+          type: integer
+        missing_repaired:
+          type: integer
+        versions_found:
+          type: integer
+        features_identified:
+          type: integer
+        advantages_identified:
+          type: integer
+
+    VersionCompareRequest:
+      type: object
+      required:
+        - versions
+      properties:
+        versions:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              version_info:
+                type: object
+        comparison_mode:
+          type: string
+          enum: [merge, diff, analysis]
+          default: merge
+        merge_strategy:
+          type: string
+          enum: [latest_first, most_complete, feature_based, hybrid]
+          default: hybrid
+
+    VersionCompareResponse:
+      type: object
+      required:
+        - success
+        - merged_content
+      properties:
+        success:
+          type: boolean
+        merged_content:
+          type: string
+        comparison_results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ComparisonResult'
+        version_analysis:
+          type: object
+        quality_improvement:
+          type: number
+
+    ComparisonResult:
+      type: object
+      properties:
+        version_id:
+          type: integer
+        content_hash:
+          type: string
+        uniqueness_score:
+          type: number
+        completeness_score:
+          type: number
+        selected_for_merge:
+          type: boolean
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - code
+      properties:
+        error:
+          type: string
+        code:
+          type: string
+        details:
+          type: object
+        timestamp:
+          type: string
+          format: date-time
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - ApiKeyAuth: []
+  - BearerAuth: []
+
+tags:
+  - name: 工作流引擎
+  - name: 意图识别
+  - name: 插件管理
+  - name: 内容修复
+  - name: 版本管理

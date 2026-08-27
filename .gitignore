@@ -18,17 +18,26 @@ node_modules/
 venv/
 coze_vision_libs/
 
-# ===== 安装包 / 便携工具 / 应用包 / 模型缓存（非源码）=====
-software/
-Dev-Janitor_2.5.0_x64_portable/
-Dism++10.1.1002.1B/
-.trae/
+# ===== 应用包 / 模型缓存 / 凭据目录（非源码，不上传）=====
 Bionic/
 profile_temp/
+# 例外：项目主目录下的 .trae 配置随项目上传
+!Coze知识库批量上传项目/项目主目录/.trae/
+!Coze知识库批量上传项目/项目主目录/.trae/**
 
-# ===== 体量超 GitHub 仓库上限，无法上传 =====
+# ===== 第三方环境 / 超限数据（无法上传）=====
 Data/
-Coze知识库批量上传项目/
+
+# ===== Coze 项目中单文件超 100MB（GitHub 硬上限，其余全部上传）=====
+Coze知识库批量上传项目/项目主目录/完整知识库_终极完整版.md
+Coze知识库批量上传项目/项目主目录/完整知识库_深度去重版.md
+Coze知识库批量上传项目/项目主目录/extracted_0628/conversations.json
+Coze知识库批量上传项目/项目主目录/完整知识库_最终版/knowledge_base/FINAL_RAG_KNOWLEDGE_BASE_COMPLETE.json
+Coze知识库批量上传项目/项目主目录/完整知识库_最终版/knowledge_base/FINAL_KNOWLEDGE_BASE_COMPLETE.json
+Coze知识库批量上传项目/项目主目录/完整知识库_最终版/data/raw/conversations1.json
+Coze知识库批量上传项目/项目主目录/完整知识库_最终版/data/raw/merged_conversations.json
+Coze知识库批量上传项目/项目主目录/完整知识库_最终版/data/processed/其他.json
+Coze知识库批量上传项目/项目主目录/DGHGH_整理合并版/05_DeepSeek对话数据/conversations.json
 
 # ===== 单文件超 100MB（GitHub 硬上限），排除 =====
 音视频字幕工具-Whisper繁简转换/models/ggml-small.bin

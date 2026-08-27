@@ -1,0 +1,5 @@
+2. 安装Tesseract OCR (Windows):
+- 下载安装: https://github.com/UB-Mannheim/tesseract/wiki
+- 确保将Tesseract添加到系统PATH或配置`pytesseract.pytesseract.tesseract_cmd`
+
+3. 运行自动化流程:

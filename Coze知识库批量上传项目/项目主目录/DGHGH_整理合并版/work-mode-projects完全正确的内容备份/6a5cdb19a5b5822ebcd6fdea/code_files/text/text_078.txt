@@ -1,0 +1,28 @@
+autocode-pro/
+├── packages/
+│   ├── core/                    # 核心引擎
+│   │   ├── src/
+│   │   │   ├── ai_engine/       # AI相关功能
+│   │   │   ├── generators/      # 代码生成器
+│   │   │   ├── templates/       # 代码模板
+│   │   │   └── utils/          # 工具函数
+│   │   └── tests/              # 单元测试
+│   ├── api-server/             # 后端API
+│   │   ├── src/
+│   │   │   ├── controllers/    # 控制器
+│   │   │   ├── models/         # 数据模型
+│   │   │   ├── routes/         # 路由定义
+│   │   │   ├── services/       # 业务逻辑
+│   │   │   └── middleware/     # 中间件
+│   │   └── tests/              # API测试
+│   └── web-dashboard/          # 前端界面
+│       ├── src/
+│       │   ├── components/     # Vue组件
+│       │   ├── views/          # 页面视图
+│       │   ├── stores/         # 状态管理
+│       │   └── api/            # API客户端
+│       └── tests/              # 前端测试
+└── shared/                     # 共享代码
+    ├── types/                  # TypeScript类型定义
+    ├── utils/                  # 共享工具函数
+    └── config/                 # 共享配置

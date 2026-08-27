@@ -1,0 +1,72 @@
+{
+  "name": "工作流变量自动生成",
+  "description": "工作流能自动生成完整的输入输出变量名、参数值，并提供选择和引用功能",
+  "version": "1.0.0",
+  "create_time": "2026-06-05 02:06:00",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7392890032102850569",
+  "original_name": "The workflow can automatically",
+  "type": "plugin",
+  "plugin_type": "云插件",
+  "functions": [
+    {
+      "name": "generate_variables",
+      "description": "生成输入输出变量",
+      "input_params": [
+        {
+          "name": "user_question",
+          "type": "string",
+          "required": true,
+          "description": "用户问题"
+        }
+      ],
+      "output_params": [
+        {
+          "name": "input_variables",
+          "type": "array",
+          "description": "输入变量列表"
+        },
+        {
+          "name": "output_variables",
+          "type": "array",
+          "description": "输出变量列表"
+        },
+        {
+          "name": "question_intent",
+          "type": "string",
+          "description": "问题意图"
+        }
+      ]
+    },
+    {
+      "name": "create_simple_workflow",
+      "description": "创建简单工作流示例",
+      "input_params": [
+        {
+          "name": "workflow_name",
+          "type": "string",
+          "required": true,
+          "description": "工作流名称"
+        },
+        {
+          "name": "task_description",
+          "type": "string",
+          "required": true,
+          "description": "任务描述"
+        }
+      ],
+      "output_params": [
+        {
+          "name": "workflow_json",
+          "type": "string",
+          "description": "工作流JSON"
+        },
+        {
+          "name": "nodes_count",
+          "type": "number",
+          "description": "节点数量"
+        }
+      ]
+    }
+  ]
+}

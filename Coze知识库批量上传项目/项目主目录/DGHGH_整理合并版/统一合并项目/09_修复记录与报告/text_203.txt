@@ -1,0 +1,12 @@
+完整技术栈与数据技术
+
+核心框架技术
+
+1. 深度学习框架: PyTorch + Transformers
+2. 高效微调: PEFT (Parameter-Efficient Fine-Tuning)
+3. 量化训练: BitsAndBytes 4bit量化
+4. 向量检索: FAISS + Product Quantization
+5. 界面框架: Gradio
+6. 安全加密: Cryptography (Fernet)
+
+数据处理技术

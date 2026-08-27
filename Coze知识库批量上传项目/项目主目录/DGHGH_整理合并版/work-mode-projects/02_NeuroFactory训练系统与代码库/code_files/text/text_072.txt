@@ -1,0 +1,58 @@
+四、完整网页推荐列表
+
+🌟 数据库类
+
+1. Supabase Dashboard - https://app.supabase.com
+   · 完整数据库管理界面
+   · 实时数据浏览器
+   · API文档自动生成
+2. MongoDB Atlas UI - https://cloud.mongodb.com
+   · NoSQL数据库管理
+   · 可视化查询工具
+   · 性能监控
+3. PlanetScale - https://planetscale.com
+   · MySQL兼容数据库
+   · 分支部署功能
+   · 完全免费套餐
+
+📊 表格/协作类
+
+4. Airtable Web App - https://airtable.com
+   · 电子表格+数据库
+   · 丰富视图类型
+   · 自动化功能
+5. Google Sheets - https://sheets.google.com
+   · 强大的公式计算
+   · Google Apps Script
+   · 团队协作
+6. NocoDB Dashboard - https://github.com/nocodb/nocodb
+   · 自托管Airtable替代
+   · MySQL/PostgreSQL支持
+
+🛠️ 开发工具类
+
+7. GitHub Codespaces - https://github.com/codespaces
+   · 云端开发环境
+   · 免费每月60小时
+8. Glide Apps - https://www.glideapps.com
+   · Google Sheets转APP
+   · 免费版足够使用
+9. Bubble.io - https://bubble.io
+   · NoCode应用开发
+   · 集成数据库
+
+☁️ 云函数/托管
+
+10. Vercel Dashboard - https://vercel.com/dashboard
+    · 自动部署前端
+    · Serverless Functions
+11. Netlify Dashboard - https://app.netlify.com
+    · Jamstack托管
+    · 表单处理
+12. Cloudflare Dashboard - https://dash.cloudflare.com
+    · Workers/KV存储
+    · R2对象存储
+
+五、Coze集成示例代码
+
+方案1: Supabase集成

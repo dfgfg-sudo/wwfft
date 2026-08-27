@@ -1,0 +1,31 @@
+paths:
+  model_path: "models/pretrained"
+  data_upload: "data/uploads"
+  processed_data: "data/processed"
+  output_dir: "models/deployed"
+
+training:
+  epochs: 5
+  batch_size: 4
+  learning_rate: 3e-5
+  max_seq_length: 512
+  fp16: true
+
+data:
+  supported_formats:
+    - ".txt"
+    - ".json"
+    - ".csv"
+    - ".zip"
+  max_file_size_mb: 100
+  encoding: "utf-8"
+
+security:
+  encryption: "quantum"
+  key_rotation: true
+  algorithm: "XChaCha20-Poly1305"
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/training.log"

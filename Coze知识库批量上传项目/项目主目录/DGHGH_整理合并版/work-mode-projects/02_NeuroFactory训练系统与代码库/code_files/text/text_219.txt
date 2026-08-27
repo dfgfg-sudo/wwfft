@@ -1,0 +1,5 @@
+---
+
+🐍 二、最终统一 Python 代码（融合 TS + Python 全部修复逻辑，可直接放入 Coze 代码节点）
+
+以下代码融合了 Quantum AI Factory 的 TypeScript 核心逻辑、Coze 工作流深层修复系统 V6.0 的全部类、万能代码修复处理器 的架构，并添加了内容对比与生存知识库。复制到 Coze 代码节点即可运行。

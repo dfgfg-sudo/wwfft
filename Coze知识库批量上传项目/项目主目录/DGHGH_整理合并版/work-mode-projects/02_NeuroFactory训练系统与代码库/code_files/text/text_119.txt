@@ -1,0 +1,15 @@
+AI-Training-Factory-v3.0/
+├── model/                     # 放置基础预训练模型（如 GPT-2、Qwen 等）
+│   ├── config.json
+│   ├── pytorch_model.bin
+│   └── tokenizer.json
+├── data/                      # 数据投喂目录（可含子文件夹或 .zip 压缩包）
+│   ├── text_samples/
+│   ├── documents/
+│   ├── images/
+│   └── archive.zip
+├── output/                    # 训练完成后的模型保存目录（自动按时间戳建子目录）
+├── auto_trainer.py            # 主程序
+├── run.bat                    # Windows 一键启动脚本
+├── requirements.txt           # Python 依赖清单
+└── training.log               # 运行日志（自动生成）

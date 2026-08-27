@@ -1,0 +1,3 @@
+"""
+请使用 batch_extract 工具，主页 URL：https://www.douyin.com/user/xxx，最大100个视频，知识库ID：kb_123456
+"""

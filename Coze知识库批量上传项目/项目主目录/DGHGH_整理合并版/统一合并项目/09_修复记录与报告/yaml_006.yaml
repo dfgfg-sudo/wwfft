@@ -1,0 +1,777 @@
+# ===================================================================
+# 统一智能自动化工具套件 - 完整YAML配置
+# 版本: 3.0.0-Complete-Unified
+# 说明: 整合所有功能模块的单一配置文件
+# ===================================================================
+
+openapi: 3.1.0
+info:
+  title: "统一智能自动化超级中枢"
+  version: "3.0.0-Complete-Unified"
+  description: |
+    🎯 完全统一的单一智能自动化工具 - 深度整合所有功能模块
+    ✅ 单一端点处理所有核心功能 | ✅ 智能路由决策 | ✅ 全链路监控
+    ✅ 企业级稳定性 | ✅ 支持自然语言和参数化两种模式
+    🔧 支持用户选择是否启用自动化处理 | 统一整合的智能自动化API中枢
+    
+    📋 整合功能列表：
+    - 神经决策系统 & 智能路由引擎
+    - Coze JSON修复器 & 插件修复
+    - MCP服务器创建器 & 自动化生成
+    - 工作流修复工具 & 优化
+    - 多模态数据处理 & 融合
+    - AI模型训练 & 增量学习
+    - 代码生成 & 自动修复
+    - API规范验证 & 兼容性检查
+    - 批量处理 & 并行计算
+    - 系统监控 & 自愈
+    - 性能优化 & 分析
+    - 模板管理 & 自定义
+    - 会话管理 & 持久化
+
+  contact:
+    name: "统一自动化开发团队"
+    email: "support@unified-automation.com"
+  license:
+    name: "Apache 2.0"
+    url: "https://www.apache.org/licenses/LICENSE-2.0.html"
+
+servers:
+  - url: "https://api.unified-automation.com/v1"
+    description: "生产环境API服务器"
+  - url: "https://staging.unified-automation.com/v1"
+    description: "测试环境API服务器"
+
+tags:
+  - name: "统一智能自动化"
+    description: "单一工具处理所有自动化功能"
+  - name: "系统监控"
+    description: "操作状态监控、健康检查和管理"
+  - name: "参数验证"
+    description: "参数验证和智能修复"
+  - name: "批量处理"
+    description: "批量文件处理"
+  - name: "代码生成"
+    description: "智能代码生成"
+  - name: "数据处理"
+    description: "多模态数据处理"
+
+paths:
+  /unified-automation:
+    post:
+      operationId: executeUnifiedAutomation
+      summary: "执行统一自动化处理"
+      description: |
+        全能统一自动化工具 | 支持用户选择是否启用自动化处理
+        
+        💡 核心功能整合：
+        - 神经决策系统 & 智能路由
+        - Coze JSON修复 & 插件修复
+        - MCP服务器创建
+        - 工作流自动化生成
+        - 代码生成与修复
+        - 多模态数据处理
+        - AI增强优化
+        - 错误检测修复
+        - 参数验证修复
+        - 系统监控自愈
+        
+        🎮 使用模式：
+        - 简单模式：自然语言描述，系统自动分析执行
+        - 专业模式：结构化参数精确控制
+        - 自动模式：全自动化处理，无需人工干预
+        - 手动模式：关键步骤人工确认
+        
+        ⚙️ 自动化控制：用户可随时启用/禁用自动化处理
+      tags:
+        - "统一智能自动化"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/SimpleRequest'
+                - $ref: '#/components/schemas/ProfessionalRequest'
+            examples:
+              简单模式示例:
+                summary: "简单自然语言模式"
+                value:
+                  user_request: "帮我创建一个Coze插件，包含用户认证和数据处理功能"
+                  enable_automation: true
+                  automation_level: "comprehensive"
+                  function_selection:
+                    code_generation: true
+                    workflow_automation: true
+                    error_fixing: true
+                    data_processing: true
+              专业模式示例:
+                summary: "专业参数模式"
+                value:
+                  operation_type: "coze_plugin_repair"
+                  operation_config:
+                    plugin_config:
+                      plugin_name: "修复后的插件"
+                      version: "1.0.0"
+                    repair_config:
+                      repair_depth: "comprehensive"
+                      auto_fix: true
+                  enable_automation: true
+                  automation_level: "full"
+      responses:
+        '200':
+          description: "同步操作成功"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnifiedSuccessResponse'
+        '202':
+          description: "异步操作已接受"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncOperationResponse'
+        '400':
+          description: "参数验证失败"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /automation-control:
+    post:
+      summary: "自动化控制管理"
+      description: "动态调整自动化处理级别和模式"
+      tags:
+        - "统一智能自动化"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                automation_enabled:
+                  type: boolean
+                  description: "是否启用自动化处理"
+                  default: true
+                automation_level:
+                  type: string
+                  enum: ["none", "basic", "standard", "comprehensive", "full"]
+                  description: "自动化处理级别"
+                  default: "standard"
+                confirmation_required:
+                  type: boolean
+                  description: "关键步骤是否需要确认"
+                  default: false
+                auto_retry_enabled:
+                  type: boolean
+                  description: "是否启用自动重试"
+                  default: true
+                optimization_enabled:
+                  type: boolean
+                  description: "是否启用优化"
+                  default: true
+              required:
+                - "automation_enabled"
+      responses:
+        '200':
+          description: "控制设置成功"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  current_settings:
+                    type: object
+                  message:
+                    type: string
+
+  /batch-process:
+    post:
+      summary: "批量处理"
+      description: "批量处理目录中的所有文件"
+      tags:
+        - "批量处理"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                directory:
+                  type: string
+                  description: "要处理的目录路径"
+                operation_mode:
+                  type: string
+                  description: "操作模式"
+                  default: "auto_detect"
+                automation_level:
+                  type: string
+                  description: "自动化级别"
+                  default: "standard"
+                max_workers:
+                  type: integer
+                  description: "最大并行数"
+                  default: 4
+                file_patterns:
+                  type: array
+                  items:
+                    type: string
+                  description: "文件匹配模式"
+                recursive:
+                  type: boolean
+                  description: "是否递归处理子目录"
+                  default: true
+              required:
+                - "directory"
+      responses:
+        '200':
+          description: "批量处理完成"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  total_files:
+                    type: integer
+                  processed_files:
+                    type: integer
+                  successful:
+                    type: integer
+                  failed:
+                    type: integer
+                  processing_time:
+                    type: number
+                  export_file:
+                    type: string
+
+  /generate-code:
+    post:
+      summary: "代码生成"
+      description: "根据需求生成代码"
+      tags:
+        - "代码生成"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requirements:
+                  type: string
+                  description: "代码需求描述"
+                language:
+                  type: string
+                  description: "编程语言"
+                  enum: ["python", "javascript", "typescript", "java", "go", "rust"]
+                  default: "python"
+                template_type:
+                  type: string
+                  description: "模板类型"
+                  default: "auto_detect"
+                include_tests:
+                  type: boolean
+                  description: "是否包含测试代码"
+                  default: true
+                include_docs:
+                  type: boolean
+                  description: "是否包含文档"
+                  default: true
+              required:
+                - "requirements"
+      responses:
+        '200':
+          description: "代码生成成功"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  generated_code:
+                    type: string
+                  file_structure:
+                    type: object
+                  dependencies:
+                    type: array
+                  validation:
+                    type: object
+
+  /system-status:
+    get:
+      summary: "系统状态"
+      description: "获取系统运行状态"
+      tags:
+        - "系统监控"
+      responses:
+        '200':
+          description: "系统状态信息"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  uptime:
+                    type: number
+                  operations_count:
+                    type: integer
+                  success_rate:
+                    type: number
+                  resource_usage:
+                    type: object
+
+  /generate-report:
+    get:
+      summary: "生成报告"
+      description: "生成系统运行报告"
+      tags:
+        - "系统监控"
+      parameters:
+        - name: report_type
+          in: query
+          schema:
+            type: string
+            enum: ["hourly", "daily", "weekly", "monthly"]
+            default: "daily"
+          description: "报告类型"
+      responses:
+        '200':
+          description: "报告生成成功"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  report_type:
+                    type: string
+                  time_period:
+                    type: string
+                  summary:
+                    type: object
+                  recommendations:
+                    type: array
+
+components:
+  schemas:
+    SimpleRequest:
+      type: object
+      description: "简单用户请求模式"
+      properties:
+        user_request:
+          type: string
+          description: "用户自然语言需求描述"
+          minLength: 10
+          maxLength: 5000
+          example: "创建一个完整的Coze插件，包含用户系统、数据处理和API集成"
+        enable_automation:
+          type: boolean
+          description: "是否启用自动化处理"
+          default: true
+        automation_level:
+          type: string
+          enum: ["none", "basic", "standard", "comprehensive", "full"]
+          description: "自动化处理级别"
+          default: "standard"
+        function_selection:
+          type: object
+          description: "功能选择配置"
+          properties:
+            code_generation:
+              type: boolean
+              description: "代码生成"
+              default: true
+            workflow_automation:
+              type: boolean
+              description: "工作流自动化"
+              default: true
+            data_processing:
+              type: boolean
+              description: "数据处理"
+              default: true
+            ai_enhancement:
+              type: boolean
+              description: "AI增强"
+              default: true
+            error_fixing:
+              type: boolean
+              description: "错误修复"
+              default: true
+            system_monitoring:
+              type: boolean
+              description: "系统监控"
+              default: true
+        output_format:
+          type: string
+          enum: ["json_pretty", "json_minified", "yaml", "coze_import", "python_code", "markdown"]
+          description: "输出格式"
+          default: "json_pretty"
+      required:
+        - "user_request"
+
+    ProfessionalRequest:
+      type: object
+      description: "专业请求模式"
+      properties:
+        operation_type:
+          type: string
+          description: "操作类型"
+          enum:
+            - "coze_json_repair"
+            - "mcp_server_creation"
+            - "workflow_repair"
+            - "plugin_creation"
+            - "code_generation"
+            - "data_processing"
+            - "ai_training"
+            - "api_specification"
+            - "error_fixing"
+            - "performance_optimization"
+            - "system_monitoring"
+          example: "coze_json_repair"
+        operation_config:
+          type: object
+          description: "操作配置"
+          properties:
+            plugin_config:
+              $ref: '#/components/schemas/PluginConfig'
+            workflow_config:
+              $ref: '#/components/schemas/WorkflowConfig'
+            code_config:
+              $ref: '#/components/schemas/CodeConfig'
+            data_config:
+              $ref: '#/components/schemas/DataConfig'
+            repair_config:
+              $ref: '#/components/schemas/RepairConfig'
+        input_data:
+          type: object
+          description: "输入数据"
+        enable_automation:
+          type: boolean
+          description: "是否启用自动化处理"
+          default: true
+        automation_level:
+          type: string
+          enum: ["none", "basic", "standard", "comprehensive", "full"]
+          description: "自动化处理级别"
+          default: "comprehensive"
+        callback_url:
+          type: string
+          format: uri
+          description: "回调URL（异步操作）"
+      required:
+        - "operation_type"
+        - "enable_automation"
+
+    PluginConfig:
+      type: object
+      description: "插件配置"
+      properties:
+        plugin_name:
+          type: string
+          description: "插件名称"
+          example: "数据处理器插件"
+        version:
+          type: string
+          description: "版本号"
+          default: "1.0.0"
+        description:
+          type: string
+          description: "插件描述"
+        author:
+          type: string
+          description: "作者"
+        inputs:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                type: string
+              required:
+                type: boolean
+              description:
+                type: string
+        outputs:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                type: string
+              description:
+                type: string
+
+    WorkflowConfig:
+      type: object
+      description: "工作流配置"
+      properties:
+        workflow_type:
+          type: string
+          enum: ["business_process", "data_pipeline", "api_workflow", "system_automation"]
+          example: "business_process"
+        complexity_level:
+          type: string
+          enum: ["simple", "medium", "complex"]
+          example: "medium"
+        nodes_count:
+          type: integer
+          minimum: 1
+          maximum: 100
+          example: 10
+        include_error_handling:
+          type: boolean
+          default: true
+
+    CodeConfig:
+      type: object
+      description: "代码配置"
+      properties:
+        programming_language:
+          type: string
+          enum: ["python", "javascript", "typescript", "java", "go", "rust"]
+          example: "python"
+        code_style:
+          type: string
+          enum: ["functional", "object_oriented", "procedural"]
+          example: "object_oriented"
+        include_comments:
+          type: boolean
+          default: true
+        include_tests:
+          type: boolean
+          default: true
+        include_docs:
+          type: boolean
+          default: true
+        code_quality:
+          type: string
+          enum: ["basic", "standard", "enterprise"]
+          example: "standard"
+
+    DataConfig:
+      type: object
+      description: "数据配置"
+      properties:
+        data_source_type:
+          type: string
+          enum: ["database", "api", "file", "stream"]
+          example: "database"
+        processing_type:
+          type: string
+          enum: ["cleaning", "transformation", "analysis", "enrichment"]
+          example: "transformation"
+        output_format:
+          type: string
+          enum: ["json", "csv", "xml", "database"]
+          example: "json"
+        batch_size:
+          type: integer
+          default: 1000
+
+    RepairConfig:
+      type: object
+      description: "修复配置"
+      properties:
+        repair_depth:
+          type: string
+          enum: ["basic", "comprehensive", "thorough"]
+          default: "comprehensive"
+        auto_fix:
+          type: boolean
+          default: true
+        validate_after_fix:
+          type: boolean
+          default: true
+        max_fix_attempts:
+          type: integer
+          default: 3
+        backup_original:
+          type: boolean
+          default: true
+
+    UnifiedSuccessResponse:
+      type: object
+      description: "统一成功响应"
+      properties:
+        success:
+          type: boolean
+          example: true
+        operation_id:
+          type: string
+          example: "op_8d7c2b9e1a3f4e5d"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2025-11-07T14:20:00Z"
+        automation_enabled:
+          type: boolean
+          example: true
+        automation_level:
+          type: string
+          example: "comprehensive"
+        processing_time:
+          type: number
+          example: 1.25
+        results:
+          type: object
+          description: "操作结果"
+          properties:
+            generated_code:
+              type: string
+              description: "生成的代码"
+            workflow_definition:
+              type: object
+              description: "工作流定义"
+            data_processed:
+              type: object
+              description: "处理后的数据"
+            documentation:
+              type: string
+              description: "生成的文档"
+            configuration_files:
+              type: object
+              description: "配置文件"
+            validation:
+              type: object
+              description: "验证结果"
+        summary:
+          type: object
+          properties:
+            processing_time:
+              type: number
+              description: "处理时间（秒）"
+            files_generated:
+              type: integer
+              description: "生成的文件数量"
+            quality_score:
+              type: number
+              description: "质量评分"
+            automation_report:
+              type: object
+              description: "自动化处理报告"
+      required:
+        - "success"
+        - "operation_id"
+
+    AsyncOperationResponse:
+      type: object
+      description: "异步操作响应"
+      properties:
+        success:
+          type: boolean
+          example: true
+        operation_id:
+          type: string
+          example: "op_8d7c2b9e1a3f4e5d"
+        status:
+          type: string
+          enum: ["accepted", "processing", "completed", "failed"]
+          example: "accepted"
+        estimated_completion:
+          type: string
+          format: date-time
+          example: "2025-11-07T14:25:00Z"
+        monitor_url:
+          type: string
+          format: uri
+          example: "https://api.unified-automation.com/v1/operations/op_8d7c2b9e1a3f4e5d"
+      required:
+        - "success"
+        - "operation_id"
+        - "status"
+
+    ErrorResponse:
+      type: object
+      description: "错误响应"
+      properties:
+        code:
+          type: integer
+          example: 4001
+        message:
+          type: string
+          example: "参数验证失败"
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              issue:
+                type: string
+              suggestion:
+                type: string
+        automation_fix_applied:
+          type: boolean
+          example: false
+        fix_suggestions:
+          type: array
+          items:
+            type: string
+      required:
+        - "code"
+        - "message"
+
+    SystemStatus:
+      type: object
+      description: "系统状态"
+      properties:
+        status:
+          type: string
+          enum: ["healthy", "degraded", "unhealthy"]
+        timestamp:
+          type: string
+          format: date-time
+        uptime:
+          type: number
+        version:
+          type: string
+        operations:
+          type: object
+          properties:
+            total:
+              type: integer
+            successful:
+              type: integer
+            failed:
+              type: integer
+            success_rate:
+              type: number
+        resource_usage:
+          type: object
+          properties:
+            cpu_percent:
+              type: number
+            memory_percent:
+              type: number
+            disk_percent:
+              type: number
+        components:
+          type: object
+          properties:
+            database:
+              type: string
+            automation_engine:
+              type: string
+            code_generator:
+              type: string
+            workflow_engine:
+              type: string
+        recommendations:
+          type: array
+          items:
+            type: string

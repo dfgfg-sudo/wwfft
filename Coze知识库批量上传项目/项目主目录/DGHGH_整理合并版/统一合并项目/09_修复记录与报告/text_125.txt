@@ -1,0 +1,31 @@
+amm-ats/
+├── README.md
+├── requirements.txt
+├── setup.py
+├── main.py
+├── config.py
+├── config.json
+├── data/
+│   ├── __init__.py
+│   ├── dataset.py
+│   ├── train.csv
+│   ├── val.csv
+│   ├── test.csv
+│   └── images/
+├── models/
+│   ├── __init__.py
+│   └── model.py
+├── training/
+│   ├── __init__.py
+│   └── trainer.py
+├── system/
+│   ├── __init__.py
+│   └── core.py
+├── utils/
+│   ├── __init__.py
+│   ├── visualization.py
+│   └── metrics.py
+├── checkpoints/
+├── outputs/
+├── logs/
+└── runs/

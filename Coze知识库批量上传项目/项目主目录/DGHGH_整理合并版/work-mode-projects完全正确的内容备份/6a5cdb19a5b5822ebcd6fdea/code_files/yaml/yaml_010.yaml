@@ -1,0 +1,161 @@
+openapi: 3.0.3
+info:
+  title: "全场景智能自动化超级中枢"
+  description: |
+    终极整合版｜神经决策+30核心功能｜行业分析+职业分类+场景处理+工作流自动化+错误修复｜洛阳非遗电商全链路支持
+    统一整合的智能自动化API中枢，支持多场景工作流自动化、数据集成与AI增强处理
+    企业级终极整合版｜单一工具入口｜支持用户选择是否启用自动化处理
+    集成30+核心功能模块｜全自动逆向驱动｜任意节点触发｜零手动配置｜全节点自愈
+  version: "15.0.0-Unified-Enterprise"
+  contact:
+    name: "Coze智能实验室 & 自动化支持团队"
+    email: "support@coze-automation.com"
+    url: "https://docs.coze-automation.com"
+  license:
+    name: "Apache 2.0"
+    url: "https://www.apache.org/licenses/LICENSE-2.0.html"
+
+externalDocs:
+  description: "完整API文档和企业使用指南"
+  url: "https://docs.coze-automation.com/enterprise"
+
+servers:
+  - url: "https://api.coze-automation.com/v1"
+    description: "生产环境API服务器"
+  - url: "https://staging-api.coze-automation.com/v1"
+    description: "预发布环境API服务器"
+  - url: "https://dev-api.coze-automation.com/v1"
+    description: "开发环境API服务器"
+  - url: "https://api.coze.com/v3"
+    description: "Coze官方API服务端（支持插件生成+工作流自愈）"
+  - url: "https://api.omni-system.ai/v5"
+    description: "全栈功能生产环境（AI训练/自动化/健康管理等）"
+  - url: "https://api.enterprise-workflow.com/v1"
+    description: "企业工作流生产环境"
+
+tags:
+  - name: "统一自动化工具"
+    description: "全功能智能自动化处理中枢，集成所有功能模块"
+  - name: "系统管理"
+    description: "系统监控和健康检查"
+  - name: "操作监控"
+    description: "操作状态跟踪和管理"
+  - name: "工作流自动化"
+    description: "全自动工作流生成与执行"
+  - name: "插件生成"
+    description: "端到端插件自动生成系统"
+  - name: "节点自愈"
+    description: "工作流节点自动检测修复"
+  - name: "智能触发"
+    description: "任意节点输入触发自动化"
+  - name: "AI增强"
+    description: "AI能力集成与增强处理"
+  - name: "数据集成"
+    description: "多源数据连接与同步"
+  - name: "行业分析"
+    description: "行业分类和分析处理"
+  - name: "非遗保护"
+    description: "非物质文化遗产处理（洛阳模式）"
+  - name: "紧急处理"
+    description: "紧急情况自动处理"
+
+paths:
+  # ==================== 统一执行端点 ====================
+  /automation/execute:
+    post:
+      operationId: "unifiedAutomationExecute"
+      summary: "执行统一自动化处理"
+      description: |
+        全功能统一自动化工具｜支持用户选择是否启用自动化处理
+        功能列表：工作流自动化生成、智能插件生成、全节点自愈、AI增强处理、数据集成连接、参数自动验证、错误修复、洛阳非遗电商全链路支持
+        核心能力整合：
+        1. 单一入口驱动：统一执行端点支持30种功能操作
+        2. 全自动逆向驱动：基于需求逆向推导前置插件节点、自动创建/配置/执行全链路
+        3. 任意节点触发：任意节点输入需求均能驱动后续节点自动化
+        4. 零手动配置：中间过程全透明，无需干预参数/连接/逻辑
+        5. 全节点自愈：自动化检测修复工作流内所有节点（配置/逻辑/依赖）
+        6. 端到端插件生成：输入功能描述即生成完整插件，自动注册到Coze
+      tags:
+        - "统一自动化工具"
+        - "工作流自动化"
+        - "插件生成"
+        - "节点自愈"
+        - "智能触发"
+        - "AI增强"
+        - "数据集成"
+        - "行业分析"
+        - "非遗保护"
+        - "紧急处理"
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+        - CozeApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnifiedAutomationRequest"
+            examples:
+              workflow_automation_example:
+                summary: "工作流自动化示例"
+                value:
+                  automation_enabled: true
+                  operation_type: "workflow_automation"
+                  operation_config:
+                    workflow_config:
+                      workflow_name: "电商订单处理工作流"
+                      description: "自动化处理电商平台订单的全流程"
+                      requirement_description: "创建电商订单处理流程，包含库存检查、支付验证、物流分配和客户通知"
+                      business_domain: "ecommerce"
+                      complexity_level: "medium"
+                      validation_strictness: "standard"
+                      nodes:
+                        - id: "order_receive"
+                          type: "input"
+                          name: "订单接收"
+                        - id: "inventory_check"
+                          type: "process"
+                          name: "库存检查"
+                        - id: "payment_verify"
+                          type: "process"
+                          name: "支付验证"
+                      triggers:
+                        - type: "webhook"
+                          config:
+                            endpoint: "/orders"
+                  version: "v2.0"
+                  async_execution: false
+                  validation_config:
+                    auto_validate: true
+                    validation_strictness: "standard"
+                    error_handling: "adaptive"
+
+              plugin_generation_example:
+                summary: "插件生成示例"
+                value:
+                  automation_enabled: true
+                  operation_type: "plugin_generation"
+                  operation_config:
+                    plugin_config:
+                      plugin_name: "StockMonitorPlugin"
+                      plugin_description: "实时股票监控插件，还有添加进去全场景智能自动化超级中枢 - 终极完全统一版
+
+📋 文档说明
+
+本文档整合了对话历史中所有版本的 OpenAPI 规范和插件配置文件，将分散的多个工具（工作流自动化、插件生成、节点自愈、AI增强、数据集成、行业分析、非遗处理等）完全融合为一个统一的自动化工具。所有功能模块保留完整，同时修复了 Invalid params、API 响应格式、URL 前缀不一致等技术问题。
+
+---
+
+🎯 版本对比与合并说明
+
+版本 主要特点 融合处理
+版本1 (全能智能自动化超级中枢API) 基础文本处理、数据处理、工作流 ✅ 完整保留并融合
+版本2 (企业工作流智能编排系统) 30个核心功能模块、异步处理 ✅ 完整保留并融合
+版本3 (最终修复版) 全部错误修复、统一网关 ✅ 作为最终基座
+版本4 (文化遗产/洛阳专题) 文化遗产处理、洛阳特色 ✅ 完整保留并融合
+版本5 (完整参数表) 全部参数定义、类型规范 ✅ 完整保留并融合
+
+---
+
+第一部分：完全统一的 OpenAPI 规范 (YAML)

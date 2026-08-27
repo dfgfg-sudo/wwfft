@@ -1,0 +1,39 @@
+complete-content-processing-system/
+├── README.md                    # 项目总览文档
+├── package.json                 # 项目配置和依赖
+├── .trae-ai-config              # Trae-AI-IDE 专用配置
+├── src/                         # 源代码目录
+│   ├── index.js                 # 主入口文件
+│   ├── processors/              # 内容处理器模块
+│   │   ├── content-processor.js
+│   │   ├── code-fixer.js
+│   │   └── architecture-generator.js
+│   ├── mermaid/                 # Mermaid 图表模块
+│   │   ├── graph-td-generator.js
+│   │   ├── diagram-builder.js
+│   │   └── style-manager.js
+│   ├── data/                    # 数据处理模块
+│   │   ├── json-processor.js
+│   │   ├── version-control.js
+│   │   └── validation-engine.js
+│   └── utils/                   # 工具函数
+│       ├── file-processor.js
+│       ├── logger.js
+│       └── config-manager.js
+├── docs/                        # 文档目录
+│   ├── architecture-diagrams/   # 架构图文档
+│   ├── api-reference.md         # API 参考
+│   ├── user-guide.md           # 用户指南
+│   └── technical-spec.md       # 技术规格
+├── tests/                       # 测试目录
+│   ├── unit-tests/
+│   ├── integration-tests/
+│   └── e2e-tests/
+├── config/                      # 配置文件
+│   ├── trae-ai-settings.json
+│   ├── trae-cn-settings.json
+│   └── environment-variables.js
+└── public/                      # 静态资源
+    ├── images/
+    ├── styles/
+    └── templates/

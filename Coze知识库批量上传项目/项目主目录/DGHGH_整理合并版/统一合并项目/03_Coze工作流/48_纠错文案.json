@@ -1,0 +1,25 @@
+{
+  "name": "纠错文案",
+  "description": "调用Claude3的api进行文案纠错",
+  "version": "1.0.0",
+  "create_time": "2026-06-05 06:17:00",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7396681615629352969",
+  "original_name": "纠错文案",
+  "type": "plugin",
+  "plugin_type": "云插件",
+  "functions": [
+    {
+      "name": "correct_text",
+      "description": "纠正文案错误",
+      "input_params": [
+        {"name": "text", "type": "string", "required": true, "description": "待纠错文本"},
+        {"name": "language", "type": "string", "required": false, "description": "语言"}
+      ],
+      "output_params": [
+        {"name": "corrected_text", "type": "string", "description": "纠错后文本"},
+        {"name": "errors", "type": "array", "description": "错误列表"}
+      ]
+    }
+  ]
+}

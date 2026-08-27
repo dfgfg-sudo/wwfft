@@ -1,0 +1,21 @@
+---
+
+第九部分：部署说明
+
+环境要求
+
+环境组件 最低版本 推荐版本 说明
+操作系统 Linux Kernel 4.0+ Ubuntu 22.04 LTS 生产环境推荐Linux
+Node.js 16.x 20.x LTS JavaScript运行环境
+Python 3.8+ 3.11+ Python运行环境
+Java 11+ 17+ Java运行环境
+MySQL 8.0+ 8.0.33 关系型数据库
+PostgreSQL 13+ 15.2 可选关系型数据库
+MongoDB 5.0+ 6.0+ NoSQL文档存储
+Redis 6.0+ 7.0+ 缓存和消息队列
+Nginx 1.20+ 1.24+ 反向代理和负载均衡
+Docker 20.10+ 24.0+ 容器化部署
+
+部署步骤
+
+步骤1：环境准备

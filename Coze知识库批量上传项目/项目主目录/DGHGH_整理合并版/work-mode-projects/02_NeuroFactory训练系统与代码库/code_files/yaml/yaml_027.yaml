@@ -1,0 +1,22 @@
+ai_training:
+  model_name: microsoft/DialoGPT-medium
+  batch_size: 4
+  learning_rate: 5e-5
+  num_epochs: 3
+  max_length: 512
+  save_dir: ./models
+  log_dir: ./logs
+  data_path: ./data
+coze_integration:
+  enabled: true
+  api_base: https://api.coze.cn
+  api_key: your_api_key_here
+  workflow_timeout: 300
+  max_retries: 3
+openapi:
+  default_version: 3.0.3
+  auto_validation: true
+  auto_fix: true
+system:
+  max_concurrent_workflows: 5
+  log_level: INFO

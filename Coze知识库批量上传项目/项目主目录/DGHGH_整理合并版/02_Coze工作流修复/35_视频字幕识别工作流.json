@@ -1,0 +1,143 @@
+{
+  "name": "视频字幕识别工作流",
+  "description": "根据视频的语音来识别字幕",
+  "version": "1.0.0",
+  "create_time": "2026-07-25 23:03:35",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7622282734928592930",
+  "original_name": "sdfrdyc",
+  "type": "workflow",
+  "nodes": [
+    {
+      "id": "100001",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "nodes",
+            "type": "string",
+            "required": false,
+            "description": "节点配置"
+          },
+          {
+            "name": "edges",
+            "type": "string",
+            "required": false,
+            "description": "连接关系"
+          }
+        ]
+      }
+    },
+    {
+      "id": "186587",
+      "type": "3",
+      "data": {
+        "name": "Link_analyzer",
+        "language": "python",
+        "code": "def main(url, timeout=30):\n    parsed_result = {\n        \"url\": url,\n        \"protocol\": \"https\",\n        \"valid\": True,\n        \"timeout\": timeout\n    }\n    return {\"parsed_result\": parsed_result}",
+        "input_params": [
+          {
+            "name": "timeout",
+            "type": "number",
+            "required": false,
+            "description": "超时时间"
+          },
+          {
+            "name": "url",
+            "type": "string",
+            "required": true,
+            "description": "视频链接"
+          }
+        ],
+        "output_params": [
+          {
+            "name": "parsed_result",
+            "type": "object",
+            "description": "解析结果"
+          }
+        ]
+      }
+    },
+    {
+      "id": "177943",
+      "type": "3",
+      "data": {
+        "name": "识别视频提取字幕",
+        "description": "根据视频的语音来识别字幕",
+        "language": "python",
+        "code": "def main(url, lang=\"zh\"):\n    result = {\n        \"msg\": \"识别成功\",\n        \"code\": 0,\n        \"data\": {\n            \"subtitle\": \"从视频中提取的字幕内容...\",\n            \"language\": lang,\n            \"url\": url\n        },\n        \"log_id\": \"video_ocr_\" + str(hash(url))\n    }\n    return result",
+        "input_params": [
+          {
+            "name": "url",
+            "type": "string",
+            "required": true,
+            "description": "视频链接"
+          },
+          {
+            "name": "lang",
+            "type": "string",
+            "required": false,
+            "description": "语言"
+          }
+        ],
+        "output_params": [
+          {
+            "name": "msg",
+            "type": "string",
+            "description": "消息"
+          },
+          {
+            "name": "code",
+            "type": "number",
+            "description": "状态码"
+          },
+          {
+            "name": "data",
+            "type": "object",
+            "description": "识别结果"
+          },
+          {
+            "name": "log_id",
+            "type": "string",
+            "description": "日志ID"
+          }
+        ]
+      }
+    },
+    {
+      "id": "900001",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "str_output",
+            "type": "string",
+            "value": "{{177943.data.subtitle}}"
+          },
+          {
+            "name": "execution_summary",
+            "type": "string",
+            "value": "{{177943.msg}}"
+          }
+        ],
+        "output_type": "返回变量"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "100001",
+      "targetNodeID": "186587"
+    },
+    {
+      "sourceNodeID": "186587",
+      "targetNodeID": "177943"
+    },
+    {
+      "sourceNodeID": "177943",
+      "targetNodeID": "900001"
+    }
+  ]
+}

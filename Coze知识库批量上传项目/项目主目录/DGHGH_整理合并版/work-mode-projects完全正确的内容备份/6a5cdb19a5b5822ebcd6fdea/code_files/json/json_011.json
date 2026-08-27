@@ -1,0 +1,85 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "NeuroFactory Fusion + OmniNeuro ASI 统一 API",
+    "description": "超融合多模态AI训练、参数修复、OpenAPI生成、工作流自动化",
+    "version": "8.0.0",
+    "contact": { "name": "NeuroFactory Team", "email": "support@neurofactory.ai" }
+  },
+  "servers": [
+    { "url": "https://api.neurofactory.ai/v1", "description": "生产环境" },
+    { "url": "https://staging.api.neurofactory.ai/v1", "description": "测试环境" }
+  ],
+  "paths": {
+    "/api/v1/ai-training": {
+      "post": {
+        "summary": "执行AI训练",
+        "operationId": "executeAITraining",
+        "parameters": [
+          { "name": "data_path", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "model_type", "in": "query", "required": true, "schema": { "type": "string", "enum": ["gpt","llama","bert"] } }
+        ],
+        "responses": { "200": { "description": "训练启动成功" } }
+      }
+    },
+    "/api/v1/parameter-fixing": {
+      "post": {
+        "summary": "参数修复",
+        "operationId": "fixParameters",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "parameters": { "type": "object" },
+                  "api_spec": { "type": "object" },
+                  "fix_strategy": { "type": "string", "enum": ["auto","conservative","aggressive"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "修复成功" } }
+      }
+    },
+    "/api/v1/openapi/generate": {
+      "post": {
+        "summary": "生成OpenAPI规范",
+        "operationId": "generateOpenAPI",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "endpoints": { "type": "array", "items": { "type": "object" } },
+                  "info": { "type": "object" },
+                  "version": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "生成成功" } }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "WorkflowType": { "type": "string", "enum": ["ai_training","data_processing","parameter_fixing","openapi_generation"] },
+      "TrainingStatus": { "type": "string", "enum": ["pending","running","completed","failed"] }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": { "type": "apiKey", "in": "header", "name": "X-API-Key" }
+    }
+  },
+  "security": [ { "ApiKeyAuth": [] } ],
+  "tags": [
+    { "name": "AI Training", "description": "AI模型训练" },
+    { "name": "Parameter Fixing", "description": "参数修复" },
+    { "name": "OpenAPI", "description": "OpenAPI规范管理" }
+  ]
+}

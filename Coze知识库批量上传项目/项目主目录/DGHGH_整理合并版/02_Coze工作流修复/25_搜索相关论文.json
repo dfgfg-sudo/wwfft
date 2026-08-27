@@ -1,0 +1,67 @@
+{
+  "name": "搜索相关论文",
+  "description": "根据关键词搜索相关学术论文",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:05:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "keyword",
+            "type": "string",
+            "required": true,
+            "description": "搜索关键词"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_search",
+      "type": "3",
+      "data": {
+        "name": "论文搜索",
+        "language": "python",
+        "code": "def main(keyword):\n    papers = [\n        {\"title\": f\"{keyword}研究综述\", \"authors\": \"张三等\", \"year\": 2024, \"citations\": 150},\n        {\"title\": f\"基于{keyword}的方法改进\", \"authors\": \"李四等\", \"year\": 2023, \"citations\": 80},\n        {\"title\": f\"{keyword}在实际应用中的验证\", \"authors\": \"王五等\", \"year\": 2023, \"citations\": 65}\n    ]\n    return {\"keyword\": keyword, \"papers\": papers}",
+        "output_params": [
+          {
+            "name": "keyword",
+            "type": "string"
+          },
+          {
+            "name": "papers",
+            "type": "array"
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "paper_list",
+            "type": "array",
+            "value": "{{code_node_search.papers}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "start_node",
+      "targetNodeID": "code_node_search"
+    },
+    {
+      "sourceNodeID": "code_node_search",
+      "targetNodeID": "end_node"
+    }
+  ]
+}

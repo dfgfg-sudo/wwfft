@@ -1,0 +1,10 @@
+{
+     "status": "success",
+     "message": "✅ 文本清洗完成！...",
+     "cleaned_text": "这 是 测试 文本",
+     "statistics": {
+       "original_length": 14,
+       "cleaned_length": 10,
+       "space_reduction": 4
+     }
+   }

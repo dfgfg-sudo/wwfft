@@ -1,0 +1,39 @@
+graph TD
+    %% ==================== Trae-CN 软件处理流程 ====================
+    StartTraeCN["Trae-CN 软件启动"] --> LoadConfig["加载配置文件<br>trae-cn-settings.json"]
+    LoadConfig --> ValidateConfig["验证配置完整性"]
+    ValidateConfig --> InitModules["初始化核心模块"]
+    
+    InitModules --> ContentInput["内容输入阶段"]
+    ContentInput --> InputValidation["输入验证<br>完整性检查"]
+    InputValidation --> ContentParsing["内容解析<br>结构分析"]
+    
+    ContentParsing --> PrincipleApplication["原则应用阶段"]
+    PrincipleApplication --> PreserveOriginal["无变动保留原文内容"]
+    PreserveOriginal --> FixCodeOnly["仅修复代码问题"]
+    FixCodeOnly --> EnsureOutput["确保输出正确代码"]
+    
+    EnsureOutput --> ArchitectureGeneration["架构生成阶段"]
+    ArchitectureGeneration --> MermaidGeneration["Mermaid 图生成"]
+    MermaidGeneration --> DiagramStyling["图表样式优化"]
+    
+    DiagramStyling --> TechStackIntegration["技术栈集成阶段"]
+    TechStackIntegration --> FrontendTech["前端技术集成"]
+    TechStackIntegration --> BackendTech["后端技术集成"]
+    TechStackIntegration --> DataTech["数据技术集成"]
+    
+    DataTech --> OutputGeneration["输出生成阶段"]
+    OutputGeneration --> FormatOutput["格式化输出"]
+    FormatOutput --> QualityValidation["质量验证"]
+    
+    QualityValidation --> ValidationCheck{验证通过?}
+    ValidationCheck -->|是| CompleteOutput["完成输出<br>Trae-CN 兼容格式"]
+    ValidationCheck -->|否| RetryProcess["重新处理<br>修复问题"]
+    
+    CompleteOutput --> SaveFiles["保存文件<br>Trae-CN 项目结构"]
+    SaveFiles --> GenerateReport["生成处理报告"]
+    GenerateReport --> EndTraeCN["处理完成<br>Trae-CN 软件"]
+    
+    style StartTraeCN fill:#1a237e,color:#fff
+    style EndTraeCN fill:#1a237e,color:#fff
+    style CompleteOutput fill:#4CAF50,color:#fff

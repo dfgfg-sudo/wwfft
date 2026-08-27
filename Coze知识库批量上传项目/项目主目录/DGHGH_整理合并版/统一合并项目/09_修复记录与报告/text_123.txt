@@ -1,0 +1,33 @@
+# Coze工作流制作方法原理模板
+
+核心定位：专为Coze工作流平台设计
+
+一、Coze工作流基础架构原理
+1.1 Coze工作流执行模型
+- 执行上下文：variables, currentNode, history, status
+- 节点执行原理：start/condition/function/parallel/end
+
+1.2 Coze节点设计原理
+- 开始节点：trigger_type: manual|webhook|cron|event
+- 函数节点：code, inputs, outputs, timeout, retry
+- 条件节点：conditions, default_branch
+
+二、Coze工作流设计方法论
+2.1 需求分析阶段
+- 提取Coze特有元素
+- 识别触发类型
+- 分析节点类型需求
+- 确定变量结构
+
+2.2 架构设计阶段
+- 设计工作流结构
+- 设计节点（基于Coze节点类型）
+- 设计边（控制流）
+
+三、Coze工作流编译原理
+3.1 中间表示到Coze格式的转换
+3.2 Coze工作流优化原理
+- 节点合并优化
+- 条件简化
+- 变量使用优化
+- 执行路径优化

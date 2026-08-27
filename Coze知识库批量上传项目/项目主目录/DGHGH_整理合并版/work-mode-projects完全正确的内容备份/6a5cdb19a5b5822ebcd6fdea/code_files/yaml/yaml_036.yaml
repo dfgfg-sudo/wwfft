@@ -1,0 +1,9 @@
+输入配置：
+  - 名称：user_requirement
+  - 类型：引用 → 开始节点的用户输入
+
+输出配置：
+  - generated_python_code: 生成的完整代码
+  - input_requirements: 输入配置说明
+  - output_variables: 输出配置说明
+  - setup_instructions: 设置步骤

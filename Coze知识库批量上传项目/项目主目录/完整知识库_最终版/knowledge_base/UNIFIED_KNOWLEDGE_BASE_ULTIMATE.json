@@ -1,0 +1,15 @@
+﻿{
+    "schema_version":  "8.0",
+    "version":  "35.0.0",
+    "total_entries":  1,
+    "name_en":  "Coze Omni Automation Hub - Ultimate Knowledge Base",
+    "content":  {
+
+                },
+    "description":  "整合所有JSON知识库的终极统一版本",
+    "created_at":  "2026-06-17T20:34:09",
+    "name":  "Coze全场景智能自动化超级中枢 - 终极知识库",
+    "source_files":  [
+                         "UNIFIED_MERGED_DATA_COMPLETE.json"
+                     ]
+}

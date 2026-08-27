@@ -1,0 +1,34 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "全自动参数修复插件规范",
+    "version": "2.0.0",
+    "description": "智能参数修复与验证系统"
+  },
+  "paths": {
+    "/parameter/fix": {
+      "post": {
+        "summary": "自动修复参数",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["parameters", "api_spec"],
+                "properties": {
+                  "parameters": {"type": "object"},
+                  "api_spec": {"type": "object"},
+                  "fix_strategy": {"type": "string", "enum": ["auto", "conservative", "aggressive"], "default": "auto"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {"description": "修复成功", "content": {"application/json": {"schema": {"type": "object"}}}}
+        }
+      }
+    }
+  }
+}

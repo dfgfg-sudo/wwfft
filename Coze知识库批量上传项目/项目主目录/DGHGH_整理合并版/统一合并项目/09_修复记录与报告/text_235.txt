@@ -1,0 +1,9 @@
+数据处理支持格式
+
+· 文本文件：.txt, .json, .jsonl
+· 表格文件：.csv, .xlsx, .xls
+· 文档文件：.pdf, .docx
+· 图像文件：.jpg, .png, .jpeg
+· 压缩文件：.zip
+
+🏗️ 完整系统架构图（Mermaid Graph TD）

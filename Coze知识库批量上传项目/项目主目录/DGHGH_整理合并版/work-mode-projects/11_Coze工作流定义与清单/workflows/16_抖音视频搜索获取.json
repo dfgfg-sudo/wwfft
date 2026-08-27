@@ -1,0 +1,61 @@
+{
+  "name": "抖音视频搜索获取",
+  "description": "搜索抖音视频并获取视频链接",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:05:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "keyword",
+            "type": "string",
+            "required": true,
+            "description": "搜索关键词"
+          },
+          {
+            "name": "count",
+            "type": "number",
+            "required": false,
+            "description": "获取数量"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_search",
+      "type": "3",
+      "data": {
+        "name": "抖音搜索",
+        "language": "python",
+        "code": "import json\ndef main(keyword, count):\n    results = []\n    for i in range(int(count or 10)):\n        results.append({\n            \"index\": i + 1,\n            \"title\": f\"{keyword}相关视频{i + 1}\",\n            \"video_url\": f\"https://v.douyin.com/i{1000000 + i}/\",\n            \"author\": \"视频作者\",\n            \"likes\": 1000 + i * 500\n        })\n    return {\"keyword\": keyword, \"videos\": results}",
+        "output_params": [
+          {"name": "keyword", "type": "string"},
+          {"name": "videos", "type": "array"}
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "video_list",
+            "type": "array",
+            "value": "{{code_node_search.videos}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "code_node_search"},
+    {"sourceNodeID": "code_node_search", "targetNodeID": "end_node"}
+  ]
+}

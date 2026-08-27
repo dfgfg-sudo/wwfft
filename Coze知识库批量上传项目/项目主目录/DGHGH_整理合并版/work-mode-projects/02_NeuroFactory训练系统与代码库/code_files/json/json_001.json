@@ -1,0 +1,927 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "企业工作流智能编排系统",
+  "name_for_model": "enterprise_workflow_orchestrator",
+  "description_for_human": "统一的企业级工作流管理、自动化执行和智能编排平台，集成30个核心功能模块",
+  "description_for_model": "综合性的企业工作流管理插件，集成了工作流创建、执行、监控、修复、行业分析、紧急处理、数据训练等30个核心功能。支持多版本兼容、参数自动验证和智能错误处理。",
+  "auth": {
+    "type": "bearer"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://api.enterprise-workflow.com/v1/openapi.yaml",
+    "is_user_authenticated": true
+  },
+  "logo_url": "https://api.enterprise-workflow.com/icons/orchestrator.png",
+  "contact_email": "support@enterprise-workflow.com",
+  "legal_info_url": "https://enterprise-workflow.com/legal",
+  "input_parameters": {
+    "type": "object",
+    "properties": {
+      "operation_type": {
+        "type": "string",
+        "enum": [
+          "activate_emergency",
+          "ai_enhancement",
+          "analyze_industry",
+          "auto_repair",
+          "backup_revert",
+          "create_custom_node",
+          "create_workflow",
+          "delete_workflow",
+          "execute_workflow",
+          "feed_data",
+          "generate_workflow",
+          "get_data_connections",
+          "get_workflow_by_id",
+          "get_workflows",
+          "process_automation",
+          "process_luoyang_heritage",
+          "repair_all_nodes",
+          "train_model",
+          "trigger_auto_plugin_workflow",
+          "update_workflow",
+          "validate_parameters"
+        ],
+        "description": "操作类型：选择要执行的具体功能"
+      },
+      "operation_config": {
+        "type": "object",
+        "description": "操作配置参数，根据不同的operation_type传入对应的参数对象",
+        "properties": {
+          "emergency_config": {
+            "type": "object",
+            "properties": {
+              "emergency_level": {
+                "type": "string",
+                "enum": ["low", "medium", "high", "critical", "level1", "level2", "level3", "level4"],
+                "description": "紧急级别"
+              },
+              "activation_reason": {
+                "type": "string",
+                "description": "激活原因描述"
+              },
+              "auto_recovery": {
+                "type": "boolean",
+                "description": "是否启用自动恢复"
+              },
+              "recovery_strategy": {
+                "type": "string",
+                "enum": ["immediate", "gradual", "manual"],
+                "description": "恢复策略"
+              },
+              "notification_contacts": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "description": "通知联系人列表"
+              }
+            }
+          },
+          "ai_enhancement_config": {
+            "type": "object",
+            "properties": {
+              "input_data": {
+                "type": "string",
+                "description": "需要增强的输入数据"
+              },
+              "enhancement_type": {
+                "type": "string",
+                "enum": ["cleaning", "enrichment", "completion", "quality_improvement"],
+                "description": "增强类型"
+              },
+              "output_format": {
+                "type": "string",
+                "enum": ["json", "xml", "csv", "text"],
+                "description": "输出格式"
+              },
+              "batch_data": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                },
+                "description": "批量处理数据"
+              },
+              "options": {
+                "type": "object",
+                "description": "增强选项"
+              }
+            }
+          },
+          "workflow_config": {
+            "type": "object",
+            "properties": {
+              "workflow_id": {
+                "type": "string",
+                "description": "工作流唯一标识符"
+              },
+              "workflow_name": {
+                "type": "string",
+                "description": "工作流名称"
+              },
+              "description": {
+                "type": "string",
+                "description": "工作流描述"
+              },
+              "nodes": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                },
+                "description": "工作流节点配置"
+              },
+              "triggers": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                },
+                "description": "触发条件"
+              },
+              "requirement_description": {
+                "type": "string",
+                "description": "需求描述"
+              },
+              "business_domain": {
+                "type": "string",
+                "enum": ["ecommerce", "industry", "programming", "finance", "healthcare", "manufacturing", "retail", "education"],
+                "description": "业务领域"
+              },
+              "execution_parameters": {
+                "type": "object",
+                "description": "执行参数"
+              },
+              "update_operations": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                },
+                "description": "更新操作列表"
+              },
+              "complexity_level": {
+                "type": "string",
+                "enum": ["simple", "medium", "complex"],
+                "description": "复杂度级别"
+              },
+              "validation_strictness": {
+                "type": "string",
+                "enum": ["relaxed", "standard", "strict"],
+                "description": "验证严格程度"
+              },
+              "monitoring_level": {
+                "type": "string",
+                "enum": ["basic", "detailed", "verbose"],
+                "description": "监控级别"
+              },
+              "result_format": {
+                "type": "string",
+                "enum": ["summary", "detailed", "raw"],
+                "description": "结果格式"
+              },
+              "version_comment": {
+                "type": "string",
+                "description": "版本注释"
+              }
+            }
+          },
+          "repair_config": {
+            "type": "object",
+            "properties": {
+              "repair_type": {
+                "type": "string",
+                "enum": ["system", "network", "database", "application", "performance"],
+                "description": "修复类型"
+              },
+              "diagnosis_level": {
+                "type": "string",
+                "enum": ["quick", "standard", "comprehensive", "deep", "predictive"],
+                "description": "诊断级别"
+              },
+              "diagnosis_mode": {
+                "type": "string",
+                "enum": ["quick", "deep", "predictive"],
+                "description": "诊断模式"
+              },
+              "auto_execute": {
+                "type": "boolean",
+                "description": "是否自动执行修复"
+              },
+              "repair_strategy": {
+                "type": "string",
+                "enum": ["auto", "semi_auto", "manual_approval"],
+                "description": "修复策略"
+              },
+              "backup_before_repair": {
+                "type": "boolean",
+                "description": "修复前是否备份"
+              },
+              "repair_scope": {
+                "type": "string",
+                "enum": ["configuration", "logic", "dependencies", "all"],
+                "description": "修复范围"
+              },
+              "target_components": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "目标组件"
+              }
+            }
+          },
+          "backup_config": {
+            "type": "object",
+            "properties": {
+              "backup_id": {
+                "type": "string",
+                "description": "备份记录的唯一标识符"
+              },
+              "revert_scope": {
+                "type": "string",
+                "enum": ["full", "partial", "data_only"],
+                "description": "恢复范围"
+              },
+              "revert_type": {
+                "type": "string",
+                "enum": ["full", "incremental", "selective"],
+                "description": "恢复类型"
+              },
+              "confirmation_required": {
+                "type": "boolean",
+                "description": "是否需要确认操作"
+              },
+              "target_components": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "指定恢复的组件"
+              },
+              "preview_changes": {
+                "type": "boolean",
+                "description": "是否预览变更"
+              },
+              "rollback_plan": {
+                "type": "string",
+                "description": "回滚计划描述"
+              },
+              "conflict_resolution": {
+                "type": "string",
+                "enum": ["overwrite", "merge", "skip"],
+                "description": "冲突解决策略"
+              }
+            }
+          },
+          "custom_node_config": {
+            "type": "object",
+            "properties": {
+              "node_type": {
+                "type": "string",
+                "enum": ["code", "plugin", "metadata"],
+                "description": "节点类型"
+              },
+              "programming_language": {
+                "type": "string",
+                "enum": ["python", "javascript", "typescript"],
+                "description": "编程语言"
+              },
+              "node_name": {
+                "type": "string",
+                "description": "节点名称"
+              },
+              "code_content": {
+                "type": "string",
+                "description": "代码内容"
+              },
+              "dependencies": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "依赖项列表"
+              },
+              "configuration": {
+                "type": "object",
+                "description": "节点配置"
+              },
+              "description": {
+                "type": "string",
+                "description": "节点描述"
+              }
+            }
+          },
+          "industry_config": {
+            "type": "object",
+            "properties": {
+              "industry_name": {
+                "type": "string",
+                "description": "行业名称或代码"
+              },
+              "analysis_depth": {
+                "type": "string",
+                "enum": ["basic", "standard", "comprehensive"],
+                "description": "分析深度"
+              },
+              "analysis_type": {
+                "type": "string",
+                "enum": ["classification", "trends", "competitive", "risk"],
+                "description": "分析类型"
+              },
+              "industry_type": {
+                "type": "string",
+                "enum": ["manufacturing", "retail", "healthcare", "finance", "education"],
+                "description": "行业类型"
+              },
+              "time_period": {
+                "type": "string",
+                "description": "分析时间段"
+              },
+              "include_trends": {
+                "type": "boolean",
+                "description": "是否包含趋势分析"
+              },
+              "include_forecast": {
+                "type": "boolean",
+                "description": "是否包含预测数据"
+              },
+              "region": {
+                "type": "string",
+                "description": "区域范围"
+              },
+              "data_sources": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "指定数据源"
+              },
+              "geographic_scope": {
+                "type": "string",
+                "description": "地理范围"
+              },
+              "forecast_period": {
+                "type": "string",
+                "description": "预测周期"
+              },
+              "comparison_metrics": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "对比指标"
+              }
+            }
+          },
+          "training_config": {
+            "type": "object",
+            "properties": {
+              "training_data": {
+                "type": "string",
+                "description": "训练数据内容或标识"
+              },
+              "training_dataset": {
+                "type": "string",
+                "description": "训练数据集标识"
+              },
+              "model_type": {
+                "type": "string",
+                "enum": ["classification", "regression", "clustering", "nlp"],
+                "description": "模型类型"
+              },
+              "model_target": {
+                "type": "string",
+                "description": "目标模型标识"
+              },
+              "data_format": {
+                "type": "string",
+                "enum": ["json", "csv", "text", "image"],
+                "description": "数据格式"
+              },
+              "validation_split": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "description": "验证集比例"
+              },
+              "training_parameters": {
+                "type": "object",
+                "description": "训练参数"
+              },
+              "preprocessing": {
+                "type": "object",
+                "description": "数据预处理配置"
+              },
+              "data_quality_check": {
+                "type": "boolean",
+                "description": "是否进行数据质量检查"
+              },
+              "hyperparameter_tuning": {
+                "type": "boolean",
+                "description": "是否进行超参数调优"
+              }
+            }
+          },
+          "heritage_config": {
+            "type": "object",
+            "properties": {
+              "heritage_type": {
+                "type": "string",
+                "enum": ["intangible", "tangible", "cultural_practice"],
+                "description": "遗产类型"
+              },
+              "heritage_category": {
+                "type": "string",
+                "enum": ["traditional_craft", "performing_arts", "rituals", "oral_traditions"],
+                "description": "遗产分类"
+              },
+              "action_type": {
+                "type": "string",
+                "enum": ["query", "register", "update", "preserve"],
+                "description": "操作类型"
+              },
+              "processing_mode": {
+                "type": "string",
+                "enum": ["cataloging", "digital_preservation", "public_display", "research"],
+                "description": "处理模式"
+              },
+              "heritage_data": {
+                "type": "object",
+                "description": "遗产数据"
+              },
+              "cultural_context": {
+                "type": "object",
+                "description": "文化背景信息"
+              },
+              "preservation_level": {
+                "type": "string",
+                "enum": ["basic", "standard", "premium"],
+                "description": "保护级别"
+              },
+              "location": {
+                "type": "string",
+                "description": "地理位置"
+              },
+              "digital_assets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "数字资产"
+              }
+            }
+          },
+          "automation_config": {
+            "type": "object",
+            "properties": {
+              "operation_mode": {
+                "type": "string",
+                "enum": ["industry_analysis", "workflow_generation", "auto_repair", "luoyang_heritage", "custom"],
+                "description": "操作模式"
+              },
+              "input_data": {
+                "type": "object",
+                "description": "输入数据"
+              },
+              "input_parameters": {
+                "type": "object",
+                "description": "输入参数"
+              },
+              "processing_level": {
+                "type": "string",
+                "enum": ["basic", "advanced", "comprehensive"],
+                "description": "处理级别"
+              },
+              "optimization_level": {
+                "type": "string",
+                "enum": ["standard", "optimized", "max_performance"],
+                "description": "优化级别"
+              },
+              "error_handling": {
+                "type": "string",
+                "enum": ["strict", "lenient", "adaptive"],
+                "description": "错误处理策略"
+              },
+              "output_format": {
+                "type": "string",
+                "description": "输出格式"
+              },
+              "parallel_processing": {
+                "type": "boolean",
+                "description": "是否并行处理"
+              }
+            }
+          },
+          "validation_config": {
+            "type": "object",
+            "properties": {
+              "parameters_to_validate": {
+                "type": "object",
+                "description": "需要验证的参数"
+              },
+              "validation_rules": {
+                "type": "object",
+                "description": "验证规则"
+              },
+              "strict_mode": {
+                "type": "boolean",
+                "description": "是否启用严格模式"
+              },
+              "context": {
+                "type": "object",
+                "description": "验证上下文"
+              }
+            }
+          },
+          "plugin_config": {
+            "type": "object",
+            "properties": {
+              "plugin_description": {
+                "type": "string",
+                "description": "插件功能描述"
+              },
+              "trigger_conditions": {
+                "type": "object",
+                "description": "触发条件"
+              },
+              "self_healing_enabled": {
+                "type": "boolean",
+                "description": "是否启用自愈功能"
+              },
+              "execution_priority": {
+                "type": "string",
+                "enum": ["low", "normal", "high", "critical"],
+                "description": "执行优先级"
+              },
+              "node_types": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "需要的节点类型"
+              }
+            }
+          },
+          "connection_config": {
+            "type": "object",
+            "properties": {
+              "connection_type": {
+                "type": "string",
+                "enum": ["all", "database", "api", "file", "streaming"],
+                "description": "连接类型过滤"
+              },
+              "status_filter": {
+                "type": "string",
+                "enum": ["all", "active", "inactive", "error"],
+                "description": "状态过滤"
+              },
+              "include_details": {
+                "type": "boolean",
+                "description": "是否包含详细信息"
+              }
+            }
+          },
+          "query_config": {
+            "type": "object",
+            "properties": {
+              "page_number": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "页码"
+              },
+              "page_size": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "每页大小"
+              },
+              "filter_by_status": {
+                "type": "string",
+                "enum": ["all", "active", "inactive", "draft"],
+                "description": "状态过滤"
+              },
+              "sort_by": {
+                "type": "string",
+                "enum": ["name", "created_date", "modified_date"],
+                "description": "排序字段"
+              },
+              "include_execution_history": {
+                "type": "boolean",
+                "description": "是否包含执行历史"
+              },
+              "include_node_details": {
+                "type": "boolean",
+                "description": "是否包含节点详情"
+              }
+            }
+          }
+        }
+      },
+      "version": {
+        "type": "string",
+        "enum": ["v1.0", "v2.0", "v3.0"],
+        "description": "功能版本号"
+      },
+      "async_execution": {
+        "type": "boolean",
+        "description": "是否异步执行"
+      },
+      "callback_url": {
+        "type": "string",
+        "format": "uri",
+        "description": "异步回调URL"
+      },
+      "validation_config": {
+        "type": "object",
+        "properties": {
+          "auto_validate": {
+            "type": "boolean",
+            "description": "是否自动验证参数"
+          },
+          "validation_strictness": {
+            "type": "string",
+            "enum": ["relaxed", "standard", "strict"],
+            "description": "验证严格程度"
+          },
+          "error_handling": {
+            "type": "string",
+            "enum": ["strict", "lenient", "adaptive"],
+            "description": "错误处理策略"
+          }
+        }
+      }
+    },
+    "required": ["operation_type", "operation_config"],
+    "oneOf": [
+      {
+        "properties": {
+          "operation_type": { "const": "activate_emergency" },
+          "operation_config": {
+            "properties": {
+              "emergency_config": {
+                "required": ["emergency_level", "activation_reason"]
+              }
+            },
+            "required": ["emergency_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "ai_enhancement" },
+          "operation_config": {
+            "properties": {
+              "ai_enhancement_config": {
+                "required": ["input_data", "enhancement_type"]
+              }
+            },
+            "required": ["ai_enhancement_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "analyze_industry" },
+          "operation_config": {
+            "properties": {
+              "industry_config": {
+                "required": ["industry_name"]
+              }
+            },
+            "required": ["industry_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "auto_repair" },
+          "operation_config": {
+            "properties": {
+              "repair_config": {
+                "required": ["repair_type"]
+              }
+            },
+            "required": ["repair_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "backup_revert" },
+          "operation_config": {
+            "properties": {
+              "backup_config": {
+                "required": ["backup_id"]
+              }
+            },
+            "required": ["backup_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "create_custom_node" },
+          "operation_config": {
+            "properties": {
+              "custom_node_config": {
+                "required": ["node_type", "programming_language", "node_name"]
+              }
+            },
+            "required": ["custom_node_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "create_workflow" },
+          "operation_config": {
+            "properties": {
+              "workflow_config": {
+                "required": ["workflow_name", "nodes"]
+              }
+            },
+            "required": ["workflow_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "delete_workflow" },
+          "operation_config": {
+            "properties": {
+              "workflow_config": {
+                "required": ["workflow_id", "confirmation"]
+              }
+            },
+            "required": ["workflow_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "execute_workflow" },
+          "operation_config": {
+            "properties": {
+              "workflow_config": {
+                "required": ["workflow_id"]
+              }
+            },
+            "required": ["workflow_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "feed_data" },
+          "operation_config": {
+            "properties": {
+              "training_config": {
+                "required": ["training_data", "model_target"]
+              }
+            },
+            "required": ["training_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "generate_workflow" },
+          "operation_config": {
+            "properties": {
+              "workflow_config": {
+                "required": ["requirement_description", "business_domain"]
+              }
+            },
+            "required": ["workflow_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "get_data_connections" },
+          "operation_config": {
+            "properties": {
+              "connection_config": {}
+            },
+            "required": ["connection_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "get_workflow_by_id" },
+          "operation_config": {
+            "properties": {
+              "workflow_config": {
+                "required": ["workflow_id"]
+              }
+            },
+            "required": ["workflow_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "get_workflows" },
+          "operation_config": {
+            "properties": {
+              "query_config": {}
+            },
+            "required": ["query_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "process_automation" },
+          "operation_config": {
+            "properties": {
+              "automation_config": {
+                "required": ["operation_mode", "input_data"]
+              }
+            },
+            "required": ["automation_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "process_luoyang_heritage" },
+          "operation_config": {
+            "properties": {
+              "heritage_config": {
+                "required": ["heritage_type", "action_type"]
+              }
+            },
+            "required": ["heritage_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "repair_all_nodes" },
+          "operation_config": {
+            "properties": {
+              "repair_config": {
+                "required": ["workflow_id", "repair_scope"]
+              }
+            },
+            "required": ["repair_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "train_model" },
+          "operation_config": {
+            "properties": {
+              "training_config": {
+                "required": ["training_dataset", "model_type"]
+              }
+            },
+            "required": ["training_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "trigger_auto_plugin_workflow" },
+          "operation_config": {
+            "properties": {
+              "plugin_config": {
+                "required": ["plugin_description"]
+              }
+            },
+            "required": ["plugin_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "update_workflow" },
+          "operation_config": {
+            "properties": {
+              "workflow_config": {
+                "required": ["workflow_id", "update_operations"]
+              }
+            },
+            "required": ["workflow_config"]
+          }
+        }
+      },
+      {
+        "properties": {
+          "operation_type": { "const": "validate_parameters" },
+          "operation_config": {
+            "properties": {
+              "validation_config": {
+                "required": ["parameters_to_validate", "validation_rules"]
+              }
+            },
+            "required": ["validation_config"]
+          }
+        }
+      }
+    ]
+  }
+}

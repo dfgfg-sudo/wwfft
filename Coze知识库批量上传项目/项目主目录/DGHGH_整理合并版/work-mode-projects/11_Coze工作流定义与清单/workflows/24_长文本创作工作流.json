@@ -1,0 +1,102 @@
+{
+  "name": "长文本创作工作流",
+  "description": "一个能够创作5000至10000字长文本的工作流；当用户输入文本创作需求的时候，调用执行的工作流",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:05:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "requirement",
+            "type": "string",
+            "required": true,
+            "description": "文本创作需求"
+          },
+          {
+            "name": "target_length",
+            "type": "string",
+            "required": false,
+            "description": "目标长度：5000/10000"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_outline",
+      "type": "4",
+      "data": {
+        "name": "AI 生成大纲",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是长文本创作专家，规划万字长文大纲",
+        "user_prompt": "需求：{{requirement}}\\n目标长度：{{target_length || '10000'}}字\\n请生成详细大纲，输出JSON：{\"chapters\":[{\"chapter\":1,\"title\":\"...\",\"sections\":[...]}]}",
+        "output_params": [{"name": "outline", "type": "object"}]
+      }
+    },
+    {
+      "id": "loop_node_write",
+      "type": "6",
+      "data": {
+        "name": "逐章写作",
+        "loop_var": "chapter",
+        "loop_array": "{{llm_node_outline.chapters}}",
+        "loop_body": [
+          {
+            "id": "llm_node_chapter",
+            "type": "4",
+            "data": {
+              "name": "AI 撰写章节",
+              "model": "doubao-pro-128k",
+              "system_prompt": "你是专业作家，撰写高质量章节内容",
+              "user_prompt": "大纲：{{llm_node_outline}}\\n当前章节：{{chapter}}\\n请撰写详细内容",
+              "output_params": [{"name": "chapter_content", "type": "string"}]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_assemble",
+      "type": "3",
+      "data": {
+        "name": "组装完整文本",
+        "language": "python",
+        "code": "def main(loop_node_write_results):\n    full_text = '\\n\\n'.join([r.get('chapter_content', '') for r in loop_node_write_results])\n    return {\"full_text\": full_text, \"total_chapters\": len(loop_node_write_results), \"word_count\": len(full_text)}\n",
+        "output_params": [
+          {"name": "full_text", "type": "string"},
+          {"name": "total_chapters", "type": "number"},
+          {"name": "word_count", "type": "number"}
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "final_text",
+            "type": "string",
+            "value": "{{code_node_assemble.full_text}}"
+          },
+          {
+            "name": "stats",
+            "type": "object",
+            "value": "{{code_node_assemble}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "llm_node_outline"},
+    {"sourceNodeID": "llm_node_outline", "targetNodeID": "loop_node_write"},
+    {"sourceNodeID": "loop_node_write", "targetNodeID": "code_node_assemble"},
+    {"sourceNodeID": "code_node_assemble", "targetNodeID": "end_node"}
+  ]
+}

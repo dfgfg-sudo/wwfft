@@ -1,0 +1,127 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Neuro Factory Pro Complete API Specification",
+    "description": "量子增强AI全能工厂系统完整API – 整合所有接口",
+    "version": "7.0.0",
+    "contact": {
+      "name": "Neuro Factory Pro Team",
+      "email": "support@neurofactory.pro"
+    }
+  },
+  "servers": [
+    {"url": "https://api.neurofactory.pro/v7", "description": "Production"},
+    {"url": "https://staging.neurofactory.pro/v7", "description": "Staging"}
+  ],
+  "tags": [
+    {"name": "训练", "description": "AI模型训练接口"},
+    {"name": "数据处理", "description": "数据加载、清洗、转换"},
+    {"name": "模型管理", "description": "模型加载、保存、导出"},
+    {"name": "Coze插件", "description": "Coze工作流和插件"},
+    {"name": "量子安全", "description": "量子加密和安全接口"}
+  ],
+  "paths": {
+    "/api/v1/train/start": {
+      "post": {
+        "tags": ["训练"],
+        "summary": "启动训练任务",
+        "operationId": "startTraining",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["dataset_path", "model_name"],
+                "properties": {
+                  "dataset_path": {"type": "string"},
+                  "model_name": {"type": "string"},
+                  "epochs": {"type": "integer", "default": 3},
+                  "batch_size": {"type": "integer", "default": 4},
+                  "learning_rate": {"type": "number", "default": 5e-5},
+                  "quantum_security": {"type": "boolean", "default": true}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "training_id": {"type": "string"},
+                    "status": {"type": "string"},
+                    "estimated_time": {"type": "string"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/data/process": {
+      "post": {
+        "tags": ["数据处理"],
+        "summary": "批量处理数据",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file_paths": {"type": "array", "items": {"type": "string"}},
+                  "output_format": {"type": "string", "enum": ["csv","json","parquet"]},
+                  "auto_clean": {"type": "boolean", "default": true}
+                }
+              }
+            }
+          }
+        },
+        "responses": {"200": {"description": "处理成功"}}
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TrainingConfig": {
+        "type": "object",
+        "properties": {
+          "model_name": {"type": "string"},
+          "max_length": {"type": "integer", "default": 512},
+          "batch_size": {"type": "integer", "default": 4},
+          "epochs": {"type": "integer", "default": 3},
+          "learning_rate": {"type": "number", "default": 5e-5}
+        }
+      },
+      "DataProcessingConfig": {
+        "type": "object",
+        "properties": {
+          "input_formats": {"type": "array", "items": {"type": "string"}},
+          "output_format": {"type": "string"},
+          "clean_data": {"type": "boolean"},
+          "normalize": {"type": "boolean"}
+        }
+      },
+      "PluginManifest": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "version": {"type": "string"},
+          "description": {"type": "string"},
+          "permissions": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {"type": "apiKey", "in": "header", "name": "X-API-Key"},
+      "QuantumAuth": {"type": "http", "scheme": "quantum", "description": "量子安全认证"}
+    }
+  },
+  "security": [{"ApiKeyAuth": []}]
+}

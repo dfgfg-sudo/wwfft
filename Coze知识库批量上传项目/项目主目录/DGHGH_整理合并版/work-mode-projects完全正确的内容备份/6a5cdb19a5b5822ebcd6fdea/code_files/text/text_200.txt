@@ -1,0 +1,12 @@
+· 特点：专门处理Coze工作流归档文件的工具包
+· 核心功能：
+  · ZIP包解析与验证
+  · 批量修复引擎
+  · 差异对比工具
+  · PostgreSQL存储集成
+· 包含脚本：
+  · fix_coze_archives.py - 批量修复脚本
+  · validate_workflow.py - 验证工具
+  · extract_and_analyze.py - 分析工具
+
+2. pg-coze-manager (推荐指数: ⭐⭐⭐⭐)

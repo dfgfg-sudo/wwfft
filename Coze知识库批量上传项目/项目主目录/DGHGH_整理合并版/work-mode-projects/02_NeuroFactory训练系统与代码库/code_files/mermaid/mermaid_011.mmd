@@ -1,0 +1,117 @@
+graph TB
+    %% ==================== 核心系统层 ====================
+    A[🌌 Neuro Factory Pro 量子增强AI全能工厂系统] --> B[数据吞噬引擎]
+    A --> C[模型训练核心]
+    A --> D[GUI控制界面]
+    A --> E[量子安全模块]
+    A --> F[Coze插件生态系统]
+    A --> G[学习认证体系]
+    
+    %% ==================== 数据处理子系统 ====================
+    B --> B1[多源数据采集]
+    B --> B2[智能数据清洗]
+    B --> B3[多模态融合]
+    B --> B4[自动化投喂]
+    
+    B1 --> B11[文本数据 .txt/.py/.json]
+    B1 --> B12[表格数据 .csv/.xlsx]
+    B1 --> B13[图像数据 .jpg/.png]
+    B1 --> B14[压缩包 .zip/.rar]
+    
+    B2 --> B21[质量评估]
+    B2 --> B22[格式标准化]
+    B2 --> B23[数据增强]
+    B2 --> B24[去重处理]
+    
+    %% ==================== 训练核心子系统 ====================
+    C --> C1[LLaMA Factory Pro]
+    C --> C2[Transformer架构]
+    C --> C3[多任务学习]
+    C --> C4[超参数优化]
+    
+    C1 --> C11[预训练模型]
+    C1 --> C12[微调适配]
+    C1 --> C13[增量学习]
+    C1 --> C14[模型评估]
+    
+    C2 --> C21[BERT/GPT]
+    C2 --> C22[多模态网络]
+    C2 --> C23[注意力机制]
+    C2 --> C24[梯度优化]
+    
+    %% ==================== GUI界面子系统 ====================
+    D --> D1[Web控制台]
+    D --> D2[一键操作]
+    D --> D3[实时监控]
+    D --> D4[可视化分析]
+    
+    D1 --> D11[🚀 吞噬数据按钮]
+    D1 --> D12[🌌 启动训练按钮]
+    D1 --> D13[📊 进度面板]
+    D1 --> D14[📈 结果图表]
+    
+    %% ==================== 安全加密子系统 ====================
+    E --> E1[量子加密算法]
+    E --> E2[模型权重保护]
+    E --> E3[数据传输安全]
+    E --> E4[访问控制]
+    
+    E1 --> E11[AES/RSA加密]
+    E1 --> E12[量子密钥分发]
+    E1 --> E13[差分隐私]
+    E1 --> E14[同态加密]
+    
+    %% ==================== Coze插件子系统 ====================
+    F --> F1[插件开发框架]
+    F --> F2[工作流引擎]
+    F --> F3[API管理系统]
+    F --> F4[智能体集成]
+    
+    F1 --> F11[OpenAPI规范]
+    F1 --> F12[插件模板]
+    F1 --> F13[自动生成]
+    F1 --> F14[调试工具]
+    
+    %% ==================== 学习认证子系统 ====================
+    G --> G1[学习路径管理]
+    G --> G2[认证考试系统]
+    G --> G3[技能评估]
+    G --> G4[职业发展]
+    
+    G1 --> G11[Python学习]
+    G1 --> G12[AI技术]
+    G1 --> G13[项目实践]
+    G1 --> G14[证书考试]
+    
+    %% ==================== 输出与部署 ====================
+    B4 --> Z[统一数据管道]
+    C4 --> Z
+    D4 --> Z
+    E4 --> Z
+    F4 --> Z
+    G4 --> Z
+    
+    Z --> Y[完整AI模型输出]
+    Y --> X1[模型部署服务]
+    Y --> X2[API接口]
+    Y --> X3[可视化报告]
+    Y --> X4[认证证书]
+    
+    %% ==================== 样式定义 ====================
+    classDef system fill:#4CAF50,stroke:#388E3C,stroke-width:3px,color:white;
+    classDef data fill:#2196F3,stroke:#1976D2,stroke-width:2px,color:white;
+    classDef train fill:#FF9800,stroke:#F57C00,stroke-width:2px,color:white;
+    classDef gui fill:#9C27B0,stroke:#7B1FA2,stroke-width:2px,color:white;
+    classDef security fill:#F44336,stroke:#D32F2F,stroke-width:2px,color:white;
+    classDef coze fill:#00BCD4,stroke:#0097A7,stroke-width:2px,color:white;
+    classDef learn fill:#8BC34A,stroke:#689F38,stroke-width:2px,color:white;
+    classDef output fill:#FF5722,stroke:#E64A19,stroke-width:3px,color:white;
+    
+    class A,system;
+    class B,B1,B2,B3,B4,B11,B12,B13,B14,B21,B22,B23,B24,data;
+    class C,C1,C2,C3,C4,C11,C12,C13,C14,C21,C22,C23,C24,train;
+    class D,D1,D2,D3,D4,D11,D12,D13,D14,gui;
+    class E,E1,E2,E3,E4,E11,E12,E13,E14,security;
+    class F,F1,F2,F3,F4,F11,F12,F13,F14,coze;
+    class G,G1,G2,G3,G4,G11,G12,G13,G14,learn;
+    class Y,X1,X2,X3,X4,output;

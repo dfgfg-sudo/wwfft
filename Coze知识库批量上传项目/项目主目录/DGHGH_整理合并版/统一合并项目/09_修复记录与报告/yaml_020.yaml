@@ -1,0 +1,45 @@
+# workflow-template.yaml
+version: '1.0'
+name: "数据处理器"
+description: "自动处理数据的示例工作流"
+
+# 节点定义
+nodes:
+  - id: "start_1"
+    type: "start"
+    name: "开始"
+    position: { x: 100, y: 100 }
+    config:
+      variables:
+        input_data: { type: "string", required: true }
+  
+  - id: "llm_1"
+    type: "llm"
+    name: "数据分析"
+    position: { x: 300, y: 100 }
+    config:
+      model: "gpt-4"
+      prompt: "分析以下数据：{{input_data}}"
+      temperature: 0.7
+  
+  - id: "end_1"
+    type: "end"
+    name: "结束"
+    position: { x: 500, y: 100 }
+
+# 连接关系
+edges:
+  - source: "start_1"
+    target: "llm_1"
+    sourceHandle: "output"
+    targetHandle: "input"
+  
+  - source: "llm_1"
+    target: "end_1"
+    sourceHandle: "output"
+    targetHandle: "input"
+
+# 全局变量
+variables:
+  api_key: { type: "string", secure: true }
+  timeout: { type: "number", default: 30 }

@@ -1,0 +1,104 @@
+{
+  "name": "自我审视工作流",
+  "description": "通过两个大模型强化回答输出，优化结果，并记录在数据库中",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:05:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "question",
+            "type": "string",
+            "required": true,
+            "description": "用户问题"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_first",
+      "type": "4",
+      "data": {
+        "name": "AI 初次回答",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是智能助手，认真回答用户问题",
+        "user_prompt": "问题：{{question}}\\n请给出详细回答",
+        "output_params": [{"name": "first_answer", "type": "string"}]
+      }
+    },
+    {
+      "id": "llm_node_review",
+      "type": "4",
+      "data": {
+        "name": "AI 自我审视",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是质量审核专家，审视回答的准确性、完整性、逻辑性",
+        "user_prompt": "原始问题：{{question}}\\n初次回答：{{llm_node_first.first_answer}}\\n\\n请审视这个回答：\\n1. 是否准确？\\n2. 是否完整？\\n3. 是否有逻辑漏洞？\\n4. 需要补充哪些内容？\\n\\n输出审视结果和改进建议",
+        "output_params": [
+          {"name": "review_result", "type": "string"},
+          {"name": "suggestions", "type": "array"}
+        ]
+      }
+    },
+    {
+      "id": "llm_node_optimize",
+      "type": "4",
+      "data": {
+        "name": "AI 优化回答",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是优化专家，根据审视结果优化回答",
+        "user_prompt": "原始问题：{{question}}\\n初次回答：{{llm_node_first.first_answer}}\\n审视结果：{{llm_node_review.review_result}}\\n改进建议：{{llm_node_review.suggestions}}\\n\\n请输出优化后的最终回答",
+        "output_params": [{"name": "final_answer", "type": "string"}]
+      }
+    },
+    {
+      "id": "code_node_save",
+      "type": "3",
+      "data": {
+        "name": "记录到数据库",
+        "language": "python",
+        "code": "import json\nimport datetime\ndef main(question, final_answer, review_result):\n    record = {\n        \"timestamp\": datetime.datetime.now().isoformat(),\n        \"question\": question,\n        \"answer\": final_answer,\n        \"review\": review_result,\n        \"saved\": True\n    }\n    return {\"record\": record, \"message\": \"已记录到数据库\"}",
+        "output_params": [
+          {"name": "record", "type": "object"},
+          {"name": "message", "type": "string"}
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "final_answer",
+            "type": "string",
+            "value": "{{llm_node_optimize.final_answer}}"
+          },
+          {
+            "name": "review_result",
+            "type": "string",
+            "value": "{{llm_node_review.review_result}}"
+          },
+          {
+            "name": "saved",
+            "type": "boolean",
+            "value": true
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "llm_node_first"},
+    {"sourceNodeID": "llm_node_first", "targetNodeID": "llm_node_review"},
+    {"sourceNodeID": "llm_node_review", "targetNodeID": "llm_node_optimize"},
+    {"sourceNodeID": "llm_node_optimize", "targetNodeID": "code_node_save"},
+    {"sourceNodeID": "code_node_save", "targetNodeID": "end_node"}
+  ]
+}

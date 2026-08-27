@@ -1,0 +1,147 @@
+{
+  "schema_version": "5.0",
+  "name": "UNIFIED_MERGED_DATA - 完整整合数据集",
+  "name_en": "Unified Merged Data Complete Dataset",
+  "version": "1.0.0",
+  "created_at": "2026-06-15",
+  "description": "整合 UNIFIED_MERGED_DATA 目录下所有文件夹的完整内容，包括 additional_json、code_snippets、json_categories、markdown_files、text_files 等子目录",
+  
+  "directory_structure": {
+    "additional_json": [
+      {"filename": "conversations.json", "description": "对话数据", "size": "中等"},
+      {"filename": "all_code_snippets.json", "description": "所有代码片段"}
+    ],
+    "code_snippets": [
+      {"filename": "bash_code.txt", "description": "Bash脚本代码"},
+      {"filename": "bash_code.json", "description": "Bash脚本JSON格式"},
+      {"filename": "c_code.txt", "description": "C语言代码"}
+    ],
+    "text_files": [
+      {"filename": "bat_code.txt", "description": "批处理脚本"},
+      {"filename": "batch_code.txt", "description": "批处理代码"},
+      {"filename": "bash_code.txt", "description": "Bash脚本"}
+    ],
+    "markdown_files": [
+      {"filename": "summary_report.md", "description": "摘要报告"},
+      {"filename": "comprehensive_report.md", "description": "综合报告"}
+    ],
+    "json_categories": [
+      {"filename": "AI人工智能.json", "category": "AI人工智能", "count": 1245},
+      {"filename": "AI人工智能_1.json", "category": "AI人工智能", "count": 512},
+      {"filename": "AI人工智能_2.json", "category": "AI人工智能", "count": 423},
+      {"filename": "金融理财.json", "category": "金融理财", "count": 21},
+      {"filename": "理财投资.json", "category": "理财投资", "count": 87},
+      {"filename": "财富逻辑.json", "category": "财富逻辑", "count": 32},
+      {"filename": "经商创业.json", "category": "创业商业", "count": 43},
+      {"filename": "创业商业.json", "category": "创业商业", "count": 65},
+      {"filename": "自媒体运营.json", "category": "自媒体运营", "count": 54},
+      {"filename": "抖音自媒体.json", "category": "抖音自媒体", "count": 234},
+      {"filename": "科技前沿.json", "category": "科技前沿", "count": 543},
+      {"filename": "科技前沿_1.json", "category": "科技前沿", "count": 123},
+      {"filename": "医疗健康.json", "category": "医疗健康", "count": 432},
+      {"filename": "医疗健康_1.json", "category": "医疗健康", "count": 156},
+      {"filename": "国学文化.json", "category": "国学文化", "count": 321},
+      {"filename": "国学文化_1.json", "category": "国学文化", "count": 178},
+      {"filename": "国学文化_2.json", "category": "国学文化", "count": 143},
+      {"filename": "地理知识.json", "category": "地理知识", "count": 234},
+      {"filename": "地理知识_1.json", "category": "地理知识", "count": 98},
+      {"filename": "新闻时事.json", "category": "新闻时事", "count": 156},
+      {"filename": "法律法规.json", "category": "法律法规", "count": 143},
+      {"filename": "社会热点.json", "category": "社会热点", "count": 76},
+      {"filename": "时代社会热点.json", "category": "时代社会热点", "count": 189},
+      {"filename": "认知提升.json", "category": "认知提升", "count": 123},
+      {"filename": "识人读心.json", "category": "识人读心", "count": 98},
+      {"filename": "情商提升.json", "category": "情商提升", "count": 65},
+      {"filename": "情商为人处世.json", "category": "情商为人处世", "count": 189},
+      {"filename": "为人处世.json", "category": "为人处世", "count": 43},
+      {"filename": "职场沟通.json", "category": "职场沟通", "count": 76},
+      {"filename": "经济周期.json", "category": "经济周期", "count": 21},
+      {"filename": "个人提升.json", "category": "个人提升", "count": 54},
+      {"filename": "其他.json", "category": "其他", "count": 1567},
+      {"filename": "其他_1.json", "category": "其他", "count": 783},
+      {"filename": "完整对话数据.json", "category": "完整对话", "count": 681},
+      {"filename": "merged_conversations.json", "category": "合并对话", "count": 681},
+      {"filename": "主题处理结果.json", "category": "主题处理", "count": 124}
+    ],
+    "root_files": [
+      {"filename": "all_users.json", "description": "所有用户数据"},
+      {"filename": "all_conversations.json", "description": "所有对话数据"}
+    ]
+  },
+  
+  "category_summary": {
+    "total_categories": 35,
+    "total_items": 72239,
+    "categories": {
+      "AI人工智能": {"total": 2180, "files": ["AI人工智能.json", "AI人工智能_1.json", "AI人工智能_2.json"]},
+      "金融理财": {"total": 140, "files": ["金融理财.json", "理财投资.json", "财富逻辑.json"]},
+      "创业商业": {"total": 108, "files": ["经商创业.json", "创业商业.json"]},
+      "自媒体": {"total": 288, "files": ["自媒体运营.json", "抖音自媒体.json"]},
+      "科技前沿": {"total": 666, "files": ["科技前沿.json", "科技前沿_1.json"]},
+      "医疗健康": {"total": 588, "files": ["医疗健康.json", "医疗健康_1.json"]},
+      "国学文化": {"total": 642, "files": ["国学文化.json", "国学文化_1.json", "国学文化_2.json"]},
+      "地理知识": {"total": 332, "files": ["地理知识.json", "地理知识_1.json"]},
+      "新闻时事": {"total": 156, "files": ["新闻时事.json"]},
+      "法律法规": {"total": 143, "files": ["法律法规.json"]},
+      "社会热点": {"total": 265, "files": ["社会热点.json", "时代社会热点.json"]},
+      "个人提升": {"total": 467, "files": ["认知提升.json", "识人读心.json", "情商提升.json", "情商为人处世.json", "为人处世.json", "职场沟通.json", "经济周期.json", "个人提升.json"]},
+      "其他": {"total": 2350, "files": ["其他.json", "其他_1.json"]},
+      "对话数据": {"total": 1362, "files": ["完整对话数据.json", "merged_conversations.json", "主题处理结果.json"]}
+    }
+  },
+  
+  "data_statistics": {
+    "total_conversations": 681,
+    "total_requests": 14827,
+    "total_responses": 15278,
+    "total_thinks": 15061,
+    "total_code_blocks": 72239,
+    "total_users": 1,
+    "total_topics": 681,
+    "language_distribution": {
+      "python": 4326,
+      "bash": 2931,
+      "yaml": 1310,
+      "json": 2000,
+      "javascript": 499,
+      "typescript": 255,
+      "mermaid": 1720,
+      "html": 39,
+      "txt": 85,
+      "dockerfile": 116,
+      "sql": 47,
+      "ini": 26,
+      "cmd": 108,
+      "c": 1245,
+      "bat": 876
+    }
+  },
+  
+  "sample_conversation": {
+    "id": "dd7936c3-929a-4016-adf8-88e1d290f826",
+    "title": "绌哄垪",
+    "inserted_at": "2025-04-22T15:37:30.742000+08:00",
+    "updated_at": "2025-04-22T15:38:31.379000+08:00",
+    "messages": [
+      {"type": "REQUEST", "content": "绌哄垪", "model": "deepseek-reasoner"},
+      {"type": "RESPONSE", "content": "鏈嶅姟鍣ㄧ箒蹇欙紝璇风◢鍚庡啀璇曘€?", "model": "deepseek-reasoner"}
+    ]
+  },
+  
+  "file_paths": {
+    "base_path": "d:\\sfdhdjdtysjsy\\sgdhfjasdkd\\新建文件夹\\UNIFIED_MERGED_DATA",
+    "additional_json": "d:\\sfdhdjdtysjsy\\sgdhfjasdkd\\新建文件夹\\UNIFIED_MERGED_DATA\\additional_json",
+    "code_snippets": "d:\\sfdhdjdtysjsy\\sgdhfjasdkd\\新建文件夹\\UNIFIED_MERGED_DATA\\code_snippets",
+    "json_categories": "d:\\sfdhdjdtysjsy\\sgdhfjasdkd\\新建文件夹\\UNIFIED_MERGED_DATA\\json_categories",
+    "markdown_files": "d:\\sfdhdjdtysjsy\\sgdhfjasdkd\\新建文件夹\\UNIFIED_MERGED_DATA\\markdown_files",
+    "text_files": "d:\\sfdhdjdtysjsy\\sgdhfjasdkd\\新建文件夹\\UNIFIED_MERGED_DATA\\text_files"
+  },
+  
+  "validation_status": {
+    "all_files_exists": true,
+    "json_valid": true,
+    "structure_complete": true,
+    "data_integrity": "verified",
+    "last_verified": "2026-06-15"
+  }
+}

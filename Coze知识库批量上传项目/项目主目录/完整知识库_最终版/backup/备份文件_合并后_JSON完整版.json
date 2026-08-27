@@ -1,0 +1,998 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "schema_version": "3.0",
+  "name": "Coze终极插件_全能完整版",
+  "name_en": "Coze Ultimate Super Plugin",
+  "version": "18.0.0",
+  "language": "zh-CN",
+  "author": "Universal Automation Team",
+  "created_at": "2026-05-27",
+  "description": "整合所有文件的全能完整版 - 包含21个模块、242+工具函数、完整OpenAPI规范、智能路由系统、零Token成本、安全合规",
+  "title": "Coze终极全能超级插件 - 完整合并版",
+  "total_files_merged": 7,
+  "source_files": [
+    "COZE_ULTIMATE_ALL_IN_ONE_COMPLETE.js",
+    "COZE_ULTIMATE_MERGED_COMPLETE.json",
+    "COZE_ULTIMATE_ALL_IN_ONE_COMPLETE.json",
+    "COZE_ULTIMATE_FINAL.js",
+    "COZE_ULTIMATE_MERGED.js",
+    "FINAL_MERGED_COMPLETE.js",
+    "kjhgffg.js"
+  ],
+  "total_modules": 21,
+  "total_tools": 242,
+  "total_plugins_merged": 83,
+  "api_protocol": "https",
+  "base_url": "https://api.coze.cn",
+  "api_url_prefix": "/api/v1/automation",
+  "entry_point": "handler",
+  "auth": {
+    "type": "bearer",
+    "token_source": "env",
+    "token_env_var": "COZE_API_TOKEN"
+  },
+  "security_features": {
+    "input_sanitization": true,
+    "parameter_validation": true,
+    "environment_variable_protection": true,
+    "injection_prevention": true,
+    "rate_limiting": true,
+    "audit_logging": true
+  },
+  "enterprise_features": {
+    "intelligent_routing": true,
+    "cross_workflow": true,
+    "full_chain_monitoring": true,
+    "auto_error_recovery": true,
+    "multi_modal_support": true,
+    "permission_control": true,
+    "multi_environment_deployment": true,
+    "caching": true,
+    "zero_token_cost": true
+  },
+  "compatibility": {
+    "platform": "coze",
+    "min_version": "2024.08",
+    "api_version": "v1",
+    "runtime": "nodejs18"
+  },
+  "scenarios": [
+    "电商运营",
+    "内容创作",
+    "业务流程自动化",
+    "编程开发",
+    "工业控制",
+    "科研转化",
+    "智能客服",
+    "批量处理",
+    "自媒体",
+    "教育",
+    "医疗",
+    "金融",
+    "物流",
+    "制造",
+    "DeepSeek对话整理",
+    "Coze插件开发",
+    "智能体开发",
+    "AI训练部署",
+    "文化保护"
+  ],
+  "tags": [
+    "automation",
+    "workflow",
+    "ai",
+    "coze",
+    "智能自动化",
+    "全场景",
+    "deepseek",
+    "插件开发",
+    "智能体",
+    "ai训练",
+    "文化遗产",
+    "openclaw",
+    "feishu"
+  ],
+  "license": "MIT",
+  "modules_definition": {
+    "universal": {
+      "name": "统一入口",
+      "functions": 1,
+      "icon": "🚀",
+      "description": "智能路由分发，自动识别意图并转发到对应模块"
+    },
+    "workflow": {
+      "name": "工作流自动化",
+      "functions": 21,
+      "icon": "🔄",
+      "description": "工作流生成、修复、执行、调度、监控全流程管理"
+    },
+    "plugin": {
+      "name": "插件开发",
+      "functions": 15,
+      "icon": "🛠️",
+      "description": "插件代码生成、测试、发布、版本管理"
+    },
+    "json_fix": {
+      "name": "JSON修复",
+      "functions": 8,
+      "icon": "📋",
+      "description": "JSON格式修复、Schema验证、格式化、合并"
+    },
+    "code_fix": {
+      "name": "代码修复",
+      "functions": 12,
+      "icon": "💻",
+      "description": "代码错误检测、修复、优化、安全检查"
+    },
+    "ai_training": {
+      "name": "AI训练",
+      "functions": 14,
+      "icon": "🧠",
+      "description": "模型训练、LoRA微调、数据集处理、GPU调度"
+    },
+    "neural_decision": {
+      "name": "神经意识决策",
+      "functions": 6,
+      "icon": "🤖",
+      "description": "自主决策、自我认知、强化学习、记忆巩固"
+    },
+    "multimedia": {
+      "name": "多媒体制作",
+      "functions": 12,
+      "icon": "🎬",
+      "description": "视频生成、图片处理、音频编辑、风格转换"
+    },
+    "industry_analysis": {
+      "name": "行业分析",
+      "functions": 8,
+      "icon": "📊",
+      "description": "行业分类、政策解读、市场分析、趋势预测"
+    },
+    "data_processing": {
+      "name": "数据处理",
+      "functions": 15,
+      "icon": "⚙️",
+      "description": "数据采集、清洗、去重、转换、加密"
+    },
+    "error_fix": {
+      "name": "错误修复",
+      "functions": 10,
+      "icon": "🔧",
+      "description": "运行时错误检测、配置修复、权限修复"
+    },
+    "deepseek": {
+      "name": "DeepSeek对话处理",
+      "functions": 16,
+      "icon": "📚",
+      "description": "对话解析、代码提取、报告生成、数据合并、历史整理"
+    },
+    "smart_agent": {
+      "name": "智能体开发",
+      "functions": 17,
+      "icon": "🧬",
+      "description": "智能体创建、提示词管理、MCP集成、进化管理"
+    },
+    "content_creation": {
+      "name": "内容创作",
+      "functions": 5,
+      "icon": "✍️",
+      "description": "文案润色、脚本生成、外贸指南、抖音提取"
+    },
+    "monetization": {
+      "name": "变现赚钱",
+      "functions": 13,
+      "icon": "💰",
+      "description": "收入模式、数字员工、工具推荐、质量优化"
+    },
+    "devops": {
+      "name": "部署运维",
+      "functions": 13,
+      "icon": "🚀",
+      "description": "Docker部署、CI/CD集成、环境规划、高可用设计"
+    },
+    "openclaw": {
+      "name": "OpenClaw集成",
+      "functions": 5,
+      "icon": "🔗",
+      "description": "OpenClaw配置、免费LLM推荐、MCP工具"
+    },
+    "security_compliance": {
+      "name": "安全合规",
+      "functions": 4,
+      "icon": "🔒",
+      "description": "数据安全、隐私保护、法规合规、内存优化"
+    },
+    "luoyang_heritage": {
+      "name": "洛阳非遗",
+      "functions": 2,
+      "icon": "🏺",
+      "description": "洛阳文化、方言、职业指南"
+    },
+    "feishu": {
+      "name": "飞书集成",
+      "functions": 1,
+      "icon": "📱",
+      "description": "飞书助手配置、日程管理、文档助手"
+    },
+    "general": {
+      "name": "通用处理",
+      "functions": 6,
+      "icon": "🎯",
+      "description": "NLP处理、翻译、摘要、问答、意图识别"
+    },
+    "unit_conversion": {
+      "name": "单位换算",
+      "functions": 5,
+      "icon": "⚖️",
+      "description": "公斤斤换算、长度、重量、温度等单位换算"
+    }
+  },
+  "error_codes": {
+    "101001": {
+      "code": "INVALID_PARAMS",
+      "message": "参数验证错误",
+      "auto_fix": true,
+      "solution": "检查输入参数格式和类型"
+    },
+    "101002": {
+      "code": "API_PREFIX_ERROR",
+      "message": "API URL前缀不一致",
+      "auto_fix": true,
+      "solution": "统一使用/api/v1前缀"
+    },
+    "101003": {
+      "code": "JSON_SCHEMA_ERROR",
+      "message": "JSON Schema验证失败",
+      "auto_fix": true,
+      "solution": "检查JSON格式"
+    },
+    "101004": {
+      "code": "WORKFLOW_ERROR",
+      "message": "工作流执行错误",
+      "auto_fix": true,
+      "solution": "检查工作流配置"
+    },
+    "101005": {
+      "code": "PLUGIN_ERROR",
+      "message": "插件执行错误",
+      "auto_fix": true,
+      "solution": "检查插件代码"
+    },
+    "101006": {
+      "code": "EXPORT_FUNCTION_ERROR",
+      "message": "函数导出错误",
+      "auto_fix": true,
+      "solution": "重命名入口函数为handler并导出"
+    },
+    "101008": {
+      "code": "DEPENDENCY_ERROR",
+      "message": "第三方依赖错误",
+      "auto_fix": true,
+      "solution": "移除非原生模块"
+    },
+    "101009": {
+      "code": "TYPE_CONFLICT_ERROR",
+      "message": "类型冲突错误",
+      "auto_fix": true,
+      "solution": "重命名冲突类型"
+    },
+    "101010": {
+      "code": "PATH_ERROR",
+      "message": "路径错误",
+      "auto_fix": true,
+      "solution": "修复HTTP URL重复片段"
+    },
+    "101011": {
+      "code": "AUTH_ERROR",
+      "message": "认证错误",
+      "auto_fix": false,
+      "solution": "检查环境变量COZE_API_TOKEN"
+    },
+    "101012": {
+      "code": "RATE_LIMIT_ERROR",
+      "message": "限流错误",
+      "auto_fix": true,
+      "solution": "等待后重试"
+    }
+  },
+  "routing_keywords": {
+    "universal": [],
+    "workflow": [
+      "工作流",
+      "workflow",
+      "流程",
+      "自动化",
+      "节点",
+      "执行",
+      "生成",
+      "修复"
+    ],
+    "plugin": [
+      "插件",
+      "plugin",
+      "工具",
+      "代码生成",
+      "发布"
+    ],
+    "json_fix": [
+      "json",
+      "格式",
+      "schema",
+      "验证",
+      "修复"
+    ],
+    "code_fix": [
+      "代码",
+      "code",
+      "bug",
+      "错误",
+      "修复",
+      "101006",
+      "101008"
+    ],
+    "ai_training": [
+      "训练",
+      "train",
+      "模型",
+      "ai",
+      "微调",
+      "LoRA",
+      "数据集"
+    ],
+    "neural_decision": [
+      "神经",
+      "意识",
+      "决策",
+      "强化学习",
+      "自我认知"
+    ],
+    "multimedia": [
+      "视频",
+      "video",
+      "剪辑",
+      "图片",
+      "image",
+      "绘画",
+      "音频",
+      "声音"
+    ],
+    "industry_analysis": [
+      "行业",
+      "分析",
+      "政策",
+      "市场",
+      "竞品",
+      "趋势"
+    ],
+    "data_processing": [
+      "数据",
+      "采集",
+      "清洗",
+      "处理",
+      "去重",
+      "转换"
+    ],
+    "error_fix": [
+      "错误",
+      "修复",
+      "故障",
+      "检测"
+    ],
+    "general": [],
+    "deepseek": [
+      "deepseek",
+      "对话",
+      "解析",
+      "导出",
+      "整理",
+      "历史"
+    ],
+    "smart_agent": [
+      "智能体",
+      "agent",
+      "中枢",
+      "提示词",
+      "MCP"
+    ],
+    "content_creation": [
+      "内容",
+      "创作",
+      "外贸",
+      "抖音",
+      "脚本",
+      "润色"
+    ],
+    "monetization": [
+      "变现",
+      "赚钱",
+      "收入",
+      "任务",
+      "数字员工"
+    ],
+    "devops": [
+      "部署",
+      "docker",
+      "github",
+      "云端",
+      "CI/CD"
+    ],
+    "openclaw": [
+      "openclaw",
+      "mcp",
+      "工具",
+      "集成"
+    ],
+    "security_compliance": [
+      "安全",
+      "合规",
+      "加密",
+      "知识库"
+    ],
+    "luoyang_heritage": [
+      "非遗",
+      "文化",
+      "洛阳",
+      "遗产"
+    ],
+    "feishu": [
+      "飞书",
+      "lark",
+      "助手"
+    ],
+    "unit_conversion": [
+      "换算",
+      "公斤",
+      "斤",
+      "单位"
+    ]
+  },
+  "openapi_spec": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Coze Ultimate Automation Suite - Complete Merged",
+      "description": "全场景智能自动化终极合并版 - 整合所有文件、21个模块、242个工具、支持智能路由、工作流生成、代码修复、AI训练、DeepSeek解析、OpenClaw集成、飞书助手搭建、完全解决Invalid params问题",
+      "version": "18.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://api.coze.cn/api/v1/automation",
+        "description": "Coze Automation API"
+      }
+    ],
+    "paths": {
+      "/execute": {
+        "post": {
+          "summary": "智能路由执行",
+          "description": "根据用户输入自动路由到相应模块执行",
+          "operationId": "executeAutomation",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "workflow",
+                        "plugin",
+                        "json_fix",
+                        "code_fix",
+                        "ai_training",
+                        "neural_decision",
+                        "multimedia",
+                        "industry_analysis",
+                        "data_processing",
+                        "error_fix",
+                        "general",
+                        "deepseek",
+                        "smart_agent",
+                        "content_creation",
+                        "monetization",
+                        "devops",
+                        "openclaw",
+                        "security_compliance",
+                        "luoyang_heritage",
+                        "feishu",
+                        "universal"
+                      ],
+                      "default": "universal"
+                    },
+                    "sub_action": {
+                      "type": "string",
+                      "default": "auto_handle"
+                    },
+                    "user_input": {
+                      "type": "string",
+                      "description": "用户输入内容（自然语言描述或具体数据）",
+                      "required": true
+                    },
+                    "options": {
+                      "type": "object",
+                      "properties": {
+                        "language": {
+                          "type": "string",
+                          "default": "zh-CN"
+                        },
+                        "output_format": {
+                          "type": "string",
+                          "enum": [
+                            "json",
+                            "text",
+                            "html"
+                          ],
+                          "default": "json"
+                        },
+                        "confidence_threshold": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1,
+                          "default": 0.6
+                        },
+                        "auto_repair": {
+                          "type": "boolean",
+                          "default": true
+                        },
+                        "processing_mode": {
+                          "type": "string",
+                          "enum": [
+                            "simple",
+                            "standard",
+                            "advanced"
+                          ],
+                          "default": "standard"
+                        },
+                        "enable_automation": {
+                          "type": "boolean",
+                          "default": true
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "user_input"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "成功执行",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean"
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "pending",
+                          "running",
+                          "success",
+                          "failed"
+                        ]
+                      },
+                      "module": {
+                        "type": "string"
+                      },
+                      "module_name": {
+                        "type": "string"
+                      },
+                      "detected_intent": {
+                        "type": "string"
+                      },
+                      "action": {
+                        "type": "string"
+                      },
+                      "result": {
+                        "type": "object"
+                      },
+                      "performance_metrics": {
+                        "type": "object",
+                        "properties": {
+                          "processing_time_ms": {
+                            "type": "number"
+                          },
+                          "confidence_score": {
+                            "type": "number"
+                          },
+                          "modules_executed": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "next_actions": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "errors_fixed": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                      },
+                      "metadata": {
+                        "type": "object",
+                        "properties": {
+                          "timestamp": {
+                            "type": "number"
+                          },
+                          "version": {
+                            "type": "string"
+                          },
+                          "request_id": {
+                            "type": "string"
+                          },
+                          "automation_enabled": {
+                            "type": "boolean"
+                          },
+                          "total_modules": {
+                            "type": "number"
+                          },
+                          "total_tools": {
+                            "type": "number"
+                          },
+                          "routed_module": {
+                            "type": "string"
+                          },
+                          "routing_confidence": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "参数错误"
+            },
+            "500": {
+              "description": "服务器错误"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    },
+    "security": [
+      {
+        "bearerAuth": []
+      }
+    ]
+  },
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "required": false,
+        "description": "操作类型 - 智能路由自动识别，无需手动指定",
+        "enum": [
+          "workflow",
+          "plugin",
+          "json_fix",
+          "code_fix",
+          "ai_training",
+          "neural_decision",
+          "multimedia",
+          "industry_analysis",
+          "data_processing",
+          "error_fix",
+          "general",
+          "deepseek",
+          "smart_agent",
+          "content_creation",
+          "monetization",
+          "devops",
+          "openclaw",
+          "security_compliance",
+          "luoyang_heritage",
+          "feishu",
+          "universal"
+        ],
+        "default": "universal"
+      },
+      "sub_action": {
+        "type": "string",
+        "required": false,
+        "description": "子操作类型",
+        "default": "auto_handle"
+      },
+      "user_input": {
+        "type": "string",
+        "required": true,
+        "description": "用户输入内容（自然语言描述或具体数据）"
+      },
+      "options": {
+        "type": "object",
+        "required": false,
+        "description": "扩展配置选项",
+        "properties": {
+          "language": {
+            "type": "string",
+            "default": "zh-CN",
+            "description": "语言设置"
+          },
+          "output_format": {
+            "type": "string",
+            "enum": [
+              "json",
+              "text",
+              "html"
+            ],
+            "default": "json",
+            "description": "输出格式"
+          },
+          "confidence_threshold": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0.6,
+            "description": "置信度阈值"
+          },
+          "auto_repair": {
+            "type": "boolean",
+            "default": true,
+            "description": "是否自动修复错误"
+          },
+          "processing_mode": {
+            "type": "string",
+            "enum": [
+              "simple",
+              "standard",
+              "advanced"
+            ],
+            "default": "standard",
+            "description": "处理模式"
+          },
+          "enable_automation": {
+            "type": "boolean",
+            "default": true,
+            "description": "是否启用自动化处理"
+          }
+        }
+      }
+    },
+    "required": [
+      "user_input"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean",
+        "description": "请求是否成功"
+      },
+      "status": {
+        "type": "string",
+        "description": "执行状态",
+        "enum": [
+          "pending",
+          "running",
+          "success",
+          "failed"
+        ]
+      },
+      "module": {
+        "type": "string",
+        "description": "处理的模块名称"
+      },
+      "module_name": {
+        "type": "string",
+        "description": "模块中文名称"
+      },
+      "module_description": {
+        "type": "string",
+        "description": "模块描述"
+      },
+      "detected_intent": {
+        "type": "string",
+        "description": "检测到的用户意图"
+      },
+      "action": {
+        "type": "string",
+        "description": "执行的具体操作"
+      },
+      "result": {
+        "type": "object",
+        "description": "实际执行结果",
+        "properties": {
+          "data": {
+            "type": "string",
+            "description": "处理后的数据"
+          },
+          "message": {
+            "type": "string",
+            "description": "处理结果描述"
+          },
+          "status": {
+            "type": "string",
+            "description": "任务状态"
+          },
+          "workflow_id": {
+            "type": "string",
+            "description": "工作流ID"
+          },
+          "workflow_name": {
+            "type": "string",
+            "description": "工作流名称"
+          },
+          "plugin_id": {
+            "type": "string",
+            "description": "插件ID"
+          },
+          "plugin_name": {
+            "type": "string",
+            "description": "插件名称"
+          },
+          "model_path": {
+            "type": "string",
+            "description": "模型路径"
+          },
+          "total_conversations": {
+            "type": "number",
+            "description": "对话总数"
+          },
+          "conversations": {
+            "type": "array",
+            "description": "对话列表",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "inserted_at": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                },
+                "messages_count": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      },
+      "performance_metrics": {
+        "type": "object",
+        "properties": {
+          "processing_time_ms": {
+            "type": "number",
+            "description": "处理时间（毫秒）"
+          },
+          "confidence_score": {
+            "type": "number",
+            "description": "路由置信度分数"
+          },
+          "modules_executed": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "执行的模块列表"
+          }
+        }
+      },
+      "next_actions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "建议的下一步操作"
+      },
+      "errors_fixed": {
+        "type": "array",
+        "description": "已修复的错误列表",
+        "items": {
+          "type": "object",
+          "properties": {
+            "error_code": {
+              "type": "string"
+            },
+            "error_message": {
+              "type": "string"
+            },
+            "solution": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "metadata": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "number",
+            "description": "时间戳（毫秒）"
+          },
+          "version": {
+            "type": "string",
+            "description": "插件版本号"
+          },
+          "request_id": {
+            "type": "string",
+            "description": "请求唯一ID"
+          },
+          "automation_enabled": {
+            "type": "boolean",
+            "description": "是否启用自动化"
+          },
+          "total_modules": {
+            "type": "number",
+            "description": "总模块数"
+          },
+          "total_tools": {
+            "type": "number",
+            "description": "总工具数"
+          },
+          "routed_module": {
+            "type": "string",
+            "description": "路由到的模块ID"
+          },
+          "routing_confidence": {
+            "type": "number",
+            "description": "路由置信度"
+          }
+        }
+      }
+    }
+  },
+  "user_data": {
+    "user_id": "92bc0533-6cb3-4514-bceb-ac2738cdb058",
+    "email": null,
+    "mobile": {
+      "mobile_number": "13783797186",
+      "area_code": "+86"
+    },
+    "oauth_profiles": [
+      {
+        "provider": "WECHAT",
+        "profile_json": {
+          "provider": "WECHAT",
+          "id": "888b7de3-86dd-47c0-9883-7f266de715d1",
+          "picture": "https://static.deepseek.com/user-avatar/mW6LUDgo-iVfax7JBKvECinb",
+          "name": "蔡景轩",
+          "locale": "zh-CN",
+          "email": null
+        }
+      }
+    ]
+  },
+  "statistics": {
+    "total_conversations": 681,
+    "total_messages": 12132,
+    "total_questions": 3996,
+    "total_answers": 4131,
+    "total_thinking": 4005,
+    "total_code_blocks": 72239,
+    "total_categories": 18,
+    "total_topics": 144
+  }
+}

@@ -1,0 +1,12 @@
+Trae-SecureModelTrainer/
+├── .trae/                    # Trae项目配置
+├── src/                      # 源代码
+│   ├── core/                 # 核心模块
+│   ├── gui/                  # GUI界面
+│   ├── utils/                # 工具模块
+│   └── config/               # 配置模块
+├── tests/                    # 测试代码
+├── data/                     # 数据目录
+├── docs/                     # 文档
+├── resources/                # 资源文件
+└── scripts/                  # 脚本目录

@@ -1,0 +1,19 @@
+coze-workflow-importer-plugin/
+├── plugin.json                    # 插件元数据
+├── package.json                   # Node.js依赖配置
+├── src/
+│   ├── index.js                   # 插件主入口
+│   ├── nodes/
+│   │   └── importer-node.js       # 导入节点实现
+│   ├── parsers/                   # 文件解析器
+│   │   ├── json-parser.js
+│   │   ├── yaml-parser.js
+│   │   └── zip-parser.js
+│   └── utils/
+│       ├── coze-api-client.js     # Coze API客户端
+│       └── converter.js           # 配置转换器
+├── assets/
+│   └── icon.svg                   # 节点图标
+├── config/
+│   └── node-config.json           # 节点配置定义
+└── README.md

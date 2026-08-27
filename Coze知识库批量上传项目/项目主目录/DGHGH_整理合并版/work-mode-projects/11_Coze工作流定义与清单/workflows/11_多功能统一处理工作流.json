@@ -1,0 +1,140 @@
+{
+  "name": "多功能统一处理工作流",
+  "description": "智能识别用户输入的各类内容（代码、文本、URL、视频链接等）并自动调用最适合的处理模块。整合了代码修复、模型合并、抖音视频处理、内容生成、格式转换、工作流分析与优化等数十种功能于一体。",
+  "version": "1.0.0",
+  "create_time": "2025-09-11 23:49:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "content",
+            "type": "string",
+            "required": true,
+            "description": "用户输入内容"
+          },
+          {
+            "name": "instruction",
+            "type": "string",
+            "required": false,
+            "description": "处理指令"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_classify",
+      "type": "4",
+      "data": {
+        "name": "AI 内容类型识别",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是内容识别专家，精准判断内容类型并选择最佳处理方式",
+        "user_prompt": "内容：{{content}}\\n指令：{{instruction || '请处理此内容'}}\\n请识别内容类型并输出JSON：{\"content_type\":\"code/text/url/video/douyin\",\"best_module\":\"...\",\"confidence\":0.95}",
+        "output_params": [
+          {"name": "content_type", "type": "string"},
+          {"name": "best_module", "type": "string"},
+          {"name": "confidence", "type": "number"}
+        ]
+      }
+    },
+    {
+      "id": "condition_node_1",
+      "type": "8",
+      "data": {
+        "name": "选择处理模块",
+        "conditions": [
+          {"if": "{{llm_node_classify.content_type}} == 'code'", "to": "llm_node_code"},
+          {"if": "{{llm_node_classify.content_type}} == 'text'", "to": "llm_node_text"},
+          {"if": "{{llm_node_classify.content_type}} == 'url'", "to": "code_node_url"},
+          {"if": "{{llm_node_classify.content_type}} == 'video' || {{llm_node_classify.content_type}} == 'douyin'", "to": "code_node_video"},
+          {"else": "llm_node_other"}
+        ]
+      }
+    },
+    {
+      "id": "llm_node_code",
+      "type": "4",
+      "data": {
+        "name": "代码处理模块",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是代码专家，处理代码修复、优化、解释",
+        "user_prompt": "代码：{{content}}\\n指令：{{instruction}}\\n请处理并输出结果",
+        "output_params": [{"name": "result", "type": "string"}]
+      }
+    },
+    {
+      "id": "llm_node_text",
+      "type": "4",
+      "data": {
+        "name": "文本处理模块",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是文本处理专家，处理内容生成、润色、摘要",
+        "user_prompt": "文本：{{content}}\\n指令：{{instruction}}\\n请处理并输出结果",
+        "output_params": [{"name": "result", "type": "string"}]
+      }
+    },
+    {
+      "id": "code_node_url",
+      "type": "3",
+      "data": {
+        "name": "URL处理模块",
+        "language": "python",
+        "code": "import json\ndef main(content, instruction):\n    result = {\n        \"url\": content,\n        \"extracted\": \"模拟从URL提取的内容\",\n        \"summary\": \"根据指令生成的摘要\",\n        \"processed\": True\n    }\n    return result",
+        "output_params": [{"name": "result", "type": "object"}]
+      }
+    },
+    {
+      "id": "code_node_video",
+      "type": "3",
+      "data": {
+        "name": "视频处理模块",
+        "language": "python",
+        "code": "import json\ndef main(content, instruction):\n    result = {\n        \"video_url\": content,\n        \"extracted_text\": \"模拟提取的视频文案\",\n        \"summary\": \"视频内容摘要\",\n        \"processed\": True\n    }\n    return result",
+        "output_params": [{"name": "result", "type": "object"}]
+      }
+    },
+    {
+      "id": "llm_node_other",
+      "type": "4",
+      "data": {
+        "name": "通用处理模块",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是全能处理专家，处理其他类型内容",
+        "user_prompt": "内容：{{content}}\\n指令：{{instruction}}\\n请处理并输出结果",
+        "output_params": [{"name": "result", "type": "string"}]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "unified_result",
+            "type": "object",
+            "value": "{{llm_node_code.result || llm_node_text.result || code_node_url.result || code_node_video.result || llm_node_other.result}}"
+          },
+          {
+            "name": "content_type",
+            "type": "string",
+            "value": "{{llm_node_classify.content_type}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "llm_node_classify"},
+    {"sourceNodeID": "llm_node_classify", "targetNodeID": "condition_node_1"},
+    {"sourceNodeID": "llm_node_code", "targetNodeID": "end_node"},
+    {"sourceNodeID": "llm_node_text", "targetNodeID": "end_node"},
+    {"sourceNodeID": "code_node_url", "targetNodeID": "end_node"},
+    {"sourceNodeID": "code_node_video", "targetNodeID": "end_node"},
+    {"sourceNodeID": "llm_node_other", "targetNodeID": "end_node"}
+  ]
+}

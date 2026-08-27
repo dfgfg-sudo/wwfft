@@ -1,0 +1,37 @@
+{
+  "name": "科技论文转插件与科研落地",
+  "description": "从科技论文到全功能插件与科研落地的全流程转化，将科技论文中的全部技术内容通过自动化工具链转化为全自动化、极简的插件，并同步生成全套白皮书及科研项目成果",
+  "version": "1.0.0",
+  "create_time": "2026-05-27 01:15:00",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7532833276247982107",
+  "original_name": "从科技论文到全功能插件与科研落地的全流程转化",
+  "type": "plugin",
+  "plugin_type": "云插件",
+  "functions": [
+    {
+      "name": "paper_to_plugin",
+      "description": "科技论文转插件",
+      "input_params": [
+        {"name": "paper_content", "type": "string", "required": true, "description": "论文内容"},
+        {"name": "plugin_type", "type": "string", "required": true, "description": "插件类型"}
+      ],
+      "output_params": [
+        {"name": "plugin_code", "type": "string", "description": "插件代码"},
+        {"name": "plugin_doc", "type": "string", "description": "插件文档"}
+      ]
+    },
+    {
+      "name": "generate_paperwork",
+      "description": "生成科研白皮书",
+      "input_params": [
+        {"name": "paper_content", "type": "string", "required": true, "description": "论文内容"}
+      ],
+      "output_params": [
+        {"name": "whitepaper", "type": "string", "description": "白皮书"},
+        {"name": "test_report", "type": "string", "description": "测试报告"},
+        {"name": "user_manual", "type": "string", "description": "使用手册"}
+      ]
+    }
+  ]
+}

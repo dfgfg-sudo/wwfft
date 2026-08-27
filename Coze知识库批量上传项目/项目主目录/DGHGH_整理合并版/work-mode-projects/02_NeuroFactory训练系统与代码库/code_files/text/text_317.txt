@@ -1,0 +1,3 @@
+📋 核心实现代码
+
+1. 主配置文件 (.trae-ide-config.json)

@@ -1,0 +1,11 @@
+---
+
+## 第二部分：本地运行与 Actions 调用的区别
+
+### 2.1 在本地运行 GitHub 项目
+- 克隆仓库：`git clone <repo-url>`
+- 安装依赖：如 `npm install`、`pip install -r requirements.txt`
+- 启动项目：遵循项目 README 中的命令（如 `npm start`、`python app.py`）
+
+### 2.2 在 GitHub Actions 中“启动”应用
+Actions 中的“启动”通常指在自动化流程中运行命令或启动服务，例如：

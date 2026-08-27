@@ -1,0 +1,20 @@
+二、完全免费的云端存储方案
+
+推荐免费存储平台：
+
+1. GitHub仓库 - 免费无限存储
+   · 适合：配置文件、JSON数据、处理日志
+   · 使用方式：GitHub API + 个人仓库
+2. Google Drive免费版 - 15GB免费
+   · 适合：文件存储、备份数据
+   · 使用方式：Google Drive API
+3. SQLite Online (如sqliteonline.com)
+   · 适合：小型数据库操作
+   · 使用方式：Web SQLite
+4. Supabase免费层
+   · 适合：结构化数据存储
+   · 包含：PostgreSQL数据库 + 存储桶
+
+三、完整Coze工作流参数配置
+
+工作流参数定义：

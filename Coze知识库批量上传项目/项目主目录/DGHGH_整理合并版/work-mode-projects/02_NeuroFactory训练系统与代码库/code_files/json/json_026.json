@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "name_for_human": "Coze全场景智能自动化超级中枢",
+  "name_for_model": "coze_automation_super_center",
+  "description_for_human": "统一整合的智能自动化API中枢，支持多场景工作流自动化、数据集成与AI增强处理。",
+  "description_for_model": "端到端自动化插件生成系统 – 输入描述即得完整插件，全节点自愈，任意节点触发，零手动配置。",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://api.coze-automation.com/v1/openapi.yaml",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://api.coze-automation.com/logo.png",
+  "contact_email": "support@coze-automation.com",
+  "legal_info_url": "https://api.coze-automation.com/legal"
+}

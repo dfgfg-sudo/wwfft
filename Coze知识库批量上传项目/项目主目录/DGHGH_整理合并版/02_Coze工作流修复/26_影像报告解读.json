@@ -1,0 +1,88 @@
+{
+  "name": "影像报告解读",
+  "description": "解读医学影像报告，提供专业分析和建议",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:04:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "report_text",
+            "type": "string",
+            "required": true,
+            "description": "影像报告文本"
+          },
+          {
+            "name": "report_type",
+            "type": "string",
+            "required": false,
+            "description": "报告类型：CT/MRI/X光/B超"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_analyze",
+      "type": "4",
+      "data": {
+        "name": "AI 解读报告",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是医学影像专家，解读报告并给出专业建议",
+        "user_prompt": "报告类型：{{report_type || '综合'}}\\n报告内容：{{report_text}}\\n请解读报告，输出关键发现和建议",
+        "output_params": [
+          {
+            "name": "key_findings",
+            "type": "array"
+          },
+          {
+            "name": "interpretation",
+            "type": "string"
+          },
+          {
+            "name": "suggestions",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "key_findings",
+            "type": "array",
+            "value": "{{llm_node_analyze.key_findings}}"
+          },
+          {
+            "name": "interpretation",
+            "type": "string",
+            "value": "{{llm_node_analyze.interpretation}}"
+          },
+          {
+            "name": "suggestions",
+            "type": "string",
+            "value": "{{llm_node_analyze.suggestions}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "start_node",
+      "targetNodeID": "llm_node_analyze"
+    },
+    {
+      "sourceNodeID": "llm_node_analyze",
+      "targetNodeID": "end_node"
+    }
+  ]
+}

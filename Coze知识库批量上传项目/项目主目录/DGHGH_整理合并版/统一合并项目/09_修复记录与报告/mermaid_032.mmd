@@ -1,0 +1,36 @@
+flowchart TD
+    Start[数据加载] --> InputType{输入类型判断}
+    InputType -->|文件夹| FolderProcess[文件夹递归处理]
+    InputType -->|ZIP文件| ZipExtract[ZIP解压处理]
+    InputType -->|单个文件| FileProcess[直接文件处理]
+    FolderProcess --> FileDispatch[文件类型分发]
+    ZipExtract --> FolderProcess
+    FileProcess --> FileDispatch
+    FileDispatch --> Text[文本处理]
+    FileDispatch --> CSV[CSV处理]
+    FileDispatch --> JSON[JSON处理]
+    FileDispatch --> Word[Word处理]
+    FileDispatch --> PDF[PDF处理]
+    FileDispatch --> Excel[Excel处理]
+    FileDispatch --> Image[图像处理]
+    FileDispatch --> Code[代码处理]
+    Text --> DataClean[数据清洗管道]
+    CSV --> DataClean
+    JSON --> DataClean
+    Word --> DataClean
+    PDF --> DataClean
+    Excel --> DataClean
+    Image --> DataClean
+    Code --> DataClean
+    DataClean --> Dedupe[数据去重]
+    DataClean --> Clean[内容清洗]
+    DataClean --> Label[自动标注]
+    Dedupe --> Split[数据集划分]
+    Clean --> Split
+    Label --> Split
+    Split --> TrainSet[训练集 80%]
+    Split --> ValidSet[验证集 20%]
+    TrainSet --> ModelTraining[模型训练]
+    ValidSet --> ModelTraining
+    ModelTraining --> ModelExport[模型导出]
+    ModelExport --> End[训练完成]

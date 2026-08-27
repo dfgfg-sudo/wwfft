@@ -1,0 +1,13 @@
+关注点（原文保留）：
+
+· ID：唯一的一个 int64，自定义节点类型建议从一个大数开始，比如 1000+。
+· Key：唯一的一个 string，准确的描述出节点的功能定位。
+· Name, Category, Desc, Color, IconURI, EnUSName, EnUSDescription：给画布用的展示信息。
+· SupportBatch: 节点是否可配置“批处理”模式。
+· ExecutableMeta：节点运行时的通用配置。
+
+注：节点对应的Icon图片需放置在 docker/volumes/minio/default_icon/workflow_icon/ 中，图标的文件名和此处的IconURI字段需要匹配。
+
+2.5 从画布到后端（原文完整数据结构）
+
+画布中的 workflow 节点传到后端，变成了 backend/domain/workflow/entity/vo/canvas.go 中的 Node 结构体。比如一个“开始节点”的 Node 结构体（原文示例）：

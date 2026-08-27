@@ -1,0 +1,59 @@
+{
+  "name": "Coze结构化提示词生成",
+  "description": "最适合coze的结构化提示词，一键生成提示词",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:05:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "role_description",
+            "type": "string",
+            "required": true,
+            "description": "角色描述（如：你是一个文案专家）"
+          },
+          {
+            "name": "task_type",
+            "type": "string",
+            "required": false,
+            "description": "任务类型：写作/分析/对话/编程"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_generate",
+      "type": "4",
+      "data": {
+        "name": "AI 生成结构化提示词",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是Coze提示词专家，生成符合Coze规范的结构化提示词",
+        "user_prompt": "角色描述：{{role_description}}\\n任务类型：{{task_type || '通用'}}\\n\\n请生成Coze结构化提示词，包含以下模块：\\n1. 角色定义（Role）\\n2. 技能列表（Skills）\\n3. 工作流程（Workflows）\\n4. 约束条件（Constraints）\\n5. 输出格式（Output Format）\\n\\n输出格式示例：\\n```\\n## 角色\\n[角色描述]\\n\\n## 技能\\n- 技能1\\n- 技能2\\n\\n## 工作流程\\n1. 步骤1\\n2. 步骤2\\n\\n## 约束\\n- 约束1\\n- 约束2\\n```",
+        "output_params": [{"name": "structured_prompt", "type": "string"}]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "prompt",
+            "type": "string",
+            "value": "{{llm_node_generate.structured_prompt}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "llm_node_generate"},
+    {"sourceNodeID": "llm_node_generate", "targetNodeID": "end_node"}
+  ]
+}

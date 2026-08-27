@@ -1,0 +1,114 @@
+{
+  "name": "意图识别流程分支",
+  "description": "示例工作流：识别用户意图，根据不同意图走不同处理流程（查询、下单、投诉、其他）",
+  "version": "1.0.0",
+  "create_time": "2026-03-12 21:31:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "user_input",
+            "type": "string",
+            "required": true,
+            "description": "用户输入文本"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_intent",
+      "type": "4",
+      "data": {
+        "name": "AI 意图识别",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是意图识别专家，识别用户意图类型",
+        "user_prompt": "用户输入：{{user_input}}\\n请识别意图类型：query（查询）/ order（下单）/ complaint（投诉）/ other（其他）\\n输出JSON：{\"intent\":\"...\",\"confidence\":0.95,\"keywords\":[\"...\"]}",
+        "output_params": [
+          {"name": "intent", "type": "string"},
+          {"name": "confidence", "type": "number"},
+          {"name": "keywords", "type": "array"}
+        ]
+      }
+    },
+    {
+      "id": "condition_node_1",
+      "type": "8",
+      "data": {
+        "name": "意图分支判断",
+        "conditions": [
+          {"if": "{{llm_node_intent.intent}} == 'query'", "to": "code_node_query"},
+          {"if": "{{llm_node_intent.intent}} == 'order'", "to": "code_node_order"},
+          {"if": "{{llm_node_intent.intent}} == 'complaint'", "to": "code_node_complaint"},
+          {"else": "code_node_other"}
+        ]
+      }
+    },
+    {
+      "id": "code_node_query",
+      "type": "3",
+      "data": {
+        "name": "查询处理流程",
+        "language": "python",
+        "code": "def main(user_input, keywords):\n    result = {\n        \"type\": \"query\",\n        \"action\": \"执行数据库查询\",\n        \"query_params\": keywords,\n        \"response\": \"已为您查询相关信息：\"\n    }\n    return result",
+        "output_params": [{"name": "result", "type": "object"}]
+      }
+    },
+    {
+      "id": "code_node_order",
+      "type": "3",
+      "data": {
+        "name": "下单处理流程",
+        "language": "python",
+        "code": "def main(user_input, keywords):\n    result = {\n        \"type\": \"order\",\n        \"action\": \"创建订单\",\n        \"items\": keywords,\n        \"response\": \"正在为您创建订单...\"\n    }\n    return result",
+        "output_params": [{"name": "result", "type": "object"}]
+      }
+    },
+    {
+      "id": "code_node_complaint",
+      "type": "3",
+      "data": {
+        "name": "投诉处理流程",
+        "language": "python",
+        "code": "def main(user_input, keywords):\n    result = {\n        \"type\": \"complaint\",\n        \"action\": \"记录投诉并分配客服\",\n        \"issue\": user_input,\n        \"response\": \"已收到您的反馈，我们将尽快处理\"\n    }\n    return result",
+        "output_params": [{"name": "result", "type": "object"}]
+      }
+    },
+    {
+      "id": "code_node_other",
+      "type": "3",
+      "data": {
+        "name": "其他意图处理",
+        "language": "python",
+        "code": "def main(user_input, keywords):\n    result = {\n        \"type\": \"other\",\n        \"action\": \"转接人工客服\",\n        \"input\": user_input,\n        \"response\": \"请稍候，为您转接人工客服\"\n    }\n    return result",
+        "output_params": [{"name": "result", "type": "object"}]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "intent_result",
+            "type": "object",
+            "value": "{{code_node_query.result || code_node_order.result || code_node_complaint.result || code_node_other.result}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "llm_node_intent"},
+    {"sourceNodeID": "llm_node_intent", "targetNodeID": "condition_node_1"},
+    {"sourceNodeID": "code_node_query", "targetNodeID": "end_node"},
+    {"sourceNodeID": "code_node_order", "targetNodeID": "end_node"},
+    {"sourceNodeID": "code_node_complaint", "targetNodeID": "end_node"},
+    {"sourceNodeID": "code_node_other", "targetNodeID": "end_node"}
+  ]
+}

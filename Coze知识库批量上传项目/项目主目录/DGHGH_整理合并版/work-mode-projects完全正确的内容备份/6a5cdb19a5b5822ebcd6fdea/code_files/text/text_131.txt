@@ -1,0 +1,18 @@
+📊 输出示例
+
+处理完成后，工具会生成详细的报告，包括：
+
+· 处理状态和耗时
+· 内容分析和问题检测
+· 修复或生成的内容
+· 兼容性检查结果
+· 优化建议和指导
+
+🔧 配置选项
+
+· 处理模式: auto_detect, coze_plugin_repair, openapi_merge_fix, code_generation等
+· 修复深度: basic, comprehensive, thorough
+· 输出格式: standard_json, formatted_yaml, coze_import_ready, minified, pretty_code
+· 自动化控制: 启用/禁用全自动处理
+
+这个工具提供了一个完整的、统一的解决方案，可以处理所有Coze相关的自动化修复和代码生成需求，支持用户选择是否启用自动化处理。所有功能都集成在一个单一的应用程序中，使用简单且功能强大。还有添加进去我将严格按照"无变动保留原文内容"原则，完整整理合并修复所有代码，确保完全保留原文所有内容，并将所有功能整合为一个统一的自动化工具。

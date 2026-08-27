@@ -1,0 +1,93 @@
+# Coze平台插件配置 - 统一修复中枢
+openapi: 3.0.0
+info:
+  title: "Quantum AI Factory - 统一修复中枢"
+  version: "4.0.0-Quantum"
+  description: |
+    🌟 Quantum AI Factory 核心模块 - 统一处理所有JSON/YAML修复转换
+    🔧 智能错误检测修复 | 🔄 多规范文件融合 | 🎯 Coze平台兼容性保证
+    
+    ## 核心功能
+    - **一键修复**: 自动检测修复所有JSON错误
+    - **批量处理**: 支持大量JSON文件同时处理  
+    - **格式转换**: 智能转换为Coze插件格式
+    - **参数验证**: 自动修复Invalid params错误
+    
+    **只需将JSON代码粘贴到输入框，系统自动完成所有修复！**
+
+servers:
+  - url: "https://api.quantum-ai-factory.com/v1"
+    description: "Quantum AI Factory API服务器"
+
+paths:
+  /quantum-process:
+    post:
+      operationId: quantumJsonProcessor
+      summary: "Quantum AI统一处理器"
+      description: "接收任意JSON/YAML代码，自动完成所有修复和转换"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - quantum_input
+              properties:
+                quantum_input:
+                  type: string
+                  description: "输入需要处理的JSON/YAML代码"
+                processing_mode:
+                  type: string
+                  enum: ["auto_quantum", "batch_quantum", "smart_fusion"]
+                  default: "auto_quantum"
+                target_platform:
+                  type: string  
+                  enum: ["coze_plugin", "openapi_3", "standard_json"]
+                  default: "coze_plugin"
+                repair_level:
+                  type: string
+                  enum: ["quantum_basic", "quantum_standard", "quantum_advanced"]
+                  default: "quantum_advanced"
+      responses:
+        '200':
+          description: "Quantum处理成功"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  quantum_id:
+                    type: string
+                  processing_time:
+                    type: number
+                  original_issues:
+                    type: integer
+                  fixed_issues:
+                    type: integer
+                  quantum_result:
+                    type: object
+                    properties:
+                      repaired_output:
+                        type: string
+                      validation_passed:
+                        type: boolean
+                      platform_ready:
+                        type: boolean
+                  quantum_report:
+                    type: object
+                    properties:
+                      syntax_repairs:
+                        type: array
+                        items:
+                          type: string
+                      structure_repairs:
+                        type: array  
+                        items:
+                          type: string
+                      fusion_operations:
+                        type: array
+                        items:
+                          type: string

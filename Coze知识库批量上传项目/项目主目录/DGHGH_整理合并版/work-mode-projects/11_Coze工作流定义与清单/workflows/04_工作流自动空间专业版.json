@@ -1,0 +1,85 @@
+{
+  "name": "工作流自动空间专业版",
+  "description": "自动管理工作流空间：批量导入、分类、重命名、归档、版本控制一体化",
+  "version": "1.0.0",
+  "create_time": "2025-08-11 20:32:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "space_action",
+            "type": "string",
+            "required": true,
+            "description": "空间操作：导入/分类/重命名/归档"
+          },
+          {
+            "name": "config",
+            "type": "object",
+            "required": true,
+            "description": "操作配置"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_scan",
+      "type": "3",
+      "data": {
+        "name": "扫描工作流空间",
+        "language": "python",
+        "code": "import json\ndef main(space_action, config):\n    items = [\n        {\"id\": \"wf_001\", \"name\": \"工作流1\", \"category\": \"数据处理\", \"version\": \"v1\"},\n        {\"id\": \"wf_002\", \"name\": \"工作流2\", \"category\": \"AI生成\", \"version\": \"v2\"}\n    ]\n    return {\"items\": items, \"action\": space_action, \"config\": config}",
+        "output_params": [
+          {"name": "items", "type": "array"},
+          {"name": "action", "type": "string"},
+          {"name": "config", "type": "object"}
+        ]
+      }
+    },
+    {
+      "id": "llm_node_classify",
+      "type": "4",
+      "data": {
+        "name": "AI 智能分类与命名",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是工作流管理专家，根据功能给出标准分类与规范命名",
+        "user_prompt": "待处理项：{{code_node_scan.items}}\\n操作：{{code_node_scan.action}}\\n输出 JSON：[{\"id\":\"...\",\"new_name\":\"...\",\"category\":\"...\"}]",
+        "output_params": [{"name": "processed", "type": "array"}]
+      }
+    },
+    {
+      "id": "code_node_apply",
+      "type": "3",
+      "data": {
+        "name": "应用变更",
+        "language": "python",
+        "code": "import json\ndef main(processed, action):\n    applied = []\n    for item in processed:\n        applied.append({\n            \"id\": item.get(\"id\"),\n            \"action\": action,\n            \"new_name\": item.get(\"new_name\"),\n            \"category\": item.get(\"category\"),\n            \"status\": \"success\"\n        })\n    return {\"applied\": applied}",
+        "output_params": [{"name": "applied", "type": "array"}]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "space_result",
+            "type": "array",
+            "value": "{{code_node_apply.applied}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "code_node_scan"},
+    {"sourceNodeID": "code_node_scan", "targetNodeID": "llm_node_classify"},
+    {"sourceNodeID": "llm_node_classify", "targetNodeID": "code_node_apply"},
+    {"sourceNodeID": "code_node_apply", "targetNodeID": "end_node"}
+  ]
+}

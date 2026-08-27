@@ -1,0 +1,4 @@
+输出格式：
+1. workflow.json（Coze 工作流定义）
+2. functions.js（JavaScript 函数）
+3. DEPLOY.md（部署说明）

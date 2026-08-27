@@ -1,0 +1,104 @@
+graph TD
+    %% ========== 系统启动层 ==========
+    A[run.bat 启动脚本] --> B[auto_trainer.py 主程序]
+    
+    %% ========== 配置管理层 ==========
+    B --> C[ConfigManager 配置管理]
+    C --> C1[路径检测与初始化]
+    C1 --> C2[模型路径: ./model]
+    C1 --> C3[数据路径: ./data]
+    C1 --> C4[输出路径: ./output]
+
+    %% ========== 数据处理层 ==========
+    B --> D[DataProcessor 数据处理器]
+    D --> D1[多格式文件支持]
+    D1 --> D11[文本类: .txt .csv .json .xml .py .js .html]
+    D1 --> D12[文档类: .docx .pdf .xlsx]
+    D1 --> D13[图像类: .png .jpg .jpeg]
+    D1 --> D14[压缩包: .zip]
+
+    D --> D2[多线程处理引擎]
+    D2 --> D21[ThreadPoolExecutor 线程池]
+    D2 --> D22[LRU缓存机制]
+    D2 --> D23[哈希去重]
+
+    D --> D3[专用格式处理器]
+    D3 --> D31[图像: PIL + torchvision]
+    D31 --> D311[Resize 224x224]
+    D31 --> D312[ToTensor & Normalize]
+
+    D3 --> D32[PDF: PyPDF2]
+    D3 --> D33[Word: python-docx]
+    D3 --> D34[Excel: pandas+openpyxl]
+    D3 --> D35[文本: UTF-8/Latin-1 自动编码]
+
+    D --> D4[知识库管理系统]
+    D4 --> D41[deque 容量1000]
+    D4 --> D42[元数据: 路径/时间/哈希]
+
+    %% ========== 模型训练层 ==========
+    B --> E[QuantumTrainer 训练器]
+    E --> E1[Hugging Face 模型加载]
+    E1 --> E11[AutoTokenizer + pad_token]
+    E1 --> E12[AutoConfig]
+    E1 --> E13[AutoModelForCausalLM]
+
+    E --> E2[PEFT LoRA 适配]
+    E2 --> E21[LoraConfig: r=8, alpha=32]
+    E2 --> E22[target: q_proj, v_proj]
+
+    E --> E3[训练循环]
+    E3 --> E31[AdamW 学习率 2e-5]
+    E3 --> E32[批次大小 2, 序列长度 512]
+    E3 --> E33[前向+反向+梯度更新]
+
+    E --> E4[模型保存]
+    E4 --> E41[保存权重+分词器]
+
+    %% ========== 用户界面层 ==========
+    B --> F[TrainingGUI 界面]
+    F --> F1[控制面板]
+    F1 --> F11[📂 加载数据]
+    F1 --> F12[🚀 开始训练]
+    F1 --> F13[💾 保存模型]
+
+    F --> F2[进度监控]
+    F2 --> F21[Progressbar 进度条]
+    F2 --> F22[状态标签]
+
+    F --> F3[日志系统]
+    F3 --> F31[滚动文本区域]
+    F3 --> F32[彩色标签: 红/绿/蓝]
+    F3 --> F33[时间戳前缀]
+
+    F --> F4[多线程管理]
+    F4 --> F41[数据加载守护线程]
+    F4 --> F42[训练守护线程]
+
+    %% ========== 数据流向 ==========
+    D4 --> G[训练数据集]
+    G --> E3
+    E4 --> H[输出模型文件]
+    H --> H1[./output/YYYYMMDD_HHMMSS/]
+
+    %% ========== 外部依赖 ==========
+    I[PyTorch] --> E
+    J[Transformers] --> E1
+    K[PEFT] --> E2
+    L[PIL] --> D31
+    M[PyPDF2] --> D32
+    N[python-docx] --> D33
+    O[pandas] --> D34
+    P[Tkinter] --> F1
+
+    classDef config fill:#e3f2fd,stroke:#1565c0
+    classDef data fill:#e8f5e9,stroke:#2e7d32
+    classDef model fill:#fff3e0,stroke:#e65100
+    classDef ui fill:#f3e5f5,stroke:#6a1b9a
+    classDef external fill:#eceff1,stroke:#455a64
+
+    class C,C1,C2,C3,C4 config
+    class D,D1,D2,D3,D4 data
+    class E,E1,E2,E3,E4 model
+    class F,F1,F2,F3,F4 ui
+    class I,J,K,L,M,N,O,P external

@@ -1,0 +1,55 @@
+{
+  "importerNode": {
+    "name": "workflow_importer",
+    "displayName": "工作流导入",
+    "description": "上传配置文件自动创建工作流",
+    "category": "import",
+    "version": "1.0.0",
+    "inputs": [
+      {
+        "name": "configFile",
+        "type": "file",
+        "required": true,
+        "description": "工作流配置文件",
+        "accept": [".json", ".yaml", ".yml", ".zip"]
+      },
+      {
+        "name": "targetWorkspace",
+        "type": "string",
+        "required": false,
+        "description": "目标工作空间ID"
+      },
+      {
+        "name": "overrideExisting",
+        "type": "boolean",
+        "required": false,
+        "default": false,
+        "description": "是否覆盖同名工作流"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "success",
+        "type": "boolean",
+        "description": "是否成功"
+      },
+      {
+        "name": "workflowId",
+        "type": "string",
+        "description": "新工作流ID"
+      },
+      {
+        "name": "workflowName",
+        "type": "string",
+        "description": "工作流名称"
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "description": "错误信息"
+      }
+    ],
+    "icon": "upload-cloud",
+    "color": "#4CAF50"
+  }
+}

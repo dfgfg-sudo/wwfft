@@ -1,0 +1,83 @@
+graph TD
+    A[AI Trainer Pro 4.0 主程序] --> B[ConfigManager 配置管理器]
+    B --> B1[初始化路径系统]
+    B1 --> B2[model/ 模型目录]
+    B1 --> B3[data/ 数据目录]
+    B1 --> B4[outputs/ 输出目录]
+
+    A --> C[TrainingGUI 训练界面]
+    C --> C1[控制面板]
+    C --> C2[数据统计面板]
+    C --> C3[训练进度条]
+    C --> C4[日志输出区域]
+    C1 --> C11[📁 加载数据按钮]
+    C1 --> C12[🚀 开始训练按钮]
+    C1 --> C13[💾 导出模型按钮]
+
+    C11 --> D[DataPreprocessor 数据预处理器]
+    D --> D1[文件类型分发器]
+    D1 --> D2[文本 .txt]
+    D1 --> D3[CSV .csv]
+    D1 --> D4[JSON .json]
+    D1 --> D5[Word .docx]
+    D1 --> D6[PDF .pdf]
+    D1 --> D7[Excel .xlsx]
+    D1 --> D8[图像 .png/.jpg]
+    D1 --> D9[代码 .py]
+    D1 --> D10[压缩包 .zip]
+
+    D2 --> E[数据清洗管道]
+    D3 --> E
+    D4 --> E
+    D5 --> E
+    D6 --> E
+    D7 --> E
+    D8 --> E
+    D9 --> E
+    D10 --> D101[ZIP解压器]
+    D101 --> D1
+
+    E --> E1[去重处理]
+    E --> E2[内容清洗]
+    E --> E3[自动标注]
+    E1 --> F[数据集划分器]
+    E2 --> F
+    E3 --> F
+    F --> F1[训练集 80%]
+    F --> F2[验证集 20%]
+
+    C12 --> G[ModelTrainer 模型训练器]
+    G --> G1[模型加载器]
+    G1 --> G11[AutoTokenizer]
+    G1 --> G12[AutoModelForCausalLM]
+    G --> G2[PEFT配置器]
+    G2 --> G21[LoRA配置: r=8, alpha=32]
+    G --> G3[训练参数配置]
+    G3 --> G31[TrainingArguments: epoch=3, batch=2]
+    F1 --> G4[训练执行器]
+    F2 --> G4
+    G4 --> G5[Trainer]
+
+    C13 --> H[模型导出器]
+    G5 --> H
+    H --> H1[save_pretrained]
+
+    I[技术支持栈] --> I1[PyTorch]
+    I --> I2[Transformers + PEFT]
+    I --> I3[Datasets + Pandas]
+    I --> I4[Tkinter + PIL + PyPDF2]
+    J[数据流转] --> J1[多格式文件]
+    J --> J2[自动清洗]
+    J --> J3[智能标注]
+    J --> J4[LoRA微调]
+
+    classDef gui fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef data fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef model fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef config fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef tech fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    class C,C1,C2,C3,C4,C11,C12,C13 gui
+    class D,D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D101,E,E1,E2,E3,F,F1,F2 data
+    class G,G1,G11,G12,G2,G21,G3,G31,G4,G5,H,H1 model
+    class B,B1,B2,B3,B4 config
+    class I,I1,I2,I3,I4,J,J1,J2,J3,J4 tech

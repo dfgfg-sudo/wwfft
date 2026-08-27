@@ -1,0 +1,23 @@
+{
+  "name": "基础云插件",
+  "description": "基础功能插件",
+  "version": "1.0.0",
+  "create_time": "2026-06-07 02:17:00",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7648348265619914767",
+  "original_name": "rtyy",
+  "type": "plugin",
+  "plugin_type": "云插件",
+  "functions": [
+    {
+      "name": "basic_action",
+      "description": "执行基础操作",
+      "input_params": [
+        {"name": "input_data", "type": "string", "required": true, "description": "输入数据"}
+      ],
+      "output_params": [
+        {"name": "output_data", "type": "string", "description": "输出数据"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,250 @@
+{
+  "workflow": {
+    "name": "采购审批工作流",
+    "description": "基于金额的审批流程：<1万经理审批，≥1万经理+总监审批",
+    "version": "1.0",
+    "settings": {
+      "timeout": 3600,
+      "memory": "512MB",
+      "concurrency": 10
+    },
+    "trigger": {
+      "type": "webhook",
+      "config": {
+        "path": "/api/webhook/approval",
+        "method": "POST",
+        "authentication": "jwt"
+      }
+    },
+    "variables": [
+      {
+        "name": "input",
+        "type": "object",
+        "default": {},
+        "description": "工作流输入数据"
+      },
+      {
+        "name": "amount",
+        "type": "number",
+        "default": 0,
+        "description": "申请金额"
+      },
+      {
+        "name": "approvalResult",
+        "type": "object",
+        "default": null,
+        "description": "审批结果"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "node_start",
+        "type": "start",
+        "name": "开始",
+        "config": {
+          "triggerType": "manual",
+          "outputMapping": {
+            "eventData": "workflow.input"
+          }
+        },
+        "position": { "x": 100, "y": 100 }
+      },
+      {
+        "id": "node_validate",
+        "type": "function",
+        "name": "验证数据",
+        "config": {
+          "code": "async function validate(input) {\n  if (!input || !input.amount) {\n    throw new Error('缺少金额数据');\n  }\n  return { valid: true, amount: input.amount };\n}",
+          "inputs": ["workflow.input"],
+          "outputs": ["validationResult"],
+          "timeout": 30000,
+          "retry": {
+            "maxAttempts": 3,
+            "backoff": "exponential"
+          }
+        },
+        "position": { "x": 300, "y": 100 }
+      },
+      {
+        "id": "node_decision",
+        "type": "condition",
+        "name": "金额判断",
+        "config": {
+          "conditions": [
+            {
+              "expression": "{{validationResult.amount}} <= 10000",
+              "target": "node_manager",
+              "description": "低金额：经理审批"
+            },
+            {
+              "expression": "{{validationResult.amount}} > 10000",
+              "target": "node_parallel",
+              "description": "高金额：并行审批"
+            }
+          ],
+          "defaultTarget": "node_error"
+        },
+        "position": { "x": 500, "y": 100 }
+      },
+      {
+        "id": "node_manager",
+        "type": "function",
+        "name": "经理审批",
+        "config": {
+          "code": "async function managerApproval(context) {\n  // 经理审批逻辑\n  return { approved: true, approver: 'manager' };\n}",
+          "inputs": ["validationResult"],
+          "outputs": ["managerResult"]
+        },
+        "position": { "x": 700, "y": 50 }
+      },
+      {
+        "id": "node_parallel",
+        "type": "parallel",
+        "name": "并行审批",
+        "config": {
+          "strategy": "all_success",
+          "branches": [
+            {
+              "id": "branch_manager",
+              "target": "node_manager_approval",
+              "variables": { "role": "manager" }
+            },
+            {
+              "id": "branch_director",
+              "target": "node_director_approval",
+              "variables": { "role": "director" }
+            }
+          ],
+          "timeout": 3600,
+          "synchronization": true
+        },
+        "position": { "x": 700, "y": 150 }
+      },
+      {
+        "id": "node_manager_approval",
+        "type": "function",
+        "name": "经理审批",
+        "config": {
+          "code": "async function approve(context) {\n  return { approved: true, by: 'manager' };\n}",
+          "inputs": ["validationResult"],
+          "outputs": ["managerApproval"]
+        },
+        "position": { "x": 900, "y": 100 }
+      },
+      {
+        "id": "node_director_approval",
+        "type": "function",
+        "name": "总监审批",
+        "config": {
+          "code": "async function approve(context) {\n  return { approved: true, by: 'director' };\n}",
+          "inputs": ["validationResult"],
+          "outputs": ["directorApproval"]
+        },
+        "position": { "x": 900, "y": 200 }
+      },
+      {
+        "id": "node_notify",
+        "type": "function",
+        "name": "发送通知",
+        "config": {
+          "code": "async function notify(context) {\n  // 发送审批结果通知\n  return { sent: true, channel: 'email' };\n}",
+          "inputs": ["approvalResult"],
+          "outputs": ["notificationResult"]
+        },
+        "position": { "x": 1100, "y": 100 }
+      },
+      {
+        "id": "node_end",
+        "type": "end",
+        "name": "结束",
+        "config": {
+          "outputMapping": {
+            "finalResult": "aggregatedResult"
+          }
+        },
+        "position": { "x": 1300, "y": 100 }
+      }
+    ],
+    "edges": [
+      {
+        "id": "edge_start_validate",
+        "source": "node_start",
+        "target": "node_validate",
+        "type": "default"
+      },
+      {
+        "id": "edge_validate_decision",
+        "source": "node_validate",
+        "target": "node_decision",
+        "type": "default"
+      },
+      {
+        "id": "edge_decision_manager",
+        "source": "node_decision",
+        "target": "node_manager",
+        "type": "conditional",
+        "condition": "{{validationResult.amount}} <= 10000"
+      },
+      {
+        "id": "edge_decision_parallel",
+        "source": "node_decision",
+        "target": "node_parallel",
+        "type": "conditional",
+        "condition": "{{validationResult.amount}} > 10000"
+      },
+      {
+        "id": "edge_manager_notify",
+        "source": "node_manager",
+        "target": "node_notify",
+        "type": "default"
+      },
+      {
+        "id": "edge_parallel_manager",
+        "source": "node_parallel",
+        "target": "node_manager_approval",
+        "type": "branch"
+      },
+      {
+        "id": "edge_parallel_director",
+        "source": "node_parallel",
+        "target": "node_director_approval",
+        "type": "branch"
+      },
+      {
+        "id": "edge_manager_approval_notify",
+        "source": "node_manager_approval",
+        "target": "node_notify",
+        "type": "default",
+        "condition": "{{managerApproval.approved}} == true"
+      },
+      {
+        "id": "edge_director_approval_notify",
+        "source": "node_director_approval",
+        "target": "node_notify",
+        "type": "default",
+        "condition": "{{directorApproval.approved}} == true"
+      },
+      {
+        "id": "edge_notify_end",
+        "source": "node_notify",
+        "target": "node_end",
+        "type": "default"
+      }
+    ],
+    "errorHandling": {
+      "globalErrorHandler": "node_error",
+      "retryPolicies": {
+        "default": {
+          "maxRetries": 3,
+          "backoffFactor": 2,
+          "maxDelay": 60000
+        }
+      },
+      "compensation": {
+        "enabled": true,
+        "strategy": "saga",
+        "compensationNodes": ["node_compensate"]
+      }
+    }
+  }
+}

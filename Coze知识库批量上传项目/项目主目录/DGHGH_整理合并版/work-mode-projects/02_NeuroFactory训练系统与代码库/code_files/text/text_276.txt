@@ -1,0 +1,4 @@
+输出格式：
+1. workflow.yaml（YAML 蓝图）
+2. main.py（Python 执行引擎）
+3. README.md（部署说明）

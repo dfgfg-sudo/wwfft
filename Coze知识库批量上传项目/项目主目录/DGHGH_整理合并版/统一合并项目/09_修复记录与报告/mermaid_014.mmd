@@ -1,0 +1,87 @@
+flowchart TD
+    Start([🚀 系统启动]) --> Init[系统初始化]
+    
+    Init --> ConfigLoad[📋 加载配置文件]
+    ConfigLoad --> DirCheck[📁 检查监控目录]
+    DirCheck --> ObserverStart[👁️ 启动文件监控]
+    
+    ObserverStart --> WaitEvent[⏳ 等待文件事件]
+    
+    WaitEvent --> FileEvent{📄 文件创建/修改事件}
+    
+    FileEvent -->|检测到新文件| FileProcess[🔄 文件处理引擎]
+    FileEvent -->|无事件| UserCommandCheck{💬 用户命令检查}
+    
+    FileProcess --> FormatDetect{🔍 智能格式检测}
+    
+    FormatDetect -->|CSV/Excel| ParseStructured[📊 结构化数据解析]
+    FormatDetect -->|TXT/LOG/PDF| ParseUnstructured[📝 非结构化数据解析]
+    FormatDetect -->|JSON/XML| ParseSemi[🔤 半结构化数据解析]
+    FormatDetect -->|JPG/PNG| ParseImage[🖼️ 图像OCR识别]
+    FormatDetect -->|PY/IPYNB| ParseCode[💻 代码语义分析]
+    FormatDetect -->|PKL| ParseSerialized[📦 序列化数据恢复]
+    FormatDetect -->|其他格式| SkipFile[⏭️ 跳过不支持格式]
+    
+    ParseStructured --> DataValidation[✅ 数据质量验证]
+    ParseUnstructured --> DataValidation
+    ParseSemi --> DataValidation
+    ParseImage --> DataValidation
+    ParseCode --> DataValidation
+    ParseSerialized --> DataValidation
+    SkipFile --> WaitEvent
+    
+    DataValidation --> QualityCheck{📈 质量评估检查}
+    
+    QualityCheck -->|质量合格| KnowledgeDistill[🧠 知识蒸馏处理]
+    QualityCheck -->|质量不合格| LogPoorQuality[📝 记录低质量数据]
+    
+    LogPoorQuality --> WaitEvent
+    KnowledgeDistill --> UpdateGraph[🕸️ 更新知识图谱]
+    
+    UpdateGraph --> TrainingCheck{🤖 训练条件检查}
+    
+    TrainingCheck -->|满足条件| StartTraining[⚡ 启动模型训练]
+    TrainingCheck -->|不满足条件| WaitEvent
+    
+    StartTraining --> ModelTraining[🏗️ 执行训练流程]
+    ModelTraining --> ModelEncrypt[🔐 模型加密处理]
+    ModelEncrypt --> ModelSave[💾 安全保存模型]
+    ModelSave --> RegistryUpdate[📋 更新模型注册表]
+    
+    RegistryUpdate --> Success[✅ 处理完成]
+    Success --> WaitEvent
+    
+    %% 用户命令处理分支
+    UserCommandCheck -->|status命令| ShowStatus[📊 显示系统状态]
+    UserCommandCheck -->|models命令| ListModels[📋 列出所有模型]
+    UserCommandCheck -->|knowledge命令| ShowKnowledge[🧠 显示知识库]
+    UserCommandCheck -->|train命令| ManualTrain[🔧 手动触发训练]
+    UserCommandCheck -->|predict命令| MakePrediction[🔮 执行预测]
+    UserCommandCheck -->|help命令| ShowHelp[📚 显示帮助]
+    UserCommandCheck -->|clear命令| ClearScreen[🔄 清空屏幕]
+    UserCommandCheck -->|exit命令| Shutdown[🛑 关闭系统]
+    UserCommandCheck -->|无命令| WaitEvent
+    
+    ShowStatus --> WaitEvent
+    ListModels --> WaitEvent
+    ShowKnowledge --> WaitEvent
+    ManualTrain --> StartTraining
+    MakePrediction --> WaitEvent
+    ShowHelp --> WaitEvent
+    ClearScreen --> WaitEvent
+    Shutdown --> End([🏁 系统安全关闭])
+    
+    %% 异常处理流程
+    FileProcess --> FileError[❌ 文件处理错误]
+    DataValidation --> ValidationError[❌ 数据验证失败]
+    KnowledgeDistill --> DistillError[❌ 知识蒸馏失败]
+    ModelTraining --> TrainingError[❌ 模型训练失败]
+    
+    FileError --> ErrorHandling[🛠️ 智能错误处理]
+    ValidationError --> ErrorHandling
+    DistillError --> ErrorHandling
+    TrainingError --> ErrorHandling
+    
+    ErrorHandling --> LogError[📝 详细错误日志记录]
+    LogError --> Recovery[🔄 自动恢复机制]
+    Recovery --> WaitEvent

@@ -1,0 +1,1 @@
+pip install torch transformers datasets peft accelerate gradio pandas faiss-cpu cryptography

@@ -1,0 +1,37 @@
+{
+  "name": "工作流自动修复插件创建",
+  "description": "让你在 Coze 里从零创建一个能自动修复工作流错误的插件，自动诊断并修复工作流运行中的各种错误，返回修正参数实现重试闭环",
+  "version": "1.0.0",
+  "create_time": "2026-04-29 00:28:00",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7633282535241383942",
+  "original_name": "让你在 Coze 里从零创建一个能自动修复工作流错误的插件",
+  "type": "plugin",
+  "plugin_type": "云插件",
+  "functions": [
+    {
+      "name": "create_fix_plugin",
+      "description": "创建自动修复插件",
+      "input_params": [
+        {"name": "plugin_name", "type": "string", "required": true, "description": "插件名称"},
+        {"name": "error_types", "type": "array", "required": true, "description": "支持的错误类型"}
+      ],
+      "output_params": [
+        {"name": "plugin_id", "type": "string", "description": "插件ID"},
+        {"name": "plugin_code", "type": "string", "description": "插件代码"}
+      ]
+    },
+    {
+      "name": "retry_with_fix",
+      "description": "修复后重试",
+      "input_params": [
+        {"name": "error_data", "type": "object", "required": true, "description": "错误数据"},
+        {"name": "retry_params", "type": "object", "required": true, "description": "重试参数"}
+      ],
+      "output_params": [
+        {"name": "fixed_params", "type": "object", "description": "修正后的参数"},
+        {"name": "retry_result", "type": "string", "description": "重试结果"}
+      ]
+    }
+  ]
+}

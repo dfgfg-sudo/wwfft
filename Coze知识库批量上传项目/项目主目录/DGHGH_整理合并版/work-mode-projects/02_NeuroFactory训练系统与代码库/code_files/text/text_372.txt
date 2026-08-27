@@ -1,0 +1,3 @@
+---
+
+3. auto_trainer.py（完整主程序）

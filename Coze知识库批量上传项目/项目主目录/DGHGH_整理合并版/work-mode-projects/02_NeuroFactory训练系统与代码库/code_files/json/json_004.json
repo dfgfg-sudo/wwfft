@@ -1,0 +1,427 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "智能工作流自动化超级中枢 - 终极完整融合版",
+  "name_for_model": "smart_workflow_automation_super_hub_ultimate",
+  "name_for_human_zh": "智能工作流自动化超级中枢 - 终极完整融合版",
+  "name_for_model_zh": "智能工作流自动化超级中枢 - 终极完整融合版",
+  "description_for_human": "完全整合的智能工作流自动化终极解决方案，统一处理意图识别、工作流执行、插件调度、内容修复、版本对比等功能，实现全自动化操作体验",
+  "description_for_model": "这是一个功能强大的智能工作流自动化插件，能够自动识别用户意图，执行复杂的工作流，调用各种插件服务，修复TXT/JSON/YAML内容，对比合并多个版本，并返回结构化的处理结果。支持天气查询、知识问答、翻译服务、计算功能、内容修复、版本管理等多种场景。",
+  "description_human_zh": "完全整合的智能工作流自动化终极解决方案，统一处理意图识别、工作流执行、插件调度、内容修复、版本对比等功能，实现全自动化操作体验",
+  "description_model_zh": "这是一个功能强大的智能工作流自动化插件，能够自动识别用户意图，执行复杂的工作流，调用各种插件服务，修复TXT/JSON/YAML内容，对比合并多个版本，并返回结构化的处理结果。支持天气查询、知识问答、翻译服务、计算功能、内容修复、版本管理等多种场景。",
+  "api": {
+    "type": "openapi",
+    "url": "https://api.coze-platform.com/v1/openapi.yaml",
+    "is_user_authenticated": false
+  },
+  "auth": {
+    "type": "none"
+  },
+  "logo_url": "https://coze-platform.com/logo.png",
+  "contact_email": "support@coze-platform.com",
+  "legal_info_url": "https://coze-platform.com/legal",
+  "http_authorization": {
+    "type": "bearer"
+  },
+  "ui_parameters": {
+    "auto_processing": {
+      "name": "auto_processing",
+      "description": "是否启用自动化处理",
+      "default_value": true,
+      "type": "boolean",
+      "required": false
+    },
+    "detailed_response": {
+      "name": "detailed_response",
+      "description": "是否返回详细响应信息",
+      "default_value": false,
+      "type": "boolean",
+      "required": false
+    },
+    "language": {
+      "name": "language",
+      "description": "返回语言设置",
+      "default_value": "zh-CN",
+      "type": "string",
+      "enum": ["zh-CN", "en-US", "ja-JP"],
+      "required": false
+    },
+    "repair_mode": {
+      "name": "repair_mode",
+      "description": "修复模式设置",
+      "default_value": "auto",
+      "type": "string",
+      "enum": ["auto", "code", "similar", "basic", "ultimate"],
+      "required": false
+    }
+  },
+  "tools": [
+    {
+      "name": "execute_workflow",
+      "description": "执行智能工作流，自动处理用户输入并返回结构化结果",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "用户输入的查询内容",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "user_id": {
+            "type": "string",
+            "description": "用户唯一标识符"
+          },
+          "session_id": {
+            "type": "string",
+            "description": "会话标识符"
+          },
+          "auto_processing": {
+            "type": "boolean",
+            "description": "是否启用自动化处理",
+            "default": true
+          },
+          "config": {
+            "type": "object",
+            "description": "高级配置选项",
+            "properties": {
+              "timeout": {
+                "type": "integer",
+                "description": "执行超时时间（毫秒）",
+                "minimum": 1000,
+                "maximum": 300000,
+                "default": 30000
+              },
+              "enable_fallback": {
+                "type": "boolean",
+                "description": "是否启用降级处理机制",
+                "default": true
+              },
+              "detailed_response": {
+                "type": "boolean",
+                "description": "是否返回详细响应信息",
+                "default": false
+              },
+              "language": {
+                "type": "string",
+                "description": "返回语言设置",
+                "enum": ["zh-CN", "en-US", "ja-JP"],
+                "default": "zh-CN"
+              },
+              "repair_mode": {
+                "type": "string",
+                "description": "修复模式设置",
+                "enum": ["auto", "code", "similar", "basic", "ultimate"],
+                "default": "auto"
+              }
+            }
+          }
+        },
+        "required": ["query"],
+        "additionalProperties": false
+      },
+      "responses": {
+        "success": {
+          "description": "成功执行工作流",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "success": {
+                "type": "boolean"
+              },
+              "data": {
+                "type": "object",
+                "properties": {
+                  "response": {
+                    "type": "string"
+                  },
+                  "intent": {
+                    "type": "string",
+                    "enum": ["weather", "knowledge", "news", "translation", "calculation", "service", "entertainment", "txt_repair", "json_repair", "yaml_repair", "version_compare", "other"]
+                  },
+                  "confidence": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "entities": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "suggestions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "repaired_file_path": {
+                    "type": "string"
+                  },
+                  "repair_statistics": {
+                    "type": "object",
+                    "properties": {
+                      "original_size": {
+                        "type": "integer"
+                      },
+                      "final_size": {
+                        "type": "integer"
+                      },
+                      "duplicate_removed": {
+                        "type": "integer"
+                      },
+                      "structure_fixed": {
+                        "type": "integer"
+                      },
+                      "missing_repaired": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "required": ["response", "intent"]
+              },
+              "metadata": {
+                "type": "object",
+                "properties": {
+                  "processing_time": {
+                    "type": "integer"
+                  },
+                  "nodes_executed": {
+                    "type": "integer"
+                  },
+                  "api_calls": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "required": ["success", "data"]
+          }
+        },
+        "error": {
+          "description": "执行过程中发生错误",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "error": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "details": {
+                "type": "object"
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": ["error", "code"]
+          }
+        }
+      }
+    },
+    {
+      "name": "repair_content",
+      "description": "修复TXT、JSON、YAML等格式的文件内容问题",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "需要修复的内容"
+          },
+          "content_type": {
+            "type": "string",
+            "description": "内容类型",
+            "enum": ["txt", "json", "yaml", "xml", "md", "html"],
+            "default": "txt"
+          },
+          "repair_mode": {
+            "type": "string",
+            "description": "修复模式",
+            "enum": ["auto", "duplicate_removal", "structure_fix", "missing_repair", "all"],
+            "default": "auto"
+          },
+          "options": {
+            "type": "object",
+            "description": "修复选项",
+            "properties": {
+              "keep_versions": {
+                "type": "boolean",
+                "default": true
+              },
+              "similarity_threshold": {
+                "type": "number",
+                "minimum": 0.1,
+                "maximum": 1.0,
+                "default": 0.85
+              },
+              "batch_processing": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          }
+        },
+        "required": ["content", "content_type"],
+        "additionalProperties": false
+      },
+      "responses": {
+        "success": {
+          "description": "内容修复成功",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "success": {
+                "type": "boolean"
+              },
+              "repaired_content": {
+                "type": "string"
+              },
+              "statistics": {
+                "type": "object",
+                "properties": {
+                  "original_size": {
+                    "type": "integer"
+                  },
+                  "final_size": {
+                    "type": "integer"
+                  },
+                  "duplicate_removed": {
+                    "type": "integer"
+                  },
+                  "structure_fixed": {
+                    "type": "integer"
+                  },
+                  "missing_repaired": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "analysis": {
+                "type": "object"
+              },
+              "quality_scores": {
+                "type": "object",
+                "properties": {
+                  "completeness": {
+                    "type": "number"
+                  },
+                  "structure": {
+                    "type": "number"
+                  },
+                  "content_quality": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "required": ["success", "repaired_content"]
+          }
+        }
+      }
+    },
+    {
+      "name": "compare_versions",
+      "description": "对比多个版本内容，智能合并最佳版本",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "versions": {
+            "type": "array",
+            "description": "版本内容列表",
+            "items": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string"
+                },
+                "version_info": {
+                  "type": "object"
+                }
+              },
+              "required": ["content"]
+            },
+            "minItems": 2
+          },
+          "comparison_mode": {
+            "type": "string",
+            "enum": ["merge", "diff", "analysis"],
+            "default": "merge"
+          },
+          "merge_strategy": {
+            "type": "string",
+            "enum": ["latest_first", "most_complete", "feature_based", "hybrid"],
+            "default": "hybrid"
+          }
+        },
+        "required": ["versions"],
+        "additionalProperties": false
+      },
+      "responses": {
+        "success": {
+          "description": "版本对比成功",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "success": {
+                "type": "boolean"
+              },
+              "merged_content": {
+                "type": "string"
+              },
+              "comparison_results": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "version_id": {
+                      "type": "integer"
+                    },
+                    "content_hash": {
+                      "type": "string"
+                    },
+                    "uniqueness_score": {
+                      "type": "number"
+                    },
+                    "completeness_score": {
+                      "type": "number"
+                    },
+                    "selected_for_merge": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              "version_analysis": {
+                "type": "object"
+              },
+              "quality_improvement": {
+                "type": "number"
+              }
+            },
+            "required": ["success", "merged_content"]
+          }
+        }
+      }
+    }
+  ],
+  "privacy_policy": {
+    "url": "https://coze-platform.com/privacy",
+    "version": "1.0"
+  },
+  "terms_of_service": {
+    "url": "https://coze-platform.com/terms",
+    "version": "1.0"
+  },
+  "version": "3.0.0",
+  "supported_languages": ["zh-CN", "en-US", "ja-JP"],
+  "categories": ["productivity", "utilities", "developer_tools", "content_tools"],
+  "compatibility": ["coze-web", "coze-mobile", "coze-desktop"],
+  "tags": ["workflow", "automation", "ai", "smart-assistant", "productivity", "content-repair", "version-control", "duplicate-removal"]
+}

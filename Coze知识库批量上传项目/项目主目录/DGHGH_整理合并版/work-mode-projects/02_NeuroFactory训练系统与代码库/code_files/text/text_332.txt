@@ -1,0 +1,1 @@
+https://github.com/sql-tools/sql-fixer

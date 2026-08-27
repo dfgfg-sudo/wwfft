@@ -1,0 +1,12 @@
+# 高级配置示例
+monitor_dirs:
+  - ./data_input
+  - ./knowledge_base
+  - ./archive_data
+
+model_store: ./encrypted_models
+max_concurrent: 8
+auto_update: true
+encryption_enabled: true
+max_file_size_mb: 500
+training_threshold: 3  # 最少知识包数量触发训练

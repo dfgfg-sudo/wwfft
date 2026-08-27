@@ -1,0 +1,29 @@
+---
+
+🚀 使用流程
+
+1. 准备基础模型：将 Hugging Face 格式的预训练模型文件（config.json, pytorch_model.bin, tokenizer.json 等）放入 model/ 目录。
+2. 投喂数据：将所有训练数据（文本、PDF、Word、Excel、图片、ZIP压缩包等）放入 data/ 目录（可包含子文件夹）。
+3. 启动程序：双击 run.bat（Windows）或在终端执行 python auto_trainer.py。
+4. 加载数据：点击 GUI 中的“📂 加载数据”按钮，选择 data/ 目录（也可选择其他路径）。
+5. 开始训练：点击“🚀 开始训练”，系统将自动加载模型、处理数据、执行 LoRA 微调（默认 3 个 Epoch）。
+6. 保存模型：训练完成后，点击“💾 保存模型”将训练好的模型保存到 output/ 下（按时间戳命名）。
+7. 增量训练：向 data/ 添加新数据后，重复步骤 4~6，模型会基于之前状态继续学习。
+
+---
+
+🧠 核心技术栈
+
+类别 技术/库 用途
+深度学习框架 PyTorch 张量计算、自动微分
+预训练模型 Hugging Face Transformers 加载并微调 GPT-2 / Qwen 等因果语言模型
+参数高效微调 PEFT (LoRA) 仅训练少量参数，降低显存/内存占用
+图像处理 PIL + torchvision 图像读取、缩放、标准化
+文档解析 PyPDF2, python-docx, pandas 提取 PDF、Word、Excel 内容
+压缩处理 zipfile 自动解压 ZIP 数据包
+图形界面 Tkinter / ttk 提供可视化操作界面
+并发处理 ThreadPoolExecutor, threading 加速数据处理，避免界面卡顿
+
+---
+
+📊 数据处理流程

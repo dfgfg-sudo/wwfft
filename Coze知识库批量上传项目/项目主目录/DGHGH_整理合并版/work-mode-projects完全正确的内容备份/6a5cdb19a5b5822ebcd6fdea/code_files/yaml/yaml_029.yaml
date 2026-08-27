@@ -1,0 +1,15 @@
+base_path: C:\Users\Administrator\Documents\uytrertrt\Bunny-v1_0-3B
+supported_formats:
+  - .txt
+  - .pdf
+  - .csv
+  - .xlsx
+  - .json
+  - .docx
+  - .jpg
+  - .png
+  - .zip
+model_name: bert-base-uncased  # 可根据需要修改
+task_type: text-classification  # text-generation/image-classification等
+ocr_enabled: true
+parallel_workers: 4

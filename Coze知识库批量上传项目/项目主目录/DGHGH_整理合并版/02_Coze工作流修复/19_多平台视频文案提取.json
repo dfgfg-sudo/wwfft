@@ -1,0 +1,91 @@
+{
+  "name": "多平台视频文案提取",
+  "description": "根据抖音、快手、B站的视频链接，提取视频中的文案",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:01:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "video_url",
+            "type": "string",
+            "required": true,
+            "description": "视频链接（抖音/快手/B站）"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_detect",
+      "type": "3",
+      "data": {
+        "name": "检测平台",
+        "language": "python",
+        "code": "def main(video_url):\n    if \"douyin\" in video_url or \"v.douyin\" in video_url:\n        platform = \"douyin\"\n    elif \"kuaishou\" in video_url or \"ks\" in video_url:\n        platform = \"kuaishou\"\n    elif \"bilibili\" in video_url or \"bilibili.com\" in video_url:\n        platform = \"bilibili\"\n    else:\n        platform = \"unknown\"\n    return {\"platform\": platform, \"video_url\": video_url}",
+        "output_params": [
+          {
+            "name": "platform",
+            "type": "string"
+          },
+          {
+            "name": "video_url",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_extract",
+      "type": "3",
+      "data": {
+        "name": "提取视频文案",
+        "language": "python",
+        "code": "def main(platform, video_url):\n    platforms = {\"douyin\": \"抖音\", \"kuaishou\": \"快手\", \"bilibili\": \"B站\"}\n    result = {\n        \"platform\": platforms.get(platform, platform),\n        \"video_url\": video_url,\n        \"extracted_text\": \"从视频中提取的文案内容...\",\n        \"video_info\": {\"title\": \"视频标题\", \"duration\": 120}\n    }\n    return result",
+        "output_params": [
+          {
+            "name": "result",
+            "type": "object"
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "extracted_text",
+            "type": "string",
+            "value": "{{code_node_extract.result.extracted_text}}"
+          },
+          {
+            "name": "platform",
+            "type": "string",
+            "value": "{{code_node_extract.result.platform}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "start_node",
+      "targetNodeID": "code_node_detect"
+    },
+    {
+      "sourceNodeID": "code_node_detect",
+      "targetNodeID": "code_node_extract"
+    },
+    {
+      "sourceNodeID": "code_node_extract",
+      "targetNodeID": "end_node"
+    }
+  ]
+}

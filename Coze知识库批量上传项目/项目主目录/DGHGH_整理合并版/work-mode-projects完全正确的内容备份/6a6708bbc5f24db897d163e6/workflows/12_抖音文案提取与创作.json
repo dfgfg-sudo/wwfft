@@ -1,0 +1,78 @@
+{
+  "name": "抖音文案提取与创作",
+  "description": "当你需要提取抖音文案并创作时，它非常有用。",
+  "version": "1.0.0",
+  "create_time": "2025-07-18 22:56:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "video_url",
+            "type": "string",
+            "required": true,
+            "description": "抖音视频链接"
+          },
+          {
+            "name": "action",
+            "type": "string",
+            "required": false,
+            "description": "操作：extract（提取）/ rewrite（改写）/ expand（扩写）"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_extract",
+      "type": "3",
+      "data": {
+        "name": "提取抖音文案",
+        "language": "python",
+        "code": "import json\ndef main(video_url):\n    extracted = {\n        \"original_text\": \"这是原视频中的文案内容...\",\n        \"video_id\": \"7428937492\",\n        \"author\": \"视频作者\",\n        \"duration\": 60,\n        \"likes\": 12580\n    }\n    return extracted",
+        "output_params": [
+          {"name": "original_text", "type": "string"},
+          {"name": "video_info", "type": "object"}
+        ]
+      }
+    },
+    {
+      "id": "llm_node_process",
+      "type": "4",
+      "data": {
+        "name": "AI 文案处理",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是抖音文案专家，提取、改写、扩写文案",
+        "user_prompt": "原文案：{{code_node_extract.original_text}}\\n操作：{{action || 'extract'}}\\n请处理文案",
+        "output_params": [{"name": "processed_text", "type": "string"}]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "final_text",
+            "type": "string",
+            "value": "{{llm_node_process.processed_text}}"
+          },
+          {
+            "name": "video_info",
+            "type": "object",
+            "value": "{{code_node_extract}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "code_node_extract"},
+    {"sourceNodeID": "code_node_extract", "targetNodeID": "llm_node_process"},
+    {"sourceNodeID": "llm_node_process", "targetNodeID": "end_node"}
+  ]
+}

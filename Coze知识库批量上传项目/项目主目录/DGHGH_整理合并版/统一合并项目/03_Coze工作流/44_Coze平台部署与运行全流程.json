@@ -1,0 +1,36 @@
+{
+  "name": "Coze平台部署与运行全流程",
+  "description": "该插件通过 JS 代码整合全场景处理逻辑，在 Coze 平台实现 \"输入任意需求→输出可执行结果\" 的终极自动化。无需人工配置工具参数或分流任务，单插件即可覆盖设备控制、代码修复、内容生成、行业任务等全领域需求，为个人和企业提供 \"拿来即用\" 的超级自动化解决方案，效率较传统流程提升 80% 以上。",
+  "version": "1.0.0",
+  "create_time": "2026-06-26 01:18:00",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7531434190131478554",
+  "original_name": "Coze 平台部署与运行全流程_零人工干预",
+  "type": "plugin",
+  "plugin_type": "云插件",
+  "functions": [
+    {
+      "name": "execute_any_task",
+      "description": "执行任意任务",
+      "input_params": [
+        {"name": "requirement", "type": "string", "required": true, "description": "需求描述"},
+        {"name": "context", "type": "object", "required": false, "description": "上下文"}
+      ],
+      "output_params": [
+        {"name": "result", "type": "string", "description": "执行结果"},
+        {"name": "execution_time", "type": "number", "description": "执行时间"}
+      ]
+    },
+    {
+      "name": "auto_deploy",
+      "description": "自动部署",
+      "input_params": [
+        {"name": "config", "type": "object", "required": true, "description": "部署配置"}
+      ],
+      "output_params": [
+        {"name": "status", "type": "string", "description": "部署状态"},
+        {"name": "endpoint", "type": "string", "description": "访问地址"}
+      ]
+    }
+  ]
+}

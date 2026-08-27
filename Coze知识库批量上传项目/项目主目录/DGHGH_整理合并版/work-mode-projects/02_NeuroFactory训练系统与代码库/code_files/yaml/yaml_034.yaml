@@ -1,0 +1,6 @@
+# crontab配置
+# 每小时运行一次增量处理
+0 * * * * cd /path/to/coze-automation && python main_controller.py --mode run >> logs/cron.log 2>&1
+
+# 每天凌晨清理旧数据
+0 0 * * * find /path/to/coze-automation/logs -name "*.log" -mtime +7 -delete

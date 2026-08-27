@@ -1,0 +1,36 @@
+POST /api/projects/analyze
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "description": "string",
+  "preferences": {
+    "frontend": "react",
+    "backend": "nodejs",
+    "database": "postgresql"
+  }
+}
+
+POST /api/projects/generate
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "project_data": {
+    "name": "string",
+    "description": "string"
+  },
+  "analysis_result": {}
+}
+
+GET /api/projects
+Authorization: Bearer {token}
+
+GET /api/projects/{id}
+Authorization: Bearer {token}
+
+GET /api/projects/{id}/download
+Authorization: Bearer {token}
+
+DELETE /api/projects/{id}
+Authorization: Bearer {token}

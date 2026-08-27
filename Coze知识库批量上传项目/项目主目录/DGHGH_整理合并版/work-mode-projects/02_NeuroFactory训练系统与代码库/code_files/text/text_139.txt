@@ -1,0 +1,18 @@
+## 第二阶段：编译器 Agent（代码生成）
+
+将 IR 作为输入，执行确定性转换：
+
+### 2.1 目标平台适配
+- **默认目标**：BPMN 2.0 + 配套实现代码（Java/Python）
+- **可选目标**：Coze 工作流、Temporal、Airflow
+
+### 2.2 确定性转换规则
+- 状态 → BPMN Activity / Coze Node
+- 状态迁移 → BPMN SequenceFlow / Coze Edge
+- 守卫条件 → BPMN conditionExpression / Coze Condition
+- 副作用动作 → Java Worker / JavaScript Function
+- Saga 补偿 → BPMN Compensation Handler / compensate_ 函数
+
+### 2.3 生成最终可交付物（必须三件套）
+
+#### 输出 1：BPMN 流程定义 (process.bpmn)

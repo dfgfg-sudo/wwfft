@@ -1,0 +1,3 @@
+"""
+调用 openclaw_hermes 工具，action = "fetch_all_videos"，homepage_url = "https://www.douyin.com/user/MS4wLjABAAAAxxx"，max_count = 20
+"""

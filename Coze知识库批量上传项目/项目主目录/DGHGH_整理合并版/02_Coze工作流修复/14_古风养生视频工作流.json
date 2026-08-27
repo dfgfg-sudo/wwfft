@@ -1,0 +1,95 @@
+{
+  "name": "古风养生视频工作流",
+  "description": "根据养生主题和风格，生成古风风格的养生视频脚本和文案",
+  "version": "1.0.0",
+  "create_time": "2025-07-16 11:02:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "health_topic",
+            "type": "string",
+            "required": true,
+            "description": "养生主题（如：茶道/太极/食疗/冥想）"
+          },
+          {
+            "name": "duration",
+            "type": "number",
+            "required": false,
+            "description": "视频时长（分钟）"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_research",
+      "type": "4",
+      "data": {
+        "name": "AI 养生知识检索",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是中医养生专家，整理相关养生知识",
+        "user_prompt": "主题：{{health_topic}}\\n请整理养生要点、方法、注意事项",
+        "output_params": [
+          {
+            "name": "knowledge",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_script",
+      "type": "4",
+      "data": {
+        "name": "AI 古风视频脚本创作",
+        "model": "doubao-pro-128k",
+        "system_prompt": "你是古风视频编剧，创作优雅的古风养生视频脚本",
+        "user_prompt": "主题：{{health_topic}}\\n养生知识：{{llm_node_research.knowledge}}\\n时长：{{duration || 5}}分钟\\n请创作古风视频脚本，包含画面描述、旁白、背景音乐建议",
+        "output_params": [
+          {
+            "name": "script",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "video_script",
+            "type": "string",
+            "value": "{{llm_node_script.script}}"
+          },
+          {
+            "name": "source_knowledge",
+            "type": "string",
+            "value": "{{llm_node_research.knowledge}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "start_node",
+      "targetNodeID": "llm_node_research"
+    },
+    {
+      "sourceNodeID": "llm_node_research",
+      "targetNodeID": "llm_node_script"
+    },
+    {
+      "sourceNodeID": "llm_node_script",
+      "targetNodeID": "end_node"
+    }
+  ]
+}

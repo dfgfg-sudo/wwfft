@@ -1,0 +1,378 @@
+openapi: 3.0.0
+info:
+  title: 全场景智能自动化超级中枢API
+  description: |
+    终极整合版｜神经决策+26核心功能｜行业分析+职业分类+场景处理+工作流自动化+错误修复｜洛阳非遗电商全链路支持
+    
+    功能涵盖：
+    1. 紧急处理模式激活
+    2. AI数据增强处理
+    3. 行业分类与分析
+    4. 系统自动修复与诊断
+    5. 备份恢复机制
+    6. 自定义节点创建（支持Python/JavaScript/TypeScript）
+    7. 工作流全生命周期管理
+    8. 智能插件生成与执行
+    9. 模型训练与数据投喂
+    10. 参数验证与错误预防
+  version: 10.1.0-Unified
+  contact:
+    name: Coze智能实验室
+    url: https://coze.com
+    email: support@coze.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.coze.com/v1
+    description: 生产环境API服务器
+  - url: https://sandbox.coze.com/v1
+    description: 沙盒环境API服务器
+  - url: https://api.coze-automation.com/v1
+    description: 自动化专用环境
+
+paths:
+  /omnipotent-automation:
+    post:
+      summary: 全场景智能自动化处理引擎
+      description: 集成21个核心功能的统一入口，支持智能路由和自动参数验证
+      operationId: processOmnipotentAutomation
+      tags:
+        - 核心自动化
+        - 智能路由
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutomationRequest'
+      responses:
+        '200':
+          description: 处理成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomationResponse'
+        '400':
+          description: 请求参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 服务器内部错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /automation/process:
+    post:
+      summary: 处理自动化请求
+      description: 根据操作模式处理行业分析、工作流生成、自动修复等请求
+      operationId: processAutomation
+      tags:
+        - 流程自动化
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutomationRequest'
+      responses:
+        '200':
+          description: 处理成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomationResponse'
+        '400':
+          description: 请求参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 服务器内部错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /workflow/generate:
+    post:
+      summary: 工作流生成
+      description: 根据用户需求生成自动化工作流
+      operationId: generateWorkflow
+      tags:
+        - 工作流管理
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowGenerationRequest'
+      responses:
+        '200':
+          description: 生成成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowResponse'
+        '400':
+          description: 请求参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 服务器内部错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /plugin/generate:
+    post:
+      summary: 自动插件生成
+      description: 根据自然语言需求自动生成插件
+      operationId: generatePlugin
+      tags:
+        - 插件生成
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PluginGenerationRequest'
+      responses:
+        '200':
+          description: 生成成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginResponse'
+        '400':
+          description: 请求参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 服务器内部错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    AutomationRequest:
+      type: object
+      required:
+        - operation_mode
+      properties:
+        operation_mode:
+          type: string
+          enum:
+            - activate_emergency
+            - ai_enhancement
+            - analyze_industry
+            - auto_repair
+            - backup_revert
+            - create_custom_node
+            - create_workflow
+            - delete_workflow
+            - execute_workflow
+            - feed_data
+            - generate_workflow
+            - get_data_connections
+            - get_workflow_by_id
+            - get_workflows
+            - process_automation
+            - process_luoyang_heritage
+            - repair_all_nodes
+            - train_model
+            - trigger_auto_plugin_workflow
+            - update_workflow
+            - validate_parameters
+          description: 操作模式选择
+        config:
+          $ref: '#/components/schemas/OperationConfig'
+          description: 操作配置参数
+        version:
+          type: string
+          enum: [v1.0, v2.0, v3.0]
+          description: 功能版本号
+        async_execution:
+          type: boolean
+          description: 是否异步执行
+        callback_url:
+          type: string
+          format: uri
+          description: 异步回调URL
+
+    OperationConfig:
+      type: object
+      description: 操作配置参数容器
+      properties:
+        user_request:
+          type: string
+          description: 用户请求描述
+        workflow_id:
+          type: string
+          description: 工作流ID
+        backup_id:
+          type: string
+          description: 备份ID
+        enhancement_type:
+          type: string
+          description: 增强类型
+        industry_name:
+          type: string
+          description: 行业名称
+        repair_scope:
+          type: string
+          description: 修复范围
+        training_data:
+          type: string
+          description: 训练数据
+        validation_rules:
+          type: object
+          description: 验证规则
+
+    AutomationResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: 操作是否成功
+        operation_id:
+          type: string
+          description: 操作ID
+        result:
+          type: object
+          description: 操作结果
+        message:
+          type: string
+          description: 响应消息
+        timestamp:
+          type: string
+          format: date-time
+          description: 响应时间戳
+
+    WorkflowGenerationRequest:
+      type: object
+      required:
+        - requirement_description
+        - business_domain
+      properties:
+        requirement_description:
+          type: string
+          description: 需求描述
+        business_domain:
+          type: string
+          description: 业务领域
+        complexity_level:
+          type: string
+          enum: [simple, medium, complex]
+          description: 复杂度级别
+        validation_strictness:
+          type: string
+          enum: [relaxed, standard, strict]
+          description: 验证严格度
+
+    WorkflowResponse:
+      type: object
+      properties:
+        workflow_id:
+          type: string
+          description: 生成的工作流ID
+        workflow_definition:
+          type: object
+          description: 工作流定义
+        validation_results:
+          type: object
+          description: 验证结果
+        generation_time:
+          type: number
+          description: 生成耗时（秒）
+
+    PluginGenerationRequest:
+      type: object
+      required:
+        - plugin_description
+      properties:
+        plugin_description:
+          type: string
+          description: 插件描述
+        trigger_node_id:
+          type: string
+          description: 触发节点ID
+        self_healing_enabled:
+          type: boolean
+          description: 是否启用自愈
+        compatibility_requirements:
+          type: object
+          description: 兼容性要求
+
+    PluginResponse:
+      type: object
+      properties:
+        plugin_id:
+          type: string
+          description: 插件ID
+        plugin_configuration:
+          type: object
+          description: 插件配置
+        import_command:
+          type: string
+          description: 导入命令
+        compatibility_check:
+          type: object
+          description: 兼容性检查结果
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+        error_code:
+          type: string
+          description: 错误代码
+        error_message:
+          type: string
+          description: 错误信息
+        timestamp:
+          type: string
+          format: date-time
+          description: 错误时间戳
+        suggestion:
+          type: string
+          description: 修复建议
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - ApiKeyAuth: []
+  - BearerAuth: []
+
+tags:
+  - name: 核心自动化
+    description: 核心自动化处理功能
+  - name: 工作流管理
+    description: 工作流生成、执行、管理
+  - name: 插件生成
+    description: 自动插件生成与管理
+  - name: 系统运维
+    description: 系统维护与修复功能

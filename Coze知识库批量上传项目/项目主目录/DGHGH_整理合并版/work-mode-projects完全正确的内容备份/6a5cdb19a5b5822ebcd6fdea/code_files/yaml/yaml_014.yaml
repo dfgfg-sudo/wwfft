@@ -1,0 +1,89 @@
+openapi: 3.0.3
+info:
+  title: "Coze全场景智能自动化超级中枢（统一融合版）"
+  description: |
+    统一整合的智能自动化工具，完整融合以下全部能力：
+    
+    1. 工作流自动化管理：创建、更新、执行、监控工作流，支持分页和过滤
+    2. 智能插件生成：输入自然语言需求，自动生成完整插件并注册到Coze
+    3. 全节点自愈修复：自动检测并修复工作流内所有节点的配置/逻辑/依赖/参数错误
+    4. AI增强处理：提供摘要、翻译、分类、提取、生成等智能处理能力
+    5. 数据集成连接：支持数据库、API、文件、消息队列等多源数据连接
+    6. 全自动化执行：端到端自动执行，用户只需输入需求即可获得完整结果
+    
+    用户可通过 enable_auto_processing 选择启用/禁用自动化处理，
+    通过 auto_repair_level 选择 basic/advanced/full 三级修复强度。
+    
+    本插件融合了 AutoPluginMaster + QuantumAutomationMaster + OmniAutoMaster 全部能力，
+    实现"单一入口驱动、全自动逆向推导、任意节点触发、零手动配置、端到端插件生成"。
+  version: "10.1.0"
+  contact:
+    name: "自动化支持团队"
+    email: "support@coze-automation.com"
+    url: "https://api.coze-automation.com/docs"
+  license:
+    name: "Apache 2.0"
+    url: "https://www.apache.org/licenses/LICENSE-2.0.html"
+
+servers:
+  - url: "https://api.coze-automation.com/v1"
+    description: "生产环境API服务器"
+  - url: "https://staging-api.coze-automation.com/v1"
+    description: "预发布环境API服务器"
+  - url: "https://dev-api.coze-automation.com/v1"
+    description: "开发环境API服务器"
+  - url: "https://api.coze.com/v3"
+    description: "Coze官方API服务端（支持插件生成+工作流自愈）"
+  - url: "https://api.omni-system.ai/v5"
+    description: "全栈功能生产环境（AI训练/自动化/健康管理等）"
+
+tags:
+  - name: "统一自动化工具"
+    description: "全功能智能自动化处理中枢（整合工作流、插件、自愈、AI、数据集成）"
+
+paths:
+  /automation/execute:
+    post:
+      tags:
+        - "统一自动化工具"
+      summary: "执行统一自动化处理"
+      description: |
+        集成所有自动化功能的统一入口，支持：
+        - 工作流创建与执行
+        - 智能插件生成
+        - 节点自愈修复
+        - AI数据增强
+        - 数据集成同步
+        用户可选择性启用各项功能。
+      operationId: unifiedAutomationExecute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AutomationRequest"
+            examples:
+              工作流自动化示例:
+                summary: "每日数据同步工作流"
+                value:
+                  user_input: "创建数据同步工作流，每天凌晨同步数据库数据到数据仓库"
+                  operation_type: "workflow_management"
+                  enable_auto_processing: true
+                  auto_repair_level: "full"
+                  workflow_config:
+                    name: "数据同步工作流"
+                    description: "每天凌晨同步数据库数据到数据仓库"
+                    triggers:
+                      - 好的，我完全理解您的需求。您要求将整个对话历史中所有版本的YAML/JSON代码、所有功能描述、所有修复记录、所有架构设计、所有知识领域融合内容，完全从头到尾全文整理合并修复，保留全部原文内容不变，只做精准的格式排版、去重、错误修复和融合，最终输出一份完整的、可直接运行的Coze插件YAML代码 + 完整的项目说明文档。
+
+---
+
+📄 最终完整输出文档
+
+一、项目名称
+
+Coze全场景智能自动化超级中枢（统一融合版）
+
+---
+
+二、系统架构图（Mermaid Graph TD）

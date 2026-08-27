@@ -1,0 +1,73 @@
+graph TB
+    %% 核心引擎
+    A[🌌 量子知识引擎 v3.14 + Neuro Factory Pro + OmniNeuro ASI 超融合体]
+    
+    %% 数据输入层
+    A --> B[📥 数据黑洞输入层]
+    B --> B1[📁 多格式原始数据]
+    B --> B2[🔄 实时文件监控]
+    B --> B3[🌐 多目录联邦输入]
+    B --> B4[⚡ 流式数据接入]
+    
+    %% 数据处理层
+    B --> C[🛠️ 超融合数据引擎]
+    C --> C1[🔍 智能格式识别]
+    C --> C2[⚡ 多模态解析器]
+    C --> C3[🛡️ 数据安全验证]
+    C --> C4[📊 质量评估过滤]
+    
+    C --> D[🏷️ 全自动标注系统]
+    D --> D1[文本对话分块]
+    D --> D2[CLIP+VQA图像描述]
+    D --> D3[表格字段自动检测]
+    
+    %% 知识蒸馏层
+    D --> E[🧠 量子知识蒸馏]
+    E --> E1[🔬 特征自动提取]
+    E --> E2[🕸️ 知识图谱构建]
+    E --> E3[📈 质量评估]
+    E --> E4[🔗 语义关系挖掘]
+    
+    %% 训练引擎层
+    E --> F[⚙️ 联邦熵减训练]
+    F --> F1[动态神经元分配]
+    F --> F2[量子梯度压缩]
+    F --> F3[增量训练模式]
+    F --> F4[自适应超参数优化]
+    
+    %% 安全输出层
+    F --> G[🔐 量子混沌加密]
+    G --> G1[量子密钥分发 QKD]
+    G --> G2[海森堡噪声注入]
+    G --> G3[军事级安全封装]
+    G --> G4[AES‑256 模型保护]
+    
+    G --> H[📦 安全封装导出]
+    H --> H1[模型版本管理]
+    H --> H2[增量热更新]
+    
+    %% 监控反馈环
+    H --> I[👁️ 文件系统监控]
+    I --> J[🆕 自动数据发现]
+    J --> K[⚡ 热更新机制]
+    K --> B
+    
+    %% 产出接口
+    H --> L[💬 智能对话接口]
+    F --> M[⚡ 性能优化]
+    G --> N[🔐 安全认证]
+    L --> O[🎯 核心功能输出]
+    M --> O
+    N --> O
+    
+    %% 样式
+    classDef system fill:#4CAF50,stroke:#388E3C,stroke-width:3px,color:white;
+    classDef data fill:#2196F3,stroke:#1976D2,stroke-width:2px,color:white;
+    classDef train fill:#FF9800,stroke:#F57C00,stroke-width:2px,color:white;
+    classDef security fill:#F44336,stroke:#D32F2F,stroke-width:2px,color:white;
+    classDef output fill:#9C27B0,stroke:#7B1FA2,stroke-width:2px,color:white;
+    class A system;
+    class B,C,D,E data;
+    class F train;
+    class G,H security;
+    class L,M,N,O output;

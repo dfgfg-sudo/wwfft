@@ -1,0 +1,11 @@
+🟣 SQLite Online
+
+网址: https://sqliteonline.com
+
+· 在线SQLite数据库
+· 导出为JSON/CSV
+· 可嵌入到应用中
+
+三、完整部署架构
+
+架构1: Coze + Supabase + Vercel (全免费)

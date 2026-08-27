@@ -1,0 +1,22 @@
+# prometheus-alerts.yml
+groups:
+  - name: coze-workflow-errors
+    rules:
+      - alert: HighWorkflowErrorRate
+        expr: |
+          increase(coze_workflow_errors_total[5m]) > 10
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High rate of Coze workflow errors"
+          description: "{{ $value }} errors in last 5 minutes"
+          
+      - alert: AutoFixApplied
+        expr: |
+          increase(coze_fixes_applied_total[1h]) > 50
+        labels:
+          severity: info
+        annotations:
+          summary: "Many automatic fixes applied"
+          description: "Consider manual review of workflow configurations"

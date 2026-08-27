@@ -1,0 +1,1 @@
+【合并后文件：custom/config.go】 （原 config.go 及适配器代码合并，修复导入路径）

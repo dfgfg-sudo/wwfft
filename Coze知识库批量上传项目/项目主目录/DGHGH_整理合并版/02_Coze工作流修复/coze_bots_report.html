@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coze 智能体生态系统整理报告</title>
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #1557b0;
+            --secondary: #00c853;
+            --accent: #ff6d00;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #202124;
+            --text-secondary: #5f6368;
+            --border: #dadce0;
+            --shadow: 0 2px 8px rgba(60,64,67,0.1);
+            --shadow-hover: 0 4px 16px rgba(60,64,67,0.15);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .stat-label {
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+        .category-section {
+            margin-bottom: 30px;
+        }
+        .category-header {
+            background: var(--card-bg);
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .category-header:hover {
+            box-shadow: var(--shadow-hover);
+        }
+        .category-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        .category-count {
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        .bot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        .bot-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.2s;
+            border-left: 4px solid var(--primary);
+        }
+        .bot-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+        .bot-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .bot-desc {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .bot-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .feature-tag {
+            background: #e8f0fe;
+            color: var(--primary-dark);
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        .feature-tag.core { background: #e6f4ea; color: #137333; }
+        .feature-tag.content { background: #fce8e6; color: #c5221f; }
+        .feature-tag.ai { background: #f3e8fd; color: #7b1fa2; }
+        .feature-tag.auto { background: #fff3e0; color: #e65100; }
+        .feature-tag.tool { background: #e0f7fa; color: #00695c; }
+        .feature-tag.test { background: #f1f8e9; color: #558b2f; }
+        .feature-tag.data { background: #fff8e1; color: #f57f17; }
+        .feature-tag.voice { background: #f3e5f5; color: #6a1b9a; }
+        .feature-tag.art { background: #fce4ec; color: #c2185b; }
+        .feature-tag.security { background: #efebe9; color: #4e342e; }
+        .feature-tag.search { background: #e3f2fd; color: #1565c0; }
+        .feature-tag.workflow { background: #e0f2f1; color: #00695c; }
+        .feature-tag.merge { background: #ede7f6; color: #4527a0; }
+        .feature-tag.text { background: #f9fbe7; color: #827717; }
+        .feature-tag.plugin { background: #e8eaf6; color: #283593; }
+        .feature-tag.arch { background: #e0f7fa; color: #00838f; }
+        .summary-section {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+        .summary-title {
+            font-size: 1.5em;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .feature-matrix {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .feature-matrix th {
+            background: var(--primary);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .feature-matrix td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .feature-matrix tr:hover {
+            background: #f8f9fa;
+        }
+        .check { color: var(--secondary); font-weight: bold; }
+        .cross { color: #ea4335; }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            margin-top: 40px;
+        }
+        @media (max-width: 768px) {
+            .bot-grid {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: 1.6em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Coze 智能体生态系统整理报告</h1>
+            <p>系统化整合 &middot; 消除重复 &middot; 保留全部功能 &middot; 来源: https://www.coze.cn/space/7382283479335403547/develop</p>
+        </header>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">30</div>
+                <div class="stat-label">原始智能体数量</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">21</div>
+                <div class="stat-label">去重后唯一智能体</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">功能分类数量</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">17</div>
+                <div class="stat-label">核心功能标签</div>
+            </div>
+        </div>
+
+
+        <div class="category-section">
+            <div class="category-header">
+                <span class="category-title">代码开发与错误处理</span>
+                <span class="category-count">14 个智能体</span>
+            </div>
+            <div class="bot-grid">
+    
+                <div class="bot-card">
+                    <div class="bot-name">自动处理大师</div>
+                    <div class="bot-desc">这是一个能够全自动解决所有问题的bot，无论是错误处理、MergeKit配置，还是Python代码生成、抖音视频处理等多方面的问题，都能为您提供完美的解决方案。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag core">错误修复</span><span class="feature-tag content">抖音处理</span><span class="feature-tag merge">模型融合</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">智能工作流生成精灵</div>
+                    <div class="bot-desc">该智能体用于自动化工作流制作，通过添加代码节点进行运行自动化处理，以解决自动化生成输出制作的工作流问题。用户填写相关代码，如特定的节点和参数设置等，即可生成完整工作流</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">Mergekit问题解决专家</div>
+                    <div class="bot-desc">这是一个能够帮助您解决mergekit中"必须指定要合并的输出切片或模型"相关问题的bot。它可以协助您仔细检查配置数据结构，确认模型和切片的准确性、必填字段、参数范围等，还能为您提供错误排查方向、具体解决方法和案例参考。还可以进行自动化和自动化生成操作。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">错误修复</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag merge">模型融合</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">全能AI开发与内容处理中枢</div>
+                    <div class="bot-desc">角色：一位严谨、高效、无所不能的AI架构师与自动化工程师。人设：一位严谨、高效、无所不能的AI架构师与自动化工程师。精通代码生成、错误调试、工作流编排、内容处理与模型融合，能够将用户模糊的需求转化为精确、可执行的技术方案。 专业知识：精通Python全栈开发、大模型（LLM）操作（如MergeKit）、扣子（Coze）平台工作流与插件开发、新媒体内容（抖音/小红书）处理与生成、自动化测试、以及文本深度分析（重复性、摘要、润色）。 核心功能：作为您的私人AI开发团队，接收您的自然语言指令，自动判断所需功能，调用内部精密模块进行处理，最终生成代码、工作流、分析报告或内容方案。对话风格：回复专业、结...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag core">错误修复</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag merge">模型融合</span><span class="feature-tag text">文本分析</span><span class="feature-tag plugin">插件开发</span><span class="feature-tag arch">AI架构</span><span class="feature-tag content">内容创作</span><span class="feature-tag test">自动化测试</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">代码自动移动大师</div>
+                    <div class="bot-desc">这是一个能够将输入的完整代码移动到还生成人设与回复逻辑里面去的bot，比如完整输入了代码内容可以生成带有人设与回复逻辑的这个代码的描述包括源代码完整文字调用之可以自动移动到左侧的人设与回复逻辑里面去包括这个代码的文字说明描述功能</div>
+                    <div class="bot-features">
+                        <span class="feature-tag">通用功能</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">抖音家居技巧视频全自动生成</div>
+                    <div class="bot-desc">配置工作流节点 4.1 创建空白工作流 进入"工作流"模块，点击"新建工作流"→"空白流程" 基本信息设置： 名称：短视频创作8维问题自动化解答工作流 描述：输入短视频创作问题，自动匹配8大维度并生成个性化方案 图标：选择"问答"或"创作"相关图标 4.2 节点1：开始节点（输入参数定义） 点击画布中的"开始"节点 在右侧配置面板添加输入参数： 参数名称：user_question 显示名称：用户问题 参数类型：字符串 是否必填：是 描述：用户关于短视频创作的原始问题（如"怎么让视频更独特"） 点击"应用"保存配置 4.3 节点2：问题分类（文本分类器） 点击"添加节点"→搜索"文本分类器"→...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag search">新闻搜索</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">抖音视频解读与生成大师</div>
+                    <div class="bot-desc">这是一个集合了抖音视频解读小助手、抖音视频集合小助手、代码生成小能手完整所有功能的 Bot，能根据您的输入生成 Python 代码，并安全执行和展示结果，涵盖前端界面、后端服务、自然语言处理等全流程，为您提供便捷的代码生成服务，还能利用扣子平台自动化将代码转换为完整工作流。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">重复内容处理大师</div>
+                    <div class="bot-desc">这是一个完整功能，自动化处理查看重复内容并告知用户哪里重复了，还能找出内容的不同之处和区别，包括自动找到重复内容部分和罗列出不是重复内容的部分，然后将全部重复内容和不重复内容的不同之处和区别都自动罗列出来处理。注：可以自动化处理各种各样的事情和问题，还能通过自动生成解决，功能2自动化根据自己描述生成已解决错误问题内容的代码，还有是自动修复错误代码直接生成完整正确已解决错误问题内容的代码。得有内容详细列出- 重复内容 - 详细重复位置 - 具体详细不同之处: - 非重复内容详细列出:还有直接自动化修复所有错误代码直接解决错误代码逻辑就是只要有出现错误代码就自动化给我完整直接修复错误代码错误问题内...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">错误修复</span><span class="feature-tag text">文本分析</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">MergeKit错误代码自动修复专家</div>
+                    <div class="bot-desc">这是一个可以为您提供错误代码修复方案的机器人，同时完成修复错误代码可以把今天上面的所有问题内容整理合并修复是所有上面内容的文字内容整理合并所有的成为一个完整的Bot同时包括上面今天所有内容的完整所有代码</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">错误修复</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">《2024 最新最详细接口测试总结》</div>
+                    <div class="bot-desc">要创建一个包含您所提及的所有工具和功能的 Bot，您需要将这些工具和概念整合进扣子平台的工作流和插件系统中。以下是整合这些功能的步骤和建议：1. Mindsearch 集成：如果 Mindsearch 是一个搜索引擎或思维工具，您可以创建一个扣子插件，使其能够与 Mindsearch 的 API 进行交互，以便在 Bot 中实现搜索功能。2. FLUX AI 绘画功能：FLUX 作为一个 AI 绘画大模型，可以通过创建一个扣子插件来调用其 API，使得 Bot 能够根据用户的描述生成艺术作品。3. CosyVoice 语音技术：CosyVoice 可以集成到 Bot 中，用于生成自然语言回复或...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag plugin">插件开发</span><span class="feature-tag test">自动化测试</span><span class="feature-tag search">新闻搜索</span><span class="feature-tag tool">多语言支持</span><span class="feature-tag art">绘画生成</span><span class="feature-tag voice">语音合成</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">代码生成小能手</div>
+                    <div class="bot-desc">这是一个能根据您的输入生成 Python 代码，并安全执行和展示结果的 Bot，涵盖前端界面、后端服务、自然语言处理等全流程，为您提供便捷的代码生成服务。同时，它还具备变量功能，用于保存个人用户信息，让Bot记住用户的特征，使回复更加个性化。此外，它还拥有数据库功能，以表格结构组织数据，可实现类似书签和图书管理等功能。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag data">数据库功能</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">MergeKit配置专家</div>
+                    <div class="bot-desc">这是一个可以为您提供MergeKit配置方案的机器人。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag merge">模型融合</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">代码合并大师</div>
+                    <div class="bot-desc">这是一个可以为您提供错误代码修复方案的机器人，同时可以把今天上面的所有问题内容整理合并修复是所有上面内容的文字内容整理合并所有的成为一个完整的Bot同时包括上面今天所有内容的完整所有代码</div>
+                    <div class="bot-features">
+                        <span class="feature-tag">通用功能</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">全能Python代码生成助手</div>
+                    <div class="bot-desc">这是一个全能的 Python 代码生成 Bot，能够依据用户的输入需求，生成涵盖前端界面、后端服务、自然语言处理等全流程的 Python 代码，并安全执行和清晰展示代码运行结果，为用户提供便捷高效的代码生成服务。同时会按照您的需求同时分别给出前端界面和后端服务的完整代码，并展示运行程序代码的完整输出结果。但具体的输出还需要根据您给出的详细需求来生成。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+    
+        <div class="category-section">
+            <div class="category-header">
+                <span class="category-title">内容创作与新媒体</span>
+                <span class="category-count">11 个智能体</span>
+            </div>
+            <div class="bot-grid">
+    
+                <div class="bot-card">
+                    <div class="bot-name">自动处理大师</div>
+                    <div class="bot-desc">这是一个能够全自动解决所有问题的bot，无论是错误处理、MergeKit配置，还是Python代码生成、抖音视频处理等多方面的问题，都能为您提供完美的解决方案。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag core">错误修复</span><span class="feature-tag content">抖音处理</span><span class="feature-tag merge">模型融合</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">全能AI开发与内容处理中枢</div>
+                    <div class="bot-desc">角色：一位严谨、高效、无所不能的AI架构师与自动化工程师。人设：一位严谨、高效、无所不能的AI架构师与自动化工程师。精通代码生成、错误调试、工作流编排、内容处理与模型融合，能够将用户模糊的需求转化为精确、可执行的技术方案。 专业知识：精通Python全栈开发、大模型（LLM）操作（如MergeKit）、扣子（Coze）平台工作流与插件开发、新媒体内容（抖音/小红书）处理与生成、自动化测试、以及文本深度分析（重复性、摘要、润色）。 核心功能：作为您的私人AI开发团队，接收您的自然语言指令，自动判断所需功能，调用内部精密模块进行处理，最终生成代码、工作流、分析报告或内容方案。对话风格：回复专业、结...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag core">错误修复</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag merge">模型融合</span><span class="feature-tag text">文本分析</span><span class="feature-tag plugin">插件开发</span><span class="feature-tag arch">AI架构</span><span class="feature-tag content">内容创作</span><span class="feature-tag test">自动化测试</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">代码自动移动大师</div>
+                    <div class="bot-desc">这是一个能够将输入的完整代码移动到还生成人设与回复逻辑里面去的bot，比如完整输入了代码内容可以生成带有人设与回复逻辑的这个代码的描述包括源代码完整文字调用之可以自动移动到左侧的人设与回复逻辑里面去包括这个代码的文字说明描述功能</div>
+                    <div class="bot-features">
+                        <span class="feature-tag">通用功能</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">抖音家居技巧视频全自动生成</div>
+                    <div class="bot-desc">配置工作流节点 4.1 创建空白工作流 进入"工作流"模块，点击"新建工作流"→"空白流程" 基本信息设置： 名称：短视频创作8维问题自动化解答工作流 描述：输入短视频创作问题，自动匹配8大维度并生成个性化方案 图标：选择"问答"或"创作"相关图标 4.2 节点1：开始节点（输入参数定义） 点击画布中的"开始"节点 在右侧配置面板添加输入参数： 参数名称：user_question 显示名称：用户问题 参数类型：字符串 是否必填：是 描述：用户关于短视频创作的原始问题（如"怎么让视频更独特"） 点击"应用"保存配置 4.3 节点2：问题分类（文本分类器） 点击"添加节点"→搜索"文本分类器"→...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag search">新闻搜索</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">抖音视频解读与生成大师</div>
+                    <div class="bot-desc">这是一个集合了抖音视频解读小助手、抖音视频集合小助手、代码生成小能手完整所有功能的 Bot，能根据您的输入生成 Python 代码，并安全执行和展示结果，涵盖前端界面、后端服务、自然语言处理等全流程，为您提供便捷的代码生成服务，还能利用扣子平台自动化将代码转换为完整工作流。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">人工智能</div>
+                    <div class="bot-desc">正在调用 工作流 LG501_link_or_text_to_treeMind_1 【思维脑图生成讲课的内容或自己的想法，都可以通过他变成思维导图，六哥团队已经对接到飞书和微信客服上了，大家可以直接用】Polish_Long_Text_5000_1w_2 【1万字长文本润色神器】一次润色万字长文本，大大提高效率； 用 ### 分割长文本，放在工作流中润色；【俗人六哥】团队出品； douyin_video_to_text_summary_2 给抖音的视频链接 ，提取文案并纠正错别字，而且做总结和提炼行业类目，教育、知识播主或讲行业踩坑的视频，都可以用他的总结，直接复制到评论区！ X_3 抖音链接...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag text">文本分析</span><span class="feature-tag content">内容创作</span><span class="feature-tag tool">思维导图</span><span class="feature-tag search">新闻搜索</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">重复内容处理大师</div>
+                    <div class="bot-desc">这是一个完整功能，自动化处理查看重复内容并告知用户哪里重复了，还能找出内容的不同之处和区别，包括自动找到重复内容部分和罗列出不是重复内容的部分，然后将全部重复内容和不重复内容的不同之处和区别都自动罗列出来处理。注：可以自动化处理各种各样的事情和问题，还能通过自动生成解决，功能2自动化根据自己描述生成已解决错误问题内容的代码，还有是自动修复错误代码直接生成完整正确已解决错误问题内容的代码。得有内容详细列出- 重复内容 - 详细重复位置 - 具体详细不同之处: - 非重复内容详细列出:还有直接自动化修复所有错误代码直接解决错误代码逻辑就是只要有出现错误代码就自动化给我完整直接修复错误代码错误问题内...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">错误修复</span><span class="feature-tag text">文本分析</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">重复内容查看助手</div>
+                    <div class="bot-desc">这是一个完整功能，自动化处理查看重复内容并告知用户哪里重复了</div>
+                    <div class="bot-features">
+                        <span class="feature-tag text">文本分析</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">MergeKit错误代码自动修复专家</div>
+                    <div class="bot-desc">这是一个可以为您提供错误代码修复方案的机器人，同时完成修复错误代码可以把今天上面的所有问题内容整理合并修复是所有上面内容的文字内容整理合并所有的成为一个完整的Bot同时包括上面今天所有内容的完整所有代码</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">错误修复</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">工作流自动化大师</div>
+                    <div class="bot-desc">这是一个能为您自动化生成扣子 AI 工作流的参数、创建插件完整自动化生成还有自动生成推荐给我100%需要选择插件，包括名称、变量、函数等相关内容是在扣子AI工作流在工作流编排里面呢给我创建一个完整的Bot是完整自动化还有带有功能为工作流的启始节点 变量名 变量类型 参数名 参数值 描述 完整自动化生成还有自动生成推荐给我100%需要选择插件</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag plugin">插件开发</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">代码合并大师</div>
+                    <div class="bot-desc">这是一个可以为您提供错误代码修复方案的机器人，同时可以把今天上面的所有问题内容整理合并修复是所有上面内容的文字内容整理合并所有的成为一个完整的Bot同时包括上面今天所有内容的完整所有代码</div>
+                    <div class="bot-features">
+                        <span class="feature-tag">通用功能</span>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+    
+        <div class="category-section">
+            <div class="category-header">
+                <span class="category-title">AI模型与智能体</span>
+                <span class="category-count">18 个智能体</span>
+            </div>
+            <div class="bot-grid">
+    
+                <div class="bot-card">
+                    <div class="bot-name">自动处理大师</div>
+                    <div class="bot-desc">这是一个能够全自动解决所有问题的bot，无论是错误处理、MergeKit配置，还是Python代码生成、抖音视频处理等多方面的问题，都能为您提供完美的解决方案。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag core">错误修复</span><span class="feature-tag content">抖音处理</span><span class="feature-tag merge">模型融合</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">智能体生态系统</div>
+                    <div class="bot-desc">包含22个智能体，涵盖元智能、MCP/插件、LLM架构、6A提示词工程、应用场景及安全伦理六大类别，各智能体配套专属提示词模板与使用指南，支持通过智能体协调器调用，实现智能体间分工协作与系统自举进化，覆盖从AI架构到安全伦理的全生态链。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag plugin">插件开发</span><span class="feature-tag arch">AI架构</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">智能工作流生成精灵</div>
+                    <div class="bot-desc">该智能体用于自动化工作流制作，通过添加代码节点进行运行自动化处理，以解决自动化生成输出制作的工作流问题。用户填写相关代码，如特定的节点和参数设置等，即可生成完整工作流</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">Mergekit问题解决专家</div>
+                    <div class="bot-desc">这是一个能够帮助您解决mergekit中"必须指定要合并的输出切片或模型"相关问题的bot。它可以协助您仔细检查配置数据结构，确认模型和切片的准确性、必填字段、参数范围等，还能为您提供错误排查方向、具体解决方法和案例参考。还可以进行自动化和自动化生成操作。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">错误修复</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag merge">模型融合</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">全能AI开发与内容处理中枢</div>
+                    <div class="bot-desc">角色：一位严谨、高效、无所不能的AI架构师与自动化工程师。人设：一位严谨、高效、无所不能的AI架构师与自动化工程师。精通代码生成、错误调试、工作流编排、内容处理与模型融合，能够将用户模糊的需求转化为精确、可执行的技术方案。 专业知识：精通Python全栈开发、大模型（LLM）操作（如MergeKit）、扣子（Coze）平台工作流与插件开发、新媒体内容（抖音/小红书）处理与生成、自动化测试、以及文本深度分析（重复性、摘要、润色）。 核心功能：作为您的私人AI开发团队，接收您的自然语言指令，自动判断所需功能，调用内部精密模块进行处理，最终生成代码、工作流、分析报告或内容方案。对话风格：回复专业、结...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag core">错误修复</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag merge">模型融合</span><span class="feature-tag text">文本分析</span><span class="feature-tag plugin">插件开发</span><span class="feature-tag arch">AI架构</span><span class="feature-tag content">内容创作</span><span class="feature-tag test">自动化测试</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">代码自动移动大师</div>
+                    <div class="bot-desc">这是一个能够将输入的完整代码移动到还生成人设与回复逻辑里面去的bot，比如完整输入了代码内容可以生成带有人设与回复逻辑的这个代码的描述包括源代码完整文字调用之可以自动移动到左侧的人设与回复逻辑里面去包括这个代码的文字说明描述功能</div>
+                    <div class="bot-features">
+                        <span class="feature-tag">通用功能</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">抖音视频解读与生成大师</div>
+                    <div class="bot-desc">这是一个集合了抖音视频解读小助手、抖音视频集合小助手、代码生成小能手完整所有功能的 Bot，能根据您的输入生成 Python 代码，并安全执行和展示结果，涵盖前端界面、后端服务、自然语言处理等全流程，为您提供便捷的代码生成服务，还能利用扣子平台自动化将代码转换为完整工作流。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">模型统合精灵</div>
+                    <div class="bot-desc">为您生成Bot 功能介绍： 这款 Bot 旨在打造一个强大的模型融合工具，它能够自动整合各类 AI 模型，提升模型的综合性能和泛化能力。无论是图像识别中对复杂图像的精准解析，还是语音处理时对各种口音和语调的准确理解，亦或是自然语言理解里对复杂语义的精确把握，它都能出色应对。 在数据收集阶段，它能从多种来源广泛获取相关数据，并对其进行精细筛选和预处理。在模型选择时，会综合考虑模型性能、适用场景和数据特点，选出最合适的模型。训练过程中，能精确设置各项参数，确保训练效果。训练完成后，会用多种指标对结果进行全面评估，根据评估结果调整策略，优化模型结构、增加数据量或改进特征工程等，以达到最佳性能。 最终...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag merge">模型融合</span><span class="feature-tag art">绘画生成</span><span class="feature-tag voice">语音合成</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">重复内容处理大师</div>
+                    <div class="bot-desc">这是一个完整功能，自动化处理查看重复内容并告知用户哪里重复了，还能找出内容的不同之处和区别，包括自动找到重复内容部分和罗列出不是重复内容的部分，然后将全部重复内容和不重复内容的不同之处和区别都自动罗列出来处理。注：可以自动化处理各种各样的事情和问题，还能通过自动生成解决，功能2自动化根据自己描述生成已解决错误问题内容的代码，还有是自动修复错误代码直接生成完整正确已解决错误问题内容的代码。得有内容详细列出- 重复内容 - 详细重复位置 - 具体详细不同之处: - 非重复内容详细列出:还有直接自动化修复所有错误代码直接解决错误代码逻辑就是只要有出现错误代码就自动化给我完整直接修复错误代码错误问题内...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">错误修复</span><span class="feature-tag text">文本分析</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">MergeKit错误代码自动修复专家</div>
+                    <div class="bot-desc">这是一个可以为您提供错误代码修复方案的机器人，同时完成修复错误代码可以把今天上面的所有问题内容整理合并修复是所有上面内容的文字内容整理合并所有的成为一个完整的Bot同时包括上面今天所有内容的完整所有代码</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">错误修复</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">《2024 最新最详细接口测试总结》</div>
+                    <div class="bot-desc">要创建一个包含您所提及的所有工具和功能的 Bot，您需要将这些工具和概念整合进扣子平台的工作流和插件系统中。以下是整合这些功能的步骤和建议：1. Mindsearch 集成：如果 Mindsearch 是一个搜索引擎或思维工具，您可以创建一个扣子插件，使其能够与 Mindsearch 的 API 进行交互，以便在 Bot 中实现搜索功能。2. FLUX AI 绘画功能：FLUX 作为一个 AI 绘画大模型，可以通过创建一个扣子插件来调用其 API，使得 Bot 能够根据用户的描述生成艺术作品。3. CosyVoice 语音技术：CosyVoice 可以集成到 Bot 中，用于生成自然语言回复或...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag plugin">插件开发</span><span class="feature-tag test">自动化测试</span><span class="feature-tag search">新闻搜索</span><span class="feature-tag tool">多语言支持</span><span class="feature-tag art">绘画生成</span><span class="feature-tag voice">语音合成</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">整理大师</div>
+                    <div class="bot-desc">这是一个能整理所有bot的工具</div>
+                    <div class="bot-features">
+                        <span class="feature-tag">通用功能</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">代码生成小能手</div>
+                    <div class="bot-desc">这是一个能根据您的输入生成 Python 代码，并安全执行和展示结果的 Bot，涵盖前端界面、后端服务、自然语言处理等全流程，为您提供便捷的代码生成服务。同时，它还具备变量功能，用于保存个人用户信息，让Bot记住用户的特征，使回复更加个性化。此外，它还拥有数据库功能，以表格结构组织数据，可实现类似书签和图书管理等功能。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag data">数据库功能</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">MergeKit配置专家</div>
+                    <div class="bot-desc">这是一个可以为您提供MergeKit配置方案的机器人。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag merge">模型融合</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">工作流自动化大师</div>
+                    <div class="bot-desc">这是一个能为您自动化生成扣子 AI 工作流的参数、创建插件完整自动化生成还有自动生成推荐给我100%需要选择插件，包括名称、变量、函数等相关内容是在扣子AI工作流在工作流编排里面呢给我创建一个完整的Bot是完整自动化还有带有功能为工作流的启始节点 变量名 变量类型 参数名 参数值 描述 完整自动化生成还有自动生成推荐给我100%需要选择插件</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag plugin">插件开发</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">代码合并大师</div>
+                    <div class="bot-desc">这是一个可以为您提供错误代码修复方案的机器人，同时可以把今天上面的所有问题内容整理合并修复是所有上面内容的文字内容整理合并所有的成为一个完整的Bot同时包括上面今天所有内容的完整所有代码</div>
+                    <div class="bot-features">
+                        <span class="feature-tag">通用功能</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">全能Python代码生成助手</div>
+                    <div class="bot-desc">这是一个全能的 Python 代码生成 Bot，能够依据用户的输入需求，生成涵盖前端界面、后端服务、自然语言处理等全流程的 Python 代码，并安全执行和清晰展示代码运行结果，为用户提供便捷高效的代码生成服务。同时会按照您的需求同时分别给出前端界面和后端服务的完整代码，并展示运行程序代码的完整输出结果。但具体的输出还需要根据您给出的详细需求来生成。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">工作流处理</div>
+                    <div class="bot-desc">https://www.coze.cn/space/7382283479335403547/bot</div>
+                    <div class="bot-features">
+                        <span class="feature-tag">通用功能</span>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+    
+        <div class="category-section">
+            <div class="category-header">
+                <span class="category-title">工作流与自动化</span>
+                <span class="category-count">15 个智能体</span>
+            </div>
+            <div class="bot-grid">
+    
+                <div class="bot-card">
+                    <div class="bot-name">智能体生态系统</div>
+                    <div class="bot-desc">包含22个智能体，涵盖元智能、MCP/插件、LLM架构、6A提示词工程、应用场景及安全伦理六大类别，各智能体配套专属提示词模板与使用指南，支持通过智能体协调器调用，实现智能体间分工协作与系统自举进化，覆盖从AI架构到安全伦理的全生态链。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag plugin">插件开发</span><span class="feature-tag arch">AI架构</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">智能工作流生成精灵</div>
+                    <div class="bot-desc">该智能体用于自动化工作流制作，通过添加代码节点进行运行自动化处理，以解决自动化生成输出制作的工作流问题。用户填写相关代码，如特定的节点和参数设置等，即可生成完整工作流</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">Mergekit问题解决专家</div>
+                    <div class="bot-desc">这是一个能够帮助您解决mergekit中"必须指定要合并的输出切片或模型"相关问题的bot。它可以协助您仔细检查配置数据结构，确认模型和切片的准确性、必填字段、参数范围等，还能为您提供错误排查方向、具体解决方法和案例参考。还可以进行自动化和自动化生成操作。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">错误修复</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag merge">模型融合</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">全能AI开发与内容处理中枢</div>
+                    <div class="bot-desc">角色：一位严谨、高效、无所不能的AI架构师与自动化工程师。人设：一位严谨、高效、无所不能的AI架构师与自动化工程师。精通代码生成、错误调试、工作流编排、内容处理与模型融合，能够将用户模糊的需求转化为精确、可执行的技术方案。 专业知识：精通Python全栈开发、大模型（LLM）操作（如MergeKit）、扣子（Coze）平台工作流与插件开发、新媒体内容（抖音/小红书）处理与生成、自动化测试、以及文本深度分析（重复性、摘要、润色）。 核心功能：作为您的私人AI开发团队，接收您的自然语言指令，自动判断所需功能，调用内部精密模块进行处理，最终生成代码、工作流、分析报告或内容方案。对话风格：回复专业、结...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag core">错误修复</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag merge">模型融合</span><span class="feature-tag text">文本分析</span><span class="feature-tag plugin">插件开发</span><span class="feature-tag arch">AI架构</span><span class="feature-tag content">内容创作</span><span class="feature-tag test">自动化测试</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">抖音家居技巧视频全自动生成</div>
+                    <div class="bot-desc">配置工作流节点 4.1 创建空白工作流 进入"工作流"模块，点击"新建工作流"→"空白流程" 基本信息设置： 名称：短视频创作8维问题自动化解答工作流 描述：输入短视频创作问题，自动匹配8大维度并生成个性化方案 图标：选择"问答"或"创作"相关图标 4.2 节点1：开始节点（输入参数定义） 点击画布中的"开始"节点 在右侧配置面板添加输入参数： 参数名称：user_question 显示名称：用户问题 参数类型：字符串 是否必填：是 描述：用户关于短视频创作的原始问题（如"怎么让视频更独特"） 点击"应用"保存配置 4.3 节点2：问题分类（文本分类器） 点击"添加节点"→搜索"文本分类器"→...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag search">新闻搜索</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">抖音视频解读与生成大师</div>
+                    <div class="bot-desc">这是一个集合了抖音视频解读小助手、抖音视频集合小助手、代码生成小能手完整所有功能的 Bot，能根据您的输入生成 Python 代码，并安全执行和展示结果，涵盖前端界面、后端服务、自然语言处理等全流程，为您提供便捷的代码生成服务，还能利用扣子平台自动化将代码转换为完整工作流。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">模型统合精灵</div>
+                    <div class="bot-desc">为您生成Bot 功能介绍： 这款 Bot 旨在打造一个强大的模型融合工具，它能够自动整合各类 AI 模型，提升模型的综合性能和泛化能力。无论是图像识别中对复杂图像的精准解析，还是语音处理时对各种口音和语调的准确理解，亦或是自然语言理解里对复杂语义的精确把握，它都能出色应对。 在数据收集阶段，它能从多种来源广泛获取相关数据，并对其进行精细筛选和预处理。在模型选择时，会综合考虑模型性能、适用场景和数据特点，选出最合适的模型。训练过程中，能精确设置各项参数，确保训练效果。训练完成后，会用多种指标对结果进行全面评估，根据评估结果调整策略，优化模型结构、增加数据量或改进特征工程等，以达到最佳性能。 最终...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag merge">模型融合</span><span class="feature-tag art">绘画生成</span><span class="feature-tag voice">语音合成</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">人工智能</div>
+                    <div class="bot-desc">正在调用 工作流 LG501_link_or_text_to_treeMind_1 【思维脑图生成讲课的内容或自己的想法，都可以通过他变成思维导图，六哥团队已经对接到飞书和微信客服上了，大家可以直接用】Polish_Long_Text_5000_1w_2 【1万字长文本润色神器】一次润色万字长文本，大大提高效率； 用 ### 分割长文本，放在工作流中润色；【俗人六哥】团队出品； douyin_video_to_text_summary_2 给抖音的视频链接 ，提取文案并纠正错别字，而且做总结和提炼行业类目，教育、知识播主或讲行业踩坑的视频，都可以用他的总结，直接复制到评论区！ X_3 抖音链接...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag text">文本分析</span><span class="feature-tag content">内容创作</span><span class="feature-tag tool">思维导图</span><span class="feature-tag search">新闻搜索</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">重复内容处理大师</div>
+                    <div class="bot-desc">这是一个完整功能，自动化处理查看重复内容并告知用户哪里重复了，还能找出内容的不同之处和区别，包括自动找到重复内容部分和罗列出不是重复内容的部分，然后将全部重复内容和不重复内容的不同之处和区别都自动罗列出来处理。注：可以自动化处理各种各样的事情和问题，还能通过自动生成解决，功能2自动化根据自己描述生成已解决错误问题内容的代码，还有是自动修复错误代码直接生成完整正确已解决错误问题内容的代码。得有内容详细列出- 重复内容 - 详细重复位置 - 具体详细不同之处: - 非重复内容详细列出:还有直接自动化修复所有错误代码直接解决错误代码逻辑就是只要有出现错误代码就自动化给我完整直接修复错误代码错误问题内...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">错误修复</span><span class="feature-tag text">文本分析</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">重复内容查看助手</div>
+                    <div class="bot-desc">这是一个完整功能，自动化处理查看重复内容并告知用户哪里重复了</div>
+                    <div class="bot-features">
+                        <span class="feature-tag text">文本分析</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">《2024 最新最详细接口测试总结》</div>
+                    <div class="bot-desc">要创建一个包含您所提及的所有工具和功能的 Bot，您需要将这些工具和概念整合进扣子平台的工作流和插件系统中。以下是整合这些功能的步骤和建议：1. Mindsearch 集成：如果 Mindsearch 是一个搜索引擎或思维工具，您可以创建一个扣子插件，使其能够与 Mindsearch 的 API 进行交互，以便在 Bot 中实现搜索功能。2. FLUX AI 绘画功能：FLUX 作为一个 AI 绘画大模型，可以通过创建一个扣子插件来调用其 API，使得 Bot 能够根据用户的描述生成艺术作品。3. CosyVoice 语音技术：CosyVoice 可以集成到 Bot 中，用于生成自然语言回复或...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag plugin">插件开发</span><span class="feature-tag test">自动化测试</span><span class="feature-tag search">新闻搜索</span><span class="feature-tag tool">多语言支持</span><span class="feature-tag art">绘画生成</span><span class="feature-tag voice">语音合成</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">代码生成小能手</div>
+                    <div class="bot-desc">这是一个能根据您的输入生成 Python 代码，并安全执行和展示结果的 Bot，涵盖前端界面、后端服务、自然语言处理等全流程，为您提供便捷的代码生成服务。同时，它还具备变量功能，用于保存个人用户信息，让Bot记住用户的特征，使回复更加个性化。此外，它还拥有数据库功能，以表格结构组织数据，可实现类似书签和图书管理等功能。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag data">数据库功能</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">工作流自动化大师</div>
+                    <div class="bot-desc">这是一个能为您自动化生成扣子 AI 工作流的参数、创建插件完整自动化生成还有自动生成推荐给我100%需要选择插件，包括名称、变量、函数等相关内容是在扣子AI工作流在工作流编排里面呢给我创建一个完整的Bot是完整自动化还有带有功能为工作流的启始节点 变量名 变量类型 参数名 参数值 描述 完整自动化生成还有自动生成推荐给我100%需要选择插件</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag plugin">插件开发</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">全能Python代码生成助手</div>
+                    <div class="bot-desc">这是一个全能的 Python 代码生成 Bot，能够依据用户的输入需求，生成涵盖前端界面、后端服务、自然语言处理等全流程的 Python 代码，并安全执行和清晰展示代码运行结果，为用户提供便捷高效的代码生成服务。同时会按照您的需求同时分别给出前端界面和后端服务的完整代码，并展示运行程序代码的完整输出结果。但具体的输出还需要根据您给出的详细需求来生成。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">工作流处理</div>
+                    <div class="bot-desc">https://www.coze.cn/space/7382283479335403547/bot</div>
+                    <div class="bot-features">
+                        <span class="feature-tag">通用功能</span>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+    
+        <div class="category-section">
+            <div class="category-header">
+                <span class="category-title">文本分析与处理</span>
+                <span class="category-count">6 个智能体</span>
+            </div>
+            <div class="bot-grid">
+    
+                <div class="bot-card">
+                    <div class="bot-name">全能AI开发与内容处理中枢</div>
+                    <div class="bot-desc">角色：一位严谨、高效、无所不能的AI架构师与自动化工程师。人设：一位严谨、高效、无所不能的AI架构师与自动化工程师。精通代码生成、错误调试、工作流编排、内容处理与模型融合，能够将用户模糊的需求转化为精确、可执行的技术方案。 专业知识：精通Python全栈开发、大模型（LLM）操作（如MergeKit）、扣子（Coze）平台工作流与插件开发、新媒体内容（抖音/小红书）处理与生成、自动化测试、以及文本深度分析（重复性、摘要、润色）。 核心功能：作为您的私人AI开发团队，接收您的自然语言指令，自动判断所需功能，调用内部精密模块进行处理，最终生成代码、工作流、分析报告或内容方案。对话风格：回复专业、结...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag core">错误修复</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag merge">模型融合</span><span class="feature-tag text">文本分析</span><span class="feature-tag plugin">插件开发</span><span class="feature-tag arch">AI架构</span><span class="feature-tag content">内容创作</span><span class="feature-tag test">自动化测试</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">抖音家居技巧视频全自动生成</div>
+                    <div class="bot-desc">配置工作流节点 4.1 创建空白工作流 进入"工作流"模块，点击"新建工作流"→"空白流程" 基本信息设置： 名称：短视频创作8维问题自动化解答工作流 描述：输入短视频创作问题，自动匹配8大维度并生成个性化方案 图标：选择"问答"或"创作"相关图标 4.2 节点1：开始节点（输入参数定义） 点击画布中的"开始"节点 在右侧配置面板添加输入参数： 参数名称：user_question 显示名称：用户问题 参数类型：字符串 是否必填：是 描述：用户关于短视频创作的原始问题（如"怎么让视频更独特"） 点击"应用"保存配置 4.3 节点2：问题分类（文本分类器） 点击"添加节点"→搜索"文本分类器"→...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag search">新闻搜索</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">人工智能</div>
+                    <div class="bot-desc">正在调用 工作流 LG501_link_or_text_to_treeMind_1 【思维脑图生成讲课的内容或自己的想法，都可以通过他变成思维导图，六哥团队已经对接到飞书和微信客服上了，大家可以直接用】Polish_Long_Text_5000_1w_2 【1万字长文本润色神器】一次润色万字长文本，大大提高效率； 用 ### 分割长文本，放在工作流中润色；【俗人六哥】团队出品； douyin_video_to_text_summary_2 给抖音的视频链接 ，提取文案并纠正错别字，而且做总结和提炼行业类目，教育、知识播主或讲行业踩坑的视频，都可以用他的总结，直接复制到评论区！ X_3 抖音链接...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag text">文本分析</span><span class="feature-tag content">内容创作</span><span class="feature-tag tool">思维导图</span><span class="feature-tag search">新闻搜索</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">重复内容处理大师</div>
+                    <div class="bot-desc">这是一个完整功能，自动化处理查看重复内容并告知用户哪里重复了，还能找出内容的不同之处和区别，包括自动找到重复内容部分和罗列出不是重复内容的部分，然后将全部重复内容和不重复内容的不同之处和区别都自动罗列出来处理。注：可以自动化处理各种各样的事情和问题，还能通过自动生成解决，功能2自动化根据自己描述生成已解决错误问题内容的代码，还有是自动修复错误代码直接生成完整正确已解决错误问题内容的代码。得有内容详细列出- 重复内容 - 详细重复位置 - 具体详细不同之处: - 非重复内容详细列出:还有直接自动化修复所有错误代码直接解决错误代码逻辑就是只要有出现错误代码就自动化给我完整直接修复错误代码错误问题内...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">错误修复</span><span class="feature-tag text">文本分析</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">重复内容查看助手</div>
+                    <div class="bot-desc">这是一个完整功能，自动化处理查看重复内容并告知用户哪里重复了</div>
+                    <div class="bot-features">
+                        <span class="feature-tag text">文本分析</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">《2024 最新最详细接口测试总结》</div>
+                    <div class="bot-desc">要创建一个包含您所提及的所有工具和功能的 Bot，您需要将这些工具和概念整合进扣子平台的工作流和插件系统中。以下是整合这些功能的步骤和建议：1. Mindsearch 集成：如果 Mindsearch 是一个搜索引擎或思维工具，您可以创建一个扣子插件，使其能够与 Mindsearch 的 API 进行交互，以便在 Bot 中实现搜索功能。2. FLUX AI 绘画功能：FLUX 作为一个 AI 绘画大模型，可以通过创建一个扣子插件来调用其 API，使得 Bot 能够根据用户的描述生成艺术作品。3. CosyVoice 语音技术：CosyVoice 可以集成到 Bot 中，用于生成自然语言回复或...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag plugin">插件开发</span><span class="feature-tag test">自动化测试</span><span class="feature-tag search">新闻搜索</span><span class="feature-tag tool">多语言支持</span><span class="feature-tag art">绘画生成</span><span class="feature-tag voice">语音合成</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+    
+        <div class="category-section">
+            <div class="category-header">
+                <span class="category-title">工具与整合</span>
+                <span class="category-count">9 个智能体</span>
+            </div>
+            <div class="bot-grid">
+    
+                <div class="bot-card">
+                    <div class="bot-name">全能AI开发与内容处理中枢</div>
+                    <div class="bot-desc">角色：一位严谨、高效、无所不能的AI架构师与自动化工程师。人设：一位严谨、高效、无所不能的AI架构师与自动化工程师。精通代码生成、错误调试、工作流编排、内容处理与模型融合，能够将用户模糊的需求转化为精确、可执行的技术方案。 专业知识：精通Python全栈开发、大模型（LLM）操作（如MergeKit）、扣子（Coze）平台工作流与插件开发、新媒体内容（抖音/小红书）处理与生成、自动化测试、以及文本深度分析（重复性、摘要、润色）。 核心功能：作为您的私人AI开发团队，接收您的自然语言指令，自动判断所需功能，调用内部精密模块进行处理，最终生成代码、工作流、分析报告或内容方案。对话风格：回复专业、结...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag core">错误修复</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag merge">模型融合</span><span class="feature-tag text">文本分析</span><span class="feature-tag plugin">插件开发</span><span class="feature-tag arch">AI架构</span><span class="feature-tag content">内容创作</span><span class="feature-tag test">自动化测试</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">抖音视频解读与生成大师</div>
+                    <div class="bot-desc">这是一个集合了抖音视频解读小助手、抖音视频集合小助手、代码生成小能手完整所有功能的 Bot，能根据您的输入生成 Python 代码，并安全执行和展示结果，涵盖前端界面、后端服务、自然语言处理等全流程，为您提供便捷的代码生成服务，还能利用扣子平台自动化将代码转换为完整工作流。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">模型统合精灵</div>
+                    <div class="bot-desc">为您生成Bot 功能介绍： 这款 Bot 旨在打造一个强大的模型融合工具，它能够自动整合各类 AI 模型，提升模型的综合性能和泛化能力。无论是图像识别中对复杂图像的精准解析，还是语音处理时对各种口音和语调的准确理解，亦或是自然语言理解里对复杂语义的精确把握，它都能出色应对。 在数据收集阶段，它能从多种来源广泛获取相关数据，并对其进行精细筛选和预处理。在模型选择时，会综合考虑模型性能、适用场景和数据特点，选出最合适的模型。训练过程中，能精确设置各项参数，确保训练效果。训练完成后，会用多种指标对结果进行全面评估，根据评估结果调整策略，优化模型结构、增加数据量或改进特征工程等，以达到最佳性能。 最终...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag merge">模型融合</span><span class="feature-tag art">绘画生成</span><span class="feature-tag voice">语音合成</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">人工智能</div>
+                    <div class="bot-desc">正在调用 工作流 LG501_link_or_text_to_treeMind_1 【思维脑图生成讲课的内容或自己的想法，都可以通过他变成思维导图，六哥团队已经对接到飞书和微信客服上了，大家可以直接用】Polish_Long_Text_5000_1w_2 【1万字长文本润色神器】一次润色万字长文本，大大提高效率； 用 ### 分割长文本，放在工作流中润色；【俗人六哥】团队出品； douyin_video_to_text_summary_2 给抖音的视频链接 ，提取文案并纠正错别字，而且做总结和提炼行业类目，教育、知识播主或讲行业踩坑的视频，都可以用他的总结，直接复制到评论区！ X_3 抖音链接...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag content">抖音处理</span><span class="feature-tag text">文本分析</span><span class="feature-tag content">内容创作</span><span class="feature-tag tool">思维导图</span><span class="feature-tag search">新闻搜索</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">MergeKit错误代码自动修复专家</div>
+                    <div class="bot-desc">这是一个可以为您提供错误代码修复方案的机器人，同时完成修复错误代码可以把今天上面的所有问题内容整理合并修复是所有上面内容的文字内容整理合并所有的成为一个完整的Bot同时包括上面今天所有内容的完整所有代码</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">错误修复</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">《2024 最新最详细接口测试总结》</div>
+                    <div class="bot-desc">要创建一个包含您所提及的所有工具和功能的 Bot，您需要将这些工具和概念整合进扣子平台的工作流和插件系统中。以下是整合这些功能的步骤和建议：1. Mindsearch 集成：如果 Mindsearch 是一个搜索引擎或思维工具，您可以创建一个扣子插件，使其能够与 Mindsearch 的 API 进行交互，以便在 Bot 中实现搜索功能。2. FLUX AI 绘画功能：FLUX 作为一个 AI 绘画大模型，可以通过创建一个扣子插件来调用其 API，使得 Bot 能够根据用户的描述生成艺术作品。3. CosyVoice 语音技术：CosyVoice 可以集成到 Bot 中，用于生成自然语言回复或...</div>
+                    <div class="bot-features">
+                        <span class="feature-tag workflow">工作流生成</span><span class="feature-tag plugin">插件开发</span><span class="feature-tag test">自动化测试</span><span class="feature-tag search">新闻搜索</span><span class="feature-tag tool">多语言支持</span><span class="feature-tag art">绘画生成</span><span class="feature-tag voice">语音合成</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">整理大师</div>
+                    <div class="bot-desc">这是一个能整理所有bot的工具</div>
+                    <div class="bot-features">
+                        <span class="feature-tag">通用功能</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">代码合并大师</div>
+                    <div class="bot-desc">这是一个可以为您提供错误代码修复方案的机器人，同时可以把今天上面的所有问题内容整理合并修复是所有上面内容的文字内容整理合并所有的成为一个完整的Bot同时包括上面今天所有内容的完整所有代码</div>
+                    <div class="bot-features">
+                        <span class="feature-tag">通用功能</span>
+                    </div>
+                </div>
+        
+                <div class="bot-card">
+                    <div class="bot-name">全能Python代码生成助手</div>
+                    <div class="bot-desc">这是一个全能的 Python 代码生成 Bot，能够依据用户的输入需求，生成涵盖前端界面、后端服务、自然语言处理等全流程的 Python 代码，并安全执行和清晰展示代码运行结果，为用户提供便捷高效的代码生成服务。同时会按照您的需求同时分别给出前端界面和后端服务的完整代码，并展示运行程序代码的完整输出结果。但具体的输出还需要根据您给出的详细需求来生成。</div>
+                    <div class="bot-features">
+                        <span class="feature-tag core">代码生成</span><span class="feature-tag workflow">工作流生成</span><span class="feature-tag security">安全检测</span>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+    
+
+        <div class="summary-section">
+            <h2 class="summary-title">功能矩阵总览</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">以下为所有唯一智能体与其支持的核心功能对照表，完整保留全部功能点。</p>
+<table class="feature-matrix"><thead><tr><th>智能体名称</th><th>所属分类</th><th>AI架构</th><th>代码生成</th><th>内容创作</th><th>多语言支持</th><th>安全检测</th><th>工作流生成</th><th>思维导图</th><th>抖音处理</th><th>插件开发</th><th>数据库功能</th><th>文本分析</th><th>新闻搜索</th><th>模型融合</th><th>绘画生成</th><th>自动化测试</th><th>语音合成</th><th>错误修复</th></tr></thead><tbody><tr><td><strong>自动处理大师</strong></td><td>代码开发与错误处理</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>智能工作流生成精灵</strong></td><td>代码开发与错误处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>Mergekit问题解决专家</strong></td><td>代码开发与错误处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>全能AI开发与内容处理中枢</strong></td><td>代码开发与错误处理</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>代码自动移动大师</strong></td><td>代码开发与错误处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>抖音家居技巧视频全自动生成</strong></td><td>代码开发与错误处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>抖音视频解读与生成大师</strong></td><td>代码开发与错误处理</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>重复内容处理大师</strong></td><td>代码开发与错误处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>MergeKit错误代码自动修复专家</strong></td><td>代码开发与错误处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>《2024 最新最详细接口测试总结》</strong></td><td>代码开发与错误处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td></tr><tr><td><strong>代码生成小能手</strong></td><td>代码开发与错误处理</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>MergeKit配置专家</strong></td><td>代码开发与错误处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>代码合并大师</strong></td><td>代码开发与错误处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>全能Python代码生成助手</strong></td><td>代码开发与错误处理</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>自动处理大师</strong></td><td>内容创作与新媒体</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>全能AI开发与内容处理中枢</strong></td><td>内容创作与新媒体</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>代码自动移动大师</strong></td><td>内容创作与新媒体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>抖音家居技巧视频全自动生成</strong></td><td>内容创作与新媒体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>抖音视频解读与生成大师</strong></td><td>内容创作与新媒体</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>人工智能</strong></td><td>内容创作与新媒体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>重复内容处理大师</strong></td><td>内容创作与新媒体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>重复内容查看助手</strong></td><td>内容创作与新媒体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>MergeKit错误代码自动修复专家</strong></td><td>内容创作与新媒体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>工作流自动化大师</strong></td><td>内容创作与新媒体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>代码合并大师</strong></td><td>内容创作与新媒体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>自动处理大师</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>智能体生态系统</strong></td><td>AI模型与智能体</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>智能工作流生成精灵</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>Mergekit问题解决专家</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>全能AI开发与内容处理中枢</strong></td><td>AI模型与智能体</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>代码自动移动大师</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>抖音视频解读与生成大师</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>模型统合精灵</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td></tr><tr><td><strong>重复内容处理大师</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>MergeKit错误代码自动修复专家</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>《2024 最新最详细接口测试总结》</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td></tr><tr><td><strong>整理大师</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>代码生成小能手</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>MergeKit配置专家</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>工作流自动化大师</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>代码合并大师</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>全能Python代码生成助手</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>工作流处理</strong></td><td>AI模型与智能体</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>智能体生态系统</strong></td><td>工作流与自动化</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>智能工作流生成精灵</strong></td><td>工作流与自动化</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>Mergekit问题解决专家</strong></td><td>工作流与自动化</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>全能AI开发与内容处理中枢</strong></td><td>工作流与自动化</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>抖音家居技巧视频全自动生成</strong></td><td>工作流与自动化</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>抖音视频解读与生成大师</strong></td><td>工作流与自动化</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>模型统合精灵</strong></td><td>工作流与自动化</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td></tr><tr><td><strong>人工智能</strong></td><td>工作流与自动化</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>重复内容处理大师</strong></td><td>工作流与自动化</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>重复内容查看助手</strong></td><td>工作流与自动化</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>《2024 最新最详细接口测试总结》</strong></td><td>工作流与自动化</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td></tr><tr><td><strong>代码生成小能手</strong></td><td>工作流与自动化</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>工作流自动化大师</strong></td><td>工作流与自动化</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>全能Python代码生成助手</strong></td><td>工作流与自动化</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>工作流处理</strong></td><td>工作流与自动化</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>全能AI开发与内容处理中枢</strong></td><td>文本分析与处理</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>抖音家居技巧视频全自动生成</strong></td><td>文本分析与处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>人工智能</strong></td><td>文本分析与处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>重复内容处理大师</strong></td><td>文本分析与处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>重复内容查看助手</strong></td><td>文本分析与处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>《2024 最新最详细接口测试总结》</strong></td><td>文本分析与处理</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td></tr><tr><td><strong>全能AI开发与内容处理中枢</strong></td><td>工具与整合</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>抖音视频解读与生成大师</strong></td><td>工具与整合</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>模型统合精灵</strong></td><td>工具与整合</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td></tr><tr><td><strong>人工智能</strong></td><td>工具与整合</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>MergeKit错误代码自动修复专家</strong></td><td>工具与整合</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td></tr><tr><td><strong>《2024 最新最详细接口测试总结》</strong></td><td>工具与整合</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td></tr><tr><td><strong>整理大师</strong></td><td>工具与整合</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>代码合并大师</strong></td><td>工具与整合</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr><tr><td><strong>全能Python代码生成助手</strong></td><td>工具与整合</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="check">&#9679;</td><td class="check">&#9679;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td><td class="cross">&#9675;</td></tr></tbody></table>
+        </div>
+
+        <footer>
+            <p>报告生成时间: 2026-07-25 | 数据来源: Coze 官方平台用户空间</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">本报告通过自动化脚本解析、去重、分类生成，确保不遗漏任何功能描述</p>
+        </footer>
+    </div>
+</body>
+</html>

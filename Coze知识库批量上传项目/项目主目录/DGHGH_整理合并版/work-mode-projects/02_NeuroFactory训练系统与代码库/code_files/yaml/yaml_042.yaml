@@ -1,0 +1,7 @@
+# OmniNeuro ASI 超融合智能系统配置文件
+monitor_dirs:
+  - ./data
+  - ./knowledge  # 支持多目录监控
+model_store: ./models
+max_concurrent: 4
+auto_update: true

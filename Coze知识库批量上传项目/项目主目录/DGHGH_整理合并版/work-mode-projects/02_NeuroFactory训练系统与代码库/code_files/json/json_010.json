@@ -1,0 +1,99 @@
+{
+  "schema_version": "v9.0",
+  "name": "OmniNeuro ASI + Neuro Factory Pro",
+  "description": "超融合多模态AI训练系统 + Coze全场景智能自动化集成",
+  "version": "9.0.0",
+  "openapi": "3.1.0",
+  "info": {
+    "title": "NeuroFactory Fusion API",
+    "description": "全栈式多模态AI训练与开发平台",
+    "version": "9.0.0",
+    "contact": {
+      "name": "NeuroFactory Team",
+      "email": "support@neurofactory.ai"
+    }
+  },
+  "servers": [
+    {"url": "https://api.neurofactory.ai/v1", "description": "生产服务器"},
+    {"url": "https://staging.api.neurofactory.ai/v1", "description": "测试服务器"}
+  ],
+  "paths": {
+    "/api/v1/train": {
+      "post": {
+        "summary": "执行AI训练",
+        "operationId": "executeTraining",
+        "parameters": [
+          {"name": "data_path", "in": "query", "required": true, "schema": {"type": "string"}},
+          {"name": "model_type", "in": "query", "required": true, "schema": {"type": "string", "enum": ["gpt", "llama", "bert"]}}
+        ],
+        "responses": {
+          "200": {"description": "训练启动成功", "content": {"application/json": {"schema": {"type": "object"}}}}
+        }
+      }
+    },
+    "/api/v1/fix-parameters": {
+      "post": {
+        "summary": "参数修复",
+        "operationId": "fixParameters",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "parameters": {"type": "object"},
+                  "api_spec": {"type": "object"},
+                  "fix_strategy": {"type": "string", "enum": ["auto", "conservative", "aggressive"]}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {"description": "修复成功", "content": {"application/json": {"schema": {"type": "object"}}}}
+        }
+      }
+    },
+    "/api/v1/openapi/generate": {
+      "post": {
+        "summary": "生成OpenAPI规范",
+        "operationId": "generateOpenAPI",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "endpoints": {"type": "array", "items": {"type": "object"}},
+                  "info": {"type": "object"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {"description": "生成成功", "content": {"application/json": {"schema": {"type": "object"}}}}
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "WorkflowType": {"type": "string", "enum": ["ai_training", "data_processing", "model_evaluation", "model_deployment", "system_monitoring", "parameter_fixing", "openapi_generation"]},
+      "TrainingStatus": {"type": "string", "enum": ["pending", "running", "completed", "failed", "cancelled"]}
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {"type": "apiKey", "in": "header", "name": "X-API-Key"},
+      "BearerAuth": {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
+    }
+  },
+  "security": [{"ApiKeyAuth": []}],
+  "tags": [
+    {"name": "AI Training", "description": "AI模型训练相关操作"},
+    {"name": "Parameter Fixing", "description": "参数修复和验证"},
+    {"name": "OpenAPI", "description": "OpenAPI规范管理"}
+  ],
+  "externalDocs": {"description": "完整文档", "url": "https://docs.neurofactory.ai"}
+}

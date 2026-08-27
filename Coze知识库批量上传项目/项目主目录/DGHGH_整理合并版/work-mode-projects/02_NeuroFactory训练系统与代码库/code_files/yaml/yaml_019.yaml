@@ -1,0 +1,90 @@
+# Neuro Factory Pro 配置文件
+# 版本: v3.14
+
+system:
+  name: "Neuro Factory Pro"
+  version: "3.14.0"
+  description: "量子增强AI全能工厂系统"
+  
+data:
+  # 数据格式支持
+  supported_formats:
+    text: [".txt", ".py", ".json", ".xml", ".md", ".html", ".css", ".js"]
+    table: [".csv", ".xlsx", ".xls", ".tsv", ".parquet"]
+    image: [".jpg", ".jpeg", ".png", ".bmp", ".gif", ".tiff"]
+    archive: [".zip", ".rar", ".tar", ".gz", ".7z"]
+    document: [".pdf", ".docx", ".pptx"]
+  
+  # 数据处理
+  max_file_size_mb: 1024
+  default_encoding: "utf-8"
+  backup_encoding: ["gbk", "latin-1", "iso-8859-1"]
+  
+  # 数据增强
+  augmentation:
+    text:
+      enabled: true
+      methods: ["synonym_replace", "random_insert", "random_swap", "random_delete"]
+    image:
+      enabled: true
+      methods: ["flip", "rotate", "crop", "brightness", "contrast"]
+  
+training:
+  # 默认模型
+  default_model: "microsoft/DialoGPT-small"
+  
+  # 训练参数
+  default_epochs: 3
+  default_batch_size: 4
+  default_learning_rate: 2e-5
+  warmup_steps: 500
+  
+  # 优化器
+  optimizer: "adamw"
+  weight_decay: 0.01
+  gradient_accumulation_steps: 1
+  
+  # 调度器
+  scheduler: "linear"
+  num_warmup_steps: 0
+  
+security:
+  # 加密配置
+  key_size: 32
+  encryption_algorithm: "AES-256-CFB"
+  hmac_algorithm: "SHA256"
+  
+  # 密钥管理
+  key_rotation_days: 30
+  max_keys: 100
+  
+gui:
+  # 界面配置
+  theme: "soft"
+  port: 7860
+  host: "0.0.0.0"
+  
+  # 显示设置
+  auto_refresh_interval: 5
+  max_log_lines: 1000
+  
+monitoring:
+  # 监控配置
+  metrics_interval: 10
+  alert_thresholds:
+    cpu: 80
+    memory: 85
+    disk: 90
+    gpu: 90
+  
+  # 日志配置
+  log_level: "INFO"
+  log_retention_days: 30
+
+paths:
+  # 路径配置
+  data_dir: "./data"
+  model_dir: "./models"
+  log_dir: "./logs"
+  temp_dir: "/tmp/neuro_factory"
+  config_dir: "./configs"

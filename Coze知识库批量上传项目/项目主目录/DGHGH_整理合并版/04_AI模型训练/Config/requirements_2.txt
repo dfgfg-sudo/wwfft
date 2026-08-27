@@ -1,0 +1,9 @@
+FROM python:3.10-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+ENV GUMROAD_KEY=xxx
+ENV JPGBOX_KEY=xxx
+ENV SMTP_PASS=xxx
+CMD ["python", "main_auto_money.py"]

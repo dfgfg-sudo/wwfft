@@ -1,0 +1,63 @@
+autocode-pro/
+├── packages/
+│   ├── core/                    # 核心引擎
+│   │   ├── src/
+│   │   │   ├── ai_engine/       # AI引擎
+│   │   │   │   ├── requirement_analyzer.py
+│   │   │   │   ├── architect.py
+│   │   │   │   ├── code_generator.py
+│   │   │   │   └── validator.py
+│   │   │   ├── templates/       # 代码模板
+│   │   │   │   ├── frontend/
+│   │   │   │   ├── backend/
+│   │   │   │   ├── mobile/
+│   │   │   │   └── database/
+│   │   │   └── config/
+│   │   │       ├── tech_stack.yaml
+│   │   │       └── patterns.yaml
+│   │   └── package.json
+│   ├── web-dashboard/           # Web管理界面
+│   │   ├── src/
+│   │   │   ├── components/
+│   │   │   │   ├── ProjectWizard.vue
+│   │   │   │   ├── CodeEditor.vue
+│   │   │   │   └── LivePreview.vue
+│   │   │   ├── views/
+│   │   │   │   ├── Home.vue
+│   │   │   │   ├── Projects.vue
+│   │   │   │   └── Settings.vue
+│   │   │   └── api/
+│   │   │       └── projectService.js
+│   │   └── package.json
+│   ├── cli-tool/               # 命令行工具
+│   │   ├── src/
+│   │   │   ├── commands/
+│   │   │   │   ├── generate.js
+│   │   │   │   ├── deploy.js
+│   │   │   │   └── test.js
+│   │   │   └── utils/
+│   │   │       └── fileGenerator.js
+│   │   └── package.json
+│   └── api-server/             # 后端API
+│       ├── src/
+│       │   ├── controllers/
+│       │   │   ├── projectController.js
+│       │   │   └── userController.js
+│       │   ├── models/
+│       │   │   ├── Project.js
+│       │   │   └── User.js
+│       │   ├── routes/
+│       │   │   ├── projects.js
+│       │   │   └── users.js
+│       │   └── services/
+│       │       └── aiService.js
+│       └── package.json
+├── templates/                  # 完整项目模板
+│   ├── ecommerce/
+│   ├── blog/
+│   ├── saas/
+│   ├── cms/
+│   └── analytics/
+├── generated-projects/         # 生成的项目存储
+├── docker-compose.yml
+└── README.md

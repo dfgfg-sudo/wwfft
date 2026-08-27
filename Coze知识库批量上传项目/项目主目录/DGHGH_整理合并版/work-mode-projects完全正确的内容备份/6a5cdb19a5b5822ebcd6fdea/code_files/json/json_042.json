@@ -1,0 +1,6 @@
+{
+     "input_parameters": {
+       "config_file": {"type": "string", "format": "file"},
+       "import_format": {"type": "string", "enum": ["json", "yaml", "zip"]}
+     }
+   }

@@ -1,0 +1,50 @@
+"""
+graph TD
+    A[用户界面 / Coze平台] --> B[统一自动化工具 API]
+    B --> C{自动化开关 automation_enabled}
+    C -->|true| D[全自动处理引擎]
+    C -->|false| E[半自动/手动处理引擎]
+    
+    D --> F[工作流引擎]
+    D --> G[AI服务集群]
+    D --> H[系统运维中心]
+    D --> I[文化遗产数字化]
+    D --> J[神经决策系统]
+    D --> K[行业分析引擎]
+    
+    F --> F1[工作流创建/执行/监控]
+    G --> G1[数据增强/行业分析/模型训练]
+    H --> H1[自动修复/紧急模式/备份恢复]
+    I --> I1[遗产保护/数字 cataloging]
+    J --> J1[识人术/读心术/心理学效应]
+    K --> K1[经济周期/财富流向/地缘政治]
+    
+    E --> L[人工审批队列]
+    L --> M[最终执行]
+    
+    N[知识库] --> N1[财富底层逻辑]
+    N --> N2[经济周期规律]
+    N --> N3[AI替代与创造]
+    N --> N4[情商为人处世]
+    N --> N5[法律协议常识]
+    N --> N6[自媒体抖音实操]
+    
+    F --> N
+    G --> N
+    H --> N
+    J --> N
+    K --> N
+    
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#fff3e0
+    style D fill:#e8f5e8
+    style E fill:#ffebee
+    style F fill:#e3f2fd
+    style G fill:#f1f8e9
+    style H fill:#fff9c4
+    style I fill:#fce4ec
+    style J fill:#e8eaf6
+    style K fill:#f3e5f5
+    style N fill:#fff8e1
+"""

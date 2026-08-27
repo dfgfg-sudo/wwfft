@@ -1,0 +1,37 @@
+{
+  "name": "Coze终极修复器",
+  "description": "一体化解决插件开发和工作流错误的终极解决方案",
+  "version": "1.0.0",
+  "create_time": "2025-08-14 00:03:00",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7538098881461125147",
+  "original_name": "CozeUltimateFixer",
+  "type": "plugin",
+  "plugin_type": "云插件",
+  "functions": [
+    {
+      "name": "fix_plugin_error",
+      "description": "修复插件开发错误",
+      "input_params": [
+        {"name": "plugin_code", "type": "string", "required": true, "description": "插件代码"},
+        {"name": "error_message", "type": "string", "required": true, "description": "错误信息"}
+      ],
+      "output_params": [
+        {"name": "fixed_code", "type": "string", "description": "修复后的代码"},
+        {"name": "fix_summary", "type": "string", "description": "修复摘要"}
+      ]
+    },
+    {
+      "name": "fix_workflow_error",
+      "description": "修复工作流配置错误",
+      "input_params": [
+        {"name": "workflow_json", "type": "string", "required": true, "description": "工作流JSON"},
+        {"name": "error_type", "type": "string", "required": true, "description": "错误类型"}
+      ],
+      "output_params": [
+        {"name": "fixed_json", "type": "string", "description": "修复后的JSON"},
+        {"name": "validation_result", "type": "string", "description": "验证结果"}
+      ]
+    }
+  ]
+}

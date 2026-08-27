@@ -1,0 +1,118 @@
+{
+  "name": "抖音小红书落地项目",
+  "description": "分析问题+推书+心理按摩",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:05:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "problem",
+            "type": "string",
+            "required": true,
+            "description": "用户问题描述"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_analyze",
+      "type": "4",
+      "data": {
+        "name": "AI 问题分析",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是问题分析专家，深度分析用户问题",
+        "user_prompt": "用户问题：{{problem}}\\n请分析问题本质和根源",
+        "output_params": [
+          {
+            "name": "analysis",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_recommend",
+      "type": "4",
+      "data": {
+        "name": "AI 推荐书籍",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是书单推荐专家，根据问题推荐合适书籍",
+        "user_prompt": "问题分析：{{llm_node_analyze.analysis}}\\n请推荐3本相关书籍",
+        "output_params": [
+          {
+            "name": "books",
+            "type": "array"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_massage",
+      "type": "4",
+      "data": {
+        "name": "AI 心理按摩",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是心理疏导专家，给予温暖鼓励",
+        "user_prompt": "问题：{{problem}}\\n分析：{{llm_node_analyze.analysis}}\\n请给予心理疏导和鼓励",
+        "output_params": [
+          {
+            "name": "massage",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "analysis",
+            "type": "string",
+            "value": "{{llm_node_analyze.analysis}}"
+          },
+          {
+            "name": "recommended_books",
+            "type": "array",
+            "value": "{{llm_node_recommend.books}}"
+          },
+          {
+            "name": "massage",
+            "type": "string",
+            "value": "{{llm_node_massage.massage}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "start_node",
+      "targetNodeID": "llm_node_analyze"
+    },
+    {
+      "sourceNodeID": "llm_node_analyze",
+      "targetNodeID": "llm_node_recommend"
+    },
+    {
+      "sourceNodeID": "llm_node_analyze",
+      "targetNodeID": "llm_node_massage"
+    },
+    {
+      "sourceNodeID": "llm_node_recommend",
+      "targetNodeID": "end_node"
+    },
+    {
+      "sourceNodeID": "llm_node_massage",
+      "targetNodeID": "end_node"
+    }
+  ]
+}

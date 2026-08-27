@@ -1,0 +1,70 @@
+NeuroFactoryPro/
+├── core/                          # 核心引擎
+│   ├── __init__.py
+│   ├── quantum_feeder.py         # 量子数据吞噬引擎
+│   ├── data_processor.py         # 多模态数据处理
+│   ├── model_trainer.py          # 模型训练核心
+│   ├── security.py               # 量子安全加密
+│   └── monitor.py                # 实时监控系统
+├── gui/                          # 图形界面
+│   ├── __init__.py
+│   ├── main_window.py           # 主窗口界面
+│   ├── training_panel.py        # 训练控制面板
+│   ├── data_panel.py            # 数据管理面板
+│   └── visualization.py         # 可视化组件
+├── coze_plugins/                 # Coze插件系统
+│   ├── __init__.py
+│   ├── plugin_generator.py      # 插件生成器
+│   ├── workflow_engine.py       # 工作流引擎
+│   └── api_manager.py           # API管理器
+├── learning/                     # 学习认证系统
+│   ├── __init__.py
+│   ├── path_manager.py          # 学习路径管理
+│   ├── certification.py         # 认证考试系统
+│   └── skill_assessment.py      # 技能评估
+├── data/                         # 数据管理
+│   ├── formats/                 # 格式处理器
+│   │   ├── text_processor.py
+│   │   ├── image_processor.py
+│   │   ├── table_processor.py
+│   │   └── archive_processor.py
+│   ├── augmentation/            # 数据增强
+│   │   ├── image_aug.py
+│   │   ├── text_aug.py
+│   │   └── table_aug.py
+│   └── quality/                # 质量评估
+│       ├── validator.py
+│       └── metrics.py
+├── models/                       # 模型架构
+│   ├── transformers/
+│   │   ├── llama_adapter.py
+│   │   ├── multimodal.py
+│   │   └── optimizers.py
+│   ├── training/
+│   │   ├── trainer.py
+│   │   ├── evaluator.py
+│   │   └── scheduler.py
+│   └── deployment/
+│       ├── exporter.py
+│       └── server.py
+├── utils/                        # 工具函数
+│   ├── file_utils.py
+│   ├── logging_utils.py
+│   ├── config_utils.py
+│   └── network_utils.py
+├── configs/                      # 配置文件
+│   ├── default.yaml
+│   ├── training_config.yaml
+│   └── security_config.yaml
+├── docs/                         # 文档
+│   ├── user_manual.md
+│   ├── api_docs.md
+│   └── development_guide.md
+├── tests/                        # 测试文件
+│   ├── test_data_processing.py
+│   ├── test_model_training.py
+│   └── test_integration.py
+├── requirements.txt              # 依赖列表
+├── setup.py                     # 安装脚本
+├── main.py                      # 主程序入口
+└── README.md                    # 项目说明

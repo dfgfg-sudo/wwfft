@@ -1,0 +1,178 @@
+# config/master.yaml
+version: "2.0"
+system:
+  name: "coze-workflow-automation-system"
+  environment: "${ENVIRONMENT:production}"
+  log_level: "${LOG_LEVEL:INFO}"
+  
+coze_platform:
+  api:
+    base_url: "https://api.coze.com"
+    version: "v1"
+    authentication:
+      api_key: "${COZE_API_KEY}"
+      workspace_id: "${COZE_WORKSPACE_ID}"
+      timeout: 30
+      retry:
+        max_attempts: 3
+        backoff_factor: 2
+        status_forcelist: [500, 502, 503, 504]
+    
+  workflow:
+    default_config:
+      timeout: 300
+      memory_limit: "2G"
+      concurrency_limit: 10
+    validation:
+      enabled: true
+      strict_mode: true
+      schema_path: "./schemas/workflow_schema.json"
+
+incremental_processing:
+  detection_strategies:
+    - name: "timestamp_based"
+      enabled: true
+      fields: ["updated_at", "created_at", "modified_at"]
+      window_size: "24h"
+      
+    - name: "id_range_based"
+      enabled: true
+      id_field: "id"
+      batch_size: 1000
+      
+    - name: "checksum_based"
+      enabled: true
+      checksum_fields: ["content_hash", "file_hash"]
+      algorithm: "sha256"
+      
+    - name: "event_based"
+      enabled: true
+      event_source: "kafka"
+      topics: ["data_updates"]
+      
+  deduplication:
+    strategy: "distributed_lock"
+    ttl: "1h"
+    storage: "redis"
+    
+  checkpointing:
+    enabled: true
+    storage: "postgresql"
+    interval: "1000 records"
+    recovery:
+      enabled: true
+      max_retry: 3
+
+batch_processing:
+  execution_strategies:
+    - name: "sequential"
+      description: "顺序执行，保证数据顺序"
+      max_concurrent: 1
+      
+    - name: "parallel"
+      description: "完全并行执行"
+      max_concurrent: 50
+      partition_key: "id"
+      
+    - name: "smart_batching"
+      description: "智能分批，基于资源使用"
+      dynamic_batch_size: true
+      max_memory_usage: "80%"
+      max_cpu_usage: "70%"
+      
+  scheduling:
+    cron_expressions:
+      hourly: "0 * * * *"
+      daily: "0 0 * * *"
+      realtime: "*/5 * * * * *"
+      
+  failure_handling:
+    retry_policy:
+      exponential_backoff:
+        initial_delay: 1
+        multiplier: 2
+        max_delay: 60
+      max_retries: 3
+      retryable_errors: ["timeout", "rate_limit", "network_error"]
+      
+    circuit_breaker:
+      enabled: true
+      failure_threshold: 5
+      reset_timeout: 60
+      half_open_max_attempts: 2
+      
+    dead_letter_queue:
+      enabled: true
+      storage: "s3"
+      retention_days: 30
+
+workflow_generation:
+  template_repository:
+    path: "./templates"
+    auto_update: true
+    version_control: true
+    
+  node_types:
+    - type: "data_input"
+      categories: ["database", "api", "file", "stream"]
+      
+    - type: "data_processing"
+      categories: ["transform", "enrich", "filter", "aggregate"]
+      
+    - type: "ai_processing"
+      categories: ["llm", "embedding", "classification", "summarization"]
+      
+    - type: "output"
+      categories: ["database", "api", "file", "notification"]
+      
+  optimization:
+    enabled: true
+    strategies:
+      - name: "node_merging"
+        enabled: true
+        
+      - name: "parallelization"
+        enabled: true
+        
+      - name: "caching"
+        enabled: true
+        ttl: "1h"
+        
+      - name: "resource_allocation"
+        enabled: true
+        memory_optimization: true
+        cpu_optimization: true
+
+monitoring_and_alerting:
+  metrics:
+    collection_interval: "30s"
+    retention_period: "30d"
+    
+  dashboards:
+    enabled: true
+    refresh_interval: "10s"
+    
+  alerting:
+    channels:
+      - type: "slack"
+        webhook_url: "${SLACK_WEBHOOK}"
+        severity: ["critical", "error"]
+        
+      - type: "email"
+        recipients: ["team@example.com"]
+        severity: ["warning", "error", "critical"]
+        
+      - type: "webhook"
+        endpoints: ["https://alert.example.com/webhook"]
+        
+    rules:
+      - name: "high_error_rate"
+        condition: "error_rate > 5%"
+        severity: "critical"
+        
+      - name: "slow_processing"
+        condition: "p95_latencyCoze工作流全自动化增量批量处理系统
+
+一、系统架构总览
+
+1.1 系统架构图

@@ -1,0 +1,56 @@
+sequenceDiagram
+    participant U as 用户
+    participant B as run.bat
+    participant M as main.py
+    participant C as SystemConfig
+    participant D as DataOmnivore
+    participant T as AITrainer
+    participant P as ModelPackager
+    participant Q as QuantumEncryptor
+
+    U->>B: 双击启动
+    B->>B: 环境检测
+    B->>B: 依赖安装
+    B->>M: 调用主程序
+
+    M->>C: 初始化配置
+    C->>C: 创建目录
+    C->>C: 配置日志
+    C->>C: 检测模型路径
+    C-->>M: 配置完成
+
+    M->>D: 启动数据加载
+    D->>D: 扫描上传目录
+    loop 每个文件
+        D->>D: 格式识别
+        D->>D: 内容解析
+        D->>D: 数据转换
+    end
+    D-->>M: 返回数据集
+
+    M->>T: 初始化训练器
+    T->>T: 加载基础模型
+    T->>T: 配置Tokenizer
+    T->>T: 准备训练数据
+    loop 训练循环
+        T->>T: 前向传播
+        T->>T: 损失计算
+        T->>T: 反向传播
+        T->>T: 参数更新
+    end
+    T->>T: 保存训练模型
+    T-->>M: 返回模型路径
+
+    M->>P: 启动打包器
+    P->>Q: 请求加密
+    Q->>Q: 生成量子密钥
+    Q->>Q: 加密模型数据
+    Q-->>P: 返回加密数据
+    P->>P: 创建ZIP包
+    P->>P: 添加元数据
+    P-->>M: 返回最终包路径
+
+    M->>M: 生成训练报告
+    M->>B: 返回成功状态
+    B->>U: 打开结果目录
+    U-->>U: 查看训练结果

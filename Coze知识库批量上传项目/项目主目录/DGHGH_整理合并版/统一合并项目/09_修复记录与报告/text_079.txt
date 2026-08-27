@@ -1,0 +1,65 @@
+---
+
+核心技术栈
+
+组件 技术选型 用途
+深度学习框架 PyTorch 1.12+ 模型训练与推理
+NLP模型 HuggingFace Transformers BERT模型加载与微调
+图像处理 torchvision, Pillow 图像预处理与特征提取
+数据分析 Pandas, NumPy 表格数据处理
+机器学习 scikit-learn 聚类、异常检测
+文件监控 watchdog 实时目录监听
+日志系统 logging 分级日志记录
+版本控制 自定义 模型版本管理
+
+---
+
+功能模块详解
+
+1. 工业级配置系统 (IndustrialConfig)
+
+· 统一管理所有路径、训练参数、系统阈值
+· 支持动态生成文件验证规范
+· 自动初始化目录结构
+
+2. 模型验证系统 (ModelValidator)
+
+· 文件完整性：检查大小、哈希（BLAKE2b）
+· 结构验证：解析 config.json 确保必要字段
+· 兼容性测试：尝试加载 tokenizer 验证
+
+3. 自动标注系统 (AutoLabeler)
+
+· 文本：关键词匹配 + TF-IDF 聚类（样本充足时）
+· 图像：ResNet18 特征提取与阈值判断
+· 表格：IsolationForest 异常检测
+
+4. 训练引擎 (IndustrialTrainer)
+
+· 动态参数：batch size、learning rate、steps 根据样本量自适应
+· 自愈修复：模型损坏时自动下载备份
+· 版本管理：每次训练保存独立版本目录
+
+5. 数据监控器 (AIWatchdog)
+
+· 事件驱动：监听 on_created、on_modified
+· 多格式支持：.txt, .csv, .json, .jpg, .png, .zip
+· 自动解压：递归处理 ZIP 包内文件
+· 数据池缓存：达到最小样本量后触发训练
+
+6. 自愈系统
+
+· 启动时自动检查模型健康
+· 缺失/损坏文件自动从 HuggingFace 重新下载
+· 最多重试 3 次，超时抛出异常
+
+---
+
+部署与使用指南
+
+环境要求
+
+· Python 3.8+
+· 推荐使用 Conda 或 virtualenv
+
+安装依赖

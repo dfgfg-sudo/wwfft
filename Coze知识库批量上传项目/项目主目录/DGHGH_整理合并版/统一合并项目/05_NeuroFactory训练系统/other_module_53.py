@@ -1,0 +1,1 @@
+{"total_extracted": 48, "knowledge_base_id": "kb_abc123", "status": "completed", "results": [...]}

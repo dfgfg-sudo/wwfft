@@ -1,0 +1,3 @@
+2.4 定节点名称（原文完整配置）
+
+在 backend/domain/workflow/entity/node_meta.go 中，给你的新节点一个独占的名字：

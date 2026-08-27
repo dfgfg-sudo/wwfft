@@ -1,0 +1,107 @@
+{
+  "name": "知识库写入检索工作流",
+  "description": "依次执行知识库写入和知识库检索操作",
+  "version": "1.0.0",
+  "create_time": "2026-07-21 22:04:00",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7664974304418086966",
+  "original_name": "rtxyfguhy",
+  "type": "workflow",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "input",
+            "type": "string",
+            "required": true,
+            "description": "输入内容"
+          }
+        ]
+      }
+    },
+    {
+      "id": "knowledge_write",
+      "type": "3",
+      "data": {
+        "name": "知识库写入",
+        "language": "python",
+        "code": "def main(knowledge):\n    result = {\n        \"documentId\": \"doc_\" + str(hash(knowledge))[:8],\n        \"fileName\": \"knowledge_doc.txt\",\n        \"fileUrl\": \"/knowledge/documents/\" + str(hash(knowledge))[:8] + \".txt\"\n    }\n    return result",
+        "input_params": [
+          {
+            "name": "knowledge",
+            "type": "string",
+            "required": true,
+            "description": "知识库内容"
+          }
+        ],
+        "output_params": [
+          {
+            "name": "documentId",
+            "type": "string",
+            "description": "文档ID"
+          },
+          {
+            "name": "fileName",
+            "type": "string",
+            "description": "文件名"
+          },
+          {
+            "name": "fileUrl",
+            "type": "string",
+            "description": "文件链接"
+          }
+        ],
+        "knowledge_base": "未配置知识库"
+      }
+    },
+    {
+      "id": "knowledge_search",
+      "type": "3",
+      "data": {
+        "name": "知识库检索",
+        "language": "python",
+        "code": "def main(Query):\n    outputList = [\n        {\"title\": \"相关文档1\", \"content\": \"检索到的内容...\", \"score\": 0.9},\n        {\"title\": \"相关文档2\", \"content\": \"检索到的内容...\", \"score\": 0.85}\n    ]\n    return {\"outputList\": outputList}",
+        "input_params": [
+          {
+            "name": "Query",
+            "type": "string",
+            "required": true,
+            "description": "查询词"
+          }
+        ],
+        "output_params": [
+          {
+            "name": "outputList",
+            "type": "array",
+            "description": "检索结果列表"
+          }
+        ],
+        "knowledge_base": "未配置知识库"
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "output",
+            "type": "string",
+            "value": "{{knowledge_search.outputList}}"
+          }
+        ],
+        "output_type": "返回变量"
+      }
+    }
+  ],
+  "edges": [
+    {"sourceNodeID": "start_node", "targetNodeID": "knowledge_write"},
+    {"sourceNodeID": "knowledge_write", "targetNodeID": "knowledge_search"},
+    {"sourceNodeID": "knowledge_search", "targetNodeID": "end_node"}
+  ]
+}

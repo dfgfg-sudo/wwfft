@@ -1,0 +1,143 @@
+graph TD
+    %% ==================== 系统核心架构 ====================
+    A[Trae-AI-IDE/Trae-CN 平台] --> B[HHCPS-OmniNeuro HyperFusion AI System v5.0]
+    
+    B --> C{系统模式选择}
+    C --> D[🎨 图形界面模式 GUI]
+    C --> E[⌨️ 命令行模式 CLI]
+    C --> F[⚙️ 初始化模式 INIT]
+    
+    %% ==================== 核心模块层 ====================
+    B --> G[🛠️ 核心配置系统]
+    B --> H[📊 多模态数据处理]
+    B --> I[🧠 自然语言理解]
+    B --> J[💻 智能代码生成]
+    B --> K[🤖 机器人控制执行]
+    B --> L[🎯 AI模型训练]
+    
+    %% ==================== 数据处理流程 ====================
+    H --> M[🚀 数据吞噬引擎]
+    M --> N[异步并行处理]
+    N --> O[📁 多格式支持]
+    
+    O --> P[📝 文本数据]
+    O --> Q[🖼️ 图像数据]
+    O --> R[📡 传感器数据]
+    O --> S[📚 知识库数据]
+    
+    %% ==================== NLU处理流程 ====================
+    I --> T[🔤 文本预处理]
+    T --> U[🎯 意图识别]
+    T --> V[🏷️ 实体提取]
+    T --> W[📐 语法分析]
+    T --> X[😊 情感分析]
+    
+    U --> Y[意图类型]
+    Y --> Z[物体操控]
+    Y --> AA[自主导航]
+    Y --> AB[人机交互]
+    Y --> AC[维护检查]
+    
+    %% ==================== 代码生成流程 ====================
+    J --> AD[📋 模板管理]
+    AD --> AE[🔧 代码定制]
+    AE --> AF[🛡️ 安全检查]
+    AF --> AG[✨ 代码格式化]
+    AG --> AH[📄 生成文档]
+    
+    %% ==================== 机器人控制流程 ====================
+    K --> AI[🔌 传感器系统]
+    K --> AJ[🧭 执行器系统]
+    K --> AK[🧩 认知模块]
+    
+    AI --> AL[👁️ 视觉感知]
+    AI --> AM[📡 LiDAR扫描]
+    AI --> AN[⚖️ 力觉反馈]
+    
+    AJ --> AO[🦾 机械臂控制]
+    AJ --> AP[🚗 移动底盘]
+    AJ --> AQ[🖐️ 夹爪控制]
+    
+    AK --> AR[🗺️ 路径规划]
+    AK --> AS[🎯 任务规划]
+    AK --> AT[⚡ 运动控制]
+    
+    %% ==================== 安全监控层 ====================
+    AU[🛡️ 安全系统] --> AV[🚨 紧急停止]
+    AU --> AW[📊 实时监控]
+    AU --> AX[⚠️ 异常检测]
+    
+    K --> AU
+    J --> AU
+    
+    %% ==================== 性能监控层 ====================
+    AY[📈 性能监控] --> AZ[💻 CPU监控]
+    AY --> BA[💾 内存监控]
+    AY --> BB[⏱️ 执行时间]
+    AY --> BC[📉 错误率]
+    
+    B --> AY
+    
+    %% ==================== 训练学习层 ====================
+    L --> BD[🎯 增量训练]
+    L --> BE[🔄 迁移学习]
+    L --> BF[🚀 全量训练]
+    
+    BD --> BG[📊 进度监控]
+    BE --> BG
+    BF --> BG
+    
+    %% ==================== 输出反馈层 ====================
+    BH[📤 输出系统] --> BI[💻 代码输出]
+    BH --> BJ[📊 结果反馈]
+    BH --> BK[📈 性能报告]
+    BH --> BL[📋 执行日志]
+    
+    J --> BH
+    K --> BH
+    L --> BH
+    
+    %% ==================== API接口层 ====================
+    BM[🌐 REST API] --> BN[/api/v1/status]
+    BM --> BO[/api/v1/analyze]
+    BM --> BP[/api/v1/generate]
+    BM --> BQ[/api/v1/execute]
+    BM --> BR[/api/v1/train]
+    
+    B --> BM
+    
+    %% ==================== 存储管理层 ====================
+    BS[💾 存储管理] --> BT[📁 配置存储]
+    BS --> BU[🗄️ 模型存储]
+    BS --> BV[📊 数据存储]
+    BS --> BW[📋 日志存储]
+    
+    B --> BS
+    
+    %% ==================== 样式定义 ====================
+    classDef platform fill:#bbdefb,stroke:#0d47a1,stroke-width:3px
+    classDef system fill:#c8e6c9,stroke:#1b5e20,stroke-width:2px
+    classDef process fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef data fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef control fill:#ffecb3,stroke:#ff6f00,stroke-width:2px
+    classDef safety fill:#ffcdd2,stroke:#b71c1c,stroke-width:2px
+    classDef monitor fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef training fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef output fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef api fill:#fff8e1,stroke:#ff8f00,stroke-width:2px
+    classDef storage fill:#f5f5f5,stroke:#616161,stroke-width:2px
+    
+    class A platform
+    class B,C,D,E,F system
+    class G,H,I,J,K,L process
+    class M,N,O,P,Q,R,S data
+    class AI,AJ,AK,AL,AM,AN,AO,AP,AQ,AR,AS,AT control
+    class AU,AV,AW,AX safety
+    class AY,AZ,BA,BB,BC monitor
+    class L,BD,BE,BF,BG training
+    class BH,BI,BJ,BK,BL output
+    class BM,BN,BO,BP,BQ,BR api
+    class BS,BT,BU,BV,BW storage
+    
+    %% ==================== 连接关系说明 ====================
+    linkStyle default stroke-width:1.5px

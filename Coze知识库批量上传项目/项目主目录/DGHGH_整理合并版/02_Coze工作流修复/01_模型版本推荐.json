@@ -1,0 +1,93 @@
+{
+  "name": "模型版本推荐",
+  "description": "根据模型版本号、性能指标和用户偏好，智能推荐最优模型版本",
+  "version": "1.0.0",
+  "create_time": "2026-02-01 17:40:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "model_id",
+            "type": "string",
+            "required": true,
+            "description": "模型标识"
+          },
+          {
+            "name": "user_preference",
+            "type": "string",
+            "required": false,
+            "description": "用户偏好（性能/成本/速度）"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_1",
+      "type": "3",
+      "data": {
+        "name": "查询模型版本列表",
+        "language": "python",
+        "code": "import json\ndef main(model_id, user_preference):\n    versions = [\n        {\"version\": \"v1.0\", \"perf\": 0.85, \"cost\": 0.5, \"speed\": 0.9},\n        {\"version\": \"v1.5\", \"perf\": 0.92, \"cost\": 0.7, \"speed\": 0.85},\n        {\"version\": \"v2.0\", \"perf\": 0.96, \"cost\": 1.0, \"speed\": 0.8}\n    ]\n    return {\"versions\": versions, \"preference\": user_preference or \"balanced\"}",
+        "output_params": [
+          {
+            "name": "versions",
+            "type": "object"
+          },
+          {
+            "name": "preference",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "llm_node_1",
+      "type": "4",
+      "data": {
+        "name": "AI 推荐最优版本",
+        "model": "doubao-pro-32k",
+        "system_prompt": "你是模型版本推荐专家，根据版本性能、成本、速度综合评估",
+        "user_prompt": "模型：{{model_id}}\\n版本列表：{{versions}}\\n用户偏好：{{preference}}\\n请推荐最优版本并说明理由",
+        "output_params": [
+          {
+            "name": "recommendation",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "recommended_version",
+            "type": "string",
+            "value": "{{llm_node_1.recommendation}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "start_node",
+      "targetNodeID": "code_node_1"
+    },
+    {
+      "sourceNodeID": "code_node_1",
+      "targetNodeID": "llm_node_1"
+    },
+    {
+      "sourceNodeID": "llm_node_1",
+      "targetNodeID": "end_node"
+    }
+  ]
+}

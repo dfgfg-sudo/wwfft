@@ -1,0 +1,14 @@
+Python 3.8+
+PyTorch >= 2.0.0
+Transformers >= 4.30.0
+Gradio >= 3.40.0
+Pandas >= 1.5.0
+PyQt5 >= 5.15.9
+Jinja2 >= 3.1.0
+Cryptography >= 3.4.0
+BitsAndBytes >= 0.40.0
+PEFT >= 0.4.0
+Datasets >= 2.10.0
+PDFPlumber >= 0.10.0
+PyTesseract >= 0.3.10
+OpenPyXL >= 3.1.0

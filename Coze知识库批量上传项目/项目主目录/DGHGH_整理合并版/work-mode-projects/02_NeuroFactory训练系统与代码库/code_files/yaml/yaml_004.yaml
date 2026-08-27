@@ -1,0 +1,813 @@
+openapi: 3.0.3
+info:
+  title: CompleteAIWorkflowAutomationPlatform API
+  description: |
+    Complete AI workflow automation platform with integrated emergency activation, data enhancement, industry analysis, self-healing backup recovery, custom node development, workflow lifecycle management, intelligent generation, data connectivity, process orchestration, cultural heritage processing, model training, plugin automation and parameter validation.
+    
+    完整AI工作流自动化平台，集成了紧急激活、数据增强、行业分析、自愈备份恢复、自定义节点开发、工作流生命周期管理、智能生成、数据连接、流程编排、文化遗产处理、模型训练、插件自动化和参数验证。
+    
+    功能包括：
+    - 激活紧急处理模式
+    - 使用AI能力对输入数据进行增强处理
+    - 专门处理行业分类和分析请求
+    - 执行系统自动修复和诊断
+    - 根据备份ID恢复系统状态
+    - 创建自定义代码节点、插件节点或元数据节点，支持Python/JavaScript/TypeScript
+    - 创建新的工作流定义
+    - 根据ID删除特定工作流
+    - 立即执行指定的工作流
+    - 触发已生成的工作流执行，支持实时监控和结果返回
+    - 向模型投喂训练数据
+    - 根据用户需求描述自动生成完整工作流配置，支持电商、行业、编程等多种场景
+    - 自动处理参数验证，确保符合规范
+    - 生成基于行业的工作流程
+    - 获取所有配置的数据连接列表
+    - 根据ID获取特定工作流的详细信息
+    - 获取用户有权访问的所有工作流列表，支持分页和过滤
+    - 根据操作模式处理行业分析、工作流生成、自动修复、洛阳非遗模式等请求
+    - 处理洛阳非物质文化遗产相关请求
+    - 自动化检测并修复工作流内所有节点（配置/逻辑/依赖），无需人工干预
+    - 启动自动化AI模型训练流程
+    - 输入描述生成插件，并自动创建工作流执行链，支持任意节点触发和全节点自愈
+    - 更新现有工作流的定义
+    - 专门用于参数验证的工具端点，防止Invalid params错误
+  version: 1.0.0
+  contact:
+    name: AI Workflow Platform Team
+    email: support@aiworkflowplatform.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  - url: https://api.aiworkflowplatform.com/v1
+    description: Production API server
+  - url: https://staging-api.aiworkflowplatform.com/v1
+    description: Staging API server
+  - url: https://dev-api.aiworkflowplatform.com/v1
+    description: Development API server
+
+paths:
+  /operations/execute:
+    post:
+      operationId: executeUnifiedOperation
+      summary: Execute unified platform operation
+      description: |
+        Execute operations across all platform capabilities including emergency activation, AI enhancement, industry analysis, auto-repair, backup recovery, custom node creation, workflow management, data feeding, automated generation, data connection management, process automation, cultural heritage processing, model training, plugin automation and parameter validation.
+        
+        执行跨所有平台能力的操作，包括紧急激活、AI增强、行业分析、自动修复、备份恢复、自定义节点创建、工作流管理、数据投喂、自动生成、数据连接管理、流程自动化、文化遗产处理、模型训练、插件自动化和参数验证。
+      tags:
+        - UnifiedOperations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnifiedOperationRequest'
+            examples:
+              emergency_activation:
+                summary: Emergency activation example
+                value:
+                  operation_mode: "emergency_activation"
+                  input_data:
+                    emergency_type: "system_failure"
+                    severity: "critical"
+                    recovery_priority: "high"
+                    affected_components: ["database", "api_gateway"]
+                    automatic_recovery: true
+              ai_enhancement:
+                summary: AI enhancement example
+                value:
+                  operation_mode: "ai_enhancement"
+                  input_data:
+                    data_type: "text"
+                    enhancement_type: "semantic_enrichment"
+                    input_text: "Sample text for enhancement"
+                    quality_threshold: 0.9
+              industry_analysis:
+                summary: Industry analysis example
+                value:
+                  operation_mode: "industry_analysis"
+                  input_data:
+                    industry: "technology"
+                    analysis_type: "market_trends"
+                    time_period: "2024"
+                    geographic_scope: "global"
+                    analysis_depth: "comprehensive"
+                  industry_type: "technology"
+              auto_repair:
+                summary: Auto repair example
+                value:
+                  operation_mode: "auto_repair"
+                  input_data:
+                    repair_scope: "system_wide"
+                    target_components: ["workflow_engine", "data_pipeline"]
+                    repair_strategy: "automatic"
+                    diagnostic_level: "comprehensive"
+                  repair_level: "high"
+              backup_recovery:
+                summary: Backup recovery example
+                value:
+                  operation_mode: "backup_recovery"
+                  input_data:
+                    recovery_type: "full"
+                    target_environment: "production"
+                    verification_required: true
+                  backup_id: "backup_20251106_120000"
+              custom_node_creation:
+                summary: Custom node creation example
+                value:
+                  operation_mode: "custom_node_creation"
+                  input_data:
+                    node_language: "Python"
+                    node_type: "processor"
+                    functionality: "data_transformation"
+                  node_config:
+                    name: "custom_data_processor"
+                    language: "Python"
+                    code: "def process_data(input): return input.upper()"
+                    dependencies: ["pandas", "numpy"]
+              workflow_management:
+                summary: Workflow management example
+                value:
+                  operation_mode: "workflow_management"
+                  input_data:
+                    management_action: "create"
+                    workflow_definition:
+                      name: "data_processing_workflow"
+                      nodes: ["input_node", "process_node", "output_node"]
+                      connections: ["input_to_process", "process_to_output"]
+                  workflow_id: "wf_new_123456"
+              cultural_heritage_processing:
+                summary: Cultural heritage processing example
+                value:
+                  operation_mode: "cultural_heritage_processing"
+                  input_data:
+                    heritage_data:
+                      category: "traditional_craft"
+                      origin: "Luoyang"
+                      historical_period: "Tang Dynasty"
+                    processing_type: "digital_archiving"
+                    preservation_level: "high"
+                  heritage_category: "luoyang_intangible_culture"
+              model_training:
+                summary: Model training example
+                value:
+                  operation_mode: "model_training"
+                  input_data:
+                    model_type: "classification"
+                    training_algorithm: "neural_network"
+                    epochs: 100
+                    batch_size: 32
+                  training_data:
+                    - {features: [1,2,3], label: "A"}
+                    - {features: [4,5,6], label: "B"}
+              plugin_automation:
+                summary: Plugin automation example
+                value:
+                  operation_mode: "plugin_automation"
+                  input_data:
+                    plugin_type: "data_processor"
+                    target_platform: "coze"
+                    automation_level: "full"
+                  plugin_description: "Create a data processing plugin for Coze platform"
+              parameter_validation:
+                summary: Parameter validation example
+                value:
+                  operation_mode: "parameter_validation"
+                  input_data:
+                    parameters_to_validate:
+                      param1: "value1"
+                      param2: 123
+                      param3: true
+                  validation_rules:
+                    param1:
+                      type: "string"
+                      required: true
+                    param2:
+                      type: "number"
+                      min: 0
+                      max: 1000
+                    param3:
+                      type: "boolean"
+                  validation_level: "strict"
+      responses:
+        '200':
+          description: Operation executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnifiedOperationResponse'
+              examples:
+                success:
+                  summary: Success response
+                  value:
+                    status: "success"
+                    result:
+                      processed_data: "Enhanced text content"
+                      items_processed: 150
+                      success_rate: 0.95
+                    workflow_id: "wf_123456"
+                    timestamp: "2025-11-06T12:00:00Z"
+                    execution_time: 150
+                error:
+                  summary: Error response
+                  value:
+                    status: "error"
+                    result:
+                      error_code: "VALIDATION_ERROR"
+                      error_message: "Parameter validation failed"
+                    timestamp: "2025-11-06T12:00:00Z"
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /health:
+    get:
+      operationId: healthCheck
+      summary: Health check endpoint
+      description: Check API service health status
+      tags:
+        - SystemManagement
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  timestamp:
+                    type: string
+                    format: date-time
+                  version:
+                    type: string
+                    example: "1.0.0"
+
+  /supported-operations:
+    get:
+      operationId: getSupportedOperations
+      summary: Get supported operations list
+      description: Retrieve all supported operation modes and their requirements
+      tags:
+        - SystemManagement
+      responses:
+        '200':
+          description: List of supported operations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  supported_operations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        operation_mode:
+                          type: string
+                        description:
+                          type: string
+                        required_parameters:
+                          type: array
+                          items:
+                            type: string
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /workflows/{workflow_id}:
+    get:
+      operationId: getWorkflowDetails
+      summary: Get specific workflow details by ID
+      description: Retrieve detailed information about a specific workflow
+      tags:
+        - WorkflowManagement
+      parameters:
+        - name: workflow_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Workflow identifier
+      responses:
+        '200':
+          description: Workflow details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workflow_id:
+                    type: string
+                  name:
+                    type: string
+                  status:
+                    type: string
+                  nodes:
+                    type: array
+                    items:
+                      type: object
+                  connections:
+                    type: array
+                    items:
+                      type: object
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time
+        '404':
+          description: Workflow not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /workflows:
+    get:
+      operationId: listWorkflows
+      summary: List all accessible workflows
+      description: Get list of all workflows accessible to the user with pagination and filtering
+      tags:
+        - WorkflowManagement
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: Page number for pagination
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          description: Number of items per page
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter by workflow status
+      responses:
+        '200':
+          description: Workflows list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  workflows:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        workflow_id:
+                          type: string
+                        name:
+                          type: string
+                        status:
+                          type: string
+                        created_at:
+                          type: string
+                          format: date-time
+                  pagination:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      page:
+                        type: integer
+                      limit:
+                        type: integer
+                      total_pages:
+                        type: integer
+
+  /data-connections:
+    get:
+      operationId: listDataConnections
+      summary: List all configured data connections
+      description: Get list of all configured data connections
+      tags:
+        - DataManagement
+      responses:
+        '200':
+          description: Data connections list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  connections:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        connection_id:
+                          type: string
+                        name:
+                          type: string
+                        type:
+                          type: string
+                        status:
+                          type: string
+                        created_at:
+                          type: string
+                          format: date-time
+
+components:
+  schemas:
+    UnifiedOperationRequest:
+      type: object
+      required:
+        - operation_mode
+        - input_data
+      properties:
+        operation_mode:
+          type: string
+          enum:
+            - emergency_activation
+            - ai_enhancement
+            - industry_analysis
+            - auto_repair
+            - backup_recovery
+            - custom_node_creation
+            - workflow_management
+            - data_feeding
+            - automated_generation
+            - data_connection_management
+            - process_automation
+            - cultural_heritage_processing
+            - model_training
+            - plugin_automation
+            - parameter_validation
+          description: Operation mode selection
+        input_data:
+          type: object
+          description: Input data for processing
+        workflow_id:
+          type: string
+          description: Workflow identifier for specific operations
+        backup_id:
+          type: string
+          description: Backup identifier for recovery operations
+        node_config:
+          type: object
+          description: Configuration for custom node creation
+        training_data:
+          type: array
+          items:
+            type: object
+          description: Training dataset for model training
+        plugin_description:
+          type: string
+          description: Description for plugin generation
+        validation_rules:
+          type: object
+          description: Rules for parameter validation
+        industry_type:
+          type: string
+          description: Industry type for analysis
+        heritage_category:
+          type: string
+          description: Cultural heritage category
+        repair_level:
+          type: string
+          enum: [low, medium, high, critical]
+          description: Level of auto-repair to perform
+        generation_template:
+          type: string
+          description: Template for automated generation
+        emergency_type:
+          type: string
+          enum: [system_failure, security_breach, performance_degradation, data_corruption]
+          description: Type of emergency for activation
+        severity:
+          type: string
+          enum: [low, medium, high, critical]
+          description: Severity level for emergency operations
+        data_type:
+          type: string
+          enum: [text, image, audio, video, tabular, time_series]
+          description: Type of data for enhancement
+        enhancement_type:
+          type: string
+          enum: [semantic_enrichment, quality_improvement, feature_extraction, pattern_recognition, anomaly_detection]
+          description: Type of enhancement to apply
+        analysis_type:
+          type: string
+          enum: [market_trends, competitive_analysis, risk_assessment, opportunity_identification, regulatory_compliance]
+          description: Type of analysis to perform
+        recovery_type:
+          type: string
+          enum: [full, partial, point_in_time, incremental]
+          description: Type of recovery to perform
+        node_language:
+          type: string
+          enum: [Python, JavaScript, TypeScript, Java, Go]
+          description: Programming language for custom node
+        management_action:
+          type: string
+          enum: [create, read, update, delete, execute, monitor]
+          description: Action for workflow management
+        processing_type:
+          type: string
+          enum: [digital_archiving, cultural_analysis, preservation_planning, historical_research]
+          description: Type of cultural heritage processing
+        model_type:
+          type: string
+          description: Type of AI model for training
+        plugin_type:
+          type: string
+          description: Type of plugin to generate
+        validation_level:
+          type: string
+          enum: [basic, standard, strict]
+          description: Level of parameter validation
+        recovery_priority:
+          type: string
+          enum: [low, medium, high, critical]
+          description: Recovery priority level
+        affected_components:
+          type: array
+          items:
+            type: string
+          description: List of affected system components
+        automatic_recovery:
+          type: boolean
+          description: Enable automatic recovery
+        enhancement_parameters:
+          type: object
+          description: Enhancement-specific parameters
+        quality_threshold:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Quality threshold for enhancement
+        time_period:
+          type: string
+          description: Analysis time period
+        geographic_scope:
+          type: string
+          description: Geographic scope of analysis
+        analysis_depth:
+          type: string
+          enum: [overview, detailed, comprehensive]
+          description: Depth of analysis
+        repair_scope:
+          type: string
+          enum: [system_wide, component_specific, workflow_specific, data_specific]
+          description: Scope of repair operation
+        target_components:
+          type: array
+          items:
+            type: string
+          description: Specific components to repair
+        repair_strategy:
+          type: string
+          enum: [automatic, guided, manual]
+          description: Repair strategy
+        diagnostic_level:
+          type: string
+          enum: [basic, standard, comprehensive]
+          description: Diagnostic depth level
+        target_environment:
+          type: string
+          description: Target environment for recovery
+        verification_required:
+          type: boolean
+          description: Perform recovery verification
+        notification_settings:
+          type: object
+          description: Recovery notification settings
+        page:
+          type: integer
+          description: Page number for pagination
+        limit:
+          type: integer
+          description: Number of items per page
+        filter_status:
+          type: string
+          description: Filter status for workflow listing
+      example:
+        operation_mode: "emergency_activation"
+        input_data:
+          emergency_type: "system_failure"
+          severity: "critical"
+          recovery_priority: "high"
+          affected_components: ["database", "api_gateway"]
+          automatic_recovery: true
+        repair_level: "high"
+
+    UnifiedOperationResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success, error, pending]
+          description: Operation status
+        result:
+          type: object
+          description: Operation result data
+        workflow_id:
+          type: string
+          description: Generated workflow identifier
+        backup_id:
+          type: string
+          description: Created backup identifier
+        node_id:
+          type: string
+          description: Created node identifier
+        training_id:
+          type: string
+          description: Training process identifier
+        plugin_id:
+          type: string
+          description: Generated plugin identifier
+        validation_result:
+          type: object
+          description: Parameter validation results
+        analysis_report:
+          type: object
+          description: Industry analysis report
+        enhancement_result:
+          type: object
+          description: AI enhancement results
+        repair_report:
+          type: object
+          description: Auto-repair diagnostic report
+        generation_output:
+          type: object
+          description: Automated generation output
+        emergency_id:
+          type: string
+          description: Emergency activation identifier
+        recovery_id:
+          type: string
+          description: Recovery operation identifier
+        timestamp:
+          type: string
+          format: date-time
+          description: Operation completion timestamp
+        execution_time:
+          type: number
+          description: Operation execution time in milliseconds
+        error_details:
+          type: object
+          description: Error details if operation failed
+        connection_list:
+          type: array
+          items:
+            type: object
+          description: List of data connections
+        workflow_list:
+          type: array
+          items:
+            type: object
+          description: List of workflows
+        model_performance:
+          type: object
+          description: Model training performance metrics
+        plugin_configuration:
+          type: object
+          description: Generated plugin configuration
+        enhanced_data:
+          type: object
+          description: Enhanced output data
+        enhancement_metrics:
+          type: object
+          description: Enhancement performance metrics
+        quality_score:
+          type: number
+          description: Quality assessment score
+        processing_time:
+          type: number
+          description: Processing time in milliseconds
+        executive_summary:
+          type: string
+          description: Executive summary of findings
+        key_insights:
+          type: array
+          items:
+            type: string
+          description: Key insights from analysis
+        market_trends:
+          type: object
+          description: Market trend analysis
+        competitive_landscape:
+          type: object
+          description: Competitive landscape analysis
+        risk_assessment:
+          type: object
+          description: Risk assessment results
+        recommendations:
+          type: array
+          items:
+            type: string
+          description: Strategic recommendations
+        issues_detected:
+          type: array
+          items:
+            type: object
+          description: Detected issues
+        repairs_performed:
+          type: array
+          items:
+            type: string
+          description: Repairs performed
+        system_health_score:
+          type: number
+          description: Post-repair system health score
+        recovered_components:
+          type: array
+          items:
+            type: string
+          description: Successfully recovered components
+        recovery_duration:
+          type: number
+          description: Recovery duration in seconds
+        verification_results:
+          type: object
+          description: Recovery verification results
+      example:
+        status: "success"
+        result:
+          processed_items: 150
+          success_rate: 0.95
+          enhanced_data: "Processed and enhanced content"
+        workflow_id: "wf_123456"
+        backup_id: "backup_20251106_120000"
+        node_id: "node_custom_processor_001"
+        timestamp: "2025-11-06T12:00:00Z"
+        execution_time: 250
+
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+          description: Error code identifier
+        error_message:
+          type: string
+          description: Human-readable error message
+        error_details:
+          type: object
+          description: Additional error details
+        timestamp:
+          type: string
+          format: date-time
+          description: Error occurrence timestamp
+        request_id:
+          type: string
+          description: Request identifier for debugging
+      example:
+        error_code: "VALIDATION_ERROR"
+        error_message: "Required parameter 'input_data' is missing"
+        error_details:
+          missing_parameters: ["input_data"]
+          invalid_parameters: []
+        timestamp: "2025-11-06T12:00:00Z"
+        request_id: "req_123456"
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+security:
+  - BearerAuth: []
+  - ApiKeyAuth: []
+
+tags:
+  - name: UnifiedOperations
+    description: Unified platform operations across all capabilities
+  - name: SystemManagement
+    description: System management and health check endpoints
+  - name: WorkflowManagement
+    description: Workflow lifecycle management operations
+  - name: DataManagement
+    description: Data connection and management operations

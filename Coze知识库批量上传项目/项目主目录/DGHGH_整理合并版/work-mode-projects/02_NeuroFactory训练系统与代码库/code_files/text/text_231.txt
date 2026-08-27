@@ -1,0 +1,8 @@
+2. NoCode数据库平台
+
+· NocoDB (开源，可自托管): Airtable开源替代
+· Baserow (开源): 类似Airtable的数据库
+· Plasmic + Supabase: 可视化+数据库
+· Glide + Google Sheets: 专业级应用
+
+3. 免费云函数+存储

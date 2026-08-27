@@ -1,0 +1,121 @@
+{
+  "name": "万字长文本润色神器",
+  "description": "一次润色万字长文本，大大提高效率；用 ### 分割长文本，放在工作流中润色",
+  "version": "1.0.0",
+  "create_time": "2024-12-29 01:08:00",
+  "update_time": "2026-07-27 12:00:00",
+  "nodes": [
+    {
+      "id": "start_node",
+      "type": "1",
+      "data": {
+        "name": "开始",
+        "input_params": [
+          {
+            "name": "long_text",
+            "type": "string",
+            "required": true,
+            "description": "万字长文本（用 ### 分割段落）"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_split",
+      "type": "3",
+      "data": {
+        "name": "分割长文本",
+        "language": "python",
+        "code": "def main(long_text):\n    segments = [s.strip() for s in long_text.split('###') if s.strip()]\n    return {\"segments\": segments, \"total_count\": len(segments)}",
+        "output_params": [
+          {
+            "name": "segments",
+            "type": "array"
+          },
+          {
+            "name": "total_count",
+            "type": "number"
+          }
+        ]
+      }
+    },
+    {
+      "id": "loop_node_polish",
+      "type": "6",
+      "data": {
+        "name": "逐段润色",
+        "loop_var": "segment",
+        "loop_array": "{{code_node_split.segments}}",
+        "loop_body": [
+          {
+            "id": "llm_node_polish",
+            "type": "4",
+            "data": {
+              "name": "AI 润色",
+              "model": "doubao-pro-32k",
+              "system_prompt": "你是专业润色专家，提升文本质量",
+              "user_prompt": "待润色文本：{{segment}}\\n请润色提升，保持原意但提高表达质量",
+              "output_params": [
+                {
+                  "name": "polished",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_node_merge",
+      "type": "3",
+      "data": {
+        "name": "合并润色结果",
+        "language": "python",
+        "code": "def main(loop_node_polish_results):\n    polished_text = '###'.join([r.get('polished', '') for r in loop_node_polish_results])\n    return {\"polished_text\": polished_text, \"total_segments\": len(loop_node_polish_results)}",
+        "output_params": [
+          {
+            "name": "polished_text",
+            "type": "string"
+          },
+          {
+            "name": "total_segments",
+            "type": "number"
+          }
+        ]
+      }
+    },
+    {
+      "id": "end_node",
+      "type": "2",
+      "data": {
+        "name": "结束",
+        "output_params": [
+          {
+            "name": "final_text",
+            "type": "string",
+            "value": "{{code_node_merge.polished_text}}"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "start_node",
+      "targetNodeID": "code_node_split"
+    },
+    {
+      "sourceNodeID": "code_node_split",
+      "targetNodeID": "loop_node_polish"
+    },
+    {
+      "sourceNodeID": "loop_node_polish",
+      "targetNodeID": "code_node_merge"
+    },
+    {
+      "sourceNodeID": "code_node_merge",
+      "targetNodeID": "end_node"
+    }
+  ]
+}

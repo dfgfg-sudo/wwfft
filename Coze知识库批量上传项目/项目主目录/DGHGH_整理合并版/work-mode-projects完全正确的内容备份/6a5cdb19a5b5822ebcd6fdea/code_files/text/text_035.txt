@@ -1,0 +1,156 @@
+9.3 监控与维护
+
+端点 方法 用途
+/health GET 系统健康状态检查
+/operations/{operation_id} GET 异步操作状态查询
+/validate POST 参数预验证
+/automations/{operationId} GET 传统端点操作状态
+
+---
+
+10. 安全与合规
+
+10.1 安全特性
+
+安全特性 实现方式
+双重认证 API Key + Bearer Token
+参数验证 严格的输入验证和清理
+访问控制 基于角色的权限管理
+数据加密 传输层TLS加密
+审计日志 完整的操作审计记录
+
+10.2 合规要求
+
+合规领域 标准/法规
+数据隐私 GDPR, CCPA
+行业标准 金融、医疗行业规范
+中国合规 网络安全法
+国际标准 ISO 27001
+
+---
+
+11. 支持与维护
+
+11.1 技术支持
+
+支持渠道 说明
+在线文档 https://docs.universal-automation.com
+API参考 完整的OpenAPI规范
+示例库 多种编程语言的示例代码
+社区论坛 开发者社区和技术讨论
+
+11.2 版本策略
+
+策略 说明
+版本控制 语义化版本控制 (SemVer)
+向后兼容 至少保持3个主要版本的兼容性
+安全更新 定期安全补丁和更新
+功能扩展 季度功能更新计划
+
+11.3 更新日志
+
+日期 版本 更新内容
+2025-11-07 v20.0.0 完全统一架构发布
+2025-10-15 v19.0.0 新增文化遗产系统
+2025-09-01 v18.0.0 企业工作流编排系统
+2025-07-01 v17.0.0 AI增强引擎升级
+
+---
+
+附录A：完整功能清单
+
+A.1 文本处理功能
+
+功能ID 名称 操作类型 说明
+T001 内容清洗 clean 去除冗余信息，标准化格式
+T002 智能摘要 summarize 自动提取核心内容
+T003 格式优化 format 统一排版和格式
+T004 多语言翻译 translate 支持多语言互译
+
+A.2 数据分析功能
+
+功能ID 名称 操作类型 说明
+D001 统计分析 statistical 描述性统计和推断分析
+D002 预测分析 predictive 基于历史数据预测趋势
+D003 聚类分析 clustering 数据自动分组归类
+D004 分类分析 classification 监督学习分类预测
+
+A.3 工作流功能
+
+功能ID 名称 操作类型 说明
+W001 创建工作流 create_workflow 创建新的工作流
+W002 执行工作流 execute_workflow 执行已有工作流
+W003 更新工作流 update_workflow 更新工作流配置
+W004 删除工作流 delete_workflow 删除工作流
+
+A.4 企业自动化功能
+
+功能ID 名称 操作类型 说明
+E001 应急激活 activate_emergency 激活应急处理机制
+E002 AI增强 ai_enhancement AI数据增强处理
+E003 行业分析 analyze_industry 行业趋势分析
+E004 自动修复 auto_repair 自动系统修复
+E005 备份恢复 backup_revert 数据备份和恢复
+E006 自定义节点 create_custom_node 创建自定义节点
+E007 数据喂入 feed_data 数据输入处理
+E008 工作流生成 generate_workflow AI生成工作流
+E009 数据连接 get_data_connections 获取数据连接
+E010 洛阳遗产 process_luoyang_heritage 文化遗产处理
+E011 模型训练 train_model AI模型训练
+E012 插件工作流 trigger_auto_plugin_workflow 插件触发工作流
+E013 参数验证 validate_parameters 参数验证服务
+
+---
+
+附录B：错误代码参考
+
+错误代码 错误名称 说明 HTTP状态
+4001 INVALID_PARAMS 参数验证失败 400
+4002 MISSING_REQUIRED 缺少必需参数 400
+4003 INVALID_FORMAT 参数格式错误 400
+4004 VALUE_OUT_OF_RANGE 参数值超出范围 400
+4011 UNAUTHORIZED 未授权访问 401
+4012 TOKEN_EXPIRED Token已过期 401
+4013 INVALID_TOKEN Token无效 401
+4041 OPERATION_NOT_FOUND 操作不存在 404
+4042 WORKFLOW_NOT_FOUND 工作流不存在 404
+4291 RATE_LIMITED 请求频率超限 429
+5001 INTERNAL_ERROR 服务器内部错误 500
+5002 SERVICE_UNAVAILABLE 服务不可用 503
+5003 TIMEOUT_ERROR 请求超时 504
+
+---
+
+文档结束
+
+---
+
+本文档为全场景智能自动化超级中枢系统的完整技术规范，整合了对话历史中所有版本的完整内容。所有代码、配置、架构图和技术说明均已统一融合，形成单一权威版本。还有添加进去Coze智能工作流自动化超级中枢插件 - 终极完整融合版
+
+版本：3.0.0（终极完整融合版）
+最后更新：2025年
+状态：✅ 完全整合、全部修复、全自动化操作
+
+---
+
+项目概述
+
+本项目是一个完全整合的智能工作流自动化终极解决方案，将意图识别、工作流引擎、插件管理、TXT/JSON/YAML文件修复、多版本对比分析、批量内容处理等功能统一为单一工具。它严格遵循“无变动保留原文内容”原则，同时修复了所有已知技术错误，真正实现了“只需用户输入 user_input，即可自动解决所有问题”的全自动化操作体验。
+
+---
+
+核心功能特性
+
+分类 功能
+智能路由 自动意图识别（天气、知识、翻译、计算、文件修复、版本对比等）
+工作流执行 支持复杂工作流编排、LLM调用、节点处理
+插件调度 统一管理外部服务插件（天气、翻译、计算器等）
+内容修复 全面修复 TXT、JSON、YAML、XML、Markdown、HTML 文件
+版本管理 多版本智能对比、差异分析、最佳版本合并
+批量处理 支持整个文件夹的批量内容修复与合并
+质量评估 自动计算完整性、结构性、内容质量评分
+全自动化 用户只需输入自然语言指令，系统自动识别意图并执行相应操作
+
+---
+
+系统架构图

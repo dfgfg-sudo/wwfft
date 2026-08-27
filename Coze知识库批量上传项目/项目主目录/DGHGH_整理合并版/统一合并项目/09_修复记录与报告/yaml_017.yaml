@@ -1,0 +1,98 @@
+# 全功能AI训练系统 v4.0 配置文件
+# 符合Trae-AI-IDE配置规范
+
+system:
+  name: "全功能AI训练系统"
+  version: "4.0.0"
+  environment: "production"
+  debug: false
+  log_level: "INFO"
+  
+paths:
+  base_dir: "./"
+  data_dir: "./data"
+  model_dir: "./models"
+  output_dir: "./output"
+  log_dir: "./logs"
+  cache_dir: "./cache"
+  
+hardware:
+  device: "auto"  # auto, cuda, cpu, mps
+  num_workers: 4
+  max_memory_percentage: 80
+  precision: "mixed"  # float32, float16, bfloat16
+  
+training:
+  base_model: "microsoft/deberta-v3-base"
+  batch_size: 8
+  epochs: 10
+  learning_rate: 5e-5
+  warmup_steps: 1000
+  gradient_accumulation_steps: 4
+  max_grad_norm: 1.0
+  
+quantization:
+  enabled: true
+  bits: 4
+  double_quant: true
+  quant_type: "nf4"
+  compute_dtype: "bfloat16"
+  
+lora:
+  enabled: true
+  r: 8
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["query", "value"]
+  
+security:
+  encryption_enabled: true
+  encryption_key_env: "MODEL_KEY"
+  integrity_check: true
+  secure_storage: true
+  
+monitoring:
+  tensorboard: true
+  wandb: false
+  prometheus: false
+  log_interval: 10
+  
+data_processing:
+  supported_formats:
+    text: [".txt", ".md", ".json", ".jsonl"]
+    image: [".jpg", ".png", ".jpeg", ".bmp"]
+    audio: [".wav", ".mp3", ".flac"]
+    video: [".mp4", ".avi", ".mov"]
+    table: [".csv", ".xlsx", ".parquet"]
+  max_file_size_mb: 100
+  chunk_size: 512
+  overlap_size: 50
+  
+inference:
+  max_length: 2048
+  temperature: 0.7
+  top_p: 0.9
+  top_k: 50
+  repetition_penalty: 1.1
+  do_sample: true
+  
+api:
+  enabled: true
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  timeout: 300
+  cors_origins: ["*"]
+  
+ui:
+  enabled: true
+  framework: "gradio"  # gradio, streamlit, fastapi
+  port: 7860
+  theme: "soft"
+  allow_uploads: true
+  
+backup:
+  enabled: true
+  interval_hours: 24
+  max_backups: 7
+  backup_dir: "./backups"

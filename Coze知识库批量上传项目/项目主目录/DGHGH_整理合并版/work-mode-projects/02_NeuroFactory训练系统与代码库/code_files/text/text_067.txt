@@ -1,0 +1,62 @@
+---
+
+4. 核心功能引擎与命名对照
+
+原始命名（旧） 最终命名（v2.0.0） 职责说明
+error_repair error_self_healing 自动诊断并修复代码/配置错误，支持备份恢复
+workflow_generate workflow_generation 根据自然语言需求生成自动化工作流定义
+workflow_industry_template industry_template_adaptation 匹配行业模板并定制化适配项目
+multimodal_generate multimodal_content_creation 生成文档、图表、示例代码等多模态内容
+plugin_repair plugin_repair 修复插件依赖、配置或兼容性问题
+monetize_plan commercial_strategy_planning 提供定价、收益模型及商业策略建议
+execution_monitor execution_monitoring 追踪任务执行健康度、性能指标与告警
+
+---
+
+5. 技术栈与性能指标
+
+层次 技术选型
+IDE 集成 Trae 插件 SDK (TypeScript), WebSocket
+API 网关 Kong, Express Gateway
+核心引擎 Python 3.11+ (FastAPI), Node.js 20+
+AI 模型 DeepSeek-Coder, 自研代码理解模型
+数据存储 PostgreSQL, Redis, MinIO
+消息队列 RabbitMQ, Apache Kafka
+容器化 Docker, Kubernetes
+监控 Prometheus, Grafana, ELK Stack
+
+性能指标：
+
+· 代码分析延迟：P99 < 2s
+· 工作流生成：< 5s
+· 错误自愈：< 3s
+· 并发支持：1000+ Trae 实例
+· 可用性：99.95% SLA
+
+---
+
+6. 部署与集成指南
+
+6.1 安装插件
+
+1. 打开 Trae-AI-IDE（版本 ≥ 2.5.0）
+2. 进入插件市场，搜索 “Coze全域智能自动化平台”
+3. 点击 安装，重启 IDE 完成激活
+
+6.2 配置认证（推荐使用 Trae 专用 API 密钥）
+
+1. 登录 Coze 控制台 → Trae 集成 → 生成专用密钥
+2. 在 Trae 中：设置 → 插件 → Coze → 粘贴 API 密钥
+3. 点击 测试连接 验证配置
+
+6.3 功能验证
+
+· 打开任意代码文件，右键选择 “Coze 代码分析”
+· 观察输出面板中的分析报告
+· 故意制造一个语法错误，查看是否弹出 错误自愈 建议
+
+---
+
+7. 使用示例（JavaScript / Python / YAML）
+
+7.1 Node.js (JavaScript)

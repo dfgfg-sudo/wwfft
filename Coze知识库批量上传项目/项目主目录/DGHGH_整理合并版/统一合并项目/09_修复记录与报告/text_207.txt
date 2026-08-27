@@ -1,0 +1,17 @@
+API文档
+
+REST API端点
+
+· GET /api/v1/status: 系统状态
+· POST /api/v1/predict: 推理预测
+· POST /api/v1/train: 模型训练
+· GET /api/v1/models: 模型列表
+
+WebSocket接口
+
+· /ws/v1/stream: 实时数据流
+· /ws/v1/monitoring: 系统监控
+
+部署指南
+
+Docker部署

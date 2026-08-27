@@ -1,0 +1,11 @@
+---
+
+二、OpenClaw·执行AI：全自动批量提取（Python脚本）
+
+这一步将由“执行”AI完成，无需你手动干涉。以下是经过优化、去错、可直接部署的最终版脚本，保存为 openclaw_executor.py 后一键运行。
+
+2.1 环境依赖
+
+```bash
+pip install playwright yt-dlp openai-whisper tqdm pydub
+playwright install chromium

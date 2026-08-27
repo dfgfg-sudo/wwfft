@@ -1,0 +1,26 @@
+{
+  "schema_version": "v1",
+  "name": "Coze全场景自动化API规范整合",
+  "version": "1.0.0",
+  "integrations": {
+    "coze": {
+      "enabled": true,
+      "version": "3.0.0",
+      "endpoints": {
+        "workflow": "/coze/workflow/execute",
+        "plugin": "/coze/plugin/manage",
+        "automation": "/coze/automation/trigger"
+      }
+    },
+    "ai_training": {
+      "enabled": true,
+      "version": "2.0.0",
+      "endpoints": {"train": "/ai/train", "evaluate": "/ai/evaluate", "deploy": "/ai/deploy"}
+    }
+  },
+  "authentication": {"methods": ["api_key", "oauth2", "jwt"], "default": "api_key"},
+  "rate_limits": {
+    "free": {"requests_per_minute": 60, "requests_per_day": 10000},
+    "premium": {"requests_per_minute": 300, "requests_per_day": 50000}
+  }
+}

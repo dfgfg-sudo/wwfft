@@ -1,0 +1,5 @@
+### 4.2 方案一：使用 GitHub Pages + JavaScript
+- 在仓库中创建 `docs/index.html`，用纯前端调用 GitHub API（注意需 OAuth 或 PAT，且不能暴露令牌）。
+- 使用 `repository_dispatch` 事件触发工作流。
+
+**示例页面 (`docs/index.html`)**

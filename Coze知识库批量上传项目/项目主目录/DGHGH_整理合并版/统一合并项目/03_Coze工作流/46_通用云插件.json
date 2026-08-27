@@ -1,0 +1,24 @@
+{
+  "name": "通用云插件",
+  "description": "通用功能插件",
+  "version": "1.0.0",
+  "create_time": "2026-06-09 17:46:00",
+  "update_time": "2026-07-27 12:00:00",
+  "resource_id": "7649329391947989007",
+  "original_name": "gdhxfcghvjb",
+  "type": "plugin",
+  "plugin_type": "云插件",
+  "functions": [
+    {
+      "name": "execute",
+      "description": "执行通用操作",
+      "input_params": [
+        {"name": "action", "type": "string", "required": true, "description": "操作类型"},
+        {"name": "params", "type": "object", "required": true, "description": "操作参数"}
+      ],
+      "output_params": [
+        {"name": "result", "type": "object", "description": "执行结果"}
+      ]
+    }
+  ]
+}

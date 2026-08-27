@@ -1,0 +1,58 @@
+graph TD
+    A[用户接口层] --> B[API网关层]
+    
+    subgraph "核心处理层"
+        B --> C[请求解析器]
+        C --> D{智能路由判断}
+        
+        D -->|紧急处理| E[紧急响应系统]
+        D -->|AI增强| F[AI增强引擎]
+        D -->|行业分析| G[行业分析器]
+        D -->|自动修复| H[自愈修复系统]
+        D -->|备份恢复| I[备份恢复中心]
+        D -->|工作流管理| J[工作流工厂]
+        D -->|插件生成| K[插件生成引擎]
+        D -->|模型训练| L[模型训练管道]
+        D -->|文化传承| M[文化传承处理器]
+        D -->|参数验证| N[参数验证网关]
+    end
+    
+    subgraph "数据存储层"
+        O[(工作流数据库)]
+        P[(训练数据仓库)]
+        Q[(备份存储系统)]
+        R[(连接配置库)]
+    end
+    
+    subgraph "外部集成层"
+        S[第三方API服务]
+        T[云存储服务]
+        U[AI模型服务]
+        V[数据源连接]
+    end
+    
+    E --> O
+    F --> P
+    G --> R
+    H --> O & Q
+    I --> Q
+    J --> O & S
+    K --> S & T
+    L --> P & U
+    M --> O & P
+    N --> R
+    
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#ffebee
+    style F fill:#f3e5f5
+    style G fill:#e8f5e8
+    style H fill:#fff3e0
+    style I fill:#fce4ec
+    style J fill:#e8eaf6
+    style K fill:#e0f2f1
+    style L fill:#f3e5f5
+    style M fill:#fff8e1
+    style N fill:#f1f8e9

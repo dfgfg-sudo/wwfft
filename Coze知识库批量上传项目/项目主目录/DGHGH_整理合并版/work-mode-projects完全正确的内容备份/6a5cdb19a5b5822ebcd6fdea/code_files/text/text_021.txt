@@ -1,0 +1,130 @@
+autocode-pro/
+├── packages/                          # 多包工作区
+│   ├── core/                          # 核心引擎
+│   │   ├── src/
+│   │   │   ├── ai_engine/             # AI引擎模块
+│   │   │   │   ├── requirement_analyzer.py     # 需求分析器
+│   │   │   │   ├── code_generator.py           # 代码生成器
+│   │   │   │   ├── architect.py                # 架构设计师
+│   │   │   │   └── validator.py                # 代码验证器
+│   │   │   ├── templates/             # 代码模板库
+│   │   │   │   ├── frontend/          # 前端模板
+│   │   │   │   │   ├── react/         # React模板
+│   │   │   │   │   ├── vue/           # Vue模板
+│   │   │   │   │   └── angular/       # Angular模板
+│   │   │   │   ├── backend/           # 后端模板
+│   │   │   │   │   ├── nodejs/        # Node.js模板
+│   │   │   │   │   ├── python/        # Python模板
+│   │   │   │   │   └── java/          # Java模板
+│   │   │   │   └── infrastructure/    # 基础设施模板
+│   │   │   │       ├── docker/        # Docker配置
+│   │   │   │       ├── kubernetes/    # K8s配置
+│   │   │   │       └── cloud/         # 云平台配置
+│   │   │   └── config/                # 配置文件
+│   │   │       ├── tech_stack.yaml    # 技术栈配置
+│   │   │       ├── patterns.yaml      # 模式匹配配置
+│   │   │       └── mappings.yaml      # 映射关系配置
+│   │   └── package.json
+│   ├── web-dashboard/                 # Web管理界面
+│   │   ├── src/
+│   │   │   ├── components/            # Vue组件
+│   │   │   │   ├── ProjectWizard.vue  # 项目向导
+│   │   │   │   ├── CodeEditor.vue     # 代码编辑器
+│   │   │   │   ├── FileTree.vue       # 文件树
+│   │   │   │   └── LivePreview.vue    # 实时预览
+│   │   │   ├── views/                 # 页面视图
+│   │   │   │   ├── Home.vue           # 首页
+│   │   │   │   ├── Projects.vue       # 项目管理
+│   │   │   │   ├── Templates.vue      # 模板管理
+│   │   │   │   └── Settings.vue       # 设置页面
+│   │   │   ├── stores/                # 状态管理
+│   │   │   │   ├── projectStore.js    # 项目状态
+│   │   │   │   └── userStore.js       # 用户状态
+│   │   │   ├── api/                   # API接口
+│   │   │   │   ├── projectService.js  # 项目服务
+│   │   │   │   ├── templateService.js # 模板服务
+│   │   │   │   └── deployService.js   # 部署服务
+│   │   │   ├── assets/                # 静态资源
+│   │   │   └── styles/                # 样式文件
+│   │   └── package.json
+│   ├── cli-tool/                      # 命令行工具
+│   │   ├── src/
+│   │   │   ├── commands/              # 命令模块
+│   │   │   │   ├── generate.js        # 生成命令
+│   │   │   │   ├── deploy.js          # 部署命令
+│   │   │   │   ├── test.js            # 测试命令
+│   │   │   │   └── init.js            # 初始化命令
+│   │   │   ├── utils/                 # 工具函数
+│   │   │   │   ├── fileGenerator.js   # 文件生成器
+│   │   │   │   ├── configLoader.js    # 配置加载器
+│   │   │   │   └── logger.js          # 日志工具
+│   │   │   └── templates/             # CLI模板
+│   │   └── package.json
+│   └── api-server/                    # 后端API服务
+│       ├── src/
+│       │   ├── controllers/           # 控制器
+│       │   │   ├── projectController.js
+│       │   │   ├── templateController.js
+│       │   │   ├── userController.js
+│       │   │   └── deployController.js
+│       │   ├── models/                # 数据模型
+│       │   │   ├── Project.js
+│       │   │   ├── User.js
+│       │   │   ├── Template.js
+│       │   │   └── Deployment.js
+│       │   ├── routes/                # 路由定义
+│       │   │   ├── projects.js
+│       │   │   ├── templates.js
+│       │   │   ├── users.js
+│       │   │   └── deployments.js
+│       │   ├── services/              # 业务服务
+│       │   │   ├── projectService.js
+│       │   │   ├── aiService.js
+│       │   │   ├── codegenService.js
+│       │   │   └── deployService.js
+│       │   ├── middleware/            # 中间件
+│       │   │   ├── auth.js
+│       │   │   ├── validation.js
+│       │   │   └── errorHandler.js
+│       │   ├── config/                # 服务配置
+│       │   │   ├── database.js
+│       │   │   ├── redis.js
+│       │   │   └── security.js
+│       │   ├── utils/                 # 工具函数
+│       │   │   ├── fileUtils.js
+│       │   │   ├── zipUtils.js
+│       │   │   └── validationUtils.js
+│       │   └── app.js                 # 应用入口
+│       └── package.json
+├── templates/                         # 项目模板库
+│   ├── ecommerce/                     # 电商平台模板
+│   ├── blog/                          # 博客系统模板
+│   ├── cms/                           # 内容管理系统模板
+│   ├── saas/                          # SaaS应用模板
+│   ├── social/                        # 社交网络模板
+│   └── analytics/                     # 数据分析模板
+├── generated-projects/                # 生成的项目存储
+├── docs/                             # 项目文档
+│   ├── api/                          # API文档
+│   ├── user-guide/                   # 用户指南
+│   └── developer-guide/              # 开发指南
+├── scripts/                          # 部署脚本
+│   ├── deploy.sh                     # 部署脚本
+│   ├── setup.sh                      # 环境设置脚本
+│   ├── backup.sh                     # 备份脚本
+│   └── health-check.sh               # 健康检查脚本
+├── tests/                            # 测试文件
+│   ├── unit/                         # 单元测试
+│   ├── integration/                  # 集成测试
+│   └── e2e/                          # 端到端测试
+├── docker-compose.yml                # Docker编排配置
+├── docker-compose.prod.yml           # 生产环境配置
+├── Dockerfile                        # Docker构建文件
+├── Dockerfile.streamlit              # Streamlit Docker文件
+├── package.json                      # 根包配置
+├── requirements.txt                  # Python依赖
+├── .env.example                      # 环境变量示例
+├── .gitignore                       # Git忽略配置
+├── Makefile                         # 构建命令
+├── README.md                        # 项目说明
+└── LICENSE                          # 开源许可证

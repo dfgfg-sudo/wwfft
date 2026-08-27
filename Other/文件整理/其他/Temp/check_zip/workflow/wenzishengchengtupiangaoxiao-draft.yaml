@@ -1,0 +1,314 @@
+description: 打造文字生成图片的高效利器
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '168528'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '105172'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_2
+  source: ''
+  source_node: '168528'
+  target: ''
+  target_node: '105172'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7527510026547920906
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: wenzishengchengtupiangaoxiao
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start-v2.jpg
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      input:
+        type: string
+        value: null
+  position:
+    x: 0
+    y: 0
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End-v2.jpg
+  id: '900001'
+  name: 节点_1
+  parameters:
+    node_inputs:
+    - input:
+        type: image
+        value:
+          path: data
+          ref_node: '105172'
+      name: output
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '168528'
+      name: output2
+    terminatePlan: returnVariables
+  position:
+    x: 1287.8692002342555
+    y: -12.999999999999993
+  title: 结束
+  type: end
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+  id: '168528'
+  name: 节点_2
+  parameters:
+    llmParam:
+    - input:
+        type: integer
+        value: '1737521813'
+      name: modelType
+    - input:
+        type: string
+        value: 豆包·1.5·Pro·32k
+      name: modelName
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.8'
+      name: temperature
+    - input:
+        type: integer
+        value: '4096'
+      name: maxTokens
+    - input:
+        type: boolean
+        value: false
+      name: spCurrentTime
+    - input:
+        type: boolean
+        value: false
+      name: spAntiLeak
+    - input:
+        type: boolean
+        value: false
+      name: prefixCache
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: string
+        value: '{{input}}'
+      name: prompt
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: integer
+        value: '3'
+      name: chatHistoryRound
+    - input:
+        type: string
+        value: '1、角色与任务:
+
+          你是一个创意提示词生成助手，擅长将用户的模糊需求转化为清晰、具体的图片生成提示词。你的任务是根据用户的描述，生成适合 Al 生成图片的详细提示词。
+
+          2、输入格式:
+
+          用户会提供以下信息:{input}
+
+          3、输出格式:
+
+          你生成的提示词应包含以下内容：主体描述：清晰描述图片的主体内容和特征；风格描述：明确说明图片的艺术风格；氛围描述：渲染图片的情感或氛围；细节描述：补充图片的细节
+          (如颜色、光线、背景)'
+      name: systemPrompt
+    - input:
+        type: string
+        value: ''
+      name: stableSystemPrompt
+    - input:
+        type: boolean
+        value: false
+      name: canContinue
+    node_inputs:
+    - input:
+        value:
+          path: input
+          ref_node: '100001'
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 425.79290627484966
+    y: -39
+  title: 大模型
+  type: llm
+  version: '3'
+- config: {}
+  description: 通过文字描述/添加参考图生成图片
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-ImageGeneration-v2.jpg
+  id: '105172'
+  name: 节点_3
+  parameters:
+    apiParam: null
+    modelSetting:
+      custom_ratio:
+        height: 1024
+        width: 1024
+      ddim_steps: 25
+      images_reference: {}
+      model: 1
+      ratio: 0
+    node_inputs:
+    - input:
+        value:
+          path: output
+          ref_node: '168528'
+      name: input
+    node_outputs:
+      data:
+        type: image
+        value: null
+      msg:
+        type: string
+        value: null
+    prompt:
+      negative_prompt: ''
+      prompt: 'Role:
+
+        图像生成器
+
+        Background:
+
+        该角色基于最新的图像生成技术，能够将用户提供的简短描述转化为具有视觉表现力的图像。它融合了多种艺术风格和技术，以满足不同用户的创作需求。
+
+        Preferences:
+
+        该角色偏好清晰、详细的描述，以便更准确地捕捉用户的创意和情感表达。
+
+        Profile:
+
+        version: 0.2
+
+        language: 中文
+
+        description: 将用户的简短描述转化为定制化的视觉图像。
+
+        Goals:
+
+        根据用户的描述 {{input}} 生成一张相应的图像。
+
+        确保图像在风格和细节上尽可能符合用户的预期。
+
+        Constrains:
+
+        仅根据用户提供的文字描述生成图像，不进行内容或风格的猜测。
+
+        遵守平台关于内容和版权使用的规定。
+
+        Skills（技能）：
+
+        高级图像处理和设计技能。
+
+        自然语言理解和创意表达能力。
+
+        Examples（示例）：
+
+        用户描述：“一个日落时分的海滩场景。” 生成的图像展示了一个温暖的日落，沙滩上有几个人影，海面上有几艘帆船。
+
+        用户描述：“一个未来的科技城市，夜晚灯光明亮。” 生成的图像展示了一个繁华的城市夜景，高楼大厦上布满了霓虹灯和电子屏幕。
+
+        OutputFormat（输出格式）：
+
+        解析用户的描述，提取关键元素和情感色彩。
+
+        将这些元素转化成符合预想风格的视觉图像。
+
+        Initialization（初始化）：
+
+        作为图像生成器，拥有高级图像处理和设计技能，严格遵守内容创作规定，使用默认中文与用户对话，友好地欢迎用户。然后介绍自己，并提示用户输入他们的创意描述以便生成图像。'
+    references: []
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 865.722046955425
+    y: -39
+  title: 图像生成
+  type: llm
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

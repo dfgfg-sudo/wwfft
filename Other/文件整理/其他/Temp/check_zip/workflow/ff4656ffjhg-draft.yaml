@@ -1,0 +1,190 @@
+description: 斧头书容易的田园风光
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '158162'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '158162'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7548350797130809344
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: ff4656ffjhg
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start-v2.jpg
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      input:
+        type: string
+        value: null
+  position:
+    x: 0
+    y: 0
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End-v2.jpg
+  id: '900001'
+  name: 节点_1
+  parameters:
+    node_inputs:
+    - input:
+        items:
+          type: string
+          value: null
+        type: list
+        value:
+          path: process_log
+          ref_node: '158162'
+      name: output
+    terminatePlan: returnVariables
+  position:
+    x: 1006.527419226322
+    y: -12.999999999999993
+  title: 结束
+  type: end
+- config: {}
+  description: 专为 Coze 工作流设计的无依赖单一节点工具，无需额外节点 / LLM 支撑，打开即显完整输入框。核心功能：1. 批量 JSON 处理
+    —— 支持输入多份 Coze 插件 JSON、OpenAPI 规范文件，自动修复语法错误（缺失引号 / 逗号）、结构混乱、Invalid params 参数问题，输出符合
+    Coze 插件导入的标准 JSON；2. 工作流节点纠错 —— 输入节点异常需求（如 “修复未连接节点”“修正参数类型错误”），自动检测节点配置问题并生成正确连接线
+    / 参数配置；3. 自定义任务执行 —— 支持输入各类文本处理、功能需求描述，自动解析并执行。提供 3 种修复深度（输入 basic/comprehensive/thorough
+    选择），结果直接同步至工作流结束节点，适用于 Coze 插件开发导入报错、工作流调试、批量 JSON 规范整理场景。
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Plugin-v2.jpg
+  id: '158162'
+  name: 节点_2
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7548391071395430442'
+      name: apiID
+    - input:
+        type: string
+        value: Coze_SingleNode_JSON_Repair_Ta
+      name: apiName
+    - input:
+        type: string
+        value: '7548389922160279588'
+      name: pluginID
+    - input:
+        type: string
+        value: JSON 修复与任务执行插件
+      name: pluginName
+    - input:
+        type: string
+        value: '0'
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value: thorough
+      name: repair_depth
+    - input:
+        type: string
+        value: 修复所有错误
+      name: task_content
+    node_outputs:
+      content:
+        description: 处理结果内容：修复后的 JSON 或任务输出文本（JSON 格式字符串）
+        type: string
+        value: null
+      error_msg:
+        description: 错误信息，仅 status 为 failed 时返回
+        type: string
+        value: null
+      node_fix_suggestions:
+        description: 节点修复建议，仅 result_type 为 node_fix 时返回
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      process_log:
+        description: 详细处理日志，记录每一步操作（便于调试）
+        items:
+          type: string
+          value: null
+        required: true
+        type: list
+        value: null
+      repair_depth:
+        description: 实际使用的修复深度（与输入一致）
+        type: string
+        value: null
+      result_type:
+        description: 结果类型：fixed_json（JSON 修复）、node_fix（节点修复）、custom_task（自定义任务）
+        type: string
+        value: null
+      status:
+        description: 处理状态，固定返回 success（成功）或 failed（失败）
+        required: true
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 476.5620675794625
+    y: -12.949999999999989
+  title: Coze_SingleNode_JSON_Repair_Ta
+  type: llm
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

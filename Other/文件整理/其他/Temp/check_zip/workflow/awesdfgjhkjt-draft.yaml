@@ -1,0 +1,896 @@
+description: srdtfyui
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '133387'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '1859782'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_2
+  source: ''
+  source_node: '133387'
+  target: ''
+  target_node: '167137'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_3
+  source: ''
+  source_node: '167137'
+  target: ''
+  target_node: '115824'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_4
+  source: ''
+  source_node: '115824'
+  target: ''
+  target_node: '108018'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_5
+  source: ''
+  source_node: '108018'
+  target: ''
+  target_node: '104838'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_6
+  source: ''
+  source_node: '104838'
+  source_port: batch-output
+  target: ''
+  target_node: '1859782'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7527527045727846442
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: awesdfgjhkjt
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start-v2.jpg
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      video_theme:
+        type: string
+        value: null
+  position:
+    x: 180
+    y: 39.00000000000001
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End-v2.jpg
+  id: '900001'
+  name: 节点_1
+  parameters:
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: videoUrl
+          ref_node: '1859782'
+      name: output
+    terminatePlan: returnVariables
+  position:
+    x: 4980
+    y: 26.000000000000007
+  title: 结束
+  type: end
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+  id: '133387'
+  name: 节点_2
+  parameters:
+    llmParam:
+    - input:
+        type: integer
+        value: '1737521813'
+      name: modelType
+    - input:
+        type: string
+        value: 豆包·1.5·Pro·32k
+      name: modelName
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.8'
+      name: temperature
+    - input:
+        type: integer
+        value: '4096'
+      name: maxTokens
+    - input:
+        type: boolean
+        value: false
+      name: spCurrentTime
+    - input:
+        type: boolean
+        value: false
+      name: spAntiLeak
+    - input:
+        type: boolean
+        value: false
+      name: prefixCache
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: string
+        value: '具体按以下要求输出：
+
+          爆款标题：1 条，20 字以内，必须包含‘数字 / 疑问 / 反差’（比如‘3 个误区！夏天美白别再做错了’），符合抖音 / 小红书热门风格。
+
+          分镜脚本：共 4-5 个镜头（适合 15-20 秒短视频），每个镜头必须写清 4 点：
+
+          画面内容：具体到动作 / 场景（比如‘手持黄瓜片贴近脸颊，背景是厨房窗台’，别写‘拍美白场景’这种模糊描述）；
+
+          配音文案：15-20 字，口语化（像聊天一样，比如‘夏天美白不用买贵的，黄瓜就能用’）；
+
+          字幕内容：和配音文案完全一样（方便后期直接添加，比如配音是‘黄瓜切片贴脸’，字幕就写‘黄瓜切片贴脸’）；
+
+          镜头时长：标注‘3 秒’‘4 秒’（单个镜头不超过 5 秒）。
+
+          风格建议：2 条实用建议，分别说明：
+
+          配音风格（比如‘语速稍快的女声，带微笑语气，像和朋友分享’）；
+
+          画面风格（比如‘明亮自然光，浅色系背景，镜头稍微晃动增加真实感’）。
+
+          输出格式：用‘标题 + 分镜脚本 + 风格建议’的结构分开写，分镜按‘镜头 1、镜头 2’编号，每条内容清晰不杂乱。
+
+          请严格按要求生成，内容要适合普通用户用 AI 工具自动生成视频（别写需要专业设备拍摄的内容）。”'
+      name: prompt
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: integer
+        value: '3'
+      name: chatHistoryRound
+    - input:
+        type: string
+        value: '# 角色
+
+          你是一名资深短视频文案策划，专长是把复杂信息转变为“口语化、有节奏、易理解”的视频旁白。你的风格是“亲切科普风”，如同朋友聊天般传递信息，杜绝生硬说教，且每句话都能呈现具体场景或动作画面。
+
+
+          ## 技能
+
+          ### 技能 1: 生成视频文案
+
+          基于用户给出的视频主题【{{video_theme}}】，开展以下工作：
+
+          1. 创作出 300 - 400 字的文案，划分成 4 - 6 个段落，每个段落对应 1 个视频画面，段落之间逻辑紧密相连。
+
+          2. 每个段落起始用“提问”或者“观点句”来吸引目光（比如：“减肥只靠少吃？其实重点在这儿”）。
+
+          3. 文案内容要涵盖“核心观点 + 简单论据 + 生活化例子”（比如：“多运动能帮助减肥——因为运动加快新陈代谢，让身体消耗更多热量，就像给身体装了个小马达”）。
+
+          4. 结尾添加 1 句互动引导话语（比如：“你平时靠什么减肥？评论区说说～”）。
+
+
+          ## 限制:
+
+          1. 语言必须是口语化表达，禁止使用专业术语（像“新陈代谢”改为“身体的运转”）。
+
+          2. 单个句子长度不能超过 20 字，段落长度不超过 80 字。
+
+          3. 不出现绝对化的说法（例如“肯定”“必定”），不涉及虚假宣传内容（例如“3 天瘦 10 斤”）。
+
+          4. 整体风格统一为“亲切科普”，不掺和搞笑、严肃学术等其他风格。  '
+      name: systemPrompt
+    - input:
+        type: string
+        value: ''
+      name: stableSystemPrompt
+    - input:
+        type: boolean
+        value: false
+      name: canContinue
+    node_inputs:
+    - input:
+        value:
+          path: video_theme
+          ref_node: '100001'
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 365.95000000000005
+    y: 430.65
+  title: 大模型
+  type: llm
+  version: '3'
+- config: {}
+  description: 用于处理多个字符串类型变量的格式
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-StrConcat-v2.jpg
+  id: '167137'
+  name: 节点_3
+  parameters:
+    method: split
+    node_inputs:
+    - input:
+        value:
+          path: output
+          ref_node: '133387'
+      name: String
+    node_outputs:
+      output:
+        items:
+          type: string
+          value: null
+        required: true
+        type: list
+        value: null
+    splitParams:
+    - input:
+        items:
+          type: string
+          value: null
+        type: list
+        value:
+        - ，
+      name: delimiters
+    - input:
+        items:
+          type: object
+          value: null
+        type: list
+        value:
+        - isDefault: true
+          label: 换行
+          value: '
+
+            '
+        - isDefault: true
+          label: 制表符
+          value: "\t"
+        - isDefault: true
+          label: 句号
+          value: 。
+        - isDefault: true
+          label: 逗号
+          value: ，
+        - isDefault: true
+          label: 分号
+          value: ；
+        - isDefault: true
+          label: 空格
+          value: ' '
+      name: allDelimiters
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1100
+    y: 26.000000000000007
+  title: 文本处理
+  type: llm
+- config: {}
+  description: 通过文字描述/添加参考图生成图片
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-ImageGeneration-v2.jpg
+  id: '115824'
+  name: 节点_4
+  parameters:
+    apiParam: null
+    modelSetting:
+      custom_ratio:
+        height: 1024
+        width: 1024
+      ddim_steps: 25
+      images_reference: {}
+      model: 1
+      ratio: 0
+    node_inputs:
+    - input:
+        value:
+          path: video_theme
+          ref_node: '100001'
+      name: img_theme
+    node_outputs:
+      data:
+        type: image
+        value: null
+      msg:
+        type: string
+        value: null
+    prompt:
+      negative_prompt: 畸形，扭曲，不完整，细节缺失，模糊，低像素，杂乱，表佾淨狞，五官不全，五僖碡形，表情僵硬，手指扭曲，手指杂乱
+      prompt: 围绕主题 {{img_theme)} 进行联想设计，极简画风，国风水墨画，留白，意境，只有黑白两种颜色
+    references: []
+    settingOnError:
+      processType: 1
+      switch: false
+      timeoutMs: 60000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1560
+    y: 0
+  title: 图像生成
+  type: llm
+- canvas_position:
+    x: 2400
+    y: 317.29999999999995
+  config: {}
+  description: 通过设定批量运行次数和逻辑，运行批处理体内的任务
+  edges:
+  - source_node: '104838'
+    source_port: batch-function-inline-output
+    target_node: '100043'
+  - source_node: '100043'
+    source_port: 'true'
+    target_node: '184973'
+  - source_node: '100043'
+    source_port: 'false'
+    target_node: '104838'
+    target_port: batch-function-inline-input
+  - source_node: '184973'
+    target_node: '190813'
+  - source_node: '190813'
+    target_node: '120922'
+  - source_node: '120922'
+    target_node: '104838'
+    target_port: batch-function-inline-input
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Batch-v2.jpg
+  id: '104838'
+  name: 节点_5
+  nodes:
+  - description: 连接多个下游分支，若设定的条件成立则仅运行对应的分支，若均不成立则只运行“否则”分支
+    icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Condition-v2.jpg
+    id: '100043'
+    parameters:
+      branches:
+      - condition:
+          conditions:
+          - left:
+              input:
+                type: string
+                value:
+                  path: input
+                  ref_node: '104838'
+            operator: 2
+            right:
+              input:
+                type: string
+                value: empty
+          logic: 2
+    position:
+      x: 180
+      y: 0
+    title: 选择器
+    type: condition
+  - description: 自定义画板排版，支持引用添加文本和图片
+    icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon_DrawingBoard_v2.jpg
+    id: '184973'
+    parameters:
+      canvasSchema: '{"version":"6.0.0-rc2","width":1920,"height":1080,"backgroundColor":"#ffffffff","objects":[{"fontSize":24,"fontWeight":"normal","fontFamily":"常规体-思源黑体","fontStyle":"normal","lineHeight":1.2,"text":"点击编辑文本预览
+        Click to edit text preview","charSpacing":0,"textAlign":"center","styles":[],"pathStartOffset":0,"pathSide":"left","pathAlign":"baseline","underline":false,"overline":false,"linethrough":false,"textBackgroundColor":"","direction":"ltr","width":482.5195,"height":27.12,"editable":true,"backgroundColor":"","padding":0,"customId":"_ZHt-f8-HIybQR7BNQFQI","customType":"inline_text","type":"IText","version":"6.0.0-rc2","originX":"left","originY":"top","left":701.6285,"top":1018.3981,"fill":"#000000ff","stroke":"#000000ff","strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0},{"fontSize":24,"fontWeight":"normal","fontFamily":"常规体-思源黑体","fontStyle":"normal","lineHeight":1.2,"text":"点击编辑文本预览
+        Click to edit text preview","charSpacing":0,"textAlign":"center","styles":[],"pathStartOffset":0,"pathSide":"left","pathAlign":"baseline","underline":false,"overline":false,"linethrough":false,"textBackgroundColor":"","direction":"ltr","width":482.5195,"height":27.12,"editable":true,"backgroundColor":"","padding":0,"customId":"55n9tKYir_kcM3O8YxgLu","customType":"inline_text","type":"IText","version":"6.0.0-rc2","originX":"left","originY":"top","left":701.6285,"top":88.0874,"fill":"#000000ff","stroke":"#000000ff","strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0}],"background":"#ffffffff","customVariableRefs":[]}'
+      node_inputs:
+      - input:
+          value:
+            path: video_theme
+            ref_node: '100001'
+        name: video_theme
+      - input:
+          type: string
+          value:
+            path: input
+            ref_node: '104838'
+        name: 'video_txt '
+      - input:
+          type: image
+          value:
+            path: data
+            ref_node: '108018'
+        name: img
+      node_outputs:
+        data:
+          type: image
+          value: null
+        msg:
+          type: string
+          value: null
+      settingOnError:
+        processType: 1
+        retryTimes: 0
+        timeoutMs: 60000
+    position:
+      x: 640
+      y: 12.699999999999996
+    title: 画板
+    type: drawing_board
+  - description: 根据音色和文本合成音频
+    icon: https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/874cbe380bc145a7ba9c02a7948d4087~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1755231415&x-signature=Ddjiuacwm%2FVMh2dHnnWCuqj5mO4%3D
+    id: '190813'
+    parameters:
+      apiParam:
+      - input:
+          type: string
+          value: '7426655854067367946'
+        name: apiID
+      - input:
+          type: string
+          value: speech_synthesis
+        name: apiName
+      - input:
+          type: string
+          value: '7426655854067351562'
+        name: pluginID
+      - input:
+          type: string
+          value: 语音合成
+        name: pluginName
+      - input:
+          type: string
+          value: ''
+        name: pluginVersion
+      - input:
+          type: string
+          value: ''
+        name: tips
+      - input:
+          type: string
+          value: ''
+        name: outDocLink
+      node_inputs:
+      - input:
+          type: string
+          value:
+            path: input
+            ref_node: '104838'
+        name: text
+      - input:
+          type: voice
+          value: '7468512265151725595'
+        name: voice_id
+      node_outputs:
+        code:
+          type: float
+          value: null
+        data:
+          properties:
+            link:
+              type: string
+              value: null
+          type: object
+          value: null
+        log_id:
+          type: string
+          value: null
+        msg:
+          type: string
+          value: null
+      settingOnError:
+        processType: 1
+        retryTimes: 0
+        timeoutMs: 180000
+    position:
+      x: 1100
+      y: 12.699999999999996
+    title: speech_synthesis
+    type: plugin
+  - description: 支持图片生成视频、视频合成视频等。技术支持：https://mathmind.feishu.cn/sync/QMfwdufqGs66Ccb9227c4F0DnqH
+    icon: https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/85a478456ee74a988f38c46ba9a62d43~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1755232674&x-signature=4WohvBs0nC%2BNHfdzSVOUqciDy0Q%3D
+    id: '120922'
+    parameters:
+      apiParam:
+      - input:
+          type: string
+          value: '7462759992714674188'
+        name: apiID
+      - input:
+          type: string
+          value: imgs2video_lite
+        name: apiName
+      - input:
+          type: string
+          value: '7461095778539388928'
+        name: pluginID
+      - input:
+          type: string
+          value: 视频合成工具箱
+        name: pluginName
+      - input:
+          type: string
+          value: ''
+        name: pluginVersion
+      - input:
+          type: string
+          value: ''
+        name: tips
+      - input:
+          type: string
+          value: ''
+        name: outDocLink
+      node_inputs:
+      - input:
+          type: string
+          value:
+            path: data
+            ref_node: '108018'
+        name: imageUrl1
+      - input:
+          type: string
+          value:
+            path: input
+            ref_node: '104838'
+        name: voiceUrl
+      node_outputs:
+        aboutUrl:
+          description: 帮助中心
+          type: string
+          value: null
+        code:
+          description: 状态码
+          type: float
+          value: null
+        downloadUrl:
+          description: 视频下载地址，点击可直接下载
+          type: string
+          value: null
+        errorMessage:
+          description: 状态
+          type: string
+          value: null
+        traceId:
+          description: 请求唯一ID
+          type: string
+          value: null
+        videoUrl:
+          description: 视频在线地址
+          type: string
+          value: null
+      settingOnError:
+        processType: 1
+        retryTimes: 0
+        timeoutMs: 180000
+    position:
+      x: 1560
+      y: 0.6999999999999886
+    title: imgs2video_lite
+    type: plugin
+  parameters:
+    batchSize:
+      type: integer
+      value:
+        content: '100'
+        type: literal
+    concurrentSize:
+      type: integer
+      value:
+        content: 3
+        rawMeta:
+          type: 2
+        type: literal
+    node_inputs:
+    - input:
+        value:
+          path: output
+          ref_node: '167137'
+      name: input
+    node_outputs:
+      output:
+        value:
+          items:
+            type: string
+            value: null
+          type: list
+          value:
+            path: videoUrl
+            ref_node: '120922'
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 3270
+    y: 26.000000000000007
+  title: 批处理
+  type: llm
+- config: {}
+  description: 保留图片前景主体，输出透明背景(.png)
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-plugin-cutout-v2.jpg
+  id: '108018'
+  name: 节点_6
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7438919188246429731'
+      name: apiID
+    - input:
+        type: string
+        value: cutout
+      name: apiName
+    - input:
+        type: string
+        value: '7438919188246413347'
+      name: pluginID
+    - input:
+        type: string
+        value: 抠图
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: image
+        value: https://p9-bot-workflow-sign.byteimg.com/tos-cn-i-mdko3gqilj/56900554e9304530a569eda18a6bcfba.png~tplv-mdko3gqilj-image.image?rk3s=81d4c505&x-expires=1783744232&x-signature=eP8Wk776YtZ66Hg310qCNerVMP4%3D
+      name: url
+    - input:
+        type: string
+        value: '0'
+      name: only_mask
+    - input:
+        type: string
+        value: '0'
+      name: output_mode
+    node_outputs:
+      data:
+        description: 透明背景图，在输出模式为透明背景时生效
+        type: image
+        value: null
+      mask:
+        description: 抠图区域蒙板矢量图，在输出模式为蒙版矢量图时生效
+        type: string
+        value: null
+      msg:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2020
+    y: 14
+  title: cutout
+  type: llm
+- config: {}
+  description: '视频合成视频~
+
+    帮助中心：https://mathmind.feishu.cn/docx/Q6eodjvPLoq7yDxZaHOcfnFrntg'
+  icon: https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/85a478456ee74a988f38c46ba9a62d43~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1755232674&x-signature=4WohvBs0nC%2BNHfdzSVOUqciDy0Q%3D
+  id: '1859782'
+  name: 节点_7
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7470924377991987215'
+      name: apiID
+    - input:
+        type: string
+        value: video2video
+      name: apiName
+    - input:
+        type: string
+        value: '7461095778539388928'
+      name: pluginID
+    - input:
+        type: string
+        value: 视频合成工具箱
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        items:
+          type: string
+          value: null
+        type: list
+        value:
+          path: output
+          ref_node: '104838'
+      name: videoFiles
+    node_outputs:
+      aboutUrl:
+        description: 关于我们
+        type: string
+        value: null
+      code:
+        description: 状态码
+        type: float
+        value: null
+      downloadUrl:
+        description: 视频下载链接
+        type: string
+        value: null
+      errorMessage:
+        description: 状态说明
+        type: string
+        value: null
+      videoUrl:
+        description: 视频在线链接
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 4520
+    y: 26.000000000000007
+  title: video2video
+  type: llm
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

@@ -1,0 +1,2528 @@
+description: '# 角色
+
+  你是一位资深的编程专家，精通文本分析智能体、全能自动化伪代码生成器（UPG）开发、新手项目流程设计、Python项目开发与创新、代码生成以及智能交互系统代码整合与优化等多个领域。你能够整理各类编程相关的文字内容，使其完整且清晰。
+
+
+  ## 技能
+
+  ### 技能 1: 提供项目开发指南
+
+  1. 当用户询问全能自动化伪代码生成器（UPG）项目架构设计、新手项目开发流程、Python项目开发全流程、Python项目克隆与创新开发等相关指南时，详细且有条理地进行解答。
+
+  2. 若涉及特定知识点的细节，可进一步深入阐述。
+
+
+  ### 技能 2: 代码生成
+
+  1. 根据用户提出的中文需求，准确生成Python和易语言代码示例。
+
+  2. 代码需逻辑清晰、语法正确，并添加必要注释以便理解。
+
+
+  ### 技能 3: 文本整理与修复
+
+  1. 对于用户提供的文字文章，能够进行全面整理和修复，确保内容完整、逻辑连贯。
+
+
+  ### 技能 4: 智能交互系统优化
+
+  1. 当用户咨询智能交互系统代码整合与优化问题时，基于专业知识给出合理的建议和解决方案。
+
+
+  ## 限制:
+
+  - 仅围绕编程相关主题进行交流，不回答无关问题。
+
+  - 提供的解答需简洁明了，避免过于复杂的表述。
+
+  - 代码示例应可运行，解释内容应易于理解。
+
+  - 回答问题尽量基于自身知识储备，若需额外信息，使用工具获取。
+
+  - 若引用外部信息，需用Markdown的 ^^ '
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '183071'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '105800'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_2
+  source: ''
+  source_node: '166536'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_3
+  source: ''
+  source_node: '145875'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_4
+  source: ''
+  source_node: '183071'
+  source_port: true_1
+  target: ''
+  target_node: '120143'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_5
+  source: ''
+  source_node: '183071'
+  source_port: 'true'
+  target: ''
+  target_node: '130588'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_6
+  source: ''
+  source_node: '183071'
+  source_port: 'false'
+  target: ''
+  target_node: '145875'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_7
+  source: ''
+  source_node: '183071'
+  source_port: 'true'
+  target: ''
+  target_node: '171043'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_8
+  source: ''
+  source_node: '190324'
+  target: ''
+  target_node: '105800'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_9
+  source: ''
+  source_node: '120143'
+  target: ''
+  target_node: '166536'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_10
+  source: ''
+  source_node: '130588'
+  target: ''
+  target_node: '173843'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_11
+  source: ''
+  source_node: '171043'
+  target: ''
+  target_node: '139157'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_12
+  source: ''
+  source_node: '139157'
+  target: ''
+  target_node: '117131'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_13
+  source: ''
+  source_node: '173843'
+  target: ''
+  target_node: '190324'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_14
+  source: ''
+  source_node: '178920'
+  target: ''
+  target_node: '120170'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_15
+  source: ''
+  source_node: '120170'
+  target: ''
+  target_node: '184555'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_16
+  source: ''
+  source_node: '184555'
+  target: ''
+  target_node: '187606'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_17
+  source: ''
+  source_node: '187606'
+  target: ''
+  target_node: '138800'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_18
+  source: ''
+  source_node: '138800'
+  target: ''
+  target_node: '166702'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7481963195969765428
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: xfxj
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start-v2.jpg
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      input:
+        required: true
+        type: string
+        value: null
+  position:
+    x: 180
+    y: 390.75
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End-v2.jpg
+  id: '900001'
+  name: 节点_1
+  parameters:
+    content:
+      type: string
+      value:
+        content: '{{output}}{{output1}}{{output2}}'
+        type: literal
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '105800'
+      name: output
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '166536'
+      name: output1
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '145875'
+      name: output2
+    streamingOutput: true
+    terminatePlan: useAnswerContent
+  position:
+    x: 2940
+    y: 367.55000000000007
+  title: 结束
+  type: end
+- config: {}
+  description: 连接多个下游分支，若设定的条件成立则仅运行对应的分支，若均不成立则只运行“否则”分支
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Condition-v2.jpg
+  id: '183071'
+  name: 节点_2
+  parameters:
+    branches:
+    - condition:
+        conditions:
+        - left:
+            input:
+              value:
+                path: input
+                ref_node: '100001'
+          operator: 7
+          right:
+            input:
+              type: string
+              value: .jpg
+        - left:
+            input:
+              value:
+                path: input
+                ref_node: '100001'
+          operator: 7
+          right:
+            input:
+              type: string
+              value: .png
+        logic: 1
+    - condition:
+        conditions:
+        - left:
+            input:
+              value:
+                path: input
+                ref_node: '100001'
+          operator: 7
+          right:
+            input:
+              type: string
+              value: .mp3
+        - left:
+            input:
+              value:
+                path: input
+                ref_node: '100001'
+          operator: 7
+          right:
+            input:
+              type: string
+              value: .wav
+        logic: 1
+  params:
+    condition: ''
+    false_branch: ''
+    true_branch: ''
+  position:
+    x: 640
+    y: 296.25
+  title: 选择器
+  type: condition
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+  id: '105800'
+  name: 节点_3
+  parameters:
+    llmParam:
+    - input:
+        type: float
+        value: '1'
+      name: temperature
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: integer
+        value: '1024'
+      name: maxTokens
+    - input:
+        type: string
+        value: 豆包·工具调用
+      name: modelName
+    - input:
+        type: integer
+        value: '1706077826'
+      name: modelType
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: string
+        value: '{{input}}'
+      name: prompt
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: integer
+        value: '3'
+      name: chatHistoryRound
+    - input:
+        type: string
+        value: '用户消息中包含图片，你需要根据图片内容和用户原始消息总结内容。
+
+          这是理解后的图片内容：“{{response_for_model}}”'
+      name: systemPrompt
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: response_for_model
+          ref_node: '130588'
+      name: response_for_model
+    - input:
+        value:
+          path: input
+          ref_node: '100001'
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError:
+      switch: false
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2480
+    y: -1.4210854715202004e-14
+  title: 大模型-总结图片
+  type: llm
+  version: '3'
+- config: {}
+  description: 读取音频url链接，并将音频转为文字
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Plugin-v2.jpg
+  id: '120143'
+  name: 节点_4
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7366504288144785434'
+      name: apiID
+    - input:
+        type: string
+        value: SpeechToText
+      name: apiName
+    - input:
+        type: string
+        value: '7366504288144769050'
+      name: pluginID
+    - input:
+        type: string
+        value: 语音转文本
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    - input:
+        type: integer
+        value: 1742029894.0
+      name: updateTime
+    inputDefs:
+    - description: 音频url链接
+      input: {}
+      name: url
+      required: true
+      type: string
+    node_inputs:
+    - input:
+        value:
+          path: input
+          ref_node: '100001'
+      name: url
+    node_outputs:
+      code:
+        description: 错误码
+        type: float
+        value: null
+      data:
+        properties:
+          msg:
+            description: 额外信息
+            type: string
+            value: null
+          text:
+            description: 音频转化后的文字
+            type: string
+            value: null
+        type: object
+        value: null
+      log_id:
+        description: 日志ID
+        type: string
+        value: null
+      msg:
+        description: 额外信息
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2020
+    y: 489.39999999999986
+  title: SpeechToText
+  type: llm
+- config: {}
+  description: 回答用户关于图像的问题
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Plugin-v2.jpg
+  id: '130588'
+  name: 节点_5
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7407644410588151819'
+      name: apiID
+    - input:
+        type: string
+        value: imgUnderstand
+      name: apiName
+    - input:
+        type: string
+        value: '7379227414322217010'
+      name: pluginID
+    - input:
+        type: string
+        value: 图片理解
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    - input:
+        type: integer
+        value: 1742030362.0
+      name: updateTime
+    inputDefs:
+    - description: 用户关于图片的问题
+      input: {}
+      name: text
+      required: false
+      type: string
+    - description: 图像的URL地址，可以从中下载图像的二进制信息
+      input: {}
+      name: url
+      required: false
+      type: string
+    node_inputs:
+    - input:
+        value:
+          path: input
+          ref_node: '100001'
+      name: url
+    node_outputs:
+      code:
+        type: float
+        value: null
+      content_type:
+        type: integer
+        value: null
+      msg:
+        type: string
+        value: null
+      response_for_model:
+        description: VLM's answer about this image
+        type: string
+        value: null
+      type_for_model:
+        type: integer
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1100
+    y: 26
+  title: imgUnderstand
+  type: llm
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+  id: '166536'
+  name: 节点_6
+  parameters:
+    llmParam:
+    - input:
+        type: float
+        value: '1'
+      name: temperature
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: integer
+        value: '1024'
+      name: maxTokens
+    - input:
+        type: string
+        value: 豆包·工具调用
+      name: modelName
+    - input:
+        type: integer
+        value: '1706077826'
+      name: modelType
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: string
+        value: '{{input}}'
+      name: prompt
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: integer
+        value: '3'
+      name: chatHistoryRound
+    - input:
+        type: string
+        value: '用户消息中包含音频，你需要根据音频内容和用户原始消息总结内容。
+
+          这是理解后的音频内容：“{{data}}”'
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: input
+          ref_node: '100001'
+      name: input
+    - input:
+        value:
+          path: data
+          ref_node: '120143'
+      name: data
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError:
+      switch: false
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2480
+    y: 463.39999999999986
+  title: 大模型-总结语音
+  type: llm
+  version: '3'
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+  id: '145875'
+  name: 节点_7
+  parameters:
+    llmParam:
+    - input:
+        type: float
+        value: '1'
+      name: temperature
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: integer
+        value: '1024'
+      name: maxTokens
+    - input:
+        type: string
+        value: 豆包·工具调用
+      name: modelName
+    - input:
+        type: integer
+        value: '1706077826'
+      name: modelType
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: string
+        value: '{{input}}'
+      name: prompt
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: integer
+        value: '3'
+      name: chatHistoryRound
+    - input:
+        type: string
+        value: 你需要根据用户原始消息总结内容。
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: input
+          ref_node: '100001'
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError:
+      switch: false
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2480
+    y: 729.0999999999999
+  title: 大模型
+  type: llm
+  version: '3'
+- config: {}
+  description: ''
+  icon: ''
+  id: '107601'
+  name: 节点_8
+  parameters:
+    note: '[{"type":"paragraph","children":[{"text":"使用选择器判断输入中是否包含图片/音频：","type":"text"}]},{"type":"paragraph","children":[{"text":"1.
+      包含图片：使用理解图片插件后再交给大模型","type":"text"}]},{"type":"paragraph","children":[{"text":"2.
+      包含音频：使用语音转文字插件后再交给大模型","type":"text"}]},{"type":"paragraph","children":[{"text":"3.
+      都不包含时：直接由大模型回复","type":"text"}]}]'
+    schemaType: slate
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 640
+    y: 798
+  size:
+    height: 91.79388791181441
+    width: 307.7721015344113
+  title: ''
+  type: llm
+- config: {}
+  description: '###AI人工智能最新新闻推荐；
+
+    ###整合各大主流AI新闻平台最新资讯，包含IT之家、36氪、钛媒体、财联社、机器之心、新浪财经、智东西、华尔街见闻等多国内外家新闻平台
+
+    ###插件和工作流BUG反馈 请到我主页Bots下留言
+
+    ###求关注！！！
+
+    ###其他接口正在加紧开发中~'
+  icon: https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/e1b55cf065494ff6b164ca86375c9661~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622511&x-signature=uTT4%2BLpgU%2BdTHhkdVOnI82iOPzQ%3D
+  id: '139157'
+  name: 节点_9
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7397297520067608616'
+      name: apiID
+    - input:
+        type: string
+        value: GetAIInfo
+      name: apiName
+    - input:
+        type: string
+        value: '7397297520067592232'
+      name: pluginID
+    - input:
+        type: string
+        value: AI人工智能最新新闻推荐
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - description: 前N条新闻
+      input: {}
+      name: topN
+      required: true
+      type: integer
+    node_inputs:
+    - input:
+        type: integer
+        value:
+          path: input
+          ref_node: '100001'
+      name: topN
+    node_outputs:
+      message:
+        description: 结果集
+        items:
+          properties:
+            info:
+              description: 简介
+              required: true
+              type: string
+              value: null
+            source:
+              description: 来源
+              required: true
+              type: string
+              value: null
+            title:
+              description: 标题
+              required: true
+              type: string
+              value: null
+            url:
+              description: 原文地址
+              required: true
+              type: string
+              value: null
+          type: object
+          value: null
+        required: true
+        type: list
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1560
+    y: 251.6999999999999
+  title: GetAIInfo
+  type: llm
+- config: {}
+  description: 新一代的AI搜索，利用人工智能技术和多模态深度语义理解技术，使搜索引擎更能够深度理解和处理自然语言，从而提供更准确、更相关、更有价值的搜索结果的一种搜索方式。它基于机器学习、深度学习、自然语言处理等技术，对用户的查询进行深入分析和理解，以识别其意图和需求，并从大量的信息中找到高质量的答案。
+  icon: https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/15f4e643afc34bdfb833a48d8a6e0fb8~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622511&x-signature=6O3ApjDze5ZC3U%2B88pzKCiPx7N4%3D
+  id: '171043'
+  name: 节点_10
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7363519784602075170'
+      name: apiID
+    - input:
+        type: string
+        value: AIS
+      name: apiName
+    - input:
+        type: string
+        value: '7363519784602058786'
+      name: pluginID
+    - input:
+        type: string
+        value: AI 搜索
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1100
+    y: 251.6999999999999
+  title: AIS
+  type: llm
+- config: {}
+  description: '用 自然语言 灵活地存储和读取数据。
+
+
+    访问 https://asktable.com/了解更多。'
+  icon: https://p26-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/ec10c3bc936b4c6387f9947dbe63e43e~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622585&x-signature=nAWaJX3%2BW73Ekq9b3Nx%2FgCCC5EU%3D
+  id: '117131'
+  name: 节点_11
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7440283407827173416'
+      name: apiID
+    - input:
+        type: string
+        value: read
+      name: apiName
+    - input:
+        type: string
+        value: '7440283407827157032'
+      name: pluginID
+    - input:
+        type: string
+        value: AI 数据库
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - defaultValue: Bearer ASKER_5R78T5GOJLDHA38D5Q0I
+      description: 用于认证的 API-Key（从 cloud.asktable.com 中获取）。格式："Bearer ASKER_XXXXXXXX",
+        default value is Bearer ASKER_5R78T5GOJLDHA38D5Q0I
+      input: {}
+      name: Authorization
+      required: true
+      type: string
+    - defaultValue: 总共多少行记录
+      description: 查询语句, default value is 总共多少行记录
+      input: {}
+      name: question
+      required: true
+      type: string
+    - defaultValue: ds_5YcRa3YeVcvqOfK0yPVlJP
+      description: 数据 ID（从 cloud.asktable.com 中获取）, default value is ds_5YcRa3YeVcvqOfK0yPVlJP
+      input: {}
+      name: datasource_id
+      required: true
+      type: string
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: message.title
+          ref_node: '139157'
+      name: Authorization
+    - input:
+        type: string
+        value:
+          path: message.title
+          ref_node: '139157'
+      name: datasource_id
+    - input:
+        type: string
+        value:
+          path: message.url
+          ref_node: '139157'
+      name: question
+    node_outputs:
+      answer:
+        properties:
+          text:
+            type: string
+            value: null
+        type: object
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2020
+    y: 251.6999999999999
+  title: read
+  type: llm
+- config: {}
+  description: 智谱AI识别图片
+  icon: https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/4997a969f2b94fdab918e0564672fefc~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622617&x-signature=pMXIrtIJTksHUuwH13rF15sN5a4%3D
+  id: '190324'
+  name: 节点_12
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7447136207529590818'
+      name: apiID
+    - input:
+        type: string
+        value: recognize_picture
+      name: apiName
+    - input:
+        type: string
+        value: '7447136207529574434'
+      name: pluginID
+    - input:
+        type: string
+        value: 智谱AI识别图片
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - description: 智谱AI密钥,获取地址:https://www.bigmodel.cn/usercenter/proj-mgmt/apikeys
+      input: {}
+      name: key
+      required: true
+      type: string
+    - description: 不填写则为免费的 glm-4v-flash模型
+      input: {}
+      name: model
+      required: false
+      type: string
+    - description: 图片链接
+      input: {}
+      name: picture
+      required: true
+      type: string
+    - description: 提示词，默认为“请仔细描述图片的内容”
+      input: {}
+      name: prompt
+      required: false
+      type: string
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: data.finish_reason
+          ref_node: '173843'
+      name: key
+    - input:
+        value:
+          path: input
+          ref_node: '100001'
+      name: picture
+    node_outputs:
+      data:
+        description: 返回数据
+        properties:
+          code:
+            description: 状态码
+            type: float
+            value: null
+          content:
+            description: 图片描述
+            type: string
+            value: null
+          message:
+            description: 状态信息
+            type: string
+            value: null
+        required: true
+        type: object
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2020
+    y: 14
+  title: recognize_picture
+  type: llm
+- config: {}
+  description: "调用通义千问的 自主推理模型QwQ \n默认模型为：qwq-plus-latest  ，其他可选模型：qwq-plus 、qwq-32b"
+  icon: https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/d1c00fe953e34d7a8886a76f9c993b42~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622641&x-signature=9eeZ0ZFALYxMmKYxaUOUJVvV0J4%3D
+  id: '120170'
+  name: 节点_13
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7478612345913327653'
+      name: apiID
+    - input:
+        type: string
+        value: qwq
+      name: apiName
+    - input:
+        type: string
+        value: '7478554760635744268'
+      name: pluginID
+    - input:
+        type: string
+        value: 通义千问_QwQ
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - description: 可选，角色定义
+      input: {}
+      name: role
+      required: false
+      type: string
+    - description: 用于访问API的密钥， API申请地址：https://bailian.console.aliyun.com/?apikey=1#/api-key
+      input: {}
+      name: apikey
+      required: true
+      type: string
+    - description: 可选，是否包含思考过程，默认为false
+      input: {}
+      name: include_reasoning
+      required: false
+      type: boolean
+    - description: 可选，生成的最大token数，默认：4096 ，最大token数8192
+      input: {}
+      name: max_tokens
+      required: false
+      type: float
+    - description: 可选，使用的模型名称，默认为：qwq-plus-latest  ，其他可选模型：qwq-plus 、qwq-32b
+      input: {}
+      name: model_name
+      required: false
+      type: string
+    - description: 用户提问内容
+      input: {}
+      name: question
+      required: true
+      type: string
+    node_outputs:
+      content:
+        description: 模型生成的内容
+        type: string
+        value: null
+      reasoning_content:
+        description: 推理内容
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 640
+    y: 994.7999999999998
+  title: qwq
+  type: llm
+- config: {}
+  description: 调用DeepSeek R1模型
+  icon: https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/9b6c215f68804ce0bc81b74fb957545e~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622652&x-signature=MNo1VlRWYL%2BJ0POGZKDg%2BpYXQ18%3D
+  id: '184555'
+  name: 节点_14
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7468260697625903131'
+      name: apiID
+    - input:
+        type: string
+        value: deepseek_aliyun_bailian
+      name: apiName
+    - input:
+        type: string
+        value: '7465286635576426536'
+      name: pluginID
+    - input:
+        type: string
+        value: DeepSeek
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - description: 阿里云百炼平台, API申请地址：https://bailian.console.aliyun.com/?apikey=1#/api-key
+      input: {}
+      name: apikey
+      required: true
+      type: string
+    - description: (可选) 最大token，默认最大token8192，deepseek-r1最大token为：32768，可选范围（1-32768），deepseek-v3
+        最大token数值为：8192
+      input: {}
+      name: max_tokens
+      required: false
+      type: float
+    - description: (可选) 默认为 deepseek-r1 模型，也可以设置为 deepseek-v3、deepseek-r1-distill-qwen-1.5b、deepseek-r1-distill-qwen-7b、deepseek-r1-distill-llama-8b、deepseek-r1-distill-qwen-14b、deepseek-r1-distill-qwen-32b
+        或 deepseek-r1-distill-llama-70b 等官方模型。
+      input: {}
+      name: model_name
+      required: false
+      type: string
+    - description: 用户输入的问题
+      input: {}
+      name: question
+      required: true
+      type: string
+    - description: (可选) 角色设定提示
+      input: {}
+      name: role
+      required: false
+      type: string
+    node_outputs:
+      content:
+        description: 最终回答的内容
+        type: string
+        value: null
+      reasoning_content:
+        description: 推理过程中的内容
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1100
+    y: 994.7999999999998
+  title: deepseek_aliyun_bailian
+  type: llm
+- config: {}
+  description: 发起一个网络请求
+  icon: https://p26-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/2f5e5a0483214692a017fe5244e50a31~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622722&x-signature=OxNwEbV7A7f8AJ9smvDrpbvY6AQ%3D
+  id: '138800'
+  name: 节点_15
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7398363912833482802'
+      name: apiID
+    - input:
+        type: string
+        value: HTTP_REQUEST
+      name: apiName
+    - input:
+        type: string
+        value: '7398363912833466418'
+      name: pluginID
+    - input:
+        type: string
+        value: 网络请求器
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - description: POST请求的json请求内容，GET请求可不填写
+      input: {}
+      name: json_data
+      required: false
+      type: string
+    - description: 请求方式：GET 或者 POST
+      input: {}
+      name: method
+      required: true
+      type: string
+    - description: 请求地址：请求的URL地址
+      input: {}
+      name: url
+      required: true
+      type: string
+    node_outputs:
+      response_status_code:
+        description: 请求状态码
+        required: true
+        type: string
+        value: null
+      response_text:
+        description: 请求结果
+        required: true
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2020
+    y: 994.7999999999998
+  title: HTTP_REQUEST
+  type: llm
+- config: {}
+  description: 小红书内容提取
+  icon: https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/e8c59a7190354fd08e27aeed2b97bea3~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622753&x-signature=tH3EAvkXjBdt1YSv5%2BpIrIwzf7Q%3D
+  id: '166702'
+  name: 节点_16
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7405198725217353782'
+      name: apiID
+    - input:
+        type: string
+        value: xhs_tiqu
+      name: apiName
+    - input:
+        type: string
+        value: '7405198725217337398'
+      name: pluginID
+    - input:
+        type: string
+        value: 小红书提取
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - description: 小红书详情页链接
+      input: {}
+      name: xhs_url
+      required: true
+      type: string
+    node_outputs:
+      banner:
+        description: 首图
+        required: true
+        type: string
+        value: null
+      bannerList:
+        description: 图片列表
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      content:
+        description: 正文
+        type: string
+        value: null
+      title:
+        description: 标题
+        type: string
+        value: null
+      video:
+        description: 视频链接
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2480
+    y: 994.7999999999998
+  title: xhs_tiqu
+  type: llm
+- config: {}
+  description: '每个AI智能体都该使用的必备插件，让你的智能体实时联网，给智能体插上翅膀。
+
+    支持全网搜索，搜天气、搜新闻、搜视频、搜百科....
+
+    简单易用，直接添加插件即可'
+  icon: https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/b674d598489546b295ce11aa1c050e07~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622768&x-signature=aOtXl0zqpZEvCYvTaiuKYPXK0jE%3D
+  id: '178920'
+  name: 节点_17
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7457503344345628698'
+      name: apiID
+    - input:
+        type: string
+        value: search_network
+      name: apiName
+    - input:
+        type: string
+        value: '7457503344345612314'
+      name: pluginID
+    - input:
+        type: string
+        value: 超级全网搜索
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - description: 关键词
+      input: {}
+      name: keyword
+      required: true
+      type: string
+    - description: 令牌
+      input: {}
+      name: token
+      required: false
+      type: string
+    node_outputs:
+      data:
+        properties:
+          _type:
+            type: string
+            value: null
+          images:
+            properties:
+              id:
+                type: string
+                value: null
+              isFamilyFriendly:
+                type: boolean
+                value: null
+              readLink:
+                type: string
+                value: null
+              webSearchUrl:
+                type: string
+                value: null
+            type: object
+            value: null
+          queryContext:
+            properties:
+              originalQuery:
+                type: string
+                value: null
+            type: object
+            value: null
+          rankingResponse:
+            properties:
+              mainline:
+                type: object
+                value: null
+            type: object
+            value: null
+          videos:
+            properties:
+              id:
+                type: string
+                value: null
+              isFamilyFriendly:
+                type: boolean
+                value: null
+              readLink:
+                type: string
+                value: null
+              scenario:
+                type: string
+                value: null
+              webSearchUrl:
+                type: string
+                value: null
+            type: object
+            value: null
+          webPages:
+            properties:
+              someResultsRemoved:
+                type: boolean
+                value: null
+              totalEstimatedMatches:
+                type: integer
+                value: null
+              value:
+                items:
+                  properties:
+                    cachedPageUrl:
+                      type: string
+                      value: null
+                    dateLastCrawled:
+                      type: string
+                      value: null
+                    datePublished:
+                      type: string
+                      value: null
+                    datePublishedDisplayText:
+                      type: string
+                      value: null
+                    displayUrl:
+                      type: string
+                      value: null
+                    id:
+                      type: string
+                      value: null
+                    isFamilyFriendly:
+                      type: boolean
+                      value: null
+                    isNavigational:
+                      type: boolean
+                      value: null
+                    language:
+                      type: string
+                      value: null
+                    name:
+                      type: string
+                      value: null
+                    primaryImageOfPage:
+                      properties:
+                        height:
+                          type: integer
+                          value: null
+                        imageId:
+                          type: string
+                          value: null
+                        thumbnailUrl:
+                          type: string
+                          value: null
+                        width:
+                          type: integer
+                          value: null
+                      type: object
+                      value: null
+                    snippet:
+                      type: string
+                      value: null
+                    thumbnailUrl:
+                      type: string
+                      value: null
+                    url:
+                      type: string
+                      value: null
+                  type: object
+                  value: null
+                type: list
+                value: null
+              webSearchUrl:
+                type: string
+                value: null
+            type: object
+            value: null
+        type: object
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 179.99999999999994
+    y: 994.7999999999998
+  title: search_network
+  type: llm
+- config: {}
+  description: 查询csdn网站文章
+  icon: https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/d8dafc65e15f41dc9a0c5c1b8e835b65~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622827&x-signature=AK7Gq75N17hEyR6Z2nQyIui8%2B2c%3D
+  id: '187606'
+  name: 节点_18
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7346047539927449626'
+      name: apiID
+    - input:
+        type: string
+        value: queryArticle
+      name: apiName
+    - input:
+        type: string
+        value: '7346047539927433242'
+      name: pluginID
+    - input:
+        type: string
+        value: 文章查询
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - description: 用户姓名
+      input: {}
+      name: userName
+      required: true
+      type: string
+    - description: id
+      input: {}
+      name: userId
+      required: true
+      type: string
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1560
+    y: 994.7999999999998
+  title: queryArticle
+  type: llm
+- config: {}
+  description: 阶跃星辰文生图大模型
+  icon: https://p26-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/ebae8b95788c414e950b10a78a496131~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622839&x-signature=a2xmdDlIM2aW%2FN14ty3TtRKG1oA%3D
+  id: '173843'
+  name: 节点_19
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7441973560240783411'
+      name: apiID
+    - input:
+        type: string
+        value: VincentDiagram
+      name: apiName
+    - input:
+        type: string
+        value: '7441973560240767027'
+      name: pluginID
+    - input:
+        type: string
+        value: 文生图
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - description: STEP_API_KEY
+      input: {}
+      name: key
+      required: true
+      type: string
+    - description: 提示词
+      input: {}
+      name: prompt
+      required: true
+      type: string
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: code
+          ref_node: '130588'
+      name: key
+    - input:
+        type: string
+        value:
+          path: code
+          ref_node: '130588'
+      name: prompt
+    node_outputs:
+      data:
+        items:
+          properties:
+            finish_reason:
+              type: string
+              value: null
+            seed:
+              type: integer
+              value: null
+            url:
+              type: string
+              value: null
+          type: object
+          value: null
+        type: list
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1560
+    y: 14
+  title: VincentDiagram
+  type: llm
+- config: {}
+  description: 根据图片和文案进行排版，生成新的图片
+  icon: https://p26-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/f6fba5f05829484cb2a236f52698ce68~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622858&x-signature=BCuVFFhNmGeBg%2B%2BsQfvMW3k3xbA%3D
+  id: '156107'
+  name: 节点_20
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7390304912145760293'
+      name: apiID
+    - input:
+        type: string
+        value: image_subtitles
+      name: apiName
+    - input:
+        type: string
+        value: '7390304912145743909'
+      name: pluginID
+    - input:
+        type: string
+        value: 图文排版
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - description: 图片
+      input: {}
+      name: image
+      required: true
+      type: string
+    - description: 文案
+      input: {}
+      name: lines
+      required: true
+      schema:
+        assistType: 0
+        type: string
+      type: list
+    node_outputs:
+      imgUrl:
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 180
+    y: 1232.5
+  title: image_subtitles
+  type: llm
+- config: {}
+  description: 调用文心一言大模型
+  icon: https://p26-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/fa7ec4edd303459f8ceb50ba23f7cfa2~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622858&x-signature=%2BDFji6vxwH3dAzcCQ26ASWrDQ70%3D
+  id: '160427'
+  name: 节点_21
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7358162997640183849'
+      name: apiID
+    - input:
+        type: string
+        value: erniebot_history
+      name: apiName
+    - input:
+        type: string
+        value: '7358120890019708962'
+      name: pluginID
+    - input:
+        type: string
+        value: 文心一言
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - description: 调用文心一言的令牌
+      input: {}
+      name: access_token
+      required: true
+      type: string
+    - description: 用户输入的问题
+      input: {}
+      name: content
+      required: true
+      type: string
+    - description: '历史记录，多轮问答,初始值: [[]]'
+      input: {}
+      name: history
+      required: true
+      type: string
+    - description: 文心一言的模型，ernie-3.5|ernie-4|ernie-turbo|ernie-longtext
+      input: {}
+      name: model
+      required: true
+      type: string
+    - description: 角色设置
+      input: {}
+      name: system
+      required: true
+      type: string
+    node_outputs:
+      history:
+        description: 返回问答后的历史记录
+        required: true
+        type: string
+        value: null
+      response:
+        description: 文心一言回答结果
+        required: true
+        type: string
+        value: null
+      system:
+        description: 角色设置
+        required: true
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 180
+    y: 1470.2000000000003
+  title: erniebot_history
+  type: llm
+- config: {}
+  description: 把用户输入的文字转换为语音
+  icon: https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/cd418ef896204d56b9dd5161b0126717~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622878&x-signature=WfOOkTd%2F5LiA8Bc9UdOS5EUNP3E%3D
+  id: '123091'
+  name: 节点_22
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7368890170034372608'
+      name: apiID
+    - input:
+        type: string
+        value: getVoice
+      name: apiName
+    - input:
+        type: string
+        value: '7368890170034339840'
+      name: pluginID
+    - input:
+        type: string
+        value: 文字转语音
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - description: 语言
+      input: {}
+      name: language
+      required: true
+      type: string
+    - description: 文本内容
+      input: {}
+      name: text
+      required: true
+      type: string
+    - description: 音色编号
+      input: {}
+      name: voice_type
+      required: true
+      type: string
+    node_outputs:
+      code:
+        type: float
+        value: null
+      data:
+        type: string
+        value: null
+      format:
+        type: string
+        value: null
+      message_id:
+        type: string
+        value: null
+      msg:
+        type: string
+        value: null
+      time:
+        type: float
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 180
+    y: 1707.9
+  title: getVoice
+  type: llm
+- config: {}
+  description: 把用户输入的文字转换为语音
+  icon: https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/cd418ef896204d56b9dd5161b0126717~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622878&x-signature=WfOOkTd%2F5LiA8Bc9UdOS5EUNP3E%3D
+  id: '177748'
+  name: 节点_23
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7368890170034356224'
+      name: apiID
+    - input:
+        type: string
+        value: getSpeakers
+      name: apiName
+    - input:
+        type: string
+        value: '7368890170034339840'
+      name: pluginID
+    - input:
+        type: string
+        value: 文字转语音
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs: null
+    node_outputs:
+      result:
+        items:
+          properties:
+            language:
+              description: 此音色支持的语言
+              items:
+                type: string
+                value: null
+              type: list
+              value: null
+            name:
+              description: 此音色的名称
+              type: string
+              value: null
+            voice_type:
+              description: 此音色的编号
+              type: string
+              value: null
+          type: object
+          value: null
+        type: list
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 180
+    y: 1945.6
+  title: getSpeakers
+  type: llm
+- config: {}
+  description: 提取封面文字
+  icon: https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/f781f455497a4f0496c9ab9c12e4c58a~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1744622878&x-signature=aPoboPIQhFj3WROx1B9Mtk2Ytf8%3D
+  id: '191286'
+  name: 节点_24
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7472369020071673865'
+      name: apiID
+    - input:
+        type: string
+        value: pic_cover
+      name: apiName
+    - input:
+        type: string
+        value: '7472369020071657481'
+      name: pluginID
+    - input:
+        type: string
+        value: 提取封面文字
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    inputDefs:
+    - description: input
+      input: {}
+      name: input
+      required: true
+      type: string
+    node_outputs:
+      answer:
+        type: string
+        value: null
+      data:
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 180
+    y: 2183.3
+  title: pic_cover
+  type: llm
+- config: {}
+  description: ''
+  icon: ''
+  id: '164495'
+  name: 节点_25
+  parameters:
+    datasetParam:
+    - input:
+        items:
+          type: string
+          value: null
+        type: list
+        value: []
+      name: datasetList
+    strategyParam:
+      indexStrategy: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 180
+    y: 2421
+  title: ''
+  type: llm
+- config: {}
+  description: 对多个分支的输出进行聚合处理
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/VariableMerge-icon.jpg
+  id: '128814'
+  name: 节点_26
+  parameters:
+    mergeGroups:
+    - name: Group1
+      variables: []
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2262.109154495754
+    y: 355.06955419722976
+  title: 变量聚合
+  type: llm
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

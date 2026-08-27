@@ -1,0 +1,1375 @@
+description: 【米核】古风养生视频工作流拆解
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '124864'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '120239'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_2
+  source: ''
+  source_node: '124864'
+  target: ''
+  target_node: '169080'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_3
+  source: ''
+  source_node: '169080'
+  source_port: batch-output
+  target: ''
+  target_node: '112583'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_4
+  source: ''
+  source_node: '112583'
+  target: ''
+  target_node: '120444'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_5
+  source: ''
+  source_node: '120444'
+  target: ''
+  target_node: '135583'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_6
+  source: ''
+  source_node: '188973'
+  target: ''
+  target_node: '159520'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_7
+  source: ''
+  source_node: '159520'
+  target: ''
+  target_node: '166801'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_8
+  source: ''
+  source_node: '135583'
+  target: ''
+  target_node: '1348425'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_9
+  source: ''
+  source_node: '166801'
+  target: ''
+  target_node: '120239'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_10
+  source: ''
+  source_node: '1348425'
+  target: ''
+  target_node: '188973'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7529003130572439595
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: gufengyangshengshipingon
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start-v2.jpg
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      input:
+        type: string
+        value: null
+  position:
+    x: 180
+    y: 25.000000000000007
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End-v2.jpg
+  id: '900001'
+  name: 节点_1
+  parameters:
+    content:
+      type: string
+      value:
+        content: '## <span style="color:#FF5733;">视频已整理完成</span>
+
+          ### 你好以下是部分内容
+
+
+          {{output}}
+
+
+          **生成成功复制上面链接粘贴到小助手内即可**
+
+
+          喜欢这个智能体，请点击右上角收藏'
+        type: literal
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: draft_url
+          ref_node: '120239'
+      name: output
+    streamingOutput: false
+    terminatePlan: useAnswerContent
+  position:
+    x: 3169.8746455013384
+    y: 613.1722064667263
+  title: 结束
+  type: end
+- canvas_position:
+    x: 714.5289868466625
+    y: 320.51525808340773
+  config: {}
+  description: 通过设定批量运行次数和逻辑，运行批处理体内的任务
+  edges:
+  - source_node: '189664'
+    target_node: '167934'
+  - source_node: '167934'
+    target_node: '169080'
+    target_port: batch-function-inline-input
+  - source_node: '169080'
+    source_port: batch-function-inline-output
+    target_node: '189664'
+  - source_node: '169080'
+    source_port: batch-function-inline-output
+    target_node: '101410'
+  - source_node: '101410'
+    target_node: '104670'
+  - source_node: '104670'
+    target_node: '169080'
+    target_port: batch-function-inline-input
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Batch-v2.jpg
+  id: '169080'
+  name: 节点_2
+  nodes:
+  - description: 通过文字描述/添加参考图生成图片
+    icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-ImageGeneration-v2.jpg
+    id: '167934'
+    parameters:
+      modelSetting:
+        custom_ratio:
+          height: 1024
+          width: 1024
+        ddim_steps: 25
+        model: 1
+      node_inputs:
+      - input:
+          value:
+            path: input
+            ref_node: '100001'
+        name: prompt
+      node_outputs:
+        data:
+          type: image
+          value: null
+        msg:
+          type: string
+          value: null
+      prompt:
+        negative_prompt: 现代元素，低画质，模糊，丑陋，变形，文字，水印，签名，低细节，低质量
+        prompt: 古风养生主题，{{主题}}，中国风，传统养生，中医药，太极拳，茶道，禅意，山水画卷，淡雅色调，细腻笔触，高细节，高质量，8k
+      references: []
+      settingOnError:
+        processType: 1
+        retryTimes: 0
+        timeoutMs: 60000
+    position:
+      x: 640
+      y: 0
+    title: 图像生成
+    type: image_generate
+  - description: 调用大语言模型,使用变量和提示词生成回复
+    icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+    id: '189664'
+    parameters:
+      llmParam:
+      - input:
+          type: integer
+          value: '1737521813'
+        name: modelType
+      - input:
+          type: string
+          value: 豆包·1.5·Pro·32k
+        name: modelName
+      - input:
+          type: string
+          value: balance
+        name: generationDiversity
+      - input:
+          type: float
+          value: '0.8'
+        name: temperature
+      - input:
+          type: integer
+          value: '4096'
+        name: maxTokens
+      - input:
+          type: boolean
+          value: false
+        name: spCurrentTime
+      - input:
+          type: boolean
+          value: false
+        name: spAntiLeak
+      - input:
+          type: boolean
+          value: false
+        name: prefixCache
+      - input:
+          type: integer
+          value: '2'
+        name: responseFormat
+      - input:
+          type: string
+          value: 用户输入 {{input}}
+        name: prompt
+      - input:
+          type: boolean
+          value: false
+        name: enableChatHistory
+      - input:
+          type: integer
+          value: '3'
+        name: chatHistoryRound
+      - input:
+          type: string
+          value: '中式养生相关主题视频后期专家，请为用户输入的视频文案进行配图，生成配图所需的提示词。
+
+
+            # 配图风格参考：
+
+            中国画，徐悲鸿，粗犷笔触
+
+
+            # 输出格式
+
+            返回一条配图提示词，不需做任何多余解释'
+        name: systemPrompt
+      - input:
+          type: string
+          value: ''
+        name: stableSystemPrompt
+      - input:
+          type: boolean
+          value: false
+        name: canContinue
+      node_inputs:
+      - input:
+          type: string
+          value:
+            path: input
+            ref_node: '169080'
+        name: input
+      node_outputs:
+        output:
+          type: string
+          value: null
+      settingOnError:
+        processType: 1
+        retryTimes: 0
+        switch: false
+        timeoutMs: 180000
+    position:
+      x: 180
+      y: 0
+    title: 图片提示词生成
+    type: llm
+    version: '3'
+  - description: 语音和成
+    icon: https://p9-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/9f8a68f16e7142bc9008672dfdd371b0~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1755096775&x-signature=U4T8ku7%2B5znDibzcqccq%2FFjzl74%3D
+    id: '101410'
+    parameters:
+      apiParam:
+      - input:
+          type: string
+          value: '7516491191870062626'
+        name: apiID
+      - input:
+          type: string
+          value: Yuyinhecheng
+        name: apiName
+      - input:
+          type: string
+          value: '7515720590427340815'
+        name: pluginID
+      - input:
+          type: string
+          value: 语音合成
+        name: pluginName
+      - input:
+          type: string
+          value: ''
+        name: pluginVersion
+      - input:
+          type: string
+          value: ''
+        name: tips
+      - input:
+          type: string
+          value: ''
+        name: outDocLink
+      node_inputs:
+      - input:
+          type: string
+          value:
+            path: input
+            ref_node: '169080'
+        name: api_key
+      - input:
+          type: string
+          value:
+            path: input
+            ref_node: '169080'
+        name: language
+      - input:
+          type: string
+          value:
+            path: input
+            ref_node: '169080'
+        name: speaker
+      - input:
+          type: string
+          value:
+            path: input
+            ref_node: '169080'
+        name: text
+      node_outputs:
+        audio_url:
+          description: 音频链接
+          type: string
+          value: null
+        message:
+          description: 状态
+          type: string
+          value: null
+      settingOnError:
+        processType: 1
+        retryTimes: 0
+        timeoutMs: 180000
+    position:
+      x: 170
+      y: 263.30000000000007
+    title: 语音合成
+    type: plugin
+  - description: 输入音频链接返回音频时长，单位秒
+    icon: https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/bbaf974adb874927bb1cdc67dbbebe08~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1755097858&x-signature=qkSBD6dw1klue05JXz96wMvpowI%3D
+    id: '104670'
+    parameters:
+      apiParam:
+      - input:
+          type: string
+          value: '7417655779794157603'
+        name: apiID
+      - input:
+          type: string
+          value: get_audio_duration
+        name: apiName
+      - input:
+          type: string
+          value: '7417655779794141219'
+        name: pluginID
+      - input:
+          type: string
+          value: 获取音频时长
+        name: pluginName
+      - input:
+          type: string
+          value: ''
+        name: pluginVersion
+      - input:
+          type: string
+          value: ''
+        name: tips
+      - input:
+          type: string
+          value: ''
+        name: outDocLink
+      node_inputs:
+      - input:
+          value:
+            path: audio_url
+            ref_node: '101410'
+        name: mp3_url
+      node_outputs:
+        duration:
+          type: float
+          value: null
+        message:
+          type: string
+          value: null
+      settingOnError:
+        processType: 1
+        retryTimes: 0
+        timeoutMs: 180000
+    position:
+      x: 640
+      y: 263.30000000000007
+    title: get_audio_duration
+    type: plugin
+  parameters:
+    batchSize:
+      type: integer
+      value:
+        content: 10
+        rawMeta:
+          type: 2
+        type: literal
+    concurrentSize:
+      type: integer
+      value:
+        content: 3
+        rawMeta:
+          type: 2
+        type: literal
+    node_inputs:
+    - input:
+        items:
+          type: string
+          value: null
+        type: list
+        value:
+          path: output
+          ref_node: '124864'
+      name: input
+    node_outputs:
+      duration_list:
+        value:
+          items:
+            type: float
+            value: null
+          type: list
+          value:
+            path: duration
+            ref_node: '104670'
+      link_list:
+        value:
+          items:
+            type: string
+            value: null
+          type: list
+          value:
+            path: message
+            ref_node: '101410'
+      output:
+        value:
+          items:
+            type: string
+            value: null
+          type: image
+          value:
+            path: data
+            ref_node: '167934'
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1119.5289868466625
+    y: 12
+  title: 批处理
+  type: llm
+- config: {}
+  description: 编写代码，处理输入变量来生成返回值
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Code-v2.jpg
+  id: '112583'
+  name: 节点_3
+  parameters:
+    code: "import json\nimport random\nfrom typing import List, Dict, Any\n\nasync\
+      \ def main(args: Dict[str, Any]) -> Dict[str, Any]:\n    # 获取输入参数\n    params\
+      \ = args['params']\n    text_list = params['text_list']\n    img_list = params['img_list']\n\
+      \    audio_list = params['audio_list']\n    duration_list = params['duration_list']\n\
+      \    height = params['height']\n    width = params['width']\n\n    # 初始化输出列表\n\
+      \    imgs = []\n    audios = []\n    captions = []\n\n    # 遍历输入列表，组合参数\n  \
+      \  for i in range(len(text_list)):\n        # 获取当前元素\n        text = text_list[i]\n\
+      \        img = img_list[i] if i < len(img_list) else \"\"\n        audio = audio_list[i]\
+      \ if i < len(audio_list) else \"\"\n        duration = duration_list[i] if i\
+      \ < len(duration_list) else 0\n\n        # 生成古风养生相关的提示词\n        caption = f\"\
+      古风养生主题，内容：{text}，背景：山水画卷，色调：淡雅古朴，风格：中国风\"\n\n        # 添加到输出列表\n        imgs.append(img)\n\
+      \        audios.append(audio)\n        captions.append(caption)\n\n    # 返回结果\n\
+      \    return {\n        \"imgs\": json.dumps(imgs),\n        \"audios\": json.dumps(audios),\n\
+      \        \"captions\": json.dumps(captions)\n    }"
+    language: 3
+    node_inputs:
+    - input:
+        items:
+          type: string
+          value: null
+        type: list
+        value:
+          path: output
+          ref_node: '124864'
+      name: text_list
+    - input:
+        items:
+          type: image
+          value: null
+        type: list
+        value:
+          path: output
+          ref_node: '169080'
+      name: img_list
+    - input:
+        items:
+          type: string
+          value: null
+        type: list
+        value:
+          path: link_list
+          ref_node: '169080'
+      name: audio_list
+    - input:
+        items:
+          type: float
+          value: null
+        type: list
+        value:
+          path: duration_list
+          ref_node: '169080'
+      name: duration_list
+    - input:
+        type: string
+        value: '1920'
+      name: height
+    - input:
+        type: string
+        value: '1980'
+      name: width
+    node_outputs:
+      audios:
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      captions:
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      imgs:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      switch: false
+      timeoutMs: 60000
+  position:
+    x: 1581.9490677127926
+    y: 12
+  title: 代码组合参数
+  type: code
+- config: {}
+  description: 剪映草稿，视频合成方案。
+  icon: https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/8121ceefd03f456aa7cb2b4c1e25d3b7~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1755097719&x-signature=NWnrDcQa%2FI838XMQ3O6g%2FIKEnH4%3D
+  id: '120444'
+  name: 节点_4
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7457837955684515874'
+      name: apiID
+    - input:
+        type: string
+        value: create_draft
+      name: apiName
+    - input:
+        type: string
+        value: '7457837925833801768'
+      name: pluginID
+    - input:
+        type: string
+        value: 视频合成_剪映小助手
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: integer
+        value: 1920
+      name: height
+    - input:
+        type: integer
+        value: 20547
+      name: user_id
+    - input:
+        type: integer
+        value: 1080
+      name: width
+    node_outputs:
+      draft_url:
+        type: string
+        value: null
+      tip_url:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2127.476857614897
+    y: 0
+  title: 创建视频草稿
+  type: llm
+- config: {}
+  description: 剪映草稿，视频合成方案。
+  icon: https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/8121ceefd03f456aa7cb2b4c1e25d3b7~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1755099519&x-signature=qRwAYYpOlP5%2BxpXquqRlGRt4Yjc%3D
+  id: '159520'
+  name: 节点_5
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7457837925833834536'
+      name: apiID
+    - input:
+        type: string
+        value: add_audios
+      name: apiName
+    - input:
+        type: string
+        value: '7457837925833801768'
+      name: pluginID
+    - input:
+        type: string
+        value: 视频合成_剪映小助手
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: audios
+          ref_node: '112583'
+      name: audio_infos
+    - input:
+        type: string
+        value:
+          path: draft_url
+          ref_node: '188973'
+      name: draft_url
+    node_outputs:
+      audio_ids:
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      draft_url:
+        type: string
+        value: null
+      track_id:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2672.677006846774
+    y: 220.51525808340773
+  title: 添加音频
+  type: llm
+- config: {}
+  description: 剪映草稿，视频合成方案。
+  icon: https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/8121ceefd03f456aa7cb2b4c1e25d3b7~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1755099519&x-signature=qRwAYYpOlP5%2BxpXquqRlGRt4Yjc%3D
+  id: '135583'
+  name: 节点_6
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7457837925833883688'
+      name: apiID
+    - input:
+        type: string
+        value: add_images
+      name: apiName
+    - input:
+        type: string
+        value: '7457837925833801768'
+      name: pluginID
+    - input:
+        type: string
+        value: 视频合成_剪映小助手
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        value:
+          path: draft_url
+          ref_node: '120444'
+      name: draft_url
+    - input:
+        value:
+          path: imgs
+          ref_node: '112583'
+      name: image_infos
+    node_outputs:
+      draft_url:
+        type: string
+        value: null
+      image_ids:
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      segment_ids:
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      segment_infos:
+        items:
+          properties:
+            end:
+              type: integer
+              value: null
+            id:
+              type: string
+              value: null
+            start:
+              type: integer
+              value: null
+          type: object
+          value: null
+        type: list
+        value: null
+      track_id:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2127.476857614897
+    y: 204.29427113398756
+  title: 添加图片
+  type: llm
+- config: {}
+  description: 剪映草稿，视频合成方案。
+  icon: https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/8121ceefd03f456aa7cb2b4c1e25d3b7~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1755099519&x-signature=qRwAYYpOlP5%2BxpXquqRlGRt4Yjc%3D
+  id: '166801'
+  name: 节点_7
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7457837925833850920'
+      name: apiID
+    - input:
+        type: string
+        value: add_captions
+      name: apiName
+    - input:
+        type: string
+        value: '7457837925833801768'
+      name: pluginID
+    - input:
+        type: string
+        value: 视频合成_剪映小助手
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        value:
+          path: imgs
+          ref_node: '112583'
+      name: captions
+    - input:
+        value:
+          path: draft_url
+          ref_node: '159520'
+      name: draft_url
+    - input:
+        type: integer
+        value: 1
+      name: alignment
+    - input:
+        type: string
+        value: '#000000'
+      name: border_color
+    - input:
+        type: string
+        value: ' SimHei 黑体'
+      name: font
+    - input:
+        type: integer
+        value: 15
+      name: font_size
+    - input:
+        type: float
+        value: 2
+      name: letter_spacing
+    - input:
+        type: float
+        value: 1.5
+      name: line_spacing
+    - input:
+        type: float
+        value: 1
+      name: scale_x
+    - input:
+        type: float
+        value: 1
+      name: scale_y
+    - input:
+        type: string
+        value: '#ffffff'
+      name: text_color
+    - input:
+        type: float
+        value: -800
+      name: transform_y
+    node_outputs:
+      draft_url:
+        type: string
+        value: null
+      segment_ids:
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      segment_infos:
+        items:
+          properties:
+            end:
+              type: integer
+              value: null
+            id:
+              type: string
+              value: null
+            start:
+              type: integer
+              value: null
+          type: object
+          value: null
+        type: list
+        value: null
+      text_ids:
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      track_id:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2680
+    y: 425.23159388465666
+  title: 添加字幕
+  type: llm
+- config: {}
+  description: 剪映草稿，视频合成方案。
+  icon: https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/8121ceefd03f456aa7cb2b4c1e25d3b7~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1755099519&x-signature=qRwAYYpOlP5%2BxpXquqRlGRt4Yjc%3D
+  id: '188973'
+  name: 节点_8
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7465608338500452404'
+      name: apiID
+    - input:
+        type: string
+        value: add_keyframes
+      name: apiName
+    - input:
+        type: string
+        value: '7457837925833801768'
+      name: pluginID
+    - input:
+        type: string
+        value: 视频合成_剪映小助手
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        value:
+          path: draft_url
+          ref_node: '135583'
+      name: draft_url
+    - input:
+        type: string
+        value:
+          path: keyframes
+          ref_node: '1348425'
+      name: keyframes
+    node_outputs:
+      draft_url:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2127.476857614897
+    y: 653.6919604494541
+  title: 创建关键帧
+  type: llm
+- config: {}
+  description: 剪映草稿，视频合成方案。
+  icon: https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/8121ceefd03f456aa7cb2b4c1e25d3b7~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1755099519&x-signature=qRwAYYpOlP5%2BxpXquqRlGRt4Yjc%3D
+  id: '120239'
+  name: 节点_9
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7457837955684548642'
+      name: apiID
+    - input:
+        type: string
+        value: save_draft
+      name: apiName
+    - input:
+        type: string
+        value: '7457837925833801768'
+      name: pluginID
+    - input:
+        type: string
+        value: 视频合成_剪映小助手
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        value:
+          path: draft_url
+          ref_node: '135583'
+      name: draft_url
+    - input:
+        type: integer
+        value:
+          path: draft_url
+          ref_node: '159520'
+      name: user_id
+    node_outputs:
+      draft_url:
+        type: string
+        value: null
+      message:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2680
+    y: 601.1722064667263
+  title: 保存草稿
+  type: llm
+- config: {}
+  description: 编写代码，处理输入变量来生成返回值
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Code-v2.jpg
+  id: '1348425'
+  name: 节点_10
+  parameters:
+    code: "import json\nfrom typing import List, Dict, Any\n\nasync def main(args:\
+      \ Dict[str, Any]) -> Dict[str, Any]:\n    try:\n        # 获取输入参数\n        params\
+      \ = args['params']\n        \n        # 检查必需的输入参数\n        if 'input' not in\
+      \ params:\n            return {\"$error\": \"Missing required parameter: 'input'\
+      \ (segment IDs list)\"}\n        \n        segment_ids = params['input']\n \
+      \       \n        # 验证segment_ids是否为列表类型\n        if not isinstance(segment_ids,\
+      \ list):\n            try:\n                # 尝试将字符串解析为列表\n                segment_ids\
+      \ = json.loads(segment_ids)\n            except (json.JSONDecodeError, TypeError):\n\
+      \                return {\"$error\": f\"Invalid 'input' format: expected list,\
+      \ got {type(segment_ids).__name__}\"}\n        \n        # 验证segment_ids列表不为空\n\
+      \        if not segment_ids:\n            return {\"$error\": \"Empty segment\
+      \ IDs list\"}\n        \n        # 初始化关键帧列表\n        keyframes: List[Dict[str,\
+      \ Any]] = []\n        \n        # 为每个segment生成关键帧（使用固定时长3秒，可根据需求调整）\n      \
+      \  for seg_id in segment_ids:\n            # 确保segment_id是字符串类型\n          \
+      \  seg_id_str = str(seg_id)\n            \n            # 设置动画时长（单位：毫秒）\n   \
+      \         duration = 3000  # 默认3秒，可根据需求调整\n            \n            # 1. 缩放动画（轻微放大，增强聚焦感）\n\
+      \            keyframes.append({\n                \"offset\": 0,\n          \
+      \      \"property\": \"UNIFORM_SCALE\",\n                \"segment_id\": seg_id_str,\n\
+      \                \"value\": 1.0,\n                \"easing\": \"ease_in_out\"\
+      \n            })\n            keyframes.append({\n                \"offset\"\
+      : duration,\n                \"property\": \"UNIFORM_SCALE\",\n            \
+      \    \"segment_id\": seg_id_str,\n                \"value\": 1.1,\n        \
+      \        \"easing\": \"ease_in_out\"\n            })\n            \n       \
+      \     # 2. 透明度动画（淡入淡出）\n            keyframes.append({\n                \"offset\"\
+      : 0,\n                \"property\": \"OPACITY\",\n                \"segment_id\"\
+      : seg_id_str,\n                \"value\": 0.0,\n                \"easing\":\
+      \ \"linear\"\n            })\n            keyframes.append({\n             \
+      \   \"offset\": duration * 0.1,  # 10%时长时完全显示\n                \"property\"\
+      : \"OPACITY\",\n                \"segment_id\": seg_id_str,\n              \
+      \  \"value\": 1.0,\n                \"easing\": \"linear\"\n            })\n\
+      \            keyframes.append({\n                \"offset\": duration * 0.9,\
+      \  # 90%时长时开始淡出\n                \"property\": \"OPACITY\",\n              \
+      \  \"segment_id\": seg_id_str,\n                \"value\": 1.0,\n          \
+      \      \"easing\": \"linear\"\n            })\n            keyframes.append({\n\
+      \                \"offset\": duration,\n                \"property\": \"OPACITY\"\
+      ,\n                \"segment_id\": seg_id_str,\n                \"value\": 0.0,\
+      \  # 结束时完全透明\n                \"easing\": \"linear\"\n            })\n     \
+      \   \n        # 生成并验证JSON字符串\n        keyframes_json = json.dumps(keyframes)\n\
+      \        \n        # 返回关键帧数据（确保输出变量名为\"keyframes\"）\n        return {\n    \
+      \        \"keyframes\": keyframes_json\n        }\n    \n    except Exception\
+      \ as e:\n        # 捕获所有异常并返回详细错误信息\n        return {\n            \"$error\"\
+      : f\"Failed to generate keyframes: {str(e)}\",\n            \"details\": {\n\
+      \                \"error_type\": type(e).__name__,\n                \"input_params\"\
+      : str(params)[:500]  # 截取部分输入参数用于调试\n            }\n        }"
+    language: 3
+    node_inputs:
+    - input:
+        value:
+          path: segment_ids
+          ref_node: '135583'
+      name: input
+    node_outputs:
+      keyframes:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      switch: false
+      timeoutMs: 60000
+  position:
+    x: 2127.476857614897
+    y: 444.1652580834077
+  title: 代码组合关键帧
+  type: code
+- config: {}
+  description: 用于处理多个字符串类型变量的格式
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-StrConcat-v2.jpg
+  id: '124864'
+  name: 节点_11
+  parameters:
+    method: split
+    node_inputs:
+    - input:
+        value:
+          path: input
+          ref_node: '100001'
+      name: String
+    node_outputs:
+      output:
+        items:
+          type: string
+          value: null
+        required: true
+        type: list
+        value: null
+    splitParams:
+    - input:
+        items:
+          type: string
+          value: null
+        type: list
+        value:
+        - '
+
+          '
+      name: delimiters
+    - input:
+        items:
+          type: object
+          value: null
+        type: list
+        value:
+        - isDefault: true
+          label: 换行
+          value: '
+
+            '
+        - isDefault: true
+          label: 制表符
+          value: "\t"
+        - isDefault: true
+          label: 句号
+          value: 。
+        - isDefault: true
+          label: 逗号
+          value: ，
+        - isDefault: true
+          label: 分号
+          value: ；
+        - isDefault: true
+          label: 空格
+          value: ' '
+      name: allDelimiters
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 634.3265683703291
+    y: 12.000000000000009
+  title: 文本处理
+  type: llm
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

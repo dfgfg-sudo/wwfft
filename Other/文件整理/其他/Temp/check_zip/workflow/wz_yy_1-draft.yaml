@@ -1,0 +1,165 @@
+description: 文字转语音
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '144741'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '144741'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7396727807843254284
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: wz_yy_1
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start.png
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      BOT_USER_INPUT:
+        description: 用户本轮对话输入内容
+        type: string
+        value: null
+      wz:
+        description: 请输入文本
+        required: true
+        type: string
+        value: null
+  position:
+    x: 387.5
+    y: 33.450000000000045
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End.png
+  id: '900001'
+  name: 节点_1
+  parameters:
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: data.url
+          ref_node: '144741'
+      name: output
+    terminatePlan: returnVariables
+  position:
+    x: 1701
+    y: 39.450000000000045
+  title: 结束
+  type: end
+- config: {}
+  description: 输入一段文本，转化为柔美女生的声音
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png
+  id: '144741'
+  name: 节点_2
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7361316775017087014'
+      name: apiID
+    - input:
+        type: string
+        value: roumei_nvsheng
+      name: apiName
+    - input:
+        type: string
+        value: '7361316775017054246'
+      name: pluginID
+    - input:
+        type: string
+        value: 中文文本转语音
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        value:
+          path: wz
+          ref_node: '100001'
+      name: text
+    node_outputs:
+      code:
+        type: float
+        value: null
+      data:
+        properties:
+          url:
+            description: 返回给用户的音频链接
+            required: true
+            type: string
+            value: null
+        type: object
+        value: null
+      log_id:
+        type: string
+        value: null
+      msg:
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1412.5454711914062
+    y: -262.0909080505371
+  title: roumei_nvsheng
+  type: llm
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

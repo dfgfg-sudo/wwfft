@@ -1,0 +1,162 @@
+description: 回答问题    多模态工具  编程代码开发  程序制作
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '106635'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '106635'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+icon: plugin_icon/chatflow-icon.png
+id: 7482227437301858354
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: chatflow
+name: deepseek
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start-v2.jpg
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      CONVERSATION_NAME:
+        default_value: Default
+        description: 本次请求绑定的会话，会自动写入消息、会从该会话读对话历史。
+        type: string
+        value: null
+      USER_INPUT:
+        type: string
+        value: null
+  position:
+    x: 0
+    y: 0
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End-v2.jpg
+  id: '900001'
+  name: 节点_1
+  parameters:
+    content:
+      type: string
+      value:
+        type: literal
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '106635'
+      name: output
+    streamingOutput: true
+    terminatePlan: useAnswerContent
+  position:
+    x: 1000
+    y: 0
+  title: 结束
+  type: end
+- config: {}
+  description: 用于处理多个字符串类型变量的格式
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-StrConcat-v2.jpg
+  id: '106635'
+  name: 节点_2
+  parameters:
+    concatParams:
+    - input:
+        type: string
+        value: ''
+      name: concatResult
+    - input:
+        type: string
+        value: ，
+      name: arrayItemConcatChar
+    - input:
+        items:
+          type: object
+          value: null
+        type: list
+        value:
+        - isDefault: true
+          label: 换行
+          value: '
+
+            '
+        - isDefault: true
+          label: 制表符
+          value: "\t"
+        - isDefault: true
+          label: 句号
+          value: 。
+        - isDefault: true
+          label: 逗号
+          value: ，
+        - isDefault: true
+          label: 分号
+          value: ；
+        - isDefault: true
+          label: 空格
+          value: ' '
+      name: allArrayItemConcatChars
+    method: concat
+    node_inputs:
+    - input:
+        value:
+          path: USER_INPUT
+          ref_node: '100001'
+      name: String1
+    node_outputs:
+      output:
+        required: true
+        type: string
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 487.76615017090467
+    y: -13
+  title: 文本处理
+  type: llm
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

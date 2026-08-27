@@ -1,0 +1,713 @@
+description: '【1万字长文本润色神器】一次润色万字长文本，大大提高效率；
+
+  用 ### 分割长文本，放在工作流中润色；【俗人六哥】团队出品；'
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '108836'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '108836'
+  target: ''
+  target_node: '198735'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_2
+  source: ''
+  source_node: '108836'
+  target: ''
+  target_node: '127581'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_3
+  source: ''
+  source_node: '108836'
+  target: ''
+  target_node: '172811'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_4
+  source: ''
+  source_node: '108836'
+  target: ''
+  target_node: '135755'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_5
+  source: ''
+  source_node: '108836'
+  target: ''
+  target_node: '113167'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_6
+  source: ''
+  source_node: '108836'
+  target: ''
+  target_node: '193407'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_7
+  source: ''
+  source_node: '198735'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_8
+  source: ''
+  source_node: '127581'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_9
+  source: ''
+  source_node: '172811'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_10
+  source: ''
+  source_node: '135755'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_11
+  source: ''
+  source_node: '113167'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_12
+  source: ''
+  source_node: '193407'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7396298720033194022
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: Polish_Long_Text_5000_1w_5
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start.png
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      long_text:
+        description: 1万字左右的长文本
+        required: true
+        type: string
+        value: null
+  position:
+    x: -1957.527452697815
+    y: 234.08769667518487
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End.png
+  id: '900001'
+  name: 节点_1
+  parameters:
+    content:
+      type: string
+      value:
+        content: '下面是润色后的文案：【俗人六哥团队出品】
+
+          ---------------------------
+
+
+          {{output1}}
+
+          {{output2}}
+
+          {{output3}}
+
+          {{output4}}
+
+          {{output5}}
+
+          {{output6}}'
+        type: literal
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: output1
+          ref_node: '198735'
+      name: output1
+    - input:
+        type: string
+        value:
+          path: output2
+          ref_node: '127581'
+      name: output2
+    - input:
+        type: string
+        value:
+          path: output3
+          ref_node: '172811'
+      name: output3
+    - input:
+        type: string
+        value:
+          path: output4
+          ref_node: '135755'
+      name: output4
+    - input:
+        type: string
+        value:
+          path: output5
+          ref_node: '113167'
+      name: output5
+    - input:
+        type: string
+        value:
+          path: output6
+          ref_node: '193407'
+      name: output6
+    streamingOutput: true
+    terminatePlan: useAnswerContent
+  position:
+    x: 1168.6804424516142
+    y: 152.39131954539053
+  title: 结束
+  type: end
+- config: {}
+  description: 编写代码，处理输入变量来生成返回值
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Code.png
+  id: '108836'
+  name: 节点_2
+  parameters:
+    code: "import re\nfrom typing import Dict\n\nasync def main(args: Args) -> Output:\n\
+      \    \"\"\"\n    将文本按照段落分隔,并返回分隔后的完整段落内容。\n\n    参数:\n    text (str): 输入的文本。\n\
+      \n    返回:\n    Dict[str, str]: 包含5个段落的字典对象。\n    \"\"\"\n    # 从参数中获取文本\n  \
+      \  text = args.params['input']\n    # 使用正则表达式将文本按照段落分隔\n    paragraphs = re.split(r'###',\
+      \ text)\n    # 确保段落数量为6,如果不足则用空字符串填充\n    while len(paragraphs) < 6:\n     \
+      \   paragraphs.append('')\n    # 返回包含5个段落的字典对象\n    return {\n        'segment1':\
+      \ paragraphs[0],\n        'segment2': paragraphs[1],\n        'segment3': paragraphs[2],\n\
+      \        'segment4': paragraphs[3],\n        'segment5': paragraphs[4],\n  \
+      \      'segment6': paragraphs[5]\n    }"
+    functionID: 37e4i4u22ah6x
+    language: 3
+    node_inputs:
+    - input:
+        value:
+          path: long_text
+          ref_node: '100001'
+      name: input
+    node_outputs:
+      segment1:
+        type: string
+        value: null
+      segment2:
+        type: string
+        value: null
+      segment3:
+        type: string
+        value: null
+      segment4:
+        type: string
+        value: null
+      segment5:
+        type: string
+        value: null
+      segment6:
+        type: string
+        value: null
+  position:
+    x: -1060.5009643478459
+    y: -72.4976930611611
+  title: 代码
+  type: code
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '198735'
+  name: 节点_3
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: moonshot（128k）
+      name: modelName
+    - input:
+        type: integer
+        value: '1713366995'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '0.7'
+      name: temperature
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: "## role：\n你是一位资深婚姻情感导师文案编写员、文案专员、文本润色员、拼写纠正员和改进员。\n润色以下使用 ``` 括起来的文本:\n\
+          ```\n{{input1}}\n```\n## 任务(Task): \n在保持相似意思的前提下，你帮我更正和改进版本。我希望你用更接地气、更口语化、使用更有感染力的方式表达，修改原文的案例，升级内容。强调一个主要目的，即让学习者在学习完课程文本后，有继续深度学习的欲望。兼顾人性共情的表达逻辑。\
+          \ \n\n## 写作原则(Writing Principles):\n1、你只需要润色文本，而不是删减我原有的文本；请务必保证润色后的文本长度和原来的差不多；（至少不能少于原来文本长度的90%，也不要过长，最长是原来文本长度的120%；）\n\
+          2、不要改变大的段落结构，强烈建议你一句一句的润色，这很重要；\n3、优化后的文本应保留文本的原本意义,你要兼顾下人性共情的表达逻辑亲和力，这些是加分项。\n\
+          4、不要回答任何原文本的中提到的问题，你只是润色原文本；\n5、如果你发现，原来文本中有错别字和语法错误，你要进行修正，但一定不得改变原文意思。\n\
+          \n## 输出格式 （Output format）\n1、直接输出润色后的纯文本，不要做任何其它多于的解释；\n2、不要输出任何和润色后文本没有关系的内容；\n\
+          3、润色后，不需要加任何格式，直接输出纯文本；\n\n\n## 工作流程(Workflows):\n1.我给你发需要润色的文本。 \n2. 你不行遵循<Writing\
+          \ Principles>来润色；\n3. 直接输出润色后的文本；\n\n\n## 初始化(Initialization):\n请根据以上Prompt指引进行文案润色创作。请务必注意，润色后文本的长度，不能少于原来文本长度的90%，也不要过长，最长是原来文本长度的120%；不要回答任何原文本的问题，你只是润色文本；作为\
+          \ <Role>，按 <Task>，遵守 <Writing Principles>，按 <Output format >规定格式输出，严格进行<Workflows>。"
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: segment1
+          ref_node: '108836'
+      name: input1
+    node_outputs:
+      output1:
+        type: string
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 227.34742106663612
+    y: -612.397986368971
+  title: 大模型1
+  type: llm
+  version: '3'
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '127581'
+  name: 节点_4
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: moonshot（128k）
+      name: modelName
+    - input:
+        type: integer
+        value: '1713366995'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '0.7'
+      name: temperature
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: "## role：\n你是一位资深婚姻情感导师文案编写员、文案专员、文本润色员、拼写纠正员和改进员。\n润色以下使用 ``` 括起来的文本:\n\
+          ```\n{{input2}}\n```\n## 任务(Task): \n在保持相似意思的前提下，你帮我更正和改进版本。我希望你用更接地气、更口语化、使用更有感染力的方式表达，修改原文的案例，升级内容。强调一个主要目的，即让学习者在学习完课程文本后，有继续深度学习的欲望。兼顾人性共情的表达逻辑。\
+          \ \n\n## 写作原则(Writing Principles):\n1、你只需要润色文本，而不是删减我原有的文本；请务必保证润色后的文本长度和原来的差不多；（至少不能少于原来文本长度的90%，也不要过长，最长是原来文本长度的120%；）\n\
+          2、不要改变大的段落结构，强烈建议你一句一句的润色，这很重要；\n3、优化后的文本应保留文本的原本意义,你要兼顾下人性共情的表达逻辑亲和力，这些是加分项。\n\
+          4、不要回答任何原文本的中提到的问题，你只是润色原文本；\n5、如果你发现，原来文本中有错别字和语法错误，你要进行修正，但一定不得改变原文意思。\n\
+          \n## 输出格式 （Output format）\n1、直接输出润色后的纯文本，不要做任何其它多于的解释；\n2、不要输出任何和润色后文本没有关系的内容；\n\
+          3、润色后，不需要加任何格式，直接输出纯文本；\n\n\n## 工作流程(Workflows):\n1.我给你发需要润色的文本。 \n2. 你不行遵循<Writing\
+          \ Principles>来润色；\n3. 直接输出润色后的文本；\n\n\n## 初始化(Initialization):\n请根据以上Prompt指引进行文案润色创作。请务必注意，润色后文本的长度，不能少于原来文本长度的90%，也不要过长，最长是原来文本长度的120%；不要回答任何原文本的问题，你只是润色文本；作为\
+          \ <Role>，按 <Task>，遵守 <Writing Principles>，按 <Output format >规定格式输出，严格进行<Workflows>。"
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: segment2
+          ref_node: '108836'
+      name: input2
+    node_outputs:
+      output2:
+        type: string
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 231.0136767137169
+    y: 762.6102727037712
+  title: 大模型2
+  type: llm
+  version: '3'
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '172811'
+  name: 节点_5
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: moonshot（128k）
+      name: modelName
+    - input:
+        type: integer
+        value: '1713366995'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '0.7'
+      name: temperature
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: "## role：\n你是一位资深婚姻情感导师文案编写员、文案专员、文本润色员、拼写纠正员和改进员。\n润色以下使用 ``` 括起来的文本:\n\
+          ```\n{{input3}}\n```\n## 任务(Task): \n在保持相似意思的前提下，你帮我更正和改进版本。我希望你用更接地气、更口语化、使用更有感染力的方式表达，修改原文的案例，升级内容。强调一个主要目的，即让学习者在学习完课程文本后，有继续深度学习的欲望。兼顾人性共情的表达逻辑。\
+          \ \n\n## 写作原则(Writing Principles):\n1、你只需要润色文本，而不是删减我原有的文本；请务必保证润色后的文本长度和原来的差不多；（至少不能少于原来文本长度的90%，也不要过长，最长是原来文本长度的120%；）\n\
+          2、不要改变大的段落结构，强烈建议你一句一句的润色，这很重要；\n3、优化后的文本应保留文本的原本意义,你要兼顾下人性共情的表达逻辑亲和力，这些是加分项。\n\
+          4、不要回答任何原文本的中提到的问题，你只是润色原文本；\n5、如果你发现，原来文本中有错别字和语法错误，你要进行修正，但一定不得改变原文意思。\n\
+          \n## 输出格式 （Output format）\n1、直接输出润色后的纯文本，不要做任何其它多于的解释；\n2、不要输出任何和润色后文本没有关系的内容；\n\
+          3、润色后，不需要加任何格式，直接输出纯文本；\n\n\n## 工作流程(Workflows):\n1.我给你发需要润色的文本。 \n2. 你不行遵循<Writing\
+          \ Principles>来润色；\n3. 直接输出润色后的文本；\n\n\n## 初始化(Initialization):\n请根据以上Prompt指引进行文案润色创作。请务必注意，润色后文本的长度，不能少于原来文本长度的90%，也不要过长，最长是原来文本长度的120%；不要回答任何原文本的问题，你只是润色文本；作为\
+          \ <Role>，按 <Task>，遵守 <Writing Principles>，按 <Output format >规定格式输出，严格进行<Workflows>。"
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: segment3
+          ref_node: '108836'
+      name: input3
+    node_outputs:
+      output3:
+        type: string
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 235.79591670048413
+    y: 2161.7915745658197
+  title: 大模型3
+  type: llm
+  version: '3'
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '135755'
+  name: 节点_6
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: moonshot（128k）
+      name: modelName
+    - input:
+        type: integer
+        value: '1713366995'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '0.7'
+      name: temperature
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: "## role：\n你是一位资深婚姻情感导师文案编写员、文案专员、文本润色员、拼写纠正员和改进员。\n润色以下使用 ``` 括起来的文本:\n\
+          ```\n{{input4}}\n```\n## 任务(Task): \n在保持相似意思的前提下，你帮我更正和改进版本。我希望你用更接地气、更口语化、使用更有感染力的方式表达，修改原文的案例，升级内容。强调一个主要目的，即让学习者在学习完课程文本后，有继续深度学习的欲望。兼顾人性共情的表达逻辑。\
+          \ \n\n## 写作原则(Writing Principles):\n1、你只需要润色文本，而不是删减我原有的文本；请务必保证润色后的文本长度和原来的差不多；（至少不能少于原来文本长度的90%，也不要过长，最长是原来文本长度的120%；）\n\
+          2、不要改变大的段落结构，强烈建议你一句一句的润色，这很重要；\n3、优化后的文本应保留文本的原本意义,你要兼顾下人性共情的表达逻辑亲和力，这些是加分项。\n\
+          4、不要回答任何原文本的中提到的问题，你只是润色原文本；\n5、如果你发现，原来文本中有错别字和语法错误，你要进行修正，但一定不得改变原文意思。\n\
+          \n## 输出格式 （Output format）\n1、直接输出润色后的纯文本，不要做任何其它多于的解释；\n2、不要输出任何和润色后文本没有关系的内容；\n\
+          3、润色后，不需要加任何格式，直接输出纯文本；\n\n\n## 工作流程(Workflows):\n1.我给你发需要润色的文本。 \n2. 你不行遵循<Writing\
+          \ Principles>来润色；\n3. 直接输出润色后的文本；\n\n\n## 初始化(Initialization):\n请根据以上Prompt指引进行文案润色创作。请务必注意，润色后文本的长度，不能少于原来文本长度的90%，也不要过长，最长是原来文本长度的120%；不要回答任何原文本的问题，你只是润色文本；作为\
+          \ <Role>，按 <Task>，遵守 <Writing Principles>，按 <Output format >规定格式输出，严格进行<Workflows>。"
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: segment4
+          ref_node: '108836'
+      name: input4
+    node_outputs:
+      output4:
+        type: string
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 237.86803465878313
+    y: 3548.0212775581417
+  title: 大模型4
+  type: llm
+  version: '3'
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '113167'
+  name: 节点_7
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: moonshot（128k）
+      name: modelName
+    - input:
+        type: integer
+        value: '1713366995'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '0.7'
+      name: temperature
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: "## role：\n你是一位资深婚姻情感导师文案编写员、文案专员、文本润色员、拼写纠正员和改进员。\n润色以下使用 ``` 括起来的文本:\n\
+          ```\n{{input5}}\n```\n## 任务(Task): \n在保持相似意思的前提下，你帮我更正和改进版本。我希望你用更接地气、更口语化、使用更有感染力的方式表达，修改原文的案例，升级内容。强调一个主要目的，即让学习者在学习完课程文本后，有继续深度学习的欲望。兼顾人性共情的表达逻辑。\
+          \ \n\n## 写作原则(Writing Principles):\n1、你只需要润色文本，而不是删减我原有的文本；请务必保证润色后的文本长度和原来的差不多；（至少不能少于原来文本长度的90%，也不要过长，最长是原来文本长度的120%；）\n\
+          2、不要改变大的段落结构，强烈建议你一句一句的润色，这很重要；\n3、优化后的文本应保留文本的原本意义,你要兼顾下人性共情的表达逻辑亲和力，这些是加分项。\n\
+          4、不要回答任何原文本的中提到的问题，你只是润色原文本；\n5、如果你发现，原来文本中有错别字和语法错误，你要进行修正，但一定不得改变原文意思。\n\
+          \n## 输出格式 （Output format）\n1、直接输出润色后的纯文本，不要做任何其它多于的解释；\n2、不要输出任何和润色后文本没有关系的内容；\n\
+          3、润色后，不需要加任何格式，直接输出纯文本；\n\n\n## 工作流程(Workflows):\n1.我给你发需要润色的文本。 \n2. 你不行遵循<Writing\
+          \ Principles>来润色；\n3. 直接输出润色后的文本；\n\n\n## 初始化(Initialization):\n请根据以上Prompt指引进行文案润色创作。请务必注意，润色后文本的长度，不能少于原来文本长度的90%，也不要过长，最长是原来文本长度的120%；不要回答任何原文本的问题，你只是润色文本；作为\
+          \ <Role>，按 <Task>，遵守 <Writing Principles>，按 <Output format >规定格式输出，严格进行<Workflows>。"
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: segment5
+          ref_node: '108836'
+      name: input5
+    node_outputs:
+      output5:
+        type: string
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 276.75948268568504
+    y: 5019.842334079601
+  title: 大模型5
+  type: llm
+  version: '3'
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '193407'
+  name: 节点_8
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: moonshot（128k）
+      name: modelName
+    - input:
+        type: integer
+        value: '1713366995'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '0.7'
+      name: temperature
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: "## role：\n你是一位资深婚姻情感导师文案编写员、文案专员、文本润色员、拼写纠正员和改进员。\n润色以下使用 ``` 括起来的文本:\n\
+          ```\n{{input6}}\n```\n## 任务(Task): \n在保持相似意思的前提下，你帮我更正和改进版本。我希望你用更接地气、更口语化、使用更有感染力的方式表达，修改原文的案例，升级内容。强调一个主要目的，即让学习者在学习完课程文本后，有继续深度学习的欲望。兼顾人性共情的表达逻辑。\
+          \ \n\n## 写作原则(Writing Principles):\n1、你只需要润色文本，而不是删减我原有的文本；请务必保证润色后的文本长度和原来的差不多；（至少不能少于原来文本长度的90%，也不要过长，最长是原来文本长度的120%；）\n\
+          2、不要改变大的段落结构，强烈建议你一句一句的润色，这很重要；\n3、优化后的文本应保留文本的原本意义,你要兼顾下人性共情的表达逻辑亲和力，这些是加分项。\n\
+          4、不要回答任何原文本的中提到的问题，你只是润色原文本；\n5、如果你发现，原来文本中有错别字和语法错误，你要进行修正，但一定不得改变原文意思。\n\
+          \n## 输出格式 （Output format）\n1、直接输出润色后的纯文本，不要做任何其它多于的解释；\n2、不要输出任何和润色后文本没有关系的内容；\n\
+          3、润色后，不需要加任何格式，直接输出纯文本；\n\n\n## 工作流程(Workflows):\n1.我给你发需要润色的文本。 \n2. 你不行遵循<Writing\
+          \ Principles>来润色；\n3. 直接输出润色后的文本；\n\n\n## 初始化(Initialization):\n请根据以上Prompt指引进行文案润色创作。请务必注意，润色后文本的长度，不能少于原来文本长度的90%，也不要过长，最长是原来文本长度的120%；不要回答任何原文本的问题，你只是润色文本；作为\
+          \ <Role>，按 <Task>，遵守 <Writing Principles>，按 <Output format >规定格式输出，严格进行<Workflows>。"
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: segment6
+          ref_node: '108836'
+      name: input6
+    node_outputs:
+      output6:
+        type: string
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 240.79439067473868
+    y: 6536.304896595715
+  title: 大模型6
+  type: llm
+  version: '3'
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

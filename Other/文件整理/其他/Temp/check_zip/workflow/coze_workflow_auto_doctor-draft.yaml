@@ -1,0 +1,262 @@
+description: 构建一个终极自动化系统，用户仅需提供自然语言需求或问题代码，系统即可在30秒内，通过两次点击，自动完成诊断、修复、代码生成与验证，输出100%符合Coze平台规范的成品（工作流或插件）。实现零手动调试、零配置知识要求。一款全自动诊断与修复Coze工作流和插件配置的AI系统。支持自然语言生成和错误JSON修复。
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '117710'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '117710'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7549770305318436890
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: coze_workflow_auto_doctor
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start-v2.jpg
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      auto_execute:
+        description: 是否自动执行修复(可选，默认true)，若为false，则仅生成诊断报告还有诊断后是否自动执行修复？
+        required: true
+        type: boolean
+        value: null
+      repair_depth:
+        description: 修复深度(可选)，选项：basic (仅语法)、comprehensive (语法+结构)、thorough (全面修复+连接)、aggressive
+          (深度修复+优化)。
+        required: true
+        type: string
+        value: null
+      user_input:
+        description: '请输入您的自然语言需求或存在错误的JSON代码，核心输入框同时处理用于接收：
+
+          自然语言需求 (例：“创建一个能抓取XXX网站内容并总结成三句话的插件”)。
+
+          错误JSON代码 (包含各种语法、结构错误的工作流或插件配置代码)。'
+        type: string
+        value: null
+  position:
+    x: 0
+    y: 0
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End-v2.jpg
+  id: '900001'
+  name: 节点_1
+  parameters:
+    content:
+      type: string
+      value:
+        content: '{{AI_Omni_Repair_Engine.output}}'
+        type: literal
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '117710'
+      name: output
+    streamingOutput: false
+    terminatePlan: useAnswerContent
+  position:
+    x: 965.5432998385651
+    y: -13
+  title: 结束
+  type: end
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+  id: '117710'
+  name: 节点_2
+  parameters:
+    fcParamVar:
+      knowledgeFCParam: {}
+    llmParam:
+    - input:
+        type: float
+        value: '0.8'
+      name: temperature
+    - input:
+        type: integer
+        value: '2200'
+      name: maxTokens
+    - input:
+        type: boolean
+        value: false
+      name: spCurrentTime
+    - input:
+        type: boolean
+        value: false
+      name: spAntiLeak
+    - input:
+        type: boolean
+        value: false
+      name: prefixCache
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: string
+        value: DeepSeek-R1
+      name: modelName
+    - input:
+        type: integer
+        value: '1738675233'
+      name: modelType
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: string
+        value: '请根据以下用户输入和指令，执行完整的“诊断+修复/生成”一体化流程。
+
+
+          **用户输入 (user_input):**
+
+          {{user_input}}
+
+
+          **修复深度模式 (repair_depth):** `{{repair_depth}}`
+
+          **自动执行 (auto_execute):** `{{auto_execute}}`
+
+
+          ---
+
+          请开始你的工作。请严格按照系统指令中定义的输出格式，生成一份包含诊断报告和最终交付成果的完整Markdown文档。'
+      name: prompt
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: integer
+        value: '3'
+      name: chatHistoryRound
+    - input:
+        type: string
+        value: "# 角色与使命\n你是 Coze 平台的全能AI工程师，集成了**诊断分析器**和**修复生成器**的双重能力。你的任务是在一个步骤中完成对用户输入的完整处理：先进行深度诊断，然后立即执行修复或代码生成。\n\
+          \n# 工作流程与规则\n1.  **输入分析**：\n    *   分析 `{{user_input}}`，判断它是**自然语言需求**（如“创建一个翻译插件”）还是**有问题的JSON代码**。\n\
+          \    *   识别用户选择的 `修复深度模式`：`[{{repair_depth}}]`。\n\n2.  **一体化处理**：\n    *\
+          \   **如果输入是自然语言需求**：\n        a.  **解析需求**：提取用户意图、功能点、参数（如 `url`, `size`）等，形成结构化理解。\n\
+          \        b.  **生成代码**：根据解析结果，直接生成一个完整的、可运行的Coze插件代码包。\n    *   **如果输入是问题代码**：\n\
+          \        a.  **提取与诊断**：从输入中精准提取JSON片段，并进行全面诊断（语法、Schema、结构、环境）。\n      \
+          \  b.  **执行修复**：根据诊断发现的问题和 `修复深度模式`，对JSON进行修复和优化。\n\n3.  **输出格式 (必须严格遵守)**：\n\
+          \    *   **最终输出必须是一个自包含的、格式化的Markdown文档**，包含以下所有部分：\n\n    ### **\U0001F9D0\
+          \ 智能诊断报告**\n    - **输入类型:** [自然语言需求/问题代码]\n    - **修复深度:** `[{{repair_depth}}]`\n\
+          \    - **问题摘要:** (如果是代码) `发现 [X] 个错误, [Y] 个警告`\n\n    ### **\U0001F4CB 诊断详情**\
+          \ (如果输入是代码，请详细列出问题)\n    - **❌ 错误:** [问题描述] (位于: `[字段路径]`)\n    - **⚠️ 警告:**\
+          \ [问题描述] (位于: `[字段路径]`)\n\n    ### **\U0001F680 最终交付成果**\n    (根据输入类型，输出以下**其中一个**代码块)\n\
+          \n    #### **A. 针对自然语言需求 (生成的代码包)**\n    **plugin.json**\n    ```json\n\
+          \    {\n      \"name\": \"generated_plugin\",\n      \"input_parameters\"\
+          : [...],\n      // ... 其他完整结构\n    }\n    ```\n\n    **index.ts**\n    ```typescript\n\
+          \    interface PluginInput {...}\n    interface PluginOutput {...}\n   \
+          \ export default async function run(input: PluginInput): Promise<PluginOutput>\
+          \ {\n      // 核心业务逻辑\n      try {...} \n      catch (error) {...}\n    }\n\
+          \    ```\n\n    #### **B. 针对问题代码 (修复后的JSON)**\n    **修复后的完美JSON**\n    ```json\n\
+          \    {\n      \"name\": \"repaired_plugin\",\n      \"input_parameters\"\
+          : [...],\n      // ... 修复后的完整结构\n    }\n    ```\n\n    ### **✅ 验证状态**\n\
+          \    - **生成/修复状态:** 成功\n    - **合规性:** 符合 Coze 平台规范\n    - **建议:** [下一步操作建议]"
+      name: systemPrompt
+    - input:
+        type: string
+        value: ''
+      name: stableSystemPrompt
+    - input:
+        type: boolean
+        value: false
+      name: canContinue
+    - input:
+        type: string
+        value: ''
+      name: loopPromptVersion
+    - input:
+        type: string
+        value: ''
+      name: loopPromptName
+    - input:
+        type: string
+        value: ''
+      name: loopPromptId
+    node_inputs:
+    - input:
+        value:
+          path: user_input
+          ref_node: '100001'
+      name: start_node_user_input
+    - input:
+        value:
+          path: repair_depth
+          ref_node: '100001'
+      name: start_node_repair_depth
+    node_outputs:
+      output:
+        description: 该变量包含了AI生成的一份完整的诊断报告。这份报告采用清晰的Markdown格式，旨在为用户和下一个节点提供结构化、易于解析的信息。
+        type: string
+        value: null
+      reasoning_content:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      switch: false
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 500
+    y: -38.95
+  title: AI_Omni_Repair_Engine大模型
+  type: llm
+  version: '3'
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

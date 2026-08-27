@@ -1,0 +1,274 @@
+description: 绘本创作
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '180699'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '180699'
+  target: ''
+  target_node: '175565'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_2
+  source: ''
+  source_node: '175565'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7396225428891074610
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: draw_a_picture_1
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start.png
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      input:
+        required: true
+        type: string
+        value: null
+  position:
+    x: -301.6964285714286
+    y: -5.02827380952381
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End.png
+  id: '900001'
+  name: 节点_1
+  parameters:
+    node_inputs:
+    - input:
+        type: object
+        value:
+          path: data
+          ref_node: '175565'
+      name: output
+    streamingOutput: false
+    terminatePlan: returnVariables
+  position:
+    x: 1718.8440476190478
+    y: -74.09880952380952
+  title: 结束
+  type: end
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '180699'
+  name: 节点_2
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: 豆包·Function call模型
+      name: modelName
+    - input:
+        type: integer
+        value: '1706077826'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '1'
+      name: temperature
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '0'
+      name: responseFormat
+    - input:
+        type: string
+        value: '# Global
+
+          - 根据{{input}}的内容，生成一段用于生成绘本插画的prompt。
+
+          ## Skill
+
+          ### Skill 1 prompt生成
+
+          - 根据{{input}}中的标题，生成一段用于生成图片的prompt。
+
+          ## Constraints
+
+          - 生成的prompt必须符合生成儿童绘本插画的的目的。
+
+          - 禁止出现敏感词汇。'
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: input
+          ref_node: '100001'
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 484.4601351893103
+    y: -258.45246637783634
+  title: 大模型
+  type: llm
+  version: '3'
+- config: {}
+  description: 通过文字描述生成图片，一次只能生成一张图片。
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png
+  id: '175565'
+  name: 节点_3
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7348853341923049482'
+      name: apiID
+    - input:
+        type: string
+        value: text2image
+      name: apiName
+    - input:
+        type: string
+        value: '7348853341922983946'
+      name: pluginID
+    - input:
+        type: string
+        value: ByteArtist
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value: '1'
+      name: model_type
+    - input:
+        value:
+          path: output
+          ref_node: '180699'
+      name: prompt
+    - input:
+        type: string
+        value: '3'
+      name: ratio
+    - input:
+        type: string
+        value: '40'
+      name: ddm_steps
+    node_outputs:
+      code:
+        type: float
+        value: null
+      data:
+        properties:
+          images:
+            items:
+              properties:
+                image_url:
+                  type: string
+                  value: null
+              type: object
+              value: null
+            type: list
+            value: null
+        type: object
+        value: null
+      log_id:
+        type: string
+        value: null
+      msg:
+        type: string
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1172.3887066178818
+    y: -337.02389494926496
+  title: text2image
+  type: llm
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

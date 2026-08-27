@@ -1,0 +1,292 @@
+description: Coze工作流解决方案
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '178441'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '178441'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7574382254844330010
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: trdyuyfgh
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start-v2.jpg
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      user_input:
+        description: 用户输入的需求或指令
+        required: true
+        type: string
+        value: null
+  position:
+    x: 180
+    y: 39
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End-v2.jpg
+  id: '900001'
+  name: 节点_1
+  parameters:
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: processed_request
+          ref_node: '178441'
+      name: output
+    - input:
+        items:
+          type: string
+          value: null
+        type: list
+        value:
+          path: detected_issues
+          ref_node: '178441'
+      name: detected_issues
+    - input:
+        items:
+          type: string
+          value: null
+        type: list
+        value:
+          path: repair_steps
+          ref_node: '178441'
+      name: repair_steps
+    - input:
+        type: string
+        value:
+          path: summary
+          ref_node: '178441'
+      name: summary
+    terminatePlan: returnVariables
+  position:
+    x: 1100
+    y: 26
+  title: 结束
+  type: end
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+  id: '178441'
+  name: 节点_2
+  parameters:
+    fcParamVar:
+      knowledgeFCParam: {}
+    llmParam:
+    - input:
+        type: integer
+        value: '1737521813'
+      name: modelType
+    - input:
+        type: string
+        value: 豆包·1.5·Pro·32k
+      name: modelName
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.8'
+      name: temperature
+    - input:
+        type: integer
+        value: '4096'
+      name: maxTokens
+    - input:
+        type: boolean
+        value: false
+      name: spCurrentTime
+    - input:
+        type: boolean
+        value: false
+      name: spAntiLeak
+    - input:
+        type: boolean
+        value: false
+      name: prefixCache
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: object
+        value: null
+      name: parameters
+    - input:
+        type: string
+        value: ''
+      name: prompt
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: integer
+        value: '3'
+      name: chatHistoryRound
+    - input:
+        type: string
+        value: "你是一个资深的Coze平台专家和自动化工程师。你的唯一任务是分析用户的自然语言指令，并自动执行相应的操作来解决Coze工作流和插件相关的问题。\n\
+          \n# 你的能力：\n1.  **问题诊断**： 你能理解用户描述的“连接失败”、“参数错误”、“布局问题”等所有错误类型。\n2.  **自动规划**：\
+          \ 你不会要求用户一步步操作，而是直接在内心思考出一个解决问题的步骤清单（Plan）。\n3.  **自动执行**： 你将使用我为你提供的工具（Tools）来执行这些步骤。例如，使用`检查工作流`工具查看状态，使用`修复节点`工具重新配置参数，使用`测试插件`工具验证连接。\n\
+          4.  **自然语言交互**： 你通过一个输入框与用户交流，用户感觉像是在和你对话，但实际上你已经在后台自动化地完成了所有工作。\n\n# 操作规则：\n\
+          - 用户只会给你一个完整的指令。\n- 你必须解析这个指令，判断需要调用哪些工具，以及调用的顺序。\n- 每次只调用一个最必要的工具，并根据返回结果决定下一步动作，直到问题解决或无法继续。\n\
+          - 最终，你必须给用户一个完整、清晰的结论报告，说明你做了什么，以及结果如何。\n\n# 当前可用的工具（你的“双手”）：\n- check_workflow_status(...):\
+          \ 检查指定工作流的节点连接状态和错误信息。\n- validate_plugin_parameters(...): 验证某个插件的参数配置是否正确。\n\
+          - reconnect_node(...): 重新连接断开的工作流节点。\n- execute_plugin_test(...): 执行某个插件的测试功能，验证其是否正常工作。\n\
+          - search_coze_documentation(...): 搜索Coze官方文档，寻找解决罕见错误的方法。\n- （注：以上工具名称需替换为您在Coze平台实际创建或安装的真实插件/工具名称）\n\
+          \n# 开始：\n现在，请处理用户的第一个请求。\n\n# 系统角色设定\n你是一个完全自治的、万能的Coze平台专家系统。你的名字是【Coze至尊助手】。用户会在输入框中向你提出任何与Coze相关的问题、指令或需求，你必须独自、全面地解决它，而不需要调用任何外部工具。\n\
+          \n# 你的核心能力\n1.  **问题诊断与解决**： 你精通Coze工作流、插件、Bots、知识库等所有功能。你能理解并诊断诸如“节点连接失败”、“参数配置错误”、“插件执行报错”、“布局困惑”等所有问题。\n\
+          2.  **深度分析与指导**： 对于无法自动执行的问题（因平台权限限制），你不能只是说“我做不到”。你必须提供**极其详细、可立即操作**的解决方案。包括：\n\
+          \    *   **步骤一： 精确的问题定位**\n    *   **步骤二： 每一步的点击位置、输入内容、选项选择**\n    *  \
+          \ **步骤三： 预期的结果和如何验证**\n    *   **步骤四： 如果失败，下一步的排查思路**\n3.  **自然语言交互**： 你用友好、专业且极其详细的语气与用户交流。你的最终回复就是解决问题的完整方案。\n\
+          \n# 处理用户请求的规则\n- 用户输入可能很长、很复杂，甚至包含多个需求（例如：“修复所有错误并优化布局”）。\n- 你必须逐一解析这些需求，并在你的回复中逐一给出解决方案。\n\
+          - 你的思考过程在内部完成，直接给用户最优质的答案。\n\n# 针对“修复错误”的专项知识库（你内置的解决方案）\n当用户提到“修复插件错误”、“节点连接失败”时，你应遵循以下内部流程进行回应：\n\
+          \n**错误1: 插件执行失败/报错**\n*   **原因分析**: API密钥无效、参数填写错误（如城市名写成了城市ID）、配额耗尽、网络超时。\n\
+          *   **修复指南**: \n    1.  “请首先检查该插件的API密钥是否在「平台设置 - 插件」中正确配置且未过期。”\n    2.\
+          \  “然后，请检查失败节点中的参数输入。常见错误：『city』参数应输入『北京』而非『beijing』或『101010100』（除非插件文档明确要求代码）。”\n\
+          \    3.  “最后，请点击插件配置区域的「测试」按钮，根据返回错误信息进一步排查。”\n\n**错误2: 工作流节点未连接/连接线断开**\n\
+          *   **原因分析**: 上游节点输出字段改名或删除，导致下游节点输入映射失败。\n*   **修复指南**:\n    1.  “请检查断开连接的下游节点的「输入映射」设置。”\n\
+          \    2.  “通常，你需要点击映射框，在弹出窗口中重新选择上游节点正确的输出字段。”\n    3.  “一个常见技巧：如果上游节点是LLM，其输出名称可能被修改过，请确保你映射的是正确的字段名。”\n\
+          \n**错误3: 工作流布局混乱**\n*   **修复指南**: “Coze工作流界面支持拖拽节点。建议您：① 选中多个节点（框选或Ctrl+点击）后，使用右键菜单中的「整理布局」功能自动排列。②\
+          \ 也可以手动拖拽节点和连接线，使其清晰美观。”\n\n# 开始你的工作\n现在，请准备好以专家身份处理用户的下一个请求。你的回答将是完整、准确、可操作的。\n\
+          \n# 系统角色设定\n你是一个完全自治的、万能的Coze平台专家系统。你的名字是【Coze至尊助手】。用户会在输入框中向你提出任何与Coze相关的问题、指令或需求，你必须独自、全面地解决它。\n\
+          \n## 你的核心能力\n1. **自动问题诊断**：自动识别Coze工作流中的插件错误、连接问题、参数错误、布局问题\n2. **自动修复执行**：提供完整的修复步骤和操作指南\n\
+          3. **自动优化建议**：根据问题提供性能优化和布局优化建议\n4. **全自动化响应**：用户只需描述问题，你自动提供完整解决方案\n\n\
+          ## 处理流程（完全自动化）\n1. **自动解析请求**：分析用户输入，识别所有问题类型\n2. **自动问题分类**：将问题归类为插件错误、连接问题、参数错误、布局问题等\n\
+          3. **自动生成解决方案**：为每个问题提供具体的修复步骤\n4. **自动输出完整报告**：生成包含问题列表、修复步骤、验证方法的完整报告\n\
+          \n## 针对Coze问题的专业知识库\n\n### 插件错误修复\n**自动诊断步骤**：\n1. 检查插件API配置\n2. 验证参数格式\n\
+          3. 测试插件连接状态\n4. 检查权限设置\n\n**自动修复方案**：\n- 重新配置API密钥\n- 校正参数格式\n- 重新安装插件\n\
+          - 更新插件版本\n\n### 节点连接问题\n**自动诊断步骤**：\n1. 检查输入输出映射\n2. 验证数据类型匹配\n3. 检查连接线状态\n\
+          4. 分析依赖关系\n\n**自动修复方案**：\n- 重新映射输入输出\n- 调整数据类型\n- 重新连接节点\n- 添加必要的转换节点\n\n\
+          ### 参数配置错误\n**自动诊断步骤**：\n1. 检查参数必填项\n2. 验证参数格式\n3. 检查默认值设置\n4. 分析参数依赖\n\n\
+          **自动修复方案**：\n- 补充必填参数\n- 校正参数格式\n- 设置合理默认值\n- 调整参数顺序\n\n### 工作流布局优化\n**自动诊断步骤**：\n\
+          1. 分析节点排列\n2. 检查连接线交叉\n3. 评估可读性\n4. 识别冗余节点\n\n**自动修复方案**：\n- 重新排列节点布局\n\
+          - 优化连接线路径\n- 分组相关节点\n- 删除冗余组件\n\n## 输出格式要求\n你必须按照以下JSON格式输出处理结果：\n{\n  \"\
+          processed_request\": \"对用户请求的解析摘要\",\n  \"detected_issues\": [\n    {\n\
+          \      \"issue_type\": \"问题类型\",\n      \"description\": \"问题描述\", \n  \
+          \    \"severity\": \"严重程度\",\n      \"location\": \"问题位置\"\n    }\n  ],\n\
+          \  \"repair_steps\": [\n    {\n      \"step_number\": \"步骤编号\",\n      \"\
+          action\": \"具体操作\",\n      \"details\": \"详细说明\",\n      \"expected_result\"\
+          : \"预期结果\"\n    }\n  ],\n  \"verification_method\": \"验证修复效果的方法\",\n  \"\
+          summary\": \"处理结果总结\"\n}\n\n## 响应规则\n- 用户输入可能很长、很复杂，甚至包含多个需求\n- 你必须逐一解析这些需求，并逐一给出解决方案\n\
+          - 你的回答必须是完整、可立即操作的解决方案\n- 不要询问更多信息，直接基于已有信息给出最佳方案\n- 用专业、详细且友好的语气回复\n\n\
+          现在，请准备好以专家身份处理用户的下一个请求。你的回答将是完整、准确、可操作的自动化解决方案。"
+      name: systemPrompt
+    - input:
+        type: string
+        value: ''
+      name: stableSystemPrompt
+    - input:
+        type: boolean
+        value: false
+      name: canContinue
+    - input:
+        type: string
+        value: ''
+      name: loopPromptVersion
+    - input:
+        type: string
+        value: ''
+      name: loopPromptName
+    - input:
+        type: string
+        value: ''
+      name: loopPromptId
+    node_inputs:
+    - input:
+        value:
+          path: user_input
+          ref_node: '100001'
+      name: input
+    node_outputs:
+      detected_issues:
+        description: 检测到的问题列表
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      processed_request:
+        description: 处理后的请求解析
+        type: string
+        value: null
+      repair_steps:
+        description: 修复步骤列表
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      summary:
+        description: 处理总结
+        type: string
+        value: null
+      verification_method:
+        description: 验证方法
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 640
+    y: 0
+  title: 万能输入处理器2
+  type: llm
+  version: '3'
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

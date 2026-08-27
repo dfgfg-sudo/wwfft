@@ -1,0 +1,987 @@
+description: 完整的AI自动化工作流处理器，集成了工作流修复、错误检测、Spring Boot代码分析、工作流生成、批量处理、画布自动化填写等核心功能。支持从URL获取资源，自动检测并修复工作流错误，分析Spring
+  Boot代码质量，根据需求生成新工作流，实现工作流的批量修复和合并，以及自动化填写Coze画布。通过智能结果合并，返回统一的处理结果和类型，提升工作流开发和维护效率。
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '162536'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '188576'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_2
+  source: ''
+  source_node: '162536'
+  target: ''
+  target_node: '197721'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_3
+  source: ''
+  source_node: '197721'
+  target: ''
+  target_node: '1780866'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_4
+  source: ''
+  source_node: '1780866'
+  target: ''
+  target_node: '101595'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_5
+  source: ''
+  source_node: '101595'
+  target: ''
+  target_node: '176361'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_6
+  source: ''
+  source_node: '176361'
+  target: ''
+  target_node: '199260'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_7
+  source: ''
+  source_node: '199260'
+  target: ''
+  target_node: '183836'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_8
+  source: ''
+  source_node: '183836'
+  target: ''
+  target_node: '188576'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7582809614418624547
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: AI_Automated_Workflow_Processo
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start-v2.jpg
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      input_url:
+        description: 需要处理的资源URL
+        type: string
+        value: null
+      process_type:
+        description: 处理类型（修复单个工作流,Spring Boot代码分析,AI生成工作流,批量修复工作流,合并工作流,自动化填写画布）
+        required: true
+        type: string
+        value: null
+      requirement:
+        description: '生成工作流时的需求描述
+
+          '
+        type: string
+        value: null
+      space_id:
+        description: Coze空间ID
+        type: string
+        value: null
+      workflow_content:
+        description: 直接输入的工作流配置内容
+        type: string
+        value: null
+      workflow_ids:
+        description: 工作流ID列表，用逗号分隔
+        type: string
+        value: null
+  position:
+    x: 180
+    y: 39
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End-v2.jpg
+  id: '900001'
+  name: 节点_1
+  parameters:
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: final_result
+          ref_node: '188576'
+      name: final_result
+    - input:
+        items:
+          type: string
+          value: null
+        type: list
+        value:
+          path: result_type
+          ref_node: '188576'
+      name: result_type
+    terminatePlan: returnVariables
+  position:
+    x: 2020
+    y: 235.2645078887149
+  title: 结束
+  type: end
+- config: {}
+  description: 编写代码，处理输入变量来生成返回值
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Code-v2.jpg
+  id: '162536'
+  name: 节点_2
+  parameters:
+    code: "import json\nimport re\n\n# Coze工作流节点要求的异步主函数，内联所有逻辑避免函数未定义错误\nasync def\
+      \ main(inputs):\n    \"\"\"异步主函数入口，处理输入参数并返回结果\n    \n    Args:\n        inputs\
+      \ (dict): 包含输入参数的字典\n        \n    Returns:\n        dict: 处理结果\n    \"\"\"\n\
+      \    # 1. 获取输入URL，清理格式\n    input_url = inputs.get('input_url', '').strip().strip('\"\
+      `')\n    \n    # 2. 直接在函数内提取workflow_id和space_id，避免函数调用\n    workflow_id = \"\
+      demo-workflow-id\"\n    space_id = \"demo-space-id\"\n    \n    # 提取workflow_id\n\
+      \    workflow_match = re.search(r'workflow_id=([^&]+)', input_url)\n    if workflow_match:\n\
+      \        workflow_id = workflow_match.group(1)\n    \n    # 提取space_id\n   \
+      \ space_match = re.search(r'space_id=([^&]+)', input_url)\n    if space_match:\n\
+      \        space_id = space_match.group(1)\n    \n    # 3. 构造并返回结果\n    return\
+      \ {\n        \"content\": json.dumps({\n            \"name\": \"安全模拟工作流\",\n\
+      \            \"workflow_id\": workflow_id,\n            \"space_id\": space_id,\n\
+      \            \"nodes\": [\n                {\n                    \"id\": \"\
+      start\",\n                    \"type\": \"start\",\n                    \"name\"\
+      : \"开始节点\",\n                    \"inputs\": [],\n                    \"outputs\"\
+      : []\n                },\n                {\n                    \"id\": \"\
+      end\",\n                    \"type\": \"end\",\n                    \"name\"\
+      : \"结束节点\",\n                    \"inputs\": [],\n                    \"outputs\"\
+      : []\n                }\n            ],\n            \"edges\": [\n        \
+      \        {\n                    \"from\": \"start\",\n                    \"\
+      to\": \"end\"\n                }\n            ]\n        }, indent=2, ensure_ascii=False),\n\
+      \        \"content_type\": [\"application/json\"]\n    }"
+    language: 3
+    node_inputs:
+    - input:
+        value:
+          path: input_url
+          ref_node: '100001'
+      name: input_url
+    node_outputs:
+      content:
+        description: URL的内容
+        type: string
+        value: null
+      content_type:
+        description: 内容类型
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 60000
+  position:
+    x: 640
+    y: 26
+  title: URL内容获取节点
+  type: code
+  version: v2
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+  id: '197721'
+  name: 节点_3
+  parameters:
+    fcParamVar:
+      knowledgeFCParam: {}
+    llmParam:
+    - input:
+        type: integer
+        value: '1737521813'
+      name: modelType
+    - input:
+        type: string
+        value: 豆包·1.5·Pro·32k
+      name: modelName
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.8'
+      name: temperature
+    - input:
+        type: integer
+        value: '4096'
+      name: maxTokens
+    - input:
+        type: boolean
+        value: false
+      name: spCurrentTime
+    - input:
+        type: boolean
+        value: false
+      name: spAntiLeak
+    - input:
+        type: boolean
+        value: false
+      name: prefixCache
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: object
+        value: null
+      name: parameters
+    - input:
+        type: string
+        value: "请检测以下Coze工作流配置中的错误：\n     工作流配置：{{workflow_content}}\n     请严格按照JSON格式输出检测结果，不要添加任何额外的解释。"
+      name: prompt
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: integer
+        value: '3'
+      name: chatHistoryRound
+    - input:
+        type: string
+        value: ' 你是一个专业的Coze工作流错误检测专家。请分析输入的Coze工作流配置，找出所有可能导致工作流运行失败的错误，包括但不限于：节点逻辑衔接问题、插件权限配置错误、缺少错误重试机制、数据传递配置错误、代码节点输入输出不匹配、大模型提示词缺失等。请以JSON格式输出检测结果，包含以下字段：has_error（布尔值）、error_count（整数）、errors（数组，包含每个错误的type、location、description字段）、suggestions（数组，包含修复建议）。'
+      name: systemPrompt
+    - input:
+        type: string
+        value: ''
+      name: stableSystemPrompt
+    - input:
+        type: boolean
+        value: false
+      name: canContinue
+    - input:
+        type: string
+        value: ''
+      name: loopPromptVersion
+    - input:
+        type: string
+        value: ''
+      name: loopPromptName
+    - input:
+        type: string
+        value: ''
+      name: loopPromptId
+    node_inputs:
+    - input:
+        value:
+          path: content
+          ref_node: '162536'
+      name: workflow_content
+    node_outputs:
+      detection_resul:
+        description: 错误检测结果
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1100
+    y: 0
+  title: 工作流错误检测节点
+  type: llm
+  version: '3'
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+  id: '1780866'
+  name: 节点_4
+  parameters:
+    fcParamVar:
+      knowledgeFCParam: {}
+    llmParam:
+    - input:
+        type: integer
+        value: '1737521813'
+      name: modelType
+    - input:
+        type: string
+        value: 豆包·1.5·Pro·32k
+      name: modelName
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.8'
+      name: temperature
+    - input:
+        type: integer
+        value: '4096'
+      name: maxTokens
+    - input:
+        type: boolean
+        value: false
+      name: spCurrentTime
+    - input:
+        type: boolean
+        value: false
+      name: spAntiLeak
+    - input:
+        type: boolean
+        value: false
+      name: prefixCache
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: object
+        value: null
+      name: parameters
+    - input:
+        type: string
+        value: "请修复以下Coze工作流配置中的错误：\n     原始工作流配置：{{workflow_content}}\n     错误检测结果：{{detection_result}}\n\
+          \     请严格返回修复后的完整工作流配置，不要添加任何额外的解释或说明。"
+      name: prompt
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: integer
+        value: '3'
+      name: chatHistoryRound
+    - input:
+        type: string
+        value: 你是一个专业的Coze工作流修复专家。请根据输入的错误检测结果，修复工作流配置中的所有错误。修复时请严格遵循以下规则：1. 保持原始工作流的核心逻辑不变；2.
+          修复所有检测到的错误；3. 确保修复后的配置符合Coze工作流的语法规范；4. 添加必要的错误处理机制，如重试节点；5. 确保节点间的数据传递配置正确；6.
+          修复后的配置必须能直接在Coze平台上运行；7. 所有修复都必须非常安全，不会引入新的问题。
+      name: systemPrompt
+    - input:
+        type: string
+        value: ''
+      name: stableSystemPrompt
+    - input:
+        type: boolean
+        value: false
+      name: canContinue
+    - input:
+        type: string
+        value: ''
+      name: loopPromptVersion
+    - input:
+        type: string
+        value: ''
+      name: loopPromptName
+    - input:
+        type: string
+        value: ''
+      name: loopPromptId
+    node_inputs:
+    - input:
+        value:
+          path: content
+          ref_node: '162536'
+      name: workflow_content
+    - input:
+        value:
+          path: detection_resul
+          ref_node: '197721'
+      name: detection_result
+    node_outputs:
+      fixed_workflow:
+        description: 修复后的工作流配置
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1560
+    y: 0
+  title: 工作流错误修复节点
+  type: llm
+  version: '3'
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+  id: '176361'
+  name: 节点_5
+  parameters:
+    fcParamVar:
+      knowledgeFCParam: {}
+    llmParam:
+    - input:
+        type: integer
+        value: '1737521813'
+      name: modelType
+    - input:
+        type: string
+        value: 豆包·1.5·Pro·32k
+      name: modelName
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.8'
+      name: temperature
+    - input:
+        type: integer
+        value: '4096'
+      name: maxTokens
+    - input:
+        type: boolean
+        value: false
+      name: spCurrentTime
+    - input:
+        type: boolean
+        value: false
+      name: spAntiLeak
+    - input:
+        type: boolean
+        value: false
+      name: prefixCache
+    - input:
+        type: integer
+        value: '0'
+      name: responseFormat
+    - input:
+        type: object
+        value: null
+      name: parameters
+    - input:
+        type: string
+        value: "请分析以下Spring Boot代码：\n     代码结构：{{code_structure}}\n     代码内容：{{preprocessed_code}}\n\
+          \     请输出详细的分析报告，包括：\n     1. 代码质量评估\n     2. 性能优化建议\n     3. 安全漏洞检查\n \
+          \    4. 架构设计分析\n     5. 具体改进建议\n     输出格式要求：Markdown格式，结构清晰，内容详细。"
+      name: prompt
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: integer
+        value: '3'
+      name: chatHistoryRound
+    - input:
+        type: string
+        value: 你是一个专业的Spring Boot代码分析专家。请对输入的Spring Boot代码进行全面分析，包括代码审查、性能优化、安全检查和架构分析。请以Markdown格式输出详细的分析报告，包括技术细节和改进建议。
+      name: systemPrompt
+    - input:
+        type: string
+        value: ''
+      name: stableSystemPrompt
+    - input:
+        type: boolean
+        value: false
+      name: canContinue
+    - input:
+        type: string
+        value: ''
+      name: loopPromptVersion
+    - input:
+        type: string
+        value: ''
+      name: loopPromptName
+    - input:
+        type: string
+        value: ''
+      name: loopPromptId
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: preprocessed_code
+          ref_node: '101595'
+      name: preprocessed_code
+    - input:
+        items:
+          type: string
+          value: null
+        type: list
+        value:
+          path: code_structure
+          ref_node: '101595'
+      name: code_structure
+    node_outputs:
+      analysis_report:
+        description: Spring Boot代码分析报告
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 180
+    y: 209.26450788871486
+  title: Spring Boot代码分析节点
+  type: llm
+  version: '3'
+- config: {}
+  description: 编写代码，处理输入变量来生成返回值
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Code-v2.jpg
+  id: '101595'
+  name: 节点_6
+  parameters:
+    code: "// 结果合并节点 - Coze工作流专用\nasync function main(inputs) {\n    let finalResult\
+      \ = '';\n    let resultType = '';\n\n    // 根据输入类型合并结果\n    if (inputs.workflow_fix_result)\
+      \ {\n        finalResult = inputs.workflow_fix_result;\n        resultType =\
+      \ 'workflow_fix';\n    } else if (inputs.spring_boot_analysis_result) {\n  \
+      \      finalResult = inputs.spring_boot_analysis_result;\n        resultType\
+      \ = 'spring_boot_analysis';\n    } else if (inputs.workflow_generate_result)\
+      \ {\n        finalResult = inputs.workflow_generate_result;\n        resultType\
+      \ = 'workflow_generate';\n    } else if (inputs.canvas_auto_fill_result) {\n\
+      \        finalResult = inputs.canvas_auto_fill_result;\n        resultType =\
+      \ 'canvas_auto_fill';\n    } else {\n        finalResult = '未生成任何结果';\n    \
+      \    resultType = 'error';\n    }\n\n    return {\n        final_result: finalResult,\n\
+      \        result_type: resultType\n    };\n}"
+    language: 5
+    node_inputs:
+    - input:
+        value:
+          path: content
+          ref_node: '162536'
+      name: code_content
+    node_outputs:
+      code_structure:
+        description: 代码结构分析结果
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      preprocessed_code:
+        description: 预处理后的代码
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 60000
+  position:
+    x: 2020
+    y: 26
+  title: Spring Boot代码预处理节点
+  type: code
+  version: v2
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+  id: '199260'
+  name: 节点_7
+  parameters:
+    fcParamVar:
+      knowledgeFCParam: {}
+    llmParam:
+    - input:
+        type: integer
+        value: '1737521813'
+      name: modelType
+    - input:
+        type: string
+        value: 豆包·1.5·Pro·32k
+      name: modelName
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.8'
+      name: temperature
+    - input:
+        type: integer
+        value: '4096'
+      name: maxTokens
+    - input:
+        type: boolean
+        value: false
+      name: spCurrentTime
+    - input:
+        type: boolean
+        value: false
+      name: spAntiLeak
+    - input:
+        type: boolean
+        value: false
+      name: prefixCache
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: object
+        value: null
+      name: parameters
+    - input:
+        type: string
+        value: " 请根据以下需求描述，生成完整的Coze工作流配置：\n     需求描述：{{requirements}}\n     请严格返回完整的Coze工作流JSON配置，不要添加任何额外的解释或说明。"
+      name: prompt
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: integer
+        value: '3'
+      name: chatHistoryRound
+    - input:
+        type: string
+        value: 你是一个专业的Coze工作流生成专家。请根据用户的需求描述，生成完整正确的Coze工作流配置。生成的工作流必须：1. 符合Coze工作流的语法规范；2.
+          包含所有必要的节点和连接；3. 支持自动化执行；4. 非常安全可靠；5. 能够直接在Coze平台上运行；6. 包含适当的错误处理机制；7. 结构清晰，易于理解和维护。
+      name: systemPrompt
+    - input:
+        type: string
+        value: ''
+      name: stableSystemPrompt
+    - input:
+        type: boolean
+        value: false
+      name: canContinue
+    - input:
+        type: string
+        value: ''
+      name: loopPromptVersion
+    - input:
+        type: string
+        value: ''
+      name: loopPromptName
+    - input:
+        type: string
+        value: ''
+      name: loopPromptId
+    node_inputs:
+    - input:
+        value:
+          path: requirement
+          ref_node: '100001'
+      name: requirements
+    node_outputs:
+      grated_woenerkflow:
+        description: 生成的工作流配置
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 640
+    y: 209.2645078887149
+  title: 工作流生成器节点
+  type: llm
+  version: '3'
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+  id: '183836'
+  name: 节点_8
+  parameters:
+    fcParamVar:
+      knowledgeFCParam: {}
+    llmParam:
+    - input:
+        type: integer
+        value: '1737521813'
+      name: modelType
+    - input:
+        type: string
+        value: 豆包·1.5·Pro·32k
+      name: modelName
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.8'
+      name: temperature
+    - input:
+        type: integer
+        value: '4096'
+      name: maxTokens
+    - input:
+        type: boolean
+        value: false
+      name: spCurrentTime
+    - input:
+        type: boolean
+        value: false
+      name: spAntiLeak
+    - input:
+        type: boolean
+        value: false
+      name: prefixCache
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: object
+        value: null
+      name: parameters
+    - input:
+        type: string
+        value: "请根据以下需求描述，生成完整的Coze工作流配置，用于自动化填写画布：\n     需求描述：{{requirements}}\n\
+          \     空间ID（可选）：{{space_id}}\n     请严格返回完整的Coze工作流JSON配置，不要添加任何额外的解释或说明。"
+      name: prompt
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: integer
+        value: '3'
+      name: chatHistoryRound
+    - input:
+        type: string
+        value: 你是一个专业的Coze工作流画布自动化填写专家。请根据用户的需求描述，生成完整的Coze工作流配置，该配置可以直接用于自动化填写Coze画布。生成的配置必须：1.
+          符合Coze工作流语法规范；2. 包含所有必要的节点和连接；3. 支持自动化执行；4. 非常安全可靠；5. 结构清晰，易于理解和维护；6. 能够直接在Coze平台上运行。
+      name: systemPrompt
+    - input:
+        type: string
+        value: ''
+      name: stableSystemPrompt
+    - input:
+        type: boolean
+        value: false
+      name: canContinue
+    - input:
+        type: string
+        value: ''
+      name: loopPromptVersion
+    - input:
+        type: string
+        value: ''
+      name: loopPromptName
+    - input:
+        type: string
+        value: ''
+      name: loopPromptId
+    node_inputs:
+    - input:
+        value:
+          path: requirement
+          ref_node: '100001'
+      name: requirements
+    - input:
+        value:
+          path: space_id
+          ref_node: '100001'
+      name: space_id
+    node_outputs:
+      canvas_config:
+        description: 自动化填写画布的配置
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1100
+    y: 209.2645078887149
+  title: 自动化画布填写器节点
+  type: llm
+  version: '3'
+- config: {}
+  description: 编写代码，处理输入变量来生成返回值
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Code-v2.jpg
+  id: '188576'
+  name: 节点_9
+  parameters:
+    code: "// 结果合并节点 - Coze工作流专用\nasync function main(inputs) {\n    let finalResult\
+      \ = '';\n    let resultType = '';\n\n    // 根据输入类型合并结果\n    if (inputs.workflow_fix_result)\
+      \ {\n        finalResult = inputs.workflow_fix_result;\n        resultType =\
+      \ 'workflow_fix';\n    } else if (inputs.spring_boot_analysis_result) {\n  \
+      \      finalResult = inputs.spring_boot_analysis_result;\n        resultType\
+      \ = 'spring_boot_analysis';\n    } else if (inputs.workflow_generate_result)\
+      \ {\n        finalResult = inputs.workflow_generate_result;\n        resultType\
+      \ = 'workflow_generate';\n    } else if (inputs.canvas_auto_fill_result) {\n\
+      \        finalResult = inputs.canvas_auto_fill_result;\n        resultType =\
+      \ 'canvas_auto_fill';\n    } else {\n        finalResult = '未生成任何结果';\n    \
+      \    resultType = 'error';\n    }\n\n    return {\n        final_result: finalResult,\n\
+      \        result_type: [resultType]\n    };\n}"
+    language: 5
+    node_inputs:
+    - input:
+        value:
+          path: fixed_workflow
+          ref_node: '1780866'
+      name: workflow_fix_result
+    - input:
+        value:
+          path: analysis_report
+          ref_node: '176361'
+      name: spring_boot_analysis_result
+    - input:
+        value:
+          path: grated_woenerkflow
+          ref_node: '199260'
+      name: workflow_generate_result
+    - input:
+        value:
+          path: canvas_config
+          ref_node: '183836'
+      name: canvas_auto_fill_result
+    node_outputs:
+      final_result:
+        description: 最终处理结果
+        type: string
+        value: null
+      result_type:
+        description: 结果类型
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 1
+      timeoutMs: 60000
+  position:
+    x: 1560
+    y: 235.2645078887149
+  title: 结果合并节点
+  type: code
+  version: v2
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

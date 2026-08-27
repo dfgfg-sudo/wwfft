@@ -1,0 +1,470 @@
+description: 此处真正完美的从头到尾全文所有内容全部整理合并修复完整内容制作成为一个全新的coze的强大功能的超级插件不缺失代码和元数据的从头到尾全文所有全部的都是自动化操作完成的无人工的
+edges: []
+icon: plugin_icon/workflow.png
+id: 7530267100759277603
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: fkdjgshgdfsd
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start-v2.jpg
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      input:
+        type: string
+        value: null
+  position:
+    x: 0
+    y: 0
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End-v2.jpg
+  id: '900001'
+  name: 节点_1
+  parameters:
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: ''
+          ref_node: ''
+      name: output
+    terminatePlan: returnVariables
+  position:
+    x: 1000
+    y: 0
+  title: 结束
+  type: end
+- config: {}
+  description: 当你需要获取网页、pdf、doc、docx、xlsx、csv、text 内容时，使用此工具，可以获取url链接下的标题和内容。由于个别网站自身站点限制，无法获取网页内容。
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Plugin-v2.jpg
+  id: '129762'
+  name: 节点_2
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7379227817307029513'
+      name: apiID
+    - input:
+        type: string
+        value: LinkReaderPlugin
+      name: apiName
+    - input:
+        type: string
+        value: '7379227817307013129'
+      name: pluginID
+    - input:
+        type: string
+        value: 链接读取
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_outputs:
+      code:
+        description: 错误码
+        type: integer
+        value: null
+      data:
+        description: 网页的内容
+        properties:
+          content:
+            type: string
+            value: null
+          images:
+            items:
+              properties:
+                alt:
+                  type: string
+                  value: null
+                height:
+                  type: integer
+                  value: null
+                title:
+                  type: string
+                  value: null
+                url:
+                  type: string
+                  value: null
+                width:
+                  type: integer
+                  value: null
+              type: object
+              value: null
+            type: list
+            value: null
+          title:
+            type: string
+            value: null
+        type: object
+        value: null
+      err_msg:
+        description: 错误信息
+        type: string
+        value: null
+      error_code:
+        description: 错误码
+        type: string
+        value: null
+      error_msg:
+        description: 错误信息
+        type: string
+        value: null
+      message:
+        description: 错误信息
+        type: string
+        value: null
+      pdf_content:
+        description: pdf的内容
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: -8.881784197001252e-16
+    y: 122.82424844188228
+  title: LinkReaderPlugin
+  type: llm
+- config: {}
+  description: 将在线PDF格式解析成文本
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Plugin-v2.jpg
+  id: '124914'
+  name: 节点_3
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7373650116919509028'
+      name: apiID
+    - input:
+        type: string
+        value: PDF_reader
+      name: apiName
+    - input:
+        type: string
+        value: '7368650371998236708'
+      name: pluginID
+    - input:
+        type: string
+        value: doc_reader
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 468.5612982207238
+    y: 122.8242484418823
+  title: PDF_reader
+  type: llm
+- config: {}
+  description: 读取docx格式
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Plugin-v2.jpg
+  id: '124023'
+  name: 节点_4
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7368650371998253092'
+      name: apiID
+    - input:
+        type: string
+        value: docx_reader
+      name: apiName
+    - input:
+        type: string
+        value: '7368650371998236708'
+      name: pluginID
+    - input:
+        type: string
+        value: doc_reader
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 867.6839017469059
+    y: 122.8242484418823
+  title: docx_reader
+  type: llm
+- config: {}
+  description: 调用文心一言大模型单次问答
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Plugin-v2.jpg
+  id: '176352'
+  name: 节点_5
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7358120890019725346'
+      name: apiID
+    - input:
+        type: string
+        value: erniebot
+      name: apiName
+    - input:
+        type: string
+        value: '7358120890019708962'
+      name: pluginID
+    - input:
+        type: string
+        value: 文心一言
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_outputs:
+      response:
+        description: 文心一言回答结果
+        required: true
+        type: string
+        value: null
+      system:
+        description: 角色设置
+        required: true
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 0
+    y: 297.5599404463203
+  title: erniebot
+  type: llm
+- config: {}
+  description: 调用文心一言大模型多轮问答
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Plugin-v2.jpg
+  id: '104597'
+  name: 节点_6
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7358162997640183849'
+      name: apiID
+    - input:
+        type: string
+        value: erniebot_history
+      name: apiName
+    - input:
+        type: string
+        value: '7358120890019708962'
+      name: pluginID
+    - input:
+        type: string
+        value: 文心一言
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_outputs:
+      history:
+        description: 返回问答后的历史记录
+        required: true
+        type: string
+        value: null
+      response:
+        description: 文心一言回答结果
+        required: true
+        type: string
+        value: null
+      system:
+        description: 角色设置
+        required: true
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 468.56129822072376
+    y: 297.5599404463203
+  title: erniebot_history
+  type: llm
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

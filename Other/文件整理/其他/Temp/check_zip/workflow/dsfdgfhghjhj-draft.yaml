@@ -1,0 +1,1348 @@
+description: 古风养生视频工作流
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '109803'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '112964'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_2
+  source: ''
+  source_node: '109803'
+  target: ''
+  target_node: '112964'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7529119424294813732
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: dsfdgfhghjhj
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start-v2.jpg
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      input:
+        type: string
+        value: null
+  position:
+    x: 180
+    y: 13
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End-v2.jpg
+  id: '900001'
+  name: 节点_1
+  parameters:
+    node_inputs:
+    - input:
+        items:
+          type: string
+          value: null
+        type: list
+        value:
+          path: key1
+          ref_node: '109803'
+      name: output
+    terminatePlan: returnVariables
+  position:
+    x: 1560
+    y: 0
+  title: 结束
+  type: end
+- config: {}
+  description: 编写代码，处理输入变量来生成返回值
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Code-v2.jpg
+  id: '109803'
+  name: 节点_2
+  parameters:
+    code: "// 在这里，您可以通过 'params'  获取节点中的输入变量，并通过 'ret' 输出结果\n// 'params' 已经被正确地注入到环境中\n\
+      // 下面是一个示例，获取节点输入中参数名为'input'的值：\n// const input = params.input; \n// 下面是一个示例，输出一个包含多种数据类型的\
+      \ 'ret' 对象：\n// const ret = { \"name\": '小明', \"hobbies\": [\"看书\", \"旅游\"]\
+      \ };\n\nasync function main({ params }: Args): Promise<Output> {\n    // 构建输出对象\n\
+      \    const ret = {\n        \"key0\": params.input + params.input, // 拼接两次入参\
+      \ input 的值\n        \"key1\": [\"hello\", \"world\"], // 输出一个数组\n        \"\
+      key2\": { // 输出一个Object\n            \"key21\": \"hi\"\n        },\n    };\n\
+      \n    return ret;\n}"
+    language: 5
+    node_inputs:
+    - input:
+        value:
+          path: input
+          ref_node: '100001'
+      name: input
+    node_outputs:
+      key0:
+        type: string
+        value: null
+      key1:
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      key2:
+        properties:
+          key21:
+            type: string
+            value: null
+        type: object
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 60000
+  position:
+    x: 640
+    y: 0
+  title: 代码
+  type: code
+- config: {}
+  description: 用于把变量转化为JSON字符串
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-to_json.png
+  id: '112964'
+  name: 节点_3
+  parameters:
+    node_inputs:
+    - input:
+        value:
+          path: key1
+          ref_node: '109803'
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1100
+    y: 0
+  title: JSON 序列化
+  type: llm
+- config: {}
+  description: ''
+  icon: ''
+  id: '103174'
+  name: 节点_4
+  parameters:
+    note: '[{"type":"paragraph","children":[{"text":"{","type":"text"}]},{"type":"paragraph","children":[{"text":"  \"type\":
+      \"coze-workflow-clipboard-data\",","type":"text"}]},{"type":"paragraph","children":[{"text":"  \"source\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"    \"workflowId\":
+      \"7512345678901234567\",","type":"text"}]},{"type":"paragraph","children":[{"text":"    \"flowMode\":
+      0,","type":"text"}]},{"type":"paragraph","children":[{"text":"    \"spaceId\":
+      \"7412345678901234567\",","type":"text"}]},{"type":"paragraph","children":[{"text":"    \"isDouyin\":
+      false,","type":"text"}]},{"type":"paragraph","children":[{"text":"    \"host\":
+      \"www.coze.cn\"","type":"text"}]},{"type":"paragraph","children":[{"text":"  },","type":"text"}]},{"type":"paragraph","children":[{"text":"  \"json\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"    \"nodes\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"1\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      -1000,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      0","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"输入节点\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"接收用户选择的场景和参数\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"sceneType\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"required\":
+      true,","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"场景类型（历史文化/生活治愈/营销育儿/知识分享/证件照）\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            },","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"theme\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"required\":
+      true,","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"内容主题（如李白的一生/治愈系风景/产品宣传等）\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            },","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"style\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"required\":
+      false,","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"风格（如古风/现代/搞笑等，根据场景选择）\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            },","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"APIKEY\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"required\":
+      true,","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"API调用密钥（需替换为你的密钥）\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            },","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"素材库\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"list\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"required\":
+      false,","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"基础素材URL列表（视频/图片/音频）\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"200001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      -600,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      0","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"场景判断\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"逻辑分流\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"根据场景类型分发到对应处理流程\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234567\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"sceneRouter\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"sceneType\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"sceneType\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"routeKey\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"路由关键字\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"200002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      -300,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      -200","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"历史文化场景\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"历史内容生成\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"处理历史人物/故事类内容\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234568\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"historyContentGen\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"theme\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"theme\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"style\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"style\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"content\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"生成的历史内容\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            },","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"prompt\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"优化后的提示词\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"200003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      -300,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      0","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"生活治愈场景\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"情感内容生成\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"处理治愈系/搞笑类内容\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234569\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"emotionalContentGen\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"theme\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"theme\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"style\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"style\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"content\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"生成的情感内容\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            },","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"mood\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"情感基调（治愈/搞笑/温馨）\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"200004\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      -300,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      200","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"营销育儿场景\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"功能内容生成\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"处理营销/育儿/知识类内容\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234570\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"functionalContentGen\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"theme\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"theme\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"style\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"style\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"content\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"生成的功能内容\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            },","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"keywords\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"关键词列表\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"300001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      0,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      -200","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"历史素材匹配\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"历史场景专用\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"匹配历史类视频素材\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234571\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"historyMaterialMatch\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"theme\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"theme\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"content\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"200002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"content\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"materialUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"匹配的历史素材URL\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"300002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      0,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      0","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"治愈素材匹配\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"生活治愈场景专用\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"匹配治愈/搞笑类视频素材\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234572\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"emotionalMaterialMatch\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"theme\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"theme\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"mood\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"200003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"mood\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"materialUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"匹配的治愈素材URL\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"300003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      0,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      200","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"营销素材匹配\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"营销育儿场景专用\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"匹配营销/育儿类视频素材\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234573\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"marketingMaterialMatch\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"theme\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"theme\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"keywords\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"200004\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"keywords\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"materialUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"匹配的营销素材URL\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"400001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      300,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      -200","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"历史语音合成\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"音色:沉稳大叔\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"历史内容转语音\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234574\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"historyTTS\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"text\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"200002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"content\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"voiceId\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"沉稳大叔\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"audioUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"生成的语音URL\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"400002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      300,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      0","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"治愈语音合成\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"音色:温柔女声\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"治愈内容转语音\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234575\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"emotionalTTS\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"text\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"200003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"content\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"voiceId\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"温柔女声\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"audioUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"生成的语音URL\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"400003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      300,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      200","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"营销语音合成\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"音色:专业主播\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"营销内容转语音\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234576\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"marketingTTS\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"text\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"200004\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"content\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"voiceId\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"专业主播\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"audioUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"生成的语音URL\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"500001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      600,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      -200","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"历史视频合成\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"历史场景专用\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"合成历史类视频\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234577\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"historyVideoSynthesis\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"videoUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"300001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"materialUrl\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"audioUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"400001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"audioUrl\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"APIKEY\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"APIKEY\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"videoUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"合成的历史视频URL\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"500002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      600,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      0","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"治愈视频合成\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"生活治愈场景专用\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"合成治愈类视频\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234578\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"emotionalVideoSynthesis\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"videoUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"300002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"materialUrl\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"audioUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"400002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"audioUrl\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"APIKEY\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"APIKEY\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"videoUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"合成的治愈视频URL\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"500003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      600,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      200","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"营销视频合成\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"营销育儿场景专用\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"合成营销类视频\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234579\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"marketingVideoSynthesis\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"videoUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"300003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"materialUrl\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"audioUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"400003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"audioUrl\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"APIKEY\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"APIKEY\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"videoUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"合成的营销视频URL\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"600001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      900,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      -200","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"历史字幕添加\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"古风字幕风格\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"为历史视频添加字幕\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234580\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"historySubtitle\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"videoUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"500001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"videoUrl\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"text\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"200002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"content\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"style\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"古风\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"finalVideoUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"最终历史视频URL\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"600002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      900,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      0","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"治愈字幕添加\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"温馨字幕风格\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"为治愈视频添加字幕\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234581\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"emotionalSubtitle\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"videoUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"500002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"videoUrl\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"text\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"200003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"content\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"style\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"温馨\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"finalVideoUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"最终治愈视频URL\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"600003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      900,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      200","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"营销字幕添加\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"专业字幕风格\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"为营销视频添加字幕\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234582\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"marketingSubtitle\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"videoUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"500003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"videoUrl\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"text\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"200004\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"content\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"style\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"专业\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"finalVideoUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"最终营销视频URL\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"700001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"4\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      1200,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      -100","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"飞书同步\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"subtitle\":
+      \"可选功能\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"将生成内容同步至飞书\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"inputs\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"apiParam\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"7432156478901234583\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiID\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      \"feishuSync\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"literal\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                },","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"apiName\"","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ],","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"inputParameters\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"title\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"theme\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"content\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"200002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"content\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              },","type":"text"}]},{"type":"paragraph","children":[{"text":"              {","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"name\":
+      \"videoUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                \"input\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                  \"value\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"type\":
+      \"ref\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                    \"content\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"source\":
+      \"block-output\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"blockID\":
+      \"600001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"                      \"name\":
+      \"finalVideoUrl\"","type":"text"}]},{"type":"paragraph","children":[{"text":"                    }","type":"text"}]},{"type":"paragraph","children":[{"text":"                  }","type":"text"}]},{"type":"paragraph","children":[{"text":"                }","type":"text"}]},{"type":"paragraph","children":[{"text":"              }","type":"text"}]},{"type":"paragraph","children":[{"text":"            ]","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"feishuDocUrl\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"description\":
+      \"飞书文档URL\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"id\":
+      \"999999\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"type\":
+      \"2\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"meta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"position\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"x\":
+      1500,","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"y\":
+      0","type":"text"}]},{"type":"paragraph","children":[{"text":"          }","type":"text"}]},{"type":"paragraph","children":[{"text":"        },","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"data\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"nodeMeta\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"title\":
+      \"输出节点\",","type":"text"}]},{"type":"paragraph","children":[{"text":"            \"description\":
+      \"返回最终结果\"","type":"text"}]},{"type":"paragraph","children":[{"text":"          },","type":"text"}]},{"type":"paragraph","children":[{"text":"          \"outputs\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"            {","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"name\":
+      \"最终结果\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"type\":
+      \"string\",","type":"text"}]},{"type":"paragraph","children":[{"text":"              \"value\":
+      \"场景类型：{{sceneType}}\\n主题：{{theme}}\\n\\n已成功生成视频：\\n{{finalVideoUrl}}\\n\\n可直接查看：![]({{finalVideoUrl}})\\n\\n飞书同步文档：{{feishuDocUrl}}\"","type":"text"}]},{"type":"paragraph","children":[{"text":"            }","type":"text"}]},{"type":"paragraph","children":[{"text":"          ]","type":"text"}]},{"type":"paragraph","children":[{"text":"        }","type":"text"}]},{"type":"paragraph","children":[{"text":"      }","type":"text"}]},{"type":"paragraph","children":[{"text":"    ],","type":"text"}]},{"type":"paragraph","children":[{"text":"    \"edges\":
+      [","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"100001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"200001\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"200001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"200002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"condition\":
+      \"routeKey === ''历史文化''\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"200001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"200003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"condition\":
+      \"routeKey === ''生活治愈''\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"200001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"200004\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"condition\":
+      \"routeKey === ''营销育儿''\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"200002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"300001\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"200003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"300002\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"200004\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"300003\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"200002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"400001\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"200003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"400002\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"200004\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"400003\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"300001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"500001\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"300002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"500002\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"300003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"500003\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"400001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"500001\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"400002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"500002\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"400003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"500003\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"500001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"600001\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"500002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"600002\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"500003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"600003\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"600001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"700001\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"600002\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"700001\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"600003\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"700001\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      },","type":"text"}]},{"type":"paragraph","children":[{"text":"      {","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"sourceNodeID\":
+      \"700001\",","type":"text"}]},{"type":"paragraph","children":[{"text":"        \"targetNodeID\":
+      \"999999\"","type":"text"}]},{"type":"paragraph","children":[{"text":"      }","type":"text"}]},{"type":"paragraph","children":[{"text":"    ]","type":"text"}]},{"type":"paragraph","children":[{"text":"  },","type":"text"}]},{"type":"paragraph","children":[{"text":"  \"bounds\":
+      {","type":"text"}]},{"type":"paragraph","children":[{"text":"    \"x\": -1200,","type":"text"}]},{"type":"paragraph","children":[{"text":"    \"y\":
+      -300,","type":"text"}]},{"type":"paragraph","children":[{"text":"    \"width\":
+      2800,","type":"text"}]},{"type":"paragraph","children":[{"text":"    \"height\":
+      600","type":"text"}]},{"type":"paragraph","children":[{"text":"  }","type":"text"}]},{"type":"paragraph","children":[{"text":"}","type":"text"}]}]'
+    schemaType: slate
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 640
+    y: 206.3
+  size:
+    height: 150
+    width: 240
+  title: ''
+  type: llm
+- config: {}
+  description: 助力开发者，1分钟即可完成
+  icon: https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/0454c1524dae4fb3a42e327d2304997b~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1755604797&x-signature=kez07aoeX%2BKWh9ixf8ggF9Ej0DQ%3D
+  id: '109116'
+  name: 节点_5
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7492985821671440436'
+      name: apiID
+    - input:
+        type: string
+        value: checkCami
+      name: apiName
+    - input:
+        type: string
+        value: '7490960782402895907'
+      name: pluginID
+    - input:
+        type: string
+        value: 工作流通用插件
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_outputs:
+      code:
+        description: 1代表成功 0代表失败
+        type: float
+        value: null
+      expired_time:
+        description: 卡密到期时间
+        type: string
+        value: null
+      msg:
+        description: 消息
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1388.4195848205873
+    y: 147.25081846645043
+  title: checkCami
+  type: llm
+- config: {}
+  description: 异步处理工作流
+  icon: https://p6-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/6c78ad9318d244b093418cb1ce353172~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1755604797&x-signature=6uiQzGZ4%2FmDomJ1ZxrRjRj3uz%2F8%3D
+  id: '120530'
+  name: 节点_6
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7512165629248520242'
+      name: apiID
+    - input:
+        type: string
+        value: async_workflow_call
+      name: apiName
+    - input:
+        type: string
+        value: '7512165629248503858'
+      name: pluginID
+    - input:
+        type: string
+        value: 异步处理工作流
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_outputs:
+      cost:
+        type: string
+        value: null
+      debug_url:
+        type: string
+        value: null
+      error:
+        properties:
+          code:
+            type: float
+            value: null
+          msg:
+            type: string
+            value: null
+        type: object
+        value: null
+      execute_id:
+        type: string
+        value: null
+      is_success:
+        required: true
+        type: boolean
+        value: null
+      msg:
+        type: string
+        value: null
+      token:
+        type: float
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1109.836517755193
+    y: -70.5148418652329
+  title: async_workflow_call
+  type: llm
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

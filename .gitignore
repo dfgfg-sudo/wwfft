@@ -1,0 +1,74 @@
+# ===== 隐私 / 个人文件（不上传）=====
+Documents/
+Downloads/
+BaiduNetdiskDownload/
+360Downloads/
+360安全浏览器下载/
+微信图片收藏/
+
+# ===== 缓存 / 虚拟环境 / 依赖（可再生，不上传）=====
+Ollama/
+ai-tools-venv/
+__pycache__/
+.pnpm-store/
+npm-cache/
+npm-global/
+pip-cache/
+node_modules/
+venv/
+coze_vision_libs/
+
+# ===== 安装包 / 便携工具 / 应用包 / 模型缓存（非源码）=====
+software/
+Dev-Janitor_2.5.0_x64_portable/
+Dism++10.1.1002.1B/
+.trae/
+Bionic/
+profile_temp/
+
+# ===== 体量超 GitHub 仓库上限，无法上传 =====
+Data/
+Coze知识库批量上传项目/
+
+# ===== 单文件超 100MB（GitHub 硬上限），排除 =====
+音视频字幕工具-Whisper繁简转换/models/ggml-small.bin
+Bionic/Bionic.exe
+coze_vision_libs/paddle/base/libpaddle.pyd
+
+# ===== 临时文件 =====
+add_err.txt
+dir_stats.txt
+
+# ===== 嵌套 git 仓库（gitlink 无法推送，暂不展开）=====
+Projects/Hello-World/
+ai-tools/AI-skills-bank/
+ai-tools/LocalAGI/
+ai-tools/LocalAI/
+ai-tools/Ollamancer/
+ai-tools/OpenMonoAgent.ai/
+ai-tools/PARMANA/
+ai-tools/QiDi-Agent/
+ai-tools/Qubitz/
+ai-tools/ResceneAgent/
+ai-tools/hermes-agent/
+ai-tools/llama.cpp/
+ai-tools/llm-security-playground/
+ai-tools/mcp-tool-security-playground/
+ai-tools/nexus/
+ai-tools/odysseus/
+freellmapi/
+github项目/AIWebsiteCloner/
+github项目/CLI-Anything/
+github项目/DeerFlow/
+github项目/HermesAgent/
+github项目/OpenAgents/
+github项目/OpenSpace/
+github项目/aimoneyhunter/
+github项目/anthropics-skills/
+github项目/antigravity-awesome-skills/
+github项目/awesome-claude-skills/
+github项目/browser-use/
+github项目/freeCodeCamp/
+github项目/pentagi/
+github项目/HermesAgent/skills/web-access/
+vibe-coding-cn/

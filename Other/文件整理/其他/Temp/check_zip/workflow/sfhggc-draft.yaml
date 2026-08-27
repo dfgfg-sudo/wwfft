@@ -1,0 +1,80 @@
+description: '工作流
+
+  LG501_link_or_text_to_treeMind_1
+
+  【思维脑图生成讲课的内容或自己的想法，都可以通过他变成思维导图，六哥团队已经对接到飞书和微信客服上了，大家可以直接用】Polish_Long_Text_5000_1w_2
+
+  【1万字长文本润色神器】一次润色万字长文本，大大提高效率； 用 ### 分割长文本，放在工作流中润色；【俗人六哥】团队出品；douyin_video_to_text_summary_2
+
+  给抖音的视频链接 ，提取文案并纠正错别字，而且做总结和提炼行业类目，教育、知识播主或讲行业踩坑的视频，都可以用他的总结，直接复制到评论区！X_3 抖音链接+文本提取+小红书改写+发布飞书文档工作流
+  DY_video_to_text_1 抖音视频提取文案 News_1 通用新闻搜索和整理工作流，可被其他工作流调用 search_summary_xmind_1搜索+总结+思维导图
+  web_summary_1输入特定网站url，以及对网页想问的问题（可选），总结回答内容
+
+  douyin1_1把抖音热门视频，转化成小红书
+
+  girl_power_1视频文案二创
+
+  get_dy_video_1抖音视频搜索+获取视频链接
+
+  douyin_wenan_1_1输入抖音链接，提取抖音文案
+
+  DY_video_to_text_2抖音视频提取文案
+
+  Do_to_x_1抖音视频转知乎文案'
+edges: []
+icon: plugin_icon/workflow.png
+id: 7394181460024066086
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: sfhggc
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start.png
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      ? ''
+      : required: true
+        type: string
+        value: null
+  position:
+    x: 0
+    y: 0
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End.png
+  id: '900001'
+  name: 节点_1
+  parameters:
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: ''
+          ref_node: ''
+      name: output
+    terminatePlan: returnVariables
+  position:
+    x: 1000
+    y: 0
+  title: 结束
+  type: end
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

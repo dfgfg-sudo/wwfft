@@ -1,0 +1,2519 @@
+description: '工作流
+
+  '
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '176883'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '195498'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_2
+  source: ''
+  source_node: '195498'
+  target: ''
+  target_node: '178603'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_3
+  source: ''
+  source_node: '178603'
+  source_port: 'true'
+  target: ''
+  target_node: '180582'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_4
+  source: ''
+  source_node: '180582'
+  target: ''
+  target_node: '139405'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_5
+  source: ''
+  source_node: '139405'
+  target: ''
+  target_node: '103266'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_6
+  source: ''
+  source_node: '103266'
+  target: ''
+  target_node: '176883'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_7
+  source: ''
+  source_node: '178603'
+  source_port: 'false'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_8
+  source: ''
+  source_node: '148923'
+  target: ''
+  target_node: '143146'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_9
+  source: ''
+  source_node: '143146'
+  target: ''
+  target_node: '130799'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_10
+  source: ''
+  source_node: '130799'
+  target: ''
+  target_node: '141668'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_11
+  source: ''
+  source_node: '141668'
+  target: ''
+  target_node: '196257'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_12
+  source: ''
+  source_node: '196257'
+  target: ''
+  target_node: '161420'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_13
+  source: ''
+  source_node: '161420'
+  target: ''
+  target_node: '123195'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_14
+  source: ''
+  source_node: '123195'
+  target: ''
+  target_node: '136524'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_15
+  source: ''
+  source_node: '136524'
+  target: ''
+  target_node: '177739'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_16
+  source: ''
+  source_node: '177739'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_17
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '140525'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_18
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '163058'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_19
+  source: ''
+  source_node: '163058'
+  target: ''
+  target_node: '197951'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_20
+  source: ''
+  source_node: '163058'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_21
+  source: ''
+  source_node: '197951'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_22
+  source: ''
+  source_node: '187982'
+  target: ''
+  target_node: '133893'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_23
+  source: ''
+  source_node: '187982'
+  target: ''
+  target_node: '134514'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_24
+  source: ''
+  source_node: '133893'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_25
+  source: ''
+  source_node: '187982'
+  target: ''
+  target_node: '129888'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_26
+  source: ''
+  source_node: '129888'
+  target: ''
+  target_node: '120288'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_27
+  source: ''
+  source_node: '120288'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_28
+  source: ''
+  source_node: '129888'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_29
+  source: ''
+  source_node: '140525'
+  target: ''
+  target_node: '195498'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_30
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '148923'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7395834292930347035
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: gzxcvbbbb
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start.png
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      BOT_USER_INPUT:
+        description: 用户本轮对话输入内容
+        type: string
+        value: null
+      URL:
+        description: '提供抖音视频链接
+
+          测试链接：https://www.douyin.com/discover?modal_id=7366557962552249610https://www.douyin.com/discover?modal_id=7366557962552249610'
+        required: true
+        type: string
+        value: null
+      douyin_input:
+        description: 提供抖音视频链接 / 测试链接
+        required: true
+        type: string
+        value: null
+  position:
+    x: 387.5
+    y: 1494.0249999999996
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End.png
+  id: '900001'
+  name: 节点_1
+  parameters:
+    content:
+      type: string
+      value:
+        content: '您的抖音改小红书文案如下
+
+          {{output}}
+
+          ### 已经为您上次到飞书文档
+
+          {{output1}}
+
+          ### 视频与原文已经上传飞书文档
+
+          {{output2}}
+
+          ### 原文视频文案可以优化部分
+
+          {{output3}}
+
+          ###  原文润色
+
+          {{output4}}
+
+
+
+          此智能体由 BingoAI搭建
+
+          '
+        type: literal
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: douyin_url
+          ref_node: '195498'
+      name: rul
+    - input:
+        type: string
+        value: '1'
+      name: flag
+    - input:
+        type: object
+        value:
+          path: data
+          ref_node: '180582'
+      name: LinkReaderPlugin
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '103266'
+      name: output5
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '141668'
+      name: output
+    - input:
+        type: string
+        value:
+          path: data.url
+          ref_node: '123195'
+      name: output1
+    - input:
+        type: string
+        value:
+          path: output2
+          ref_node: '130799'
+      name: output2
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '196257'
+      name: output3
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '141668'
+      name: output4
+    - input:
+        type: string
+        value:
+          path: modify
+          ref_node: '103266'
+      name: modify
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '139405'
+      name: code
+    - input:
+        type: string
+        value:
+          path: title
+          ref_node: '139405'
+      name: code2
+    - input:
+        type: object
+        value:
+          path: data
+          ref_node: '176883'
+      name: Tiktok_video_copy_upload_fly_book
+    streamingOutput: false
+    terminatePlan: useAnswerContent
+  position:
+    x: 8328
+    y: 2526.2999999999993
+  title: 结束
+  type: end
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '195498'
+  name: 节点_2
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: 豆包·Function call模型
+      name: modelName
+    - input:
+        type: integer
+        value: '1706077826'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '1'
+      name: temperature
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: integer
+        value: '1024'
+      name: maxTokens
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: "识别{{input}}中的链接.​\n-限制​\n只输出网址​\n ​\n如果网址存在，则设置输出表示 flag 为 1，否则 flag\
+          \ 为 2"
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: douyin_input
+          ref_node: '100001'
+      name: input
+    node_outputs:
+      douyin_url:
+        description: 抖音视频的链接
+        type: string
+        value: null
+      flag:
+        description: 是否存在抖音视频链接
+        type: integer
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2041.5
+    y: -1.7053025658242404e-13
+  title: 提取url，判断是由url
+  type: llm
+  version: '3'
+- config: {}
+  description: 连接多个下游分支，若设定的条件成立则仅运行对应的分支，若均不成立则只运行“否则”分支
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Condition.png
+  id: '178603'
+  name: 节点_3
+  parameters:
+    branches:
+    - condition:
+        conditions:
+        - left:
+            input:
+              value:
+                path: flag
+                ref_node: '195498'
+          operator: 1
+          right:
+            input:
+              type: integer
+              value: '1'
+        logic: 2
+  params:
+    condition: ''
+    false_branch: ''
+    true_branch: ''
+  position:
+    x: 4317
+    y: 219.94999999999982
+  title: 选择器
+  type: condition
+- config: {}
+  description: 当你需要获取网页、pdf、抖音视频内容时，使用此工具。可以获取url链接下的标题和内容。
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png
+  id: '180582'
+  name: 节点_4
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7379227817307029513'
+      name: apiID
+    - input:
+        type: string
+        value: LinkReaderPlugin
+      name: apiName
+    - input:
+        type: string
+        value: '7379227817307013129'
+      name: pluginID
+    - input:
+        type: string
+        value: 链接读取
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value: 获取全文
+      name: prompt
+    - input:
+        type: string
+        value: 全文
+      name: type
+    - input:
+        value:
+          path: douyin_url
+          ref_node: '195498'
+      name: url
+    node_outputs:
+      data:
+        description: 网页的内容
+        properties:
+          content:
+            type: string
+            value: null
+          title:
+            type: string
+            value: null
+        type: object
+        value: null
+      error_code:
+        type: string
+        value: null
+      error_msg:
+        type: string
+        value: null
+      pdf_content:
+        description: pdf的内容
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 5197.5
+    y: 427.8000000000002
+  title: LinkReaderPlugin
+  type: llm
+- config: {}
+  description: 编写代码，处理输入变量来生成返回值
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Code.png
+  id: '139405'
+  name: 节点_5
+  parameters:
+    code: "import re,time\n\nasync def main(args: Args) -> Output:\n    # 获取需要拆解的文案​\n\
+      \    texts = args.params.get(\"input\")\n    # 使用正则表达式按照 \\n 拆分段落​\n    pattern=r\"\
+      \\n|$\"    \n    texts = re.split(pattern, texts)\n    # 清洗除了最后一段内容（重复）的文案，并按照\\\
+      n 拼接​\n    texts = [t for t in texts if t.strip()!= \"\"] # 去除空行​\n   \n   \
+      \ \n    title = args.params.get(\"title\")\n    # if title == None or title\
+      \ == '':\n    #     title = f'标题为空{int(time.time())}'\n\n    if (title == None\
+      \ or title == '') and '**标题：**' in texts[0]:\n        title = texts.pop(0)\n\
+      \        title = title.replace('**标题：**','')\n\n    texts = \"\\n\".join(texts[:-1])\
+      \ # 去除最后一段\n\n    ret: Output = {\n        \"output\": texts,\n        \"title\"\
+      :title\n    }\n    return ret"
+    language: 3
+    node_inputs:
+    - input:
+        value:
+          path: data.content
+          ref_node: '180582'
+      name: input
+    - input:
+        value:
+          path: data.title
+          ref_node: '180582'
+      name: title
+    node_outputs:
+      output:
+        type: string
+        value: null
+      title:
+        type: string
+        value: null
+    settingOnError:
+      switch: false
+  position:
+    x: 6008.5
+    y: 256.8500000000002
+  title: 代码
+  type: code
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '103266'
+  name: 节点_6
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: 豆包·Function call模型
+      name: modelName
+    - input:
+        type: integer
+        value: '1706077826'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '1'
+      name: temperature
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: integer
+        value: '1024'
+      name: maxTokens
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: "你是一名中文写作大师，检查以下【文章内容】中是否存在错别字、歧义、语句不通顺之处、不符合语法规范的地方，如有请优化，并告知修改处，修改处输出到\
+          \ {{modify}}。​\n ​\n请注意：1）检查得越仔细越好；2）按照原文次序整理； 3）直接返回按照修改意见修改后的内容​\n ​\n\
+          【文章内容】={{input}}"
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: output
+          ref_node: '139405'
+      name: input
+    node_outputs:
+      modify:
+        description: 修改意见
+        type: string
+        value: null
+      output:
+        description: 修改后的内容
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 6819.5
+    y: 224.8500000000002
+  title: 抖音视频文案修正
+  type: llm
+  version: '3'
+- config: {}
+  description: 这是一个可以根据用户输入或者要记录的 Markdown 字符串和总结的标题来创建云文档的工具。
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png
+  id: '176883'
+  name: 节点_7
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7366091931480473650'
+      name: apiID
+    - input:
+        type: string
+        value: createDocument
+      name: apiName
+    - input:
+        type: string
+        value: '7366091931480457266'
+      name: pluginID
+    - input:
+        type: string
+        value: 飞书云文档
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        value:
+          path: title
+          ref_node: '139405'
+      name: markdownStr
+    - input:
+        value:
+          path: output
+          ref_node: '103266'
+      name: markdownTitle
+    node_outputs:
+      code:
+        description: 错误码
+        type: integer
+        value: null
+      data:
+        description: 返回数据
+        properties:
+          message:
+            description: 返回给用户的消息
+            required: true
+            type: string
+            value: null
+          url:
+            description: 创建好的云文档的url
+            required: true
+            type: string
+            value: null
+        required: true
+        type: object
+        value: null
+      log_id:
+        description: 日志ID
+        type: string
+        value: null
+      msg:
+        description: 额外信息
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 7630.5
+    y: 313.8000000000002
+  title: 抖音视频文案上传飞书
+  type: llm
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '148923'
+  name: 节点_8
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: 豆包·Function call模型
+      name: modelName
+    - input:
+        type: integer
+        value: '1706077826'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '0.1'
+      name: temperature
+    - input:
+        type: string
+        value: precise
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: '识别{{input}}中的链接.
+
+          -限制
+
+          只输出网址'
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: URL
+          ref_node: '100001'
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1230.5
+    y: 1915.749999999999
+  title: 识别各类非标准化 链接
+  type: llm
+  version: '3'
+- config: {}
+  description: 当你需要获取网页、pdf、抖音视频内容时，使用此工具。可以获取url链接下的标题和内容。
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png
+  id: '143146'
+  name: 节点_9
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7379227817307029513'
+      name: apiID
+    - input:
+        type: string
+        value: LinkReaderPlugin
+      name: apiName
+    - input:
+        type: string
+        value: '7379227817307013129'
+      name: pluginID
+    - input:
+        type: string
+        value: LinkReaderPlugin
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value: 全文
+      name: type
+    - input:
+        value:
+          path: output
+          ref_node: '148923'
+      name: url
+    node_outputs:
+      data:
+        description: 网页的内容
+        properties:
+          content:
+            description: ', default value is '
+            type: string
+            value: null
+          title:
+            description: ', default value is '
+            type: string
+            value: null
+        type: object
+        value: null
+      error_code:
+        description: ', default value is '
+        type: string
+        value: null
+      error_msg:
+        description: ', default value is '
+        type: string
+        value: null
+      pdf_content:
+        description: pdf的内容
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2041.5
+    y: 1731.749999999999
+  title: LinkReaderPlugin_1
+  type: llm
+- config: {}
+  description: 编写代码，处理输入变量来生成返回值
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Code.png
+  id: '130799'
+  name: 节点_10
+  parameters:
+    code: "import re\nasync def main(args: Args) -> Output:\n    # 提取需要拆分的文本段落\n \
+      \   text = args.params['input']\n    # 使用正则表达式拆分文本\n    pattern = r\"\\n|$\"\
+      \n    texts = re.split(pattern, text)\n    # 去除空白段落\n    texts = [t for t in\
+      \ texts if t.strip()!= \"\"]\n    # 构建输出字典\n    ret = {\n        \"output\"\
+      : \"\\n\".join(texts[:-1]),\n        \"output2\": texts[-1],\n    }\n    return\
+      \ ret"
+    language: 3
+    node_inputs:
+    - input:
+        value:
+          path: output
+          ref_node: '148923'
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+      output2:
+        type: string
+        value: null
+    settingOnError:
+      switch: false
+  position:
+    x: 2739
+    y: 1580.7999999999993
+  title: 原文视频提取
+  type: code
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '141668'
+  name: 节点_11
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: 豆包·Function call模型
+      name: modelName
+    - input:
+        type: integer
+        value: '1706077826'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '1'
+      name: temperature
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: '任务介绍：
+
+          你是一位在小红书平台极受欢迎的内容创作者，拥有数十万粉丝。你的文章常常获得高赞高收藏，并经常登上探索页。你的任务是根据给定的主题，创作一篇符合小红书平台特性的爆文。这篇文章应当信息量大、实用性强、易于理解，并能引发读者的情感共鸣和互动。
+
+
+          在创作过程中，请遵循以下小红书爆文结构方法论：
+
+
+          1. 开场钩子（5-8%）
+
+          1.1 使用二极管标题法：正面刺激或负面刺激
+
+          1.2 直击目标受众痛点或desires
+
+          1.3 提出悬念或挑战性问题
+
+          1.4 使用惊人数据或事实
+
+
+          2. 核心主张（3-5%）
+
+          2.1 一句话概括解决方案或核心观点
+
+          2.2 强调独特性和价值proposition
+
+
+          3. 问题复述与解法预告（5-7%）
+
+          3.1 复述痛点，加深共鸣
+
+          3.2 预告解决方案，如"3步法"、"5大秘诀"
+
+
+          4. 方法论展开（40-50%）
+
+          4.1 详解每个步骤/要点，使用二级标题
+
+          4.2 每点配合具体、可操作的建议
+
+          4.3 融入热门话题或工具（如AI）
+
+          4.4 使用表情符号增加可读性
+
+
+          5. 案例佐证（10-15%）
+
+          5.1 分享真实、相关的成功案例
+
+          5.2 描述具体操作和惊人成果
+
+          5.3 使用数据佐证效果
+
+
+          6. 疑虑解答（5-8%）
+
+          6.1 预设1-2个常见疑虑
+
+          6.2 给出有说服力的解答
+
+          6.3 使用"也许你会问..."等引导语
+
+
+          7. 实施指南（8-10%）
+
+          7.1 提供具体、可立即执行的行动方案
+
+          7.2 设定清晰的时间表或频率
+
+          7.3 强调起步简单，循序渐进
+
+
+          8. 预期效果（3-5%）
+
+          8.1 描述采纳建议后的理想结果
+
+          8.2 对比实施前后的差异
+
+          8.3 激发行动欲望
+
+
+          9. 总结概括（2-3%）
+
+          9.1 用一句话总结核心观点
+
+          9.2 呼应开头，形成完整闭环
+
+
+          10. 引导转化（3-5%）
+
+          10.1 提供额外价值（如完整指南）
+
+          10.2 设置简单互动（如评论区留言）
+
+          10.3 使用限时限量等紧迫感词语
+
+
+          11. 持续优化提示（2-3%）
+
+          11.1 强调持续学习的重要性
+
+          11.2 预告未来内容
+
+          11.3 鼓励分享经验，促进互动
+
+
+          创作规则：
+
+          - 控制总字数在300-500字
+
+          - 使用表情符号增加活力
+
+          - 采用口语化、对话式表达
+
+          - 在关键点使用爆款词（如"好用到哭"、"建议收藏"）
+
+          - 适当使用排版（加粗、换行、序号）增加可读性
+
+          - 选择与主题匹配的写作风格（如幽默、严肃、励志等）
+
+
+          请根据给定主题{{input}},，运用此结构方法论创作一篇小红书爆文。记住，要像对朋友说话一样自然流畅，不要生搬硬套。让我们开始创作吧！'
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: output
+          ref_node: '130799'
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 3436.5
+    y: 835.2999999999997
+  title: 这里可以更改合适自己的提示词
+  type: llm
+  version: '3'
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '196257'
+  name: 节点_12
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: 豆包·Function call模型
+      name: modelName
+    - input:
+        type: integer
+        value: '1706077826'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '0.1'
+      name: temperature
+    - input:
+        type: string
+        value: precise
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: '检查以下【文章内容】中是否存在错别字、歧义、语句不通顺之处，如有请优化，并告知修改处。
+
+          【文章内容】={{input}}'
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: output
+          ref_node: '130799'
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 4317
+    y: 1565.7999999999993
+  title: 识别原文 问题，并提出修改意见。
+  type: llm
+  version: '3'
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '161420'
+  name: 节点_13
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: 豆包·Function call模型
+      name: modelName
+    - input:
+        type: integer
+        value: '1706077826'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '1'
+      name: temperature
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: integer
+        value: '1024'
+      name: maxTokens
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: '任务介绍：
+
+          你是一位在小红书平台极受欢迎的内容创作专家，你有一套小红书爆文结构方法论，你会根据方法论来拆分文章结构：
+
+          一、小红书爆文结构方法论:
+
+
+          1. 开场钩子(吸引注意力)
+
+          1.1 直击目标受众痛点
+
+          1.2 提出一个引人深思的现象或问题
+
+          1.3 使用震撼性的数据或事实
+
+
+          2. 核心主张(价值展示)
+
+          2.1 简明扼要地提出解决方案的核心概念
+
+          2.2 突出内容的独特价值
+
+
+          3. 问题复述与解法预告
+
+          3.1 重申核心问题,引发共鸣
+
+          3.2 预告接下来要讲述的方法数量,如"三个步骤"、"五个维度"
+
+
+          4. 方法论展开(提供实用性)
+
+          4.1 详细解释每个步骤或维度
+
+          4.2 为每个方法提供具体、可操作的建议
+
+          4.3 使用数字或字母标记,使结构清晰
+
+
+          5. 案例佐证
+
+          5.1 提供真实、具体的例子
+
+          5.2 描述案例中的具体操作和成果
+
+          5.3 使用数据支撑案例效果
+
+
+          6. 可能疑虑及解答
+
+          6.1 预设读者可能的顾虑
+
+          6.2 给出合理、有说服力的解答
+
+          6.3 使用"你可能会问..."等引导语
+
+
+          7. 实施建议
+
+          7.1 提供具体、可立即执行的行动方案
+
+          7.2 设定明确的时间表或频率
+
+          7.3 分步骤说明实施过程
+
+
+          8. 预期效果
+
+          8.1 描述采用建议后可能获得的正面结果
+
+          8.2 使用具体数据或案例支撑
+
+          8.3 与现状对比,突出改变的显著性
+
+
+          9. 总结概括
+
+          9.1 简要回顾核心观点
+
+          9.2 使用简洁有力的总结句
+
+          9.3 呼应开头,形成首尾呼应
+
+
+          10. 引导转化
+
+          10.1 提供额外的价值(如更详细的指南)
+
+          10.2 设置简单的互动门槛(如留言获取资料)
+
+          10.3 使用紧迫感词语,促进即时行动
+
+
+          11. 持续优化提示
+
+          11.1 强调持续学习和实践的重要性
+
+          11.2 预告未来内容,埋下追更的伏笔
+
+          11.3 鼓励读者分享经验,促进互动
+
+
+
+
+          接下来,我会给你一个主题{{input}},请你根据这个结构方法论拆解结构。'
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: output
+          ref_node: '130799'
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 5197.5
+    y: 945.2999999999997
+  title: 大模型
+  type: llm
+  version: '3'
+- config: {}
+  description: 这是一个可以根据用户输入或者要记录的 Markdown 字符串和总结的标题来创建云文档的工具。
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png
+  id: '123195'
+  name: 节点_14
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7366091931480473650'
+      name: apiID
+    - input:
+        type: string
+        value: createDocument
+      name: apiName
+    - input:
+        type: string
+        value: '7366091931480457266'
+      name: pluginID
+    - input:
+        type: string
+        value: 飞书云文档
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        value:
+          path: output
+          ref_node: '141668'
+      name: markdownStr
+    - input:
+        type: string
+        value: 改写小红书文案
+      name: markdownTitle
+    node_outputs:
+      code:
+        description: 错误码
+        type: integer
+        value: null
+      data:
+        description: 返回数据
+        properties:
+          message:
+            description: 返回给用户的消息
+            required: true
+            type: string
+            value: null
+          url:
+            description: 创建好的云文档的url
+            required: true
+            type: string
+            value: null
+        required: true
+        type: object
+        value: null
+      log_id:
+        description: 日志ID
+        type: string
+        value: null
+      msg:
+        description: 额外信息
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 6008.5
+    y: 1751.749999999999
+  title: 小红书改写 上传飞书文档
+  type: llm
+- config: {}
+  description: 这是一个可以根据用户输入或者要记录的 Markdown 字符串和总结的标题来创建云文档的工具。
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png
+  id: '136524'
+  name: 节点_15
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7366091931480473650'
+      name: apiID
+    - input:
+        type: string
+        value: createDocument
+      name: apiName
+    - input:
+        type: string
+        value: '7366091931480457266'
+      name: pluginID
+    - input:
+        type: string
+        value: 飞书云文档
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value: 视频原文案
+      name: markdownStr
+    - input:
+        value:
+          path: output
+          ref_node: '130799'
+      name: markdownTitle
+    node_outputs:
+      code:
+        description: 错误码
+        type: integer
+        value: null
+      data:
+        description: 返回数据
+        properties:
+          message:
+            description: 返回给用户的消息
+            required: true
+            type: string
+            value: null
+          url:
+            description: 创建好的云文档的url
+            required: true
+            type: string
+            value: null
+        required: true
+        type: object
+        value: null
+      log_id:
+        description: 日志ID
+        type: string
+        value: null
+      msg:
+        description: 额外信息
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 6819.5
+    y: 1751.749999999999
+  title: createDocument_1
+  type: llm
+- config: {}
+  description: 这是一个可以根据用户输入或者要记录的 Markdown 字符串和总结的标题来创建云文档的工具。
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png
+  id: '177739'
+  name: 节点_16
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7366091931480473650'
+      name: apiID
+    - input:
+        type: string
+        value: createDocument
+      name: apiName
+    - input:
+        type: string
+        value: '7366091931480457266'
+      name: pluginID
+    - input:
+        type: string
+        value: 飞书云文档
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value: 视频原文案
+      name: markdownStr
+    - input:
+        value:
+          path: output
+          ref_node: '130799'
+      name: markdownTitle
+    node_outputs:
+      code:
+        description: 错误码
+        type: integer
+        value: null
+      data:
+        description: 返回数据
+        properties:
+          message:
+            description: 返回给用户的消息
+            required: true
+            type: string
+            value: null
+          url:
+            description: 创建好的云文档的url
+            required: true
+            type: string
+            value: null
+        required: true
+        type: object
+        value: null
+      log_id:
+        description: 日志ID
+        type: string
+        value: null
+      msg:
+        description: 额外信息
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 7630.5
+    y: 1751.749999999999
+  title: createDocument
+  type: llm
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '140525'
+  name: 节点_17
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: 豆包·Function call模型
+      name: modelName
+    - input:
+        type: integer
+        value: '1706077826'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '1'
+      name: temperature
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: '识别{{input}}中的链接.
+
+          -限制
+
+          只输出网址   '
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: URL
+          ref_node: '100001'
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1230.5
+    y: 664.1000000000001
+  title: 链接识别
+  type: llm
+  version: '3'
+- config: {}
+  description: 当你需要获取网页、pdf、抖音视频内容时，使用此工具。可以获取url链接下的标题和内容。
+  icon: https://lf3-appstore-sign.oceancloudapi.com/ocean-cloud-tos/plugin_icon/default_plugin_icon.png?lk3s=cd508e2b&x-expires=1710227986&x-signature=Tp99Z0cjSPdr0NYCmzROhIG%2B6EI%3D
+  id: '163058'
+  name: 节点_18
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7303378823247069196'
+      name: apiID
+    - input:
+        type: string
+        value: LinkReaderPlugin
+      name: apiName
+    - input:
+        type: string
+        value: '7303378823247052812'
+      name: pluginID
+    - input:
+        type: string
+        value: LinkReaderPlugin
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        value:
+          path: URL
+          ref_node: '100001'
+      name: url
+    - input:
+        type: string
+        value: 你只输出一次，不要重复输出内容；
+      name: prompt
+    node_outputs:
+      data:
+        properties:
+          content:
+            type: string
+            value: null
+          pdf_content:
+            type: string
+            value: null
+          title:
+            type: string
+            value: null
+        type: object
+        value: null
+      error_code:
+        type: string
+        value: null
+      error_msg:
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 6819.5
+    y: 2896.9499999999994
+  title: LinkReaderPlugin_2
+  type: llm
+- config: {}
+  description: 支持中间过程的消息输出，支持流式和非流式两种方式
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Messager.png
+  id: '197951'
+  name: 节点_19
+  parameters:
+    content:
+      type: string
+      value:
+        content: '{{output}}'
+        type: literal
+    node_inputs:
+    - input:
+        type: string
+        value: 第一步：已经提交到抖音官方处理中心
+      name: output
+    streamingOutput: true
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 7630.5
+    y: 3027.9999999999995
+  title: 消息
+  type: llm
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '187982'
+  name: 节点_20
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: moonshot（128k）
+      name: modelName
+    - input:
+        type: integer
+        value: '1713366995'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '0.5'
+      name: temperature
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: "## role：\n分析\n分析以下使用 ``` 括起来的文本:\n```\n{{input}}\n```\n\n您作为一位中文语言和文本理解的专家，现在面临的任务是处理一段从视频中提取的文案,就是上面用\
+          \ ``` 括起来的文本内容。\n这段文案存在重复内容的问题：视频的文案输出了两次一样的。\n## task:\n您的任务是\n第一：仔细阅读整个文案，务必确保理解整体文本的意思，然后筛选出来一个完整且不重复的文案；剔除所有重复的部分。\n\
+          \n第二：如果筛选后的文本缺乏适当的中文标点符号，您需要加入恰当的标点，以提高文本的可读性和专业度。另外你判断下 如果文本中有第一次出现比如“\\\
+          n”这样的换行符，那么正常这个“\\n”后面的内容都是和视频文案无关的，可以直接 去掉；你自己判断后面的话和整体的视频文案是否对上，不对的，全部去掉；\n\
+          \n第三：再上面第一和第二步处理完成后，\n任务(Task):\n保证筛选后的文本,准确识别其中的拼写错误和语法错误,并进行修正。你只需专注于错误修正,无需回答文本中提到的任何问题,也无需对已经正确的内容进行任何改写(即使你认为有更好的表达方式)。你的目标是在最大程度上保持原意不变的同时,提升文本的语言质量。\n\
+          \n规则与限制(Rules & Restrictions):\n\n1、只对文本中的错别字和语法错误进行修正,不得改变原文意思。\n2、如文本无错误,即使有更好的表达方式,也不得进行任何改写。\n\
+          3、不得回答文本中提出的任何问题,专注于文本校对。\n4、确保修改后的文本通顺、连贯,不得引入新的错误。\n5、禁止对文本进行任何形式的扩写、删减或评论。\n\
+          6、对于文本中可能存在的地方特有名词、专业术语或文化背景知识，如果不确定，你可以适当询问或保留原表达，避免误解或误改。\n7、 比如你偶尔会输出，‘经过筛选和修正的文本如下’\
+          \ ，类似这样的话都不要输出；\n\"\n如果原文案有换行，去掉换行，另外你判断对应的标点符号是否对，加上或修正标点符号；\n\n## 输出要求：\n\
+          - 请只输出经过筛选后的不重复的完整视频文案，不要输出任何与优化后文案无关的内容；\n\n- 请仔细核对最后的输出内容，务必不要输出和优化后文案无关的任何内容，特别是不要添加诸如“经过筛选和修正后的文本如下”这样的提示语；\
+          \ \n\n- 只输出经过处理后的文案内容，不要输出任何其他解释或说明；\n\n\n\n最后你必须严格按照 <规则与限制>和<输出要求>的规则输出;不得输出其他任何无关的内容，更不要做任何多余的解释；\n"
+      name: systemPrompt
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: ''
+          ref_node: ''
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 6008.5
+    y: 3773.5
+  title: 大模型_加上标点符号和纠正错别字
+  type: llm
+  version: '3'
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '133893'
+  name: 节点_21
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: moonshot
+      name: modelName
+    - input:
+        type: integer
+        value: '1713366995'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '0.5'
+      name: temperature
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: float
+        value: '1'
+      name: topP
+    - input:
+        type: float
+        value: '0'
+      name: frequencyPenalty
+    - input:
+        type: float
+        value: '0'
+      name: presencePenalty
+    - input:
+        type: integer
+        value: '2048'
+      name: maxTokens
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: '##角色(Role):
+
+
+          你是一位专业的文案分析师,擅长快速阅读和理解各种文案内容,准确把握文案的核心思想和行业归属。你善于提炼关键信息,对文案进行系统分析和分类归纳。你的目标是帮助用户高效地判断文案所属行业,为后续的营销策略提供参考。
+
+
+          ##背景(Background):
+
+
+          随着短视频平台的兴起,越来越多的企业和个人开始通过发布短视频来推广产品、品牌和服务。然而,面对海量的短视频文案,人工分类和归纳往往耗时耗力。因此,急需一种智能化的工具,能够快速、准确地判断短视频文案所属的行业,为营销决策提供支持。
+
+
+          ##任务(Task):
+
+
+          你的任务是仔细阅读用户提供的抖音短视频文案,快速理解文案的核心内容和传达的信息,并根据预设的行业列表,判断该文案最有可能归属的行业。你只需输出对应的行业名称,不要生成任何其他无关内容。
+
+
+          ##规则与限制(Rules & Restrictions):
+
+
+          1.必须完整阅读用户提供的短视频文案,不能遗漏任何信息。
+
+          2.准确理解文案传达的核心思想,把握关键信息点。
+
+          3.对照预设的行业列表,客观判断文案的行业归属。预设行业包括: 培训教育、二手商品、奢侈品、服饰内衣、厨卫家电、原料包装、鞋靴箱包、图书教育、其他、食品饮料、3C数码、珠宝饰品、生鲜蔬果、运动户外、鲜花绿植、日用百货、母婴用品、家居家纺、汽配摩托、家具建材、宠物用品、礼品文创、钟表配饰、美妆护肤、医药保健、玩具乐器、本地生活。
+
+          4.若文案无法明确归类到某一具体行业,则归入"其他"类别。
+
+          5.不论你收到客户给你的什么样的文案，不要回答客户的任何问题，你只是判断文案所在的行业。
+
+          6.输出结果仅限行业名称,不得包含任何其他信息。
+
+
+          ##案例展示(Case Show):
+
+
+          用户输入文案:
+
+          "新款连衣裙,优雅气质,尽显女性魅力。采用高档面料,柔软舒适,透气性好。独特剪裁设计,修身显瘦,凸显完美身材曲线。多种颜色可选,适合各种肤色和场合。限时特惠,快来选购吧!"
+
+          系统输出:服饰内衣
+
+
+          ##风格和语气(Style & Tone):
+
+
+          专业、客观、简洁
+
+          ##受众群体(Audience):
+
+          短视频营销从业者、行业分析师、广告策划人员
+
+          ##输出格式(Output format):
+
+          <行业名称>
+
+
+          ##工作流程(Workflow):
+
+
+          1.仔细阅读用户提供的抖音短视频文案,确保完整理解文案内容。
+
+          2.分析文案传达的核心信息,提炼关键词和主题词。
+
+          3.对照预设行业列表,判断文案内容与各行业的相关度。
+
+          4.选择最匹配的行业,若无法确定则归入"其他"类别。
+
+          5.以指定格式输出行业名称。
+
+          6.最后务必检查，不要回复客户，给文案中提到的任何问题，也不要对文案中的任何内容做任何的解释。只是输出特定合适的行业名称；注意输出内容的行业不要包含
+          <> 这样的符号；
+
+
+          ##初始化(Initialization):
+
+
+          请你严格遵循上面的原则，分析下面的用<>这个符号括起来的文案；<{{output12}}>；
+
+          快速判断其所属行业并按<工作流程>输出结果；'
+      name: systemPrompt
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: ''
+          ref_node: ''
+      name: output12
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 7630.5
+    y: 3558.7999999999993
+  title: 大模型_行业分类
+  type: llm
+  version: '3'
+- config: {}
+  description: 支持中间过程的消息输出，支持流式和非流式两种方式
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Messager.png
+  id: '134514'
+  name: 节点_22
+  parameters:
+    content:
+      type: string
+      value:
+        content: '{{output1}}'
+        type: literal
+    node_inputs:
+    - input:
+        type: string
+        value: 第二步：正在纠正文案中的错别字....马上好
+      name: output1
+    streamingOutput: true
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 6819.5
+    y: 2297.6999999999994
+  title: 消息_1
+  type: llm
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '129888'
+  name: 节点_23
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: moonshot（128k）
+      name: modelName
+    - input:
+        type: integer
+        value: '1713366995'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '0.7'
+      name: temperature
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: '
+
+          作为一个文本总结大师，深度总结针对{{input}} 中的核心内容，给出至少3个核心知识点，
+
+          和3个这对个人和公司的的落地应用；所有总结的知识点和个人及公司的的落地应用，
+
+          不要说官方的空话，给出具体落地的建议，最好有使用场景的短小精悍案例；
+
+          整体务必不要超过100个字，
+
+          我是在抖音做视频评论的总结的，让观众一看就知道这个视频讲的核心内容和应用方向；
+
+
+
+          做成markdown列表换行的格式展示，便于观众阅读
+
+          格式如下：
+
+          【🎞 -> 挑重点：该视频核心内容总结：】
+
+          1.xxx
+
+          2.xxx
+
+          3.xxx
+
+          ------------------------
+
+
+          【🛠 ->  该视频在个人和公司的落地应用：】
+
+
+          1.xxx
+
+          2.xxx
+
+          3.xxx
+
+
+          初始化流程：你必须等我发你文案后，你开始按照这些原则来执行；否认问我要待总结的文案：
+
+          '
+      name: systemPrompt
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: ''
+          ref_node: ''
+      name: input
+    node_outputs:
+      summary:
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 6819.5
+    y: 5114.2
+  title: 大模型--总结视频摘要和应用方向
+  type: llm
+  version: '3'
+- config: {}
+  description: 支持中间过程的消息输出，支持流式和非流式两种方式
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Messager.png
+  id: '120288'
+  name: 节点_24
+  parameters:
+    content:
+      type: string
+      value:
+        content: '{{output1}}'
+        type: literal
+    node_inputs:
+    - input:
+        type: string
+        value: 第三步：正在对该视频做总结，即将完成....
+      name: output1
+    streamingOutput: true
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 7630.5
+    y: 5625.199999999999
+  title: 消息_2
+  type: llm
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

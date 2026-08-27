@@ -1,0 +1,522 @@
+description: 抖音小红书落地项目：分析问题+推书+心理按摩
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '141050'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '157029'
+  target: ''
+  target_node: '152983'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_2
+  source: ''
+  source_node: '141050'
+  target: ''
+  target_node: '157029'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_3
+  source: ''
+  source_node: '152983'
+  target: ''
+  target_node: '150464'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_4
+  source: ''
+  source_node: '150464'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+icon: FileBizType.BIZ_BOT_WORKFLOW/2474345056442048_1718878225047857999_Esud3H9csu.jpg
+id: 7396226711937122330
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: jieshu_2
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start.png
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      input:
+        required: true
+        type: string
+        value: null
+  position:
+    x: 387.5
+    y: 477.95
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End.png
+  id: '900001'
+  name: 节点_1
+  parameters:
+    content:
+      type: string
+      value:
+        content: '{{cover}}
+
+          {{title}}
+
+          {{content}}'
+        type: literal
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '150464'
+      name: content
+    - input:
+        type: string
+        value:
+          path: output.cover
+          ref_node: '152983'
+      name: cover
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '141050'
+      name: title
+    streamingOutput: true
+    terminatePlan: useAnswerContent
+  position:
+    x: 3907
+    y: 463.95
+  title: 结束
+  type: end
+- config: {}
+  description: 在线搜索书籍信息，返回结构化的书籍列表信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png
+  id: '157029'
+  name: 节点_2
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7372173992205008948'
+      name: apiID
+    - input:
+        type: string
+        value: search_books_online
+      name: apiName
+    - input:
+        type: string
+        value: '7372173992204976180'
+      name: pluginID
+    - input:
+        type: string
+        value: 在线搜书
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '141050'
+      name: kw
+    node_outputs:
+      data:
+        items:
+          properties:
+            author:
+              description: 作者
+              type: string
+              value: null
+            book_id:
+              description: 唯一 id
+              type: string
+              value: null
+            cover:
+              description: 封面图片的地址
+              type: string
+              value: null
+            intro:
+              description: 简介
+              type: string
+              value: null
+            price:
+              description: 书籍价格
+              type: integer
+              value: null
+            publisher:
+              description: 出版社
+              type: string
+              value: null
+            title:
+              description: 书名
+              type: string
+              value: null
+          type: object
+          value: null
+        type: list
+        value: null
+      errCode:
+        description: 错误码，为0时表示接口调用正常
+        type: float
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1928
+    y: 279
+  title: 查找书单和简介
+  type: llm
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '141050'
+  name: 节点_3
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: 豆包·角色扮演模型
+      name: modelName
+    - input:
+        type: integer
+        value: '18'
+      name: modelType
+    - input:
+        type: string
+        value: '
+
+          ## Skills <Bot 的功能>
+
+          ### Skill 1: 分析输入内容
+
+          1. 仔细研究用户输入的{{input}}。
+
+          2. 提取关键信息和潜在需求。
+
+
+          ### Skill 2: 匹配书籍
+
+          1. 从知识库中筛选符合需求的书籍。
+
+          2. 确定最适合的书籍名称和作者。
+
+
+          ## Constraints <Bot 约束>
+
+          - 只输出书籍名称和作者，格式为：《书籍名》作者。
+
+          - 推荐的书籍要与用户输入内容紧密相关。
+
+          - 推荐的书籍应具有一定的普遍性和实用性。'
+      name: prompt
+    - input:
+        type: float
+        value: '1'
+      name: temperature
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2000'
+      name: maxTokens
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: '# Character <书籍推荐专家>
+
+          [我擅长根据用户的输入{{input}}和所描述的遭遇、背景和时间等情况，为其精准推荐能够缓解或解惑的书籍]'
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: input
+          ref_node: '100001'
+      name: input
+    node_outputs:
+      output:
+        description: 书籍信息
+        type: string
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1230.5
+    y: 0
+  title: 分析用户输入，输出书籍信息
+  type: llm
+  version: '3'
+- config: {}
+  description: 编写代码，处理输入变量来生成返回值
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Code.png
+  id: '152983'
+  name: 节点_4
+  parameters:
+    code: "import json\nfrom typing import Dict, Any\n\nasync def main(args: Dict[str,\
+      \ Any]) -> Dict[str, Any]:\n    params = args['params']\n    input_data = params['input']\n\
+      \    \n    # 输出结构初始化\n    output = {}\n\n    # 确保input数据存在并且有至少一个元素\n    if\
+      \ input_data and len(input_data) > 0:\n        first_item = input_data[0]  #\
+      \ 获取第一个数组中的第一个元素\n\n        # 提取需要的信息\n        output['intro'] = first_item.get('intro',\
+      \ '')\n        output['title'] = first_item.get('title', '')\n        output['author']\
+      \ = first_item.get('author', '')\n        output['cover'] = first_item.get('cover',\
+      \ '')\n\n    return {\"output\": output}\n"
+    functionID: 37h8owuj6etjt
+    language: 3
+    node_inputs:
+    - input:
+        value:
+          path: data
+          ref_node: '157029'
+      name: input
+    node_outputs:
+      output:
+        properties:
+          author:
+            type: string
+            value: null
+          cover:
+            type: string
+            value: null
+          intro:
+            type: string
+            value: null
+          title:
+            type: string
+            value: null
+        type: object
+        value: null
+  position:
+    x: 2512
+    y: 228
+  title: 处理格式
+  type: code
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '150464'
+  name: 节点_5
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: 豆包·角色扮演模型
+      name: modelName
+    - input:
+        type: integer
+        value: '18'
+      name: modelType
+    - input:
+        type: string
+        value: '用户输入的内容为：{{input}}
+
+
+          书名：{{title}}
+
+          作者：{{author}}
+
+          简介：{{intro}}
+
+
+          ## Skills <Bot 的功能>
+
+          ### Skill 1: 深入理解用户输入
+
+          1. 仔细剖析用户输入的{{input}}内容，挖掘核心问题和情绪。
+
+          2. 提取关键信息，如困惑的本质、烦恼的根源等。
+
+
+          ### Skill 2: 定制鼓励话语
+
+          1. 基于对用户的理解，用温暖且有力量的语言给予鼓励。
+
+          2. 从积极的角度引导用户正视问题，激发其解决问题的信心。
+
+
+          ### Skill 3: 精准推荐书籍
+
+          1. 巧妙引入给定的书名{{title}}、作者{{author}}。
+
+          2. 结合书籍简介{{intro}}，清晰阐述这本书对用户的帮助和价值。
+
+
+          ## Constraints <Bot 约束>
+
+          - 鼓励的话要贴合用户实际情况，避免泛泛而谈。
+
+          - 推荐书籍时，要将书籍内容与用户问题紧密关联，突出针对性。
+
+          - 语言表达要亲和、自然，让用户感受到真诚的关怀。
+
+          - 严格按照给定的书籍信息进行准确推荐，不随意更改。 '
+      name: prompt
+    - input:
+        type: float
+        value: '1'
+      name: temperature
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2000'
+      name: maxTokens
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: '# Character <鼓励人专家>
+
+          [我能够针对用户的困惑、疑问和烦心事，给予温暖鼓励，并推荐相关书籍{{title}}助力]'
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: input
+          ref_node: '100001'
+      name: input
+    - input:
+        value:
+          path: output.title
+          ref_node: '152983'
+      name: title
+    - input:
+        value:
+          path: output.author
+          ref_node: '152983'
+      name: author
+    - input:
+        value:
+          path: output.intro
+          ref_node: '152983'
+      name: intro
+    node_outputs:
+      output:
+        type: string
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 3209.5
+    y: 258.05
+  title: 大模型
+  type: llm
+  version: '3'
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

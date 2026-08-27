@@ -1,0 +1,910 @@
+description: 短视频创作8维核心库和使用LLM处理问题和
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '150419'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '150419'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_2
+  source: ''
+  source_node: '193653'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_3
+  source: ''
+  source_node: '150419'
+  target: ''
+  target_node: '110702'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_4
+  source: ''
+  source_node: '110702'
+  target: ''
+  target_node: '139569'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_5
+  source: ''
+  source_node: '139569'
+  target: ''
+  target_node: '195424'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_6
+  source: ''
+  source_node: '195424'
+  target: ''
+  target_node: '141872'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_7
+  source: ''
+  source_node: '141872'
+  target: ''
+  target_node: '154588'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_8
+  source: ''
+  source_node: '154588'
+  target: ''
+  target_node: '193653'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7526018889190686760
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: workflow
+name: yehass
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start-v2.jpg
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      user_input:
+        type: string
+        value: null
+  position:
+    x: 180
+    y: 13.000000000000007
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End-v2.jpg
+  id: '900001'
+  name: 节点_1
+  parameters:
+    node_inputs:
+    - input:
+        value:
+          path: user_input
+          ref_node: '100001'
+      name: output
+    terminatePlan: returnVariables
+  position:
+    x: 3860
+    y: 7.105427357601002e-15
+  title: 结束
+  type: end
+- config: {}
+  description: 编写代码，处理输入变量来生成返回值
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Code-v2.jpg
+  id: '150419'
+  name: 节点_2
+  parameters:
+    code: "/**\n * 无限制自然语言工作流生成器（终极修复版）\n * 功能：用户输入任意需求→自动生成完整工作流（含结构化输出）\n * 特性：100%解决key0:null问题，支持所有领域和场景\n\
+      \ */\nasync function main({ params, context }) {\n    const userDemand = params.demand;\n\
+      \  \n    if (!userDemand) {\n      return { error: \"请输入工作流需求（如：生成一个图书管理系统流程）\"\
+      \ };\n    }\n  \n    // 1. 深度理解需求（增强鲁棒性）\n    const demandInfo = await understandDemand(userDemand,\
+      \ context);\n  \n    // 2. 智能拆解步骤\n    const steps = splitSteps(demandInfo);\n\
+      \  \n    // 3. 生成节点（强制结构化输出，\U0001F525修复key0:null问题）\n    const nodes = createNodes(steps,\
+      \ demandInfo.domain);\n  \n    // 4. 自动连线\n    const connections = linkNodes(nodes,\
+      \ demandInfo.conditions);\n  \n    // 5. 异常处理\n    const exceptionNodes = handleExceptions(demandInfo.potentialProblems,\
+      \ nodes, connections);\n  \n    return {\n      workflowName: demandInfo.name,\n\
+      \      nodes,\n      connections,\n      exceptionHandled: exceptionNodes.map(n\
+      \ => n.problem),\n      guide: \"直接复制到Coze→导入工作流→无需任何修改即可运行\"\n    };\n  }\n\
+      \  \n  /** 1. 深度理解需求（增强鲁棒性） */\n  async function understandDemand(demand, context)\
+      \ {\n    const prompt = `\n    分析以下自然语言需求，输出JSON格式：\n    {\n      \"name\":\
+      \ \"工作流名称\",\n      \"domain\": \"领域（如：电商/金融/医疗）\",\n      \"coreLogic\": \"\
+      核心逻辑描述\",\n      \"steps\": [\"步骤1\", \"步骤2\"],\n      \"conditions\": [{\"\
+      source\": \"步骤2\", \"condition\": \"条件判断\", \"trueStep\": \"步骤3\", \"falseStep\"\
+      : \"步骤4\"}],\n      \"outputKeys\": [\"订单状态\", \"处理结果\", \"用户信息\"],\n      \"\
+      potentialProblems\": [\"可能出现的问题1\", \"可能出现的问题2\"]\n    }\n    需求：${demand}\n\
+      \    `;\n  \n    try {\n      const result = await context.callModel({\n   \
+      \     model: \"豆包\",\n        prompt: prompt,\n        temperature: 0.1 // 降低随机性，提高稳定性\n\
+      \      });\n      \n      // \U0001F525关键修复：强制解析为JSON，确保结构完整\n      const parsed\
+      \ = JSON.parse(result);\n      \n      // 自动补全缺失字段\n      if (!parsed.steps\
+      \ || parsed.steps.length === 0) {\n        parsed.steps = demand.split(/[；;。]/).filter(s\
+      \ => s.trim());\n      }\n      \n      if (!parsed.outputKeys) {\n        parsed.outputKeys\
+      \ = [\"key0\", \"key1\", \"key2\"];\n      }\n      \n      return parsed;\n\
+      \    } catch (e) {\n      // 容错处理：返回基础结构，确保必有key0\n      return {\n        name:\
+      \ \"自动生成工作流\",\n        domain: \"通用\",\n        coreLogic: demand,\n      \
+      \  steps: demand.split(/[；;。]/).filter(s => s.trim()),\n        conditions:\
+      \ [],\n        outputKeys: [\"key0\", \"key1\", \"key2\"],\n        potentialProblems:\
+      \ [\"超时\", \"重复操作\", \"数据异常\"]\n      };\n    }\n  }\n  \n  /** 2. 智能拆解步骤 */\n\
+      \  function splitSteps(info) {\n    return info.steps.map((step, i) => ({\n\
+      \      index: i,\n      description: step,\n      type: step.includes(\"分析\"\
+      ) || step.includes(\"判断\") ? \"大模型节点\" : \n             step.includes(\"调用\"\
+      ) || step.includes(\"发送\") ? \"插件节点\" : \"代码节点\",\n      outputKeys: info.outputKeys\
+      \ // 传递输出键信息\n    }));\n  }\n  \n  /** 3. 生成节点（\U0001F525核心修复：强制所有节点输出key0/key1/key2）\
+      \ */\n  function createNodes(steps, domain) {\n    return steps.map(step =>\
+      \ {\n      const nodeId = `step_${step.index}`;\n      let params = {};\n  \n\
+      \      // 大模型节点：严格要求JSON输出，\U0001F525修复key0:null问题\n      if (step.type ===\
+      \ \"大模型节点\") {\n        params = {\n          model: domain === \"医疗\" ? \"\
+      医疗专用模型\" : \"豆包\",\n          prompt: `\n          处理步骤：${step.description}（领域：${domain}）。\n\
+      \          必须返回以下JSON格式（不要添加任何其他文字）：\n          {\n            \"key0\": \"\
+      核心结果（如：通过/拒绝/需要人工审核）\",\n            \"key1\": \"辅助信息（如：原因/规则/建议）\",\n     \
+      \       \"key2\": \"详细数据（如：计算结果/相关ID）\"\n          }\n          示例：{\"key0\"\
+      :\"需要人工审核\",\"key1\":\"订单金额超过5000元\",\"key2\":\"订单ID:12345\"}\n          `\n\
+      \        };\n      }\n  \n      // 插件节点：配置输出映射到key0/key1/key2\n      else if\
+      \ (step.type === \"插件节点\") {\n        const pluginMap = {\n          \"电商\"\
+      : step.includes(\"退款\") ? \"RefundPlugin\" : \"OrderPlugin\",\n          \"\
+      金融\": step.includes(\"支付\") ? \"PaymentPlugin\" : \"RiskCheckPlugin\",\n   \
+      \       \"医疗\": step.includes(\"挂号\") ? \"RegistrationPlugin\" : \"MedicalRecordPlugin\"\
+      \n        };\n        \n        params = {\n          pluginId: pluginMap[domain]\
+      \ || \"UniversalPlugin\",\n          config: {\n            timeout: 30000,\n\
+      \            // \U0001F525确保插件输出映射到标准key0/key1/key2\n            outputMapping:\
+      \ {\n              key0: \"${pluginResult.status}\",\n              key1: \"\
+      ${pluginResult.message}\",\n              key2: \"${pluginResult.data}\"\n \
+      \           }\n          }\n        };\n      }\n  \n      // 代码节点：强制返回key0/key1/key2\n\
+      \      else {\n        params = {\n          code: `async function main({ data\
+      \ }) {\n            try {\n              // 处理：${step.description}\n       \
+      \       const result = \"完成：${step.description}\";\n              \n       \
+      \       // \U0001F525关键修复：强制返回结构化输出，确保有key0/key1/key2\n              return\
+      \ {\n                key0: result,\n                key1: \"执行时间：\" + new Date().toISOString(),\n\
+      \                key2: data || {} // 传递原始数据\n              };\n            }\
+      \ catch (error) {\n              // 错误处理：确保即使出错也有key0\n              return\
+      \ {\n                key0: \"处理失败\",\n                key1: error.message ||\
+      \ \"未知错误\",\n                key2: null\n              };\n            }\n \
+      \         }`\n        };\n      }\n  \n      return {\n        id: nodeId,\n\
+      \        type: step.type,\n        name: step.description,\n        parameters:\
+      \ params\n      };\n    });\n  }\n  \n  /** 4. 自动连线 */\n  function linkNodes(nodes,\
+      \ conditions) {\n    const connections = [];\n  \n    // 顺序连线\n    nodes.forEach((node,\
+      \ i) => {\n      if (i < nodes.length - 1) {\n        connections.push({\n \
+      \         from: node.id,\n          to: nodes[i + 1].id,\n          type: \"\
+      顺序执行\",\n          condition: `\\${nodes['${node.id}'].output.key0 !== null}`\
+      \ // 使用key0作为条件\n        });\n      }\n    });\n  \n    // 条件连线\n    conditions.forEach(cond\
+      \ => {\n      const sourceNode = nodes.find(n => n.name.includes(cond.source))\
+      \ || nodes[0];\n      const trueNode = nodes.find(n => n.name.includes(cond.trueStep));\n\
+      \      const falseNode = nodes.find(n => n.name.includes(cond.falseStep));\n\
+      \  \n      if (sourceNode && trueNode) {\n        connections.push({\n     \
+      \     from: sourceNode.id,\n          to: trueNode.id,\n          type: \"条件满足\"\
+      ,\n          condition: `\\${nodes['${sourceNode.id}'].output.key0 === '${cond.condition}'}`\n\
+      \        });\n      }\n      \n      if (sourceNode && falseNode) {\n      \
+      \  connections.push({\n          from: sourceNode.id,\n          to: falseNode.id,\n\
+      \          type: \"条件不满足\",\n          condition: `\\${nodes['${sourceNode.id}'].output.key0\
+      \ !== '${cond.condition}'}`\n        });\n      }\n    });\n  \n    return connections;\n\
+      \  }\n  \n  /** 5. 异常处理 */\n  function handleExceptions(problems, nodes, connections)\
+      \ {\n    if (!problems || problems.length === 0) {\n      problems = [\"超时\"\
+      , \"重复操作\", \"数据异常\"];\n    }\n  \n    return problems.map((problem, i) => {\n\
+      \      const exceptionNode = {\n        id: `exception_${i}`,\n        type:\
+      \ \"代码节点\",\n        name: `异常处理：${problem}`,\n        parameters: {\n     \
+      \     code: `async function main({ data }) {\n            try {\n          \
+      \    // 异常检测与处理：${problem}\n              ${problem.includes(\"超时\") ? `\n \
+      \               const isTimeout = Date.now() - data.startTime > 3600000;\n \
+      \               return { key0: isTimeout, key1: isTimeout ? \"超时\" : \"正常\"\
+      \ };\n              ` : problem.includes(\"重复\") ? `\n                const\
+      \ history = await data.getHistory();\n                const isDuplicate = history.some(item\
+      \ => item.id === data.currentId);\n                return { key0: isDuplicate,\
+      \ key1: isDuplicate ? \"重复\" : \"正常\" };\n              ` : `\n            \
+      \    const isValid = data && data.payload && Object.keys(data.payload).length\
+      \ > 0;\n                return { key0: !isValid, key1: !isValid ? \"数据异常\" :\
+      \ \"数据正常\" };\n              `}\n            } catch (error) {\n           \
+      \   // \U0001F525确保异常节点也有key0\n              return { key0: true, key1: \"异常检测失败：\"\
+      \ + error.message };\n            }\n          }`\n        }\n      };\n  \n\
+      \      // 插入流程最开始\n      nodes.unshift(exceptionNode);\n      connections.unshift({\n\
+      \        from: exceptionNode.id,\n        to: nodes[1]?.id || nodes[0].id,\n\
+      \        type: \"异常处理后继续\",\n        condition: `\\${nodes['${exceptionNode.id}'].output.key0\
+      \ === false}`\n      });\n  \n      return { problem, nodeId: exceptionNode.id\
+      \ };\n    });\n  }"
+    language: 5
+    node_inputs:
+    - input:
+        type: string
+        value: 生成电商售后流程的工作流
+      name: input
+    node_outputs:
+      key0:
+        description: '"工作流配置 JSON"'
+        type: string
+        value: null
+      key1:
+        description: '"安全报告"'
+        items:
+          type: string
+          value: null
+        type: list
+        value: null
+      key2:
+        description: '"完整输出对象"'
+        properties:
+          key21:
+            description: '"工作流名称"'
+            type: string
+            value: null
+        type: object
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 60000
+  position:
+    x: 640
+    y: 7.105427357601002e-15
+  title: 代码
+  type: code
+- config: {}
+  description: 表单大师官方提供的数据存储和查询插件。
+  icon: https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/5a3b184150c645b5a5e639d98b58805a~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1754891965&x-signature=RvTw3TeNP7Mj%2B0bSCLfBUrQtZ%2BE%3D
+  id: '110702'
+  name: 节点_3
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7494108491972657152'
+      name: apiID
+    - input:
+        type: string
+        value: insert_data
+      name: apiName
+    - input:
+        type: string
+        value: '7494108491972640768'
+      name: pluginID
+    - input:
+        type: string
+        value: 表单大师
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value: 从数据存储服务提供商处获取
+      name: APIKey
+    - input:
+        type: string
+        value: 从数据存储服务提供商处获取
+      name: APISecret
+    - input:
+        type: object
+        value: "{\n  \"username\": \"test_user\",\n  \"content\": \"测试内容\",\n  \"\
+          create_time\": \"2025-07-12\"\n}"
+      name: data
+    - input:
+        type: string
+        value: 填写表单标识（如关联的表单 ID，若无需表单可留空或填写默认值 default_form）
+      name: formId
+    node_outputs:
+      message:
+        description: 如果失败，用此字段描述失败原因。如果成功，此字段为空。
+        type: string
+        value: null
+      status:
+        description: 状态
+        required: true
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1100
+    y: 59
+  title: insert_data
+  type: llm
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM-v2.jpg
+  id: '139569'
+  name: 节点_4
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: default_val
+      name: generationDiversity
+    - input:
+        type: float
+        value: '1'
+      name: temperature
+    - input:
+        type: integer
+        value: '4096'
+      name: maxTokens
+    - input:
+        type: boolean
+        value: false
+      name: spCurrentTime
+    - input:
+        type: boolean
+        value: false
+      name: spAntiLeak
+    - input:
+        type: boolean
+        value: false
+      name: prefixCache
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: integer
+        value: '1737521813'
+      name: modelType
+    - input:
+        type: string
+        value: 豆包·1.5·Pro·32k
+      name: modelName
+    - input:
+        type: string
+        value: '{input}'
+      name: prompt
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: integer
+        value: '3'
+      name: chatHistoryRound
+    - input:
+        type: string
+        value: "/**\n * 增强版 COZE 工作流自动生成器\n * 支持复杂需求解析、参数配置增强和错误处理\n */\nasync function\
+          \ main({ params }) {\n  try {\n    // 1. 获取并验证内容框输入\n    const contentBoxInput\
+          \ = params.content || '';\n    if (!contentBoxInput.trim()) {\n      throw\
+          \ new Error('内容框不能为空，请填写工作流需求描述');\n    }\n\n    // 2. 解析内容框输入\n    const\
+          \ parsedData = parseContent(contentBoxInput);\n    \n    // 3. 生成工作流元素\n\
+          \    const nodes = generateNodes(parsedData);\n    const connections = generateConnections(parsedData,\
+          \ nodes);\n    \n    // 4. 验证生成结果\n    validateWorkflow(nodes, connections);\n\
+          \n    // 5. 返回完整工作流配置\n    return {\n      workflowName: parsedData.name\
+          \ || \"自动生成工作流_\" + new Date().toISOString().slice(0, 10),\n      inputSource:\
+          \ contentBoxInput,\n      nodes,\n      connections\n    };\n  } catch (error)\
+          \ {\n    // 错误处理\n    return {\n      error: error.message,\n      nodes:\
+          \ [],\n      connections: []\n    };\n  }\n}\n\n/**\n * 解析内容框输入，提取工作流结构信息\n\
+          \ */\nfunction parseContent(content) {\n  // 提取工作流名称\n  const nameMatch\
+          \ = content.match(/生成\\s*([^，。\\n]+)\\s*流程/);\n  const name = nameMatch?.[1]?.trim()\
+          \ || \"未命名工作流\";\n\n  // 提取步骤定义（支持序号、节点类型和参数说明）\n  const stepPattern = /(?:\\\
+          d+\\.\\s*)?([^：]+)：\\s*([^（]+)(?:\\(([^)]+)\\))?/g;\n  const steps = [];\n\
+          \  let match;\n  \n  while ((match = stepPattern.exec(content)) !== null)\
+          \ {\n    const [, description, type, params] = match;\n    steps.push({\n\
+          \      description: description.trim(),\n      type: normalizeNodeType(type.trim()),\n\
+          \      params: parseNodeParams(params)\n    });\n  }\n\n  // 提取条件分支\n  const\
+          \ conditions = [];\n  const conditionPattern = /条件\\s*[:：]\\s*([^；]+)；?/g;\n\
+          \  \n  while ((match = conditionPattern.exec(content)) !== null) {\n   \
+          \ const conditionText = match[1];\n    const [condition, action] = conditionText.split(/则|→/).map(part\
+          \ => part.trim());\n    if (condition && action) {\n      conditions.push({\
+          \ condition, action });\n    }\n  }\n\n  return { name, steps, conditions\
+          \ };\n}\n\n/**\n * 规范化节点类型\n */\nfunction normalizeNodeType(type) {\n  const\
+          \ typeMap = {\n    \"大模型\": \"大模型节点\",\n    \"AI\": \"大模型节点\",\n    \"插件\"\
+          : \"插件节点\",\n    \"代码\": \"代码节点\",\n    \"条件分支\": \"条件节点\",\n    \"开始\"\
+          : \"开始节点\",\n    \"结束\": \"结束节点\"\n  };\n  \n  return typeMap[type] || type;\n\
+          }\n\n/**\n * 解析节点参数\n */\nfunction parseNodeParams(paramsText) {\n  if (!paramsText)\
+          \ return {};\n  \n  const params = {};\n  const paramPairs = paramsText.split(/[,，]\\\
+          s*/);\n  \n  paramPairs.forEach(pair => {\n    const [key, value] = pair.split(/[:：]\\\
+          s*/).map(part => part.trim());\n    if (key) {\n      params[key] = value\
+          \ || true;\n    }\n  });\n  \n  return params;\n}\n\n/**\n * 生成工作流节点\n */\n\
+          function generateNodes(data) {\n  // 自动添加开始节点\n  const nodes = [{\n    id:\
+          \ \"start_node\",\n    type: \"开始节点\",\n    description: \"流程开始\",\n   \
+          \ parameters: {}\n  }];\n\n  // 生成用户定义的节点\n  data.steps.forEach((step, index)\
+          \ => {\n    const nodeId = `node_${index + 1}`;\n    let parameters = {\
+          \ ...step.params };\n\n    // 设置节点默认参数\n    switch (step.type) {\n     \
+          \ case \"大模型节点\":\n        parameters.prompt = parameters.prompt || \n \
+          \         `处理步骤：${step.description}，请根据业务规则返回处理结果`;\n        parameters.model\
+          \ = parameters.model || \"gpt-3.5-turbo\";\n        break;\n      case \"\
+          插件节点\":\n        parameters.pluginName = parameters.pluginName || \n   \
+          \       step.description.includes(\"表单\") ? \"FormSubmit\" : \"DataProcess\"\
+          ;\n        break;\n      case \"条件节点\":\n        parameters.condition =\
+          \ parameters.condition || \"条件判断\";\n        break;\n      case \"代码节点\"\
+          :\n        parameters.code = parameters.code || \n          `// 实现 ${step.description}\\\
+          nconsole.log(\"执行 ${step.description}\");\\nreturn true;`;\n        break;\n\
+          \    }\n\n    nodes.push({\n      id: nodeId,\n      type: step.type,\n\
+          \      description: step.description,\n      parameters\n    });\n  });\n\
+          \n  // 自动添加结束节点\n  nodes.push({\n    id: \"end_node\",\n    type: \"结束节点\"\
+          ,\n    description: \"流程结束\",\n    parameters: {}\n  });\n\n  return nodes;\n\
+          }\n\n/**\n * 生成节点连线\n */\nfunction generateConnections(data, nodes) {\n\
+          \  const connections = [];\n  \n  // 添加开始节点到第一个用户节点的连线\n  if (nodes.length\
+          \ > 2) { // 至少有开始、一个用户节点和结束节点\n    connections.push({\n      from: \"start_node\"\
+          ,\n      to: \"node_1\",\n      type: \"开始连线\",\n      condition: \"流程启动\"\
+          \n    });\n  }\n\n  // 生成顺序连线\n  for (let i = 1; i < nodes.length - 2; i++)\
+          \ {\n    connections.push({\n      from: nodes[i].id,\n      to: nodes[i\
+          \ + 1].id,\n      type: \"顺序连线\",\n      condition: \"默认下一步\"\n    });\n\
+          \  }\n\n  // 添加最后一个用户节点到结束节点的连线\n  if (nodes.length > 2) {\n    connections.push({\n\
+          \      from: nodes[nodes.length - 2].id,\n      to: \"end_node\",\n    \
+          \  type: \"结束连线\",\n      condition: \"流程完成\"\n    });\n  }\n\n  // 处理条件分支\n\
+          \  data.conditions.forEach(cond => {\n    // 查找条件节点\n    const conditionNode\
+          \ = nodes.find(node => \n      node.type === \"条件节点\" || \n      node.description.includes(\"\
+          判断\") || \n      node.description.includes(\"审核\")\n    );\n\n    // 查找目标节点\n\
+          \    const targetNode = nodes.find(node => \n      node.description.includes(cond.action)\
+          \ || \n      node.id === cond.action\n    );\n\n    if (conditionNode &&\
+          \ targetNode) {\n      connections.push({\n        from: conditionNode.id,\n\
+          \        to: targetNode.id,\n        type: \"条件连线\",\n        condition:\
+          \ cond.condition\n      });\n    }\n  });\n\n  return connections;\n}\n\n\
+          /**\n * 验证工作流结构\n */\nfunction validateWorkflow(nodes, connections) {\n\
+          \  if (nodes.length < 3) { // 至少需要开始、一个用户节点和结束节点\n    throw new Error(\"\
+          生成的工作流节点数量不足，请检查需求描述\");\n  }\n\n  const nodeIds = new Set(nodes.map(node\
+          \ => node.id));\n  const invalidConnections = connections.filter(conn =>\
+          \ \n    !nodeIds.has(conn.from) || !nodeIds.has(conn.to)\n  );\n\n  if (invalidConnections.length\
+          \ > 0) {\n    throw new Error(\"存在无效的节点连线，请检查节点ID是否匹配\");\n  }\n}\n\nmodule.exports\
+          \ = { main };"
+      name: systemPrompt
+    - input:
+        type: string
+        value: ''
+      name: stableSystemPrompt
+    - input:
+        type: boolean
+        value: false
+      name: canContinue
+    node_inputs:
+    - input:
+        value:
+          path: user_input
+          ref_node: '100001'
+      name: input
+    node_outputs:
+      output:
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1560
+    y: 45
+  title: 大模型
+  type: llm
+  version: '3'
+- config: {}
+  description: 用于创建消息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-创建消息.jpg
+  id: '195424'
+  name: 节点_5
+  parameters:
+    node_inputs:
+    - input:
+        type: string
+        value: Default
+      name: conversationName
+    - input:
+        type: string
+        value: user
+      name: role
+    node_outputs:
+      isSuccess:
+        type: boolean
+        value: null
+      message:
+        properties:
+          content:
+            type: string
+            value: null
+          contentType:
+            type: string
+            value: null
+          messageId:
+            type: string
+            value: null
+          role:
+            type: string
+            value: null
+        type: object
+        value: null
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2020
+    y: 71
+  title: 创建消息
+  type: llm
+- config: {}
+  description: 支持中间向用户提问问题,支持预置选项提问和开放式问题提问两种方式
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Direct-Question-v2.jpg
+  id: '141872'
+  name: 节点_6
+  parameters:
+    answer_type: text
+    dynamic_option:
+      type: string
+      value:
+        content:
+          blockID: ''
+          name: ''
+          source: block-output
+        type: ref
+    extra_output: false
+    limit: 3
+    llmParam:
+      generationDiversity: balance
+      maxTokens: 4096
+      modelName: 豆包·1.5·Pro·32k
+      modelType: 1737521813.0
+      responseFormat: 2
+      systemPrompt: ''
+      temperature: 0.8
+    node_inputs:
+    - input:
+        type: string
+        value: '/**  * 增强版 COZE 工作流自动生成器  * 支持复杂需求解析、参数配置增强和错误处理  */ async function
+          main({ params }) {   try {     // 1. 获取并验证内容框输入     const contentBoxInput
+          = params.content || '''';     if (!contentBoxInput.trim()) {       throw
+          new Error(''内容框不能为空，请填写工作流需求描述'');     }      // 2. 解析内容框输入     const parsedData
+          = parseContent(contentBoxInput);          // 3. 生成工作流元素     const nodes
+          = generateNodes(parsedData);     const connections = generateConnections(parsedData,
+          nodes);          // 4. 验证生成结果     validateWorkflow(nodes, connections);      //
+          5. 返回完整工作流配置     return {       workflowName: parsedData.name || "自动生成工作流_"
+          + new Date().toISOString().slice(0, 10),       inputSource: contentBoxInput,       nodes,       connections     };   }
+          catch (error) {     // 错误处理     return {       error: error.message,       nodes:
+          [],       connections: []     };   } }  /**  * 解析内容框输入，提取工作流结构信息  */ function
+          parseContent(content) {   // 提取工作流名称   const nameMatch = content.match(/生成\s*([^，。\n]+)\s*流程/);   const
+          name = nameMatch?.[1]?.trim() || "未命名工作流";    // 提取步骤定义（支持序号、节点类型和参数说明）   const
+          stepPattern = /(?:\d+\.\s*)?([^：]+)：\s*([^（]+)(?:\(([^)]+)\))?/g;   const
+          steps = [];   let match;      while ((match = stepPattern.exec(content))
+          !== null) {     const [, description, type, params] = match;     steps.push({       description:
+          description.trim(),       type: normalizeNodeType(type.trim()),       params:
+          parseNodeParams(params)     });   }    // 提取条件分支   const conditions = [];   const
+          conditionPattern = /条件\s*[:：]\s*([^；]+)；?/g;      while ((match = conditionPattern.exec(content))
+          !== null) {     const conditionText = match[1];     const [condition, action]
+          = conditionText.split(/则|→/).map(part => part.trim());     if (condition
+          && action) {       conditions.push({ condition, action });     }   }    return
+          { name, steps, conditions }; }  /**  * 规范化节点类型  */ function normalizeNodeType(type)
+          {   const typeMap = {     "大模型": "大模型节点",     "AI": "大模型节点",     "插件": "插件节点",     "代码":
+          "代码节点",     "条件分支": "条件节点",     "开始": "开始节点",     "结束": "结束节点"   };      return
+          typeMap[type] || type; }  /**  * 解析节点参数  */ function parseNodeParams(paramsText)
+          {   if (!paramsText) return {};      const params = {};   const paramPairs
+          = paramsText.split(/[,，]\s*/);      paramPairs.forEach(pair => {     const
+          [key, value] = pair.split(/[:：]\s*/).map(part => part.trim());     if (key)
+          {       params[key] = value || true;     }   });      return params; }  /**  *
+          生成工作流节点  */ function generateNodes(data) {   // 自动添加开始节点   const nodes =
+          [{     id: "start_node",     type: "开始节点",     description: "流程开始",     parameters:
+          {}   }];    // 生成用户定义的节点   data.steps.forEach((step, index) => {     const
+          nodeId = `node_${index + 1}`;     let parameters = { ...step.params };      //
+          设置节点默认参数     switch (step.type) {       case "大模型节点":         parameters.prompt
+          = parameters.prompt ||            `处理步骤：${step.description}，请根据业务规则返回处理结果`;         parameters.model
+          = parameters.model || "gpt-3.5-turbo";         break;       case "插件节点":         parameters.pluginName
+          = parameters.pluginName ||            step.description.includes("表单") ?
+          "FormSubmit" : "DataProcess";         break;       case "条件节点":         parameters.condition
+          = parameters.condition || "条件判断";         break;       case "代码节点":         parameters.code
+          = parameters.code ||            `// 实现 ${step.description}\nconsole.log("执行
+          ${step.description}");\nreturn true;`;         break;     }      nodes.push({       id:
+          nodeId,       type: step.type,       description: step.description,       parameters     });   });    //
+          自动添加结束节点   nodes.push({     id: "end_node",     type: "结束节点",     description:
+          "流程结束",     parameters: {}   });    return nodes; }  /**  * 生成节点连线  */ function
+          generateConnections(data, nodes) {   const connections = [];      // 添加开始节点到第一个用户节点的连线   if
+          (nodes.length > 2) { // 至少有开始、一个用户节点和结束节点     connections.push({       from:
+          "start_node",       to: "node_1",       type: "开始连线",       condition: "流程启动"     });   }    //
+          生成顺序连线   for (let i = 1; i < nodes.length - 2; i++) {     connections.push({       from:
+          nodes[i].id,       to: nodes[i + 1].id,       type: "顺序连线",       condition:
+          "默认下一步"     });   }    // 添加最后一个用户节点到结束节点的连线   if (nodes.length > 2) {     connections.push({       from:
+          nodes[nodes.length - 2].id,       to: "end_node",       type: "结束连线",       condition:
+          "流程完成"     });   }    // 处理条件分支   data.conditions.forEach(cond => {     //
+          查找条件节点     const conditionNode = nodes.find(node =>        node.type ===
+          "条件节点" ||        node.description.includes("判断") ||        node.description.includes("审核")     );      //
+          查找目标节点     const targetNode = nodes.find(node =>        node.description.includes(cond.action)
+          ||        node.id === cond.action     );      if (conditionNode && targetNode)
+          {       connections.push({         from: conditionNode.id,         to: targetNode.id,         type:
+          "条件连线",         condition: cond.condition       });     }   });    return
+          connections; }  /**  * 验证工作流结构  */ function validateWorkflow(nodes, connections)
+          {   if (nodes.length < 3) { // 至少需要开始、一个用户节点和结束节点     throw new Error("生成的工作流节点数量不足，请检查需求描述");   }    const
+          nodeIds = new Set(nodes.map(node => node.id));   const invalidConnections
+          = connections.filter(conn =>      !nodeIds.has(conn.from) || !nodeIds.has(conn.to)   );    if
+          (invalidConnections.length > 0) {     throw new Error("存在无效的节点连线，请检查节点ID是否匹配");   }
+          }  module.exports = { main };'
+      name: input
+    node_outputs:
+      USER_RESPONSE:
+        description: 用户本轮对话输入内容
+        required: true
+        type: string
+        value: null
+    option_type: static
+    options:
+    - name: ''
+    - name: ''
+    question: 如何解决工作流变量为空的问题？还有解决自动化创建cozen工作流
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2480
+    y: 44.650000000000006
+  title: 问答
+  type: llm
+- config: {}
+  description: 助力开发者，1分钟即可完成
+  icon: https://p3-flow-product-sign.byteimg.com/tos-cn-i-13w3uml6bg/0454c1524dae4fb3a42e327d2304997b~tplv-13w3uml6bg-resize:128:128.image?rk3s=2e2596fd&x-expires=1754893534&x-signature=OGHKam8yrReh5TVUEvMZdh37Wq0%3D
+  id: '193653'
+  name: 节点_7
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7492985821671440436'
+      name: apiID
+    - input:
+        type: string
+        value: checkCami
+      name: apiName
+    - input:
+        type: string
+        value: '7490960782402895907'
+      name: pluginID
+    - input:
+        type: string
+        value: 工作流通用插件
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value: 从 Cami 服务提供商处获取（如开发者后台申请的应用 ID 和授权码）
+      name: app_id
+    - input:
+        type: string
+        value: 从 Cami 服务提供商处获取（如开发者后台申请的应用 ID 和授权码）
+      name: code
+    - input:
+        type: string
+        value: 填写系统唯一标识（如服务器 UUID 或自定义的系统 ID）
+      name: sys_uuid
+    - input:
+        type: integer
+        value:
+          path: stockCount
+          ref_node: '150419'
+      name: type
+    node_outputs:
+      code:
+        description: 1代表成功 0代表失败
+        type: float
+        value: null
+      expired_time:
+        description: 卡密到期时间
+        type: string
+        value: null
+      msg:
+        description: 消息
+        type: string
+        value: null
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 3400
+    y: 59
+  title: checkCami
+  type: llm
+- config: {}
+  description: jsonPath解析
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Plugin-v2.jpg
+  id: '154588'
+  name: 节点_8
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7353532375931977767'
+      name: apiID
+    - input:
+        type: string
+        value: json_path_parse
+      name: apiName
+    - input:
+        type: string
+        value: '7353532375931961383'
+      name: pluginID
+    - input:
+        type: string
+        value: json解析器
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value: '{   "result": {     "code": 200,     "message": "成功",     "data":
+          {       "items": [{"id": 1, "name": "测试数据"}]     }   } }'
+      name: json_data
+    - input:
+        type: string
+        value: $.result.data.items[0].name（提取第一个数据项的名称）
+      name: json_path
+    settingOnError:
+      processType: 1
+      retryTimes: 0
+      timeoutMs: 180000
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2940
+    y: 71
+  title: json_path_parse
+  type: llm
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

@@ -1,0 +1,803 @@
+description: 搜索相关论文
+edges:
+- from: '100001'
+  id: edge_0
+  source: ''
+  source_node: '100001'
+  target: ''
+  target_node: '115066'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_1
+  source: ''
+  source_node: '115066'
+  target: ''
+  target_node: '171807'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_2
+  source: ''
+  source_node: '171807'
+  target: ''
+  target_node: '100358'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_3
+  source: ''
+  source_node: '100358'
+  target: ''
+  target_node: '900001'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_4
+  source: ''
+  source_node: '120728'
+  target: ''
+  target_node: '100358'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_5
+  source: ''
+  source_node: '115066'
+  target: ''
+  target_node: '120728'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_6
+  source: ''
+  source_node: '115066'
+  target: ''
+  target_node: '150457'
+  to: '900001'
+  type: flow
+- from: '100001'
+  id: edge_7
+  source: ''
+  source_node: '150457'
+  target: ''
+  target_node: '100358'
+  to: '900001'
+  type: flow
+icon: plugin_icon/workflow.png
+id: 7396226126563147803
+metadata:
+  createdAt: '2025-01-01T00:00:00.000Z'
+  creator: coze_workflow_fixer
+  tags: []
+  updatedAt: '2025-01-01T00:00:00.000Z'
+mode: chatflow
+name: paper_search_1
+nodes:
+- config: {}
+  description: 工作流的起始节点，用于设定启动工作流需要的信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start.png
+  id: '100001'
+  name: 节点_0
+  parameters:
+    node_outputs:
+      BOT_USER_INPUT:
+        description: 用户本轮对话输入内容
+        type: string
+        value: null
+  position:
+    x: -148.0124643728193
+    y: -317.7393203673961
+  title: 开始
+  type: start
+- config: {}
+  description: 工作流的最终节点，用于返回工作流运行后的结果信息
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End.png
+  id: '900001'
+  name: 节点_1
+  parameters:
+    content:
+      type: string
+      value:
+        content: '{{summary}}'
+        type: literal
+    node_inputs:
+    - input:
+        type: string
+        value:
+          path: output
+          ref_node: '100358'
+      name: summary
+    streamingOutput: false
+    terminatePlan: useAnswerContent
+  position:
+    x: 3047.180858005978
+    y: -483.2073016045149
+  title: 结束
+  type: end
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '115066'
+  name: 节点_2
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: GLM-4
+      name: modelName
+    - input:
+        type: integer
+        value: '1717582794'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '0.5'
+      name: temperature
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2000'
+      name: maxTokens
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: '根据下方我的需求，生成三个英文搜索关键词，搜索arxiv上相关的论文
+
+
+          # 我的需求
+
+          {{query}}'
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: BOT_USER_INPUT
+          ref_node: '100001'
+      name: query
+    node_outputs:
+      keyword1:
+        description: 搜索关键词1
+        type: string
+        value: null
+      keyword2:
+        description: 搜索关键词2
+        type: string
+        value: null
+      keyword3:
+        description: 搜索关键词3
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 802.1655402905931
+    y: -650.513105673598
+  title: 大模型
+  type: llm
+  version: '3'
+- config: {}
+  description: 帮助用户在arXiv中搜索论文。
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png
+  id: '171807'
+  name: 节点_3
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7376239123344130099'
+      name: apiID
+    - input:
+        type: string
+        value: search
+      name: apiName
+    - input:
+        type: string
+        value: '7351376511687032851'
+      name: pluginID
+    - input:
+        type: string
+        value: arXiv
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value: '1'
+      name: sort_order
+    - input:
+        type: string
+        value: '2'
+      name: sort_by
+    - input:
+        value:
+          path: keyword1
+          ref_node: '115066'
+      name: search_query
+    - input:
+        type: string
+        value: '5'
+      name: count
+    node_outputs:
+      code:
+        type: integer
+        value: null
+      items:
+        items:
+          properties:
+            author:
+              items:
+                type: string
+                value: null
+              type: list
+              value: null
+            doi:
+              type: string
+              value: null
+            id:
+              type: string
+              value: null
+            link:
+              description: PDF link
+              required: true
+              type: string
+              value: null
+            published:
+              type: string
+              value: null
+            summary:
+              description: Paper summary
+              required: true
+              type: string
+              value: null
+            title:
+              description: Paper title
+              required: true
+              type: string
+              value: null
+          type: object
+          value: null
+        type: list
+        value: null
+      message:
+        type: string
+        value: null
+      total:
+        type: float
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1568.281602405359
+    y: -696.9797946859238
+  title: search
+  type: llm
+- config: {}
+  description: 调用大语言模型,使用变量和提示词生成回复
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png
+  id: '100358'
+  name: 节点_4
+  parameters:
+    llmParam:
+    - input:
+        type: string
+        value: GLM-4
+      name: modelName
+    - input:
+        type: integer
+        value: '1717582794'
+      name: modelType
+    - input:
+        type: string
+        value: ' '
+      name: prompt
+    - input:
+        type: float
+        value: '0.5'
+      name: temperature
+    - input:
+        type: float
+        value: '0.7'
+      name: topP
+    - input:
+        type: integer
+        value: '2000'
+      name: maxTokens
+    - input:
+        type: integer
+        value: '2'
+      name: responseFormat
+    - input:
+        type: string
+        value: balance
+      name: generationDiversity
+    - input:
+        type: boolean
+        value: false
+      name: enableChatHistory
+    - input:
+        type: string
+        value: '以下是我搜索到的论文资料，请帮我分点用中文总结。
+
+
+          # 搜索结果
+
+          {{result_1[0]}}
+
+          ---
+
+          {{result_1[1]}}
+
+          ---
+
+          {{result_2[0]}}
+
+          ---
+
+          {{result_2[1]}}
+
+          ---
+
+          {{result_3[0]}}
+
+          ---
+
+          {{result_3[1]}}
+
+
+          # 注意
+
+          - 你要用markdown格式输出详细的总结
+
+          - 每一篇论文的总结都必须包括：英文标题、主要内容、论文链接
+
+          '
+      name: systemPrompt
+    node_inputs:
+    - input:
+        value:
+          path: items
+          ref_node: '171807'
+      name: result_1
+    - input:
+        items:
+          properties:
+            author:
+              items:
+                type: string
+                value: null
+              type: list
+              value: null
+            doi:
+              type: string
+              value: null
+            id:
+              type: string
+              value: null
+            link:
+              description: PDF link
+              required: true
+              type: string
+              value: null
+            published:
+              type: string
+              value: null
+            summary:
+              description: Paper summary
+              required: true
+              type: string
+              value: null
+            title:
+              description: Paper title
+              required: true
+              type: string
+              value: null
+          type: object
+          value: null
+        type: list
+        value:
+          path: items
+          ref_node: '120728'
+      name: result_2
+    - input:
+        items:
+          properties:
+            author:
+              items:
+                type: string
+                value: null
+              type: list
+              value: null
+            doi:
+              type: string
+              value: null
+            id:
+              type: string
+              value: null
+            link:
+              description: PDF link
+              required: true
+              type: string
+              value: null
+            published:
+              type: string
+              value: null
+            summary:
+              description: Paper summary
+              required: true
+              type: string
+              value: null
+            title:
+              description: Paper title
+              required: true
+              type: string
+              value: null
+          type: object
+          value: null
+        type: list
+        value:
+          path: items
+          ref_node: '150457'
+      name: result_3
+    node_outputs:
+      output:
+        description: 搜索结果的总结
+        type: string
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 2363.170854636205
+    y: -649.6898145634468
+  title: 论文总结
+  type: llm
+  version: '3'
+- config: {}
+  description: 帮助用户在arXiv中搜索论文。
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png
+  id: '120728'
+  name: 节点_5
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7376239123344130099'
+      name: apiID
+    - input:
+        type: string
+        value: search
+      name: apiName
+    - input:
+        type: string
+        value: '7351376511687032851'
+      name: pluginID
+    - input:
+        type: string
+        value: arXiv
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value: '1'
+      name: sort_order
+    - input:
+        type: string
+        value: '2'
+      name: sort_by
+    - input:
+        value:
+          path: keyword2
+          ref_node: '115066'
+      name: search_query
+    - input:
+        type: string
+        value: '5'
+      name: count
+    node_outputs:
+      code:
+        type: integer
+        value: null
+      items:
+        items:
+          properties:
+            author:
+              items:
+                type: string
+                value: null
+              type: list
+              value: null
+            doi:
+              type: string
+              value: null
+            id:
+              type: string
+              value: null
+            link:
+              description: PDF link
+              required: true
+              type: string
+              value: null
+            published:
+              type: string
+              value: null
+            summary:
+              description: Paper summary
+              required: true
+              type: string
+              value: null
+            title:
+              description: Paper title
+              required: true
+              type: string
+              value: null
+          type: object
+          value: null
+        type: list
+        value: null
+      message:
+        type: string
+        value: null
+      total:
+        type: float
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1542.1164579642964
+    y: -127.44062388672157
+  title: search_1
+  type: llm
+- config: {}
+  description: 帮助用户在arXiv中搜索论文。
+  icon: https://lf3-static.bytednsdoc.com/obj/eden-cn/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png
+  id: '150457'
+  name: 节点_6
+  parameters:
+    apiParam:
+    - input:
+        type: string
+        value: '7376239123344130099'
+      name: apiID
+    - input:
+        type: string
+        value: search
+      name: apiName
+    - input:
+        type: string
+        value: '7351376511687032851'
+      name: pluginID
+    - input:
+        type: string
+        value: arXiv
+      name: pluginName
+    - input:
+        type: string
+        value: ''
+      name: pluginVersion
+    - input:
+        type: string
+        value: ''
+      name: tips
+    - input:
+        type: string
+        value: ''
+      name: outDocLink
+    node_inputs:
+    - input:
+        type: string
+        value: '1'
+      name: sort_order
+    - input:
+        type: string
+        value: '2'
+      name: sort_by
+    - input:
+        value:
+          path: keyword3
+          ref_node: '115066'
+      name: search_query
+    - input:
+        type: string
+        value: '5'
+      name: count
+    node_outputs:
+      code:
+        type: integer
+        value: null
+      items:
+        items:
+          properties:
+            author:
+              items:
+                type: string
+                value: null
+              type: list
+              value: null
+            doi:
+              type: string
+              value: null
+            id:
+              type: string
+              value: null
+            link:
+              description: PDF link
+              required: true
+              type: string
+              value: null
+            published:
+              type: string
+              value: null
+            summary:
+              description: Paper summary
+              required: true
+              type: string
+              value: null
+            title:
+              description: Paper title
+              required: true
+              type: string
+              value: null
+          type: object
+          value: null
+        type: list
+        value: null
+      message:
+        type: string
+        value: null
+      total:
+        type: float
+        value: null
+    settingOnError: {}
+  params:
+    max_tokens: 2000
+    model: gpt-4
+    stop: []
+    system_prompt: '你是一个智能助手，能够根据用户的请求提供准确、有用的回答。
+
+      请确保你的回答：
+
+      1. 直接针对用户的问题
+
+      2. 提供详细且有用的信息
+
+      3. 使用友好且专业的语言
+
+      4. 遵循安全和伦理准则'
+    temperature: 0.7
+    top_p: 0.9
+    user_prompt: '请根据系统提示处理以下输入：
+
+      {{input}}'
+  position:
+    x: 1537.4758074443694
+    y: 371.73635402005294
+  title: search_2
+  type: llm
+outputs: []
+schema_version: 1.0.0
+trigger:
+  name: 手动触发
+  type: manual
+type: workflow
+version: 1.0.0
+viewport:
+  x: 0
+  y: 0
+  zoom: 1

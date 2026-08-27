@@ -1,0 +1,29 @@
+{
+  "original_rel_path": "项目主目录/extracted_0628/conversations.json",
+  "original_size": 314728810,
+  "original_sha256": "fd1d77ee22656ed3433b9c8718ada5c0af22f95fd742574a14493903a1e1afbe",
+  "part_size": 83886080,
+  "part_count": 4,
+  "parts": [
+    {
+      "name": "part000",
+      "size": 83886080,
+      "sha256": "bc3d5e08b6d7463641f59929be22b6342310bee221ac4bcafc5034244dd3afcd"
+    },
+    {
+      "name": "part001",
+      "size": 83886080,
+      "sha256": "4e8101c412201fd1b0a2eb5d998a900de6867a5bbd8029446ae616043fa5d5f5"
+    },
+    {
+      "name": "part002",
+      "size": 83886080,
+      "sha256": "a0150fac92569c9f5baf992f14240d4215edc72433fefa1fe0c9292b043210a5"
+    },
+    {
+      "name": "part003",
+      "size": 63070570,
+      "sha256": "720800e8a41428ad186f8f6039a9ca2c95a6f94960673c547ef9abe3f3eaeeee"
+    }
+  ]
+}

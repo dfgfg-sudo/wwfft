@@ -1,0 +1,24 @@
+{
+  "original_rel_path": "项目主目录/完整知识库_最终版/knowledge_base/FINAL_KNOWLEDGE_BASE_COMPLETE.json",
+  "original_size": 207493537,
+  "original_sha256": "8d4659cea103738e7097e07ac3a4174f5b8d700efcd10f2b60a1b3322d18904f",
+  "part_size": 83886080,
+  "part_count": 3,
+  "parts": [
+    {
+      "name": "part000",
+      "size": 83886080,
+      "sha256": "93262cae7ae80f92f05d7676c6566d6faba52de3d5404b7abeec166f1aa482e9"
+    },
+    {
+      "name": "part001",
+      "size": 83886080,
+      "sha256": "a8985ff47c28e9f6102043f44aaf4da4d28bae7c3ce3f0a2e953ff7bb170d3c9"
+    },
+    {
+      "name": "part002",
+      "size": 39721377,
+      "sha256": "2a96ddac4f4f66c8e40a5b52c8f385c71177841ee09586e71344ac36057862fb"
+    }
+  ]
+}

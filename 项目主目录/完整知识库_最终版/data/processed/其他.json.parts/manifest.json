@@ -1,0 +1,19 @@
+{
+  "original_rel_path": "项目主目录/完整知识库_最终版/data/processed/其他.json",
+  "original_size": 127915071,
+  "original_sha256": "10c3349c92d8e4a90641c4b96116163fe062d73b88df9737232eb8c47754dfbd",
+  "part_size": 83886080,
+  "part_count": 2,
+  "parts": [
+    {
+      "name": "part000",
+      "size": 83886080,
+      "sha256": "6ec2257b637aa1abd44a67907cde206bf61c8ecd59dd8bb1b9df95450838bc10"
+    },
+    {
+      "name": "part001",
+      "size": 44028991,
+      "sha256": "b572c1bb217fb581fdfd9d7f4f031b562d09dcc0c384d2e2338a2eade77c32c8"
+    }
+  ]
+}

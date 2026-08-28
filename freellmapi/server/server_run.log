@@ -1,0 +1,28 @@
+◇ injected env (3) from ..\.env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+[config] .env check: 1 documented default missing. Startup continues.
+[config]   missing from .env: ENCRYPTION_KEY
+[config]   Compare .env.example when you next edit your config.
+Database initialized at D:\wwfft\freellmapi\server\data\freeapi.db
+[crypto] No ENCRYPTION_KEY set — using the auto-generated key at D:\wwfft\freellmapi\server\data\.encryption-key (dev only). Set ENCRYPTION_KEY for production.
+[proxy] Not configured — outbound requests go direct.
+Server running on http://[::]:3001
+Proxy endpoint: http://[::]:3001/v1/chat/completions
+[Health] Starting health checker (every ~300s ±20%)
+[catalog-sync] re-applied cached monthly v2026.08.25 after boot
+[catalog-sync] polling https://api.freellmapi.co every 12h
+[CooldownProbe] starting cooldown-probe recovery (scan every 60s)
+[Proxy] 15:42:51 start e86cda a0 ollama - gpt-oss:120b req=auto
+[Proxy] 15:42:51 fail e86cda a0 ollama - gpt-oss:120b lat=1531ms err="Ollama Cloud API error 401: Unauthorized"
+[FallbackLoop] Upstream 401 from ollama key 2; revalidating it now instead of waiting for the health cycle
+[Proxy] 15:42:51 next e86cda a1 ollama - gemma4:31b
+[Proxy] 15:42:53 fail e86cda a1 ollama - gemma4:31b lat=2677ms err="Ollama Cloud API error 401: Unauthorized"
+[Proxy] 15:42:53 next e86cda a2 ollama - minimax-m3
+[Proxy] 15:42:54 fail e86cda a2 ollama - minimax-m3 lat=3634ms err="Ollama Cloud API error 401: Unauthorized"
+[Proxy] 15:42:54 next e86cda a3 ollama - nemotron-3-super
+[Proxy] 15:42:54 fail e86cda a3 ollama - nemotron-3-super lat=4057ms err="Ollama Cloud API error 401: Unauthorized"
+[Proxy] 15:42:54 next e86cda a4 aihorde - aphrodite/TheDrummer/Cydonia-24B-v4.3
+[Proxy] 15:42:55 fail e86cda a4 aihorde - aphrodite/TheDrummer/Cydonia-24B-v4.3 lat=4948ms err="AI Horde API error 406: Model None not known!"
+[Proxy] 15:43:11 start 569e7b a0 aihorde - koboldcpp/Llama-3.2-3B req=koboldcpp/Llama-3.2-3B
+[Proxy] 15:43:16 ok 569e7b a0 aihorde - koboldcpp/Llama-3.2-3B lat=5078ms in=1 out=12
+[Proxy] routing exhausted (no upstream tried) req=b54db4 requested=mistral-7b-instruct-v0.3 candidates=1:
+  ovh/Mistral-7B-Instruct-v0.3: no enabled+healthy key for platform
